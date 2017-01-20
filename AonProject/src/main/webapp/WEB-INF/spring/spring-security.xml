@@ -8,45 +8,34 @@
 		
 	<http pattern="/**/*.js" security="none"></http>
 	<http pattern="/**/*.css" security="none"></http>
-	<http pattern="/image/*" security="none"></http>
+	<http pattern="/image/**" security="none"></http>
 
-	<http pattern="/admin/**" auto-config="true" use-expressions="true" disable-url-rewriting="true" authentication-manager-ref="adminManager">
+	<http auto-config="true" use-expressions="true" disable-url-rewriting="true">
 		<intercept-url pattern="/admin/login" access = "isAnonymous()" />
-		<intercept-url pattern="/admin/logout" access = "isAnonymous()" />
-		<intercept-url pattern="/admin/**" access="hasRole('sys')"/>
-		<form-login login-processing-url="/admin/login" username-parameter="adminId" password-parameter="adminPwd" login-page="/admin/login.do" default-target-url="/main.do" authentication-failure-url="/admin/login.do?fail=true"/>		
-		<logout logout-success-url="/main.do" logout-url="/admin/logout" invalidate-session="true" />
-	</http>
-	
-	<http auto-config="true" use-expressions="true" disable-url-rewriting="true" authentication-manager-ref="memberManager">
-		<intercept-url pattern="/member/login.do" access = "isAnonymous()" />
-		<intercept-url pattern="/**" access = "permitAll"/>
-		<form-login login-processing-url="/j_login2" username-parameter="loginId" password-parameter="loginPwd" login-page="/member/login.do" default-target-url="/main.do" authentication-failure-url="/member/login.do?fail=true"/>		
-		<logout logout-success-url="/main.do" logout-url="/logout" invalidate-session="true" />
+		<intercept-url pattern="/admin/loginCheck" access = "isAnonymous()" />
+		<intercept-url pattern="/admin/logout" access="hasRole('admin')" />
+		<intercept-url pattern="/admin/**" access="hasRole('admin')"/> 
+		<intercept-url pattern="/**" access="permitAll"/>
+		<form-login login-processing-url="/admin/loginChk" username-parameter="adminId" password-parameter="adminPwd" login-page="/admin/login" default-target-url="/admin/main" always-use-default-target="false" authentication-failure-url="/admin/login?fail=true"/>		
+		<logout logout-success-url="/admin/login" logout-url="/admin/logout" invalidate-session="true" />
 	</http>
 	
 	<beans:bean id = "logDataSource_pos" class = "org.springframework.jndi.JndiObjectFactoryBean">
 		<beans:property name="jndiName" value="java:comp/env/jdbc/Oracle11g"></beans:property>
 	</beans:bean>
 	
-	<authentication-manager id="adminManager">
+	<authentication-manager>
 		<authentication-provider user-service-ref="adminDAOImpl">
 			<password-encoder ref="passwordEncoder"></password-encoder>
 		</authentication-provider>
 	</authentication-manager>
 	
-	<authentication-manager id="memberManager">
-		<authentication-provider user-service-ref="memberDAOImpl">
-			<password-encoder ref="passwordEncoder"></password-encoder>
-		</authentication-provider>
-	</authentication-manager>
-	
-	<beans:bean id="adminDAOImpl" class="com.aonproject.admin.dao.AdminDAOImpl">
+	<beans:bean id="adminDAOImpl" class="com.aonproject.admin.adminInfo.dao.AdminDAOImpl">
 		<beans:property name="dataSource" ref="logDataSource_pos" />
 		<beans:property name="rolePrefix" value="" />
-		<beans:property name="usersByUsernameQuery" value="select id, password, name from admininfo where id = ?" />
+		<beans:property name="usersByUsernameQuery" value="select a_id, a_pwd from admin where a_id = ?" />
 		
-		<beans:property name="authoritiesByUsernameQuery" value = "select a.authority_name from authority a, (select authority from admin_authority where id = ?) b where a.authority = b.authority" />
+		<beans:property name="authoritiesByUsernameQuery" value = "select a_authorities from admin where a_id = ?" />
 		<beans:property name="enableGroups" value="false" />
 	</beans:bean>
 	

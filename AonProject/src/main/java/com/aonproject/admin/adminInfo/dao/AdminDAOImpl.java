@@ -1,4 +1,4 @@
-package com.aonproject.admin.dao;
+package com.aonproject.admin.adminInfo.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,6 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -16,13 +20,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.stereotype.Repository;
 
-import com.aonproject.admin.vo.AdminVO;
+import com.aonproject.admin.adminInfo.vo.AdminVO;
+
 
 @Repository
 public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 	
-	
-	
+	@Autowired
+	private DataSource dataSource;
+	@PostConstruct
+	void init(){
+		setDataSource(dataSource);
+	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -1,4 +1,4 @@
-package com.aonproject.admin.service;
+package com.aonproject.admin.adminInfo.service;
 
 public interface AdminService {
 
