@@ -12,7 +12,7 @@
 
     <title>A O N !</title>
 
-<!-- Bootstrap -->
+<!-- Bootstrap --->
     <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="/resources/bootstrap/css/font-awesome.min.css" rel="stylesheet">
