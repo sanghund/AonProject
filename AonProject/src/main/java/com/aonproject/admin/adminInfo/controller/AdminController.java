@@ -20,13 +20,13 @@ public class AdminController {
 	
 	@RequestMapping(value = "/login")
 	public String loginForm(){
-		logger.info("loginForm 龋免 己傍");
-		return "admin/login/loginForm";
+		logger.info("loginForm 順胳稖 靹标车");
+		return "admin/main";
 	}
 	
 	@RequestMapping(value = "/main")
 	public ModelAndView main(Authentication auth){
-		logger.info("main 龋免 己傍");
+		logger.info("main 順胳稖 靹标车");
 		ModelAndView mav = new ModelAndView();
 		if(auth != null){
 			UserDetails vo = (AdminVO) auth.getPrincipal();
