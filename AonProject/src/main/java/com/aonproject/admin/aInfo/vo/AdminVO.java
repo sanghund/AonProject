@@ -1,4 +1,4 @@
-package com.aonproject.admin.adminInfo.vo;
+package com.aonproject.admin.aInfo.vo;
 
 import java.io.Serializable;
 import java.util.Collection;

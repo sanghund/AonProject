@@ -1,4 +1,4 @@
-package com.aonproject.admin.adminInfo.service;
+package com.aonproject.admin.aInfo.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.aonproject.admin.adminInfo.dao;
+package com.aonproject.admin.aInfo.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.stereotype.Repository;
 
-import com.aonproject.admin.adminInfo.vo.AdminVO;
+import com.aonproject.admin.aInfo.vo.AdminVO;
 
 
 @Repository
