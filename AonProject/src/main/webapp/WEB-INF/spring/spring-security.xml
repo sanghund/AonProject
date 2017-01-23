@@ -16,7 +16,7 @@
 		<intercept-url pattern="/admin/logout" access="hasRole('admin')" />
 		<intercept-url pattern="/admin/**" access="hasRole('admin')"/> 
 		<intercept-url pattern="/**" access="permitAll"/>
-		<form-login login-processing-url="/admin/loginChk" username-parameter="adminId" password-parameter="adminPwd" login-page="/admin/login" default-target-url="/admin/main" always-use-default-target="false" authentication-failure-url="/admin/login?fail=true"/>		
+		<form-login login-processing-url="/admin/loginChk" username-parameter="adminId" password-parameter="adminPwd" login-page="/admin/login" default-target-url="/admin/main" always-use-default-target="false" authentication-success-handler-ref="loginSuccessHandler" authentication-failure-handler-ref="loginFailureHandler"/>		
 		<logout logout-success-url="/admin/login" logout-url="/admin/logout" invalidate-session="true" />
 	</http>
 	
@@ -33,12 +33,16 @@
 	<beans:bean id="adminDAOImpl" class="com.aonproject.admin.aInfo.dao.AdminDAOImpl">
 		<beans:property name="dataSource" ref="logDataSource_pos" />
 		<beans:property name="rolePrefix" value="" />
-		<beans:property name="usersByUsernameQuery" value="select a_id, a_pwd from admin where a_id = ?" />
+		<beans:property name="usersByUsernameQuery" value="select a_no, a_id, a_pwd, a_name, a_addr, a_tel, a_email, to_char(a_date, 'YYYY/MM/DD HH24:mi:ss') a_date, a_auth from admin where a_id = ?" />
 		
-		<beans:property name="authoritiesByUsernameQuery" value = "select a_authorities from admin where a_id = ?" />
+		<beans:property name="authoritiesByUsernameQuery" value = "select a_auth from admin where a_id = ?" />
 		<beans:property name="enableGroups" value="false" />
 	</beans:bean>
 	
+	<beans:bean id = "loginSuccessHandler" class = "com.aonproject.common.util.security.LoginSuccessHandler" />
+	<beans:bean id = "loginFailureHandler" class = "com.aonproject.common.util.security.LoginFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/loginChk?error=true" />
+	</beans:bean>
 	
 	
 	
