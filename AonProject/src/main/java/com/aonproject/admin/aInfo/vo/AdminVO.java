@@ -27,18 +27,25 @@ public class AdminVO implements UserDetails{
 	private String a_addr = ""; // 관리자 주소
 	private String a_tel = ""; // 관리자 연락처
 	private String a_email = ""; // 관리자 이메일
-	private char a_pravacy = ' '; // 개인정보 수집동의
 	private String a_date = ""; // 등록일
 	private Set<GrantedAuthority> authorities; // 계정이 가지고 있는 권한 목록
 	
 	public AdminVO() {}
-
-	public AdminVO(String a_id, String a_pwd, Collection<? extends GrantedAuthority> authorities) {
+	
+	public AdminVO(int a_no, String a_id, String a_pwd, String a_name, String a_addr, String a_tel, String a_email,
+			String a_date, Collection<? extends GrantedAuthority> authorities) {
+		super();
+		this.a_no = a_no;
 		this.a_id = a_id;
 		this.a_pwd = a_pwd;
+		this.a_name = a_name;
+		this.a_addr = a_addr;
+		this.a_tel = a_tel;
+		this.a_email = a_email;
+		this.a_date = a_date;
 		this.authorities = Collections.unmodifiableSet(sortAuthorities(authorities));
 	}
-	
+
 	private static SortedSet<GrantedAuthority> sortAuthorities(Collection<? extends GrantedAuthority> authorities){
 		Assert.notNull(authorities, "Cannot pass a null GrantedAuthority collection");
 		
@@ -67,8 +74,6 @@ public class AdminVO implements UserDetails{
 		
 	}
 	
-	
-
 	public int getA_no() {
 		return a_no;
 	}
@@ -125,13 +130,6 @@ public class AdminVO implements UserDetails{
 		this.a_email = a_email;
 	}
 
-	public char getA_pravacy() {
-		return a_pravacy;
-	}
-
-	public void setA_pravacy(char a_pravacy) {
-		this.a_pravacy = a_pravacy;
-	}
 
 	public String getA_date() {
 		return a_date;
