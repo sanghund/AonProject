@@ -192,7 +192,7 @@
               </div>
 
             </div>
-            <!-- /sidebar menu --->
+            <!-- /sidebar menu -->
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
