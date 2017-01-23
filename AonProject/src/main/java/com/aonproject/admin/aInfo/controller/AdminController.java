@@ -22,7 +22,6 @@ public class AdminController {
 	public String loginForm(){
 		logger.info("loginForm 호출 성공");
 		return "admin/login/loginForm";
-		
 	}
 	
 	@RequestMapping(value = "/main")
