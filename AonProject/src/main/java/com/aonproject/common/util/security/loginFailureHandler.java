@@ -1,4 +1,4 @@
-package com.aonproject.common.security;
+package com.aonproject.common.util.security;
 
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 

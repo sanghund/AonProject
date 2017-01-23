@@ -30,7 +30,7 @@
 		</authentication-provider>
 	</authentication-manager>
 	
-	<beans:bean id="adminDAOImpl" class="com.aonproject.admin.adminInfo.dao.AdminDAOImpl">
+	<beans:bean id="adminDAOImpl" class="com.aonproject.admin.aInfo.dao.AdminDAOImpl">
 		<beans:property name="dataSource" ref="logDataSource_pos" />
 		<beans:property name="rolePrefix" value="" />
 		<beans:property name="usersByUsernameQuery" value="select a_id, a_pwd from admin where a_id = ?" />
