@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.aonproject.client.dao.ProductDAO">
-
+<mapper namespace="com.aonproject.admin.product.dao.ProductDAO">
+	<select id="productList" resultType="product" parameterType="product">
+		/* product - productList */
+		select p_no, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_date, ca_no, su_no 
+		from product
+	</select>
+	
+	<select id="productDetail" resultType="product" parameterType="product">
+		/* product - productDetail */
+		select p_no, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_date, ca_no, su_no 
+		from product where p_no like #{p_no}
+	</select>
 </mapper>

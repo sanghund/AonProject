@@ -3,5 +3,6 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.aonproject.admin.aInfo.vo.AdminVO" alias="admin"/>	
+		<typeAlias type="com.aonproject.admin.product.vo.ProductVO" alias="product"/>
 	</typeAliases>
 </configuration>

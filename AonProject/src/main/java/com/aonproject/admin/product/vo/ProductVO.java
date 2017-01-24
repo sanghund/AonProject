@@ -1,4 +1,4 @@
-package com.aonproject.client.product.vo;
+package com.aonproject.admin.product.vo;
 
 public class ProductVO {
 	private String p_no;		//상품 코드

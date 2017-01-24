@@ -12,6 +12,7 @@
    <script src="./js/html5shiv.js"></script>
 <![endif]--> 
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/resources/include/css/reset.css">
 </head>
 <body>
 	hi

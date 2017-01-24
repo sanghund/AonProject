@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.aonproject.client.product.service.ProductService;
-import com.aonproject.client.product.vo.ProductVO;
+import com.aonproject.admin.product.service.ProductService;
+import com.aonproject.admin.product.vo.ProductVO;
 
 @Controller
-@RequestMapping(value = "/product")
-public class ProductController {
-	Logger logger = Logger.getLogger(ProductController.class);
+@RequestMapping(value = "/client")
+public class _ProductController {
+	Logger logger = Logger.getLogger(_ProductController.class);
 	
 	@Autowired
 	private ProductService productService;
@@ -26,11 +26,11 @@ public class ProductController {
 	public String itemList(@ModelAttribute ProductVO pvo, Model model){
 		logger.info("itemList 호출 성공!");
 		
-		List<ProductVO> productList = productService.productList(pvo);
+		//List<ProductVO> productList = productService.productList(pvo);
 		
-		model.addAttribute("productList", productList);
+		//model.addAttribute("productList", productList);
 		
-		return "client/product/main";
+		return "admin/product";
 	}
 			
 }

@@ -20,5 +20,7 @@
 			});
 		</script>
 	</sec:authorize>
+	
+	<a href="/admin/product">제품목록</a>
 </body>
 </html>
