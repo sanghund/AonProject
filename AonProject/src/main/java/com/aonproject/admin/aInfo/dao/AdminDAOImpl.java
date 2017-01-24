@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +29,7 @@ public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 	
 	@Autowired
 	private DataSource dataSource;
+	
 	@PostConstruct
 	void init(){
 		setDataSource(dataSource);
@@ -100,5 +102,16 @@ public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 	protected List<GrantedAuthority> loadGroupAuthorities(String username) {
 		// TODO Auto-generated method stub
 		return super.loadGroupAuthorities(username);
+	}
+
+	// 아래서부터 AdminDAO 구현
+	
+	@Autowired
+	private SqlSession selSession;
+	
+	@Override
+	public int joinGo(AdminVO vo) {
+		// TODO Auto-generated method stub
+		return selSession.insert("joinGo",vo);
 	}
 }

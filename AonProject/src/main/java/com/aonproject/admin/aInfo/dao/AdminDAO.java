@@ -1,5 +1,7 @@
 package com.aonproject.admin.aInfo.dao;
 
-public interface AdminDAO {
+import com.aonproject.admin.aInfo.vo.AdminVO;
 
+public interface AdminDAO {
+	public int joinGo(AdminVO vo);
 }

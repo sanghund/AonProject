@@ -8,13 +8,23 @@
 <title>로그인 페이지</title>
 </head>
 <body>
-	<h2>관리자 로그인</h2>
-	<form id = "gogoLogin" method = "post" action="/admin/loginChk">
-		아이디 <input type="text" style="width: 145px;" id= "adminId" name = "adminId" /><br />
-		비밀번호 <input type="password" style="width: 145px;" id= "adminPwd" name = "adminPwd" /><br />
-		<input type="button" id = "loginBtn" value = "로그인" />
-	</form>
-	<div id="loginError"></div>
+	<div class="main">
+   	 <h2>Admin Login</h2>
+   	 <form id="gogoLogin" name="gogoLogin">
+        	<div>
+        		<label for="adminId">아이디</label>
+        		<input type="text" style="width: 145px;" id="adminId" name="adminId" maxlength="20" />
+        	</div>
+        	<div>
+        		<label for="adminPwd">비밀번호</label>
+        		<input type="password" style="width: 145px;" id="adminPwd" name="adminPwd" maxlength="20" />
+        	</div>
+        	<div>
+        		<input type="button" id="loginBtn" value="로그인" />
+        	</div>
+    	</form>
+    	<div id="loginError"></div>
+	</div>
 	
 	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
