@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<<<<<<< HEAD
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-=======
->>>>>>> refs/remotes/origin/master
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="ko">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -47,25 +43,7 @@
 				$("#logOut").click(function(){
 					location.href = "/admin/logout";
 				});
-=======
-<html>
-<head>
-<meta charset=UTF-8>
-<title>Insert title here</title>
-</head>
-<body>
-	${vo.a_id }님<br />
-	<input type = "button" id = "logOut" value="로그아웃">
-	<input type="button" value="신규가입" id = "gogo">
-	
-	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$("#logOut").click(function(){
-				location.href = "/admin/logout";
->>>>>>> refs/remotes/origin/master
 			});
-<<<<<<< HEAD
 		</script>
 	</sec:authorize>
 	
@@ -80,7 +58,15 @@
             <div class="clearfix"></div>
 
             <!-- menu profile quick info -->
-           
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <img src="/resources/bootstrap/images/img.jpg" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                <span>Welcome,</span>
+                <h2>Min Ho</h2>
+              </div>
+            </div>
             <!-- /menu profile quick info -->
 
             <br />
@@ -583,13 +569,4 @@
     </script>
     <!-- /gauge.js -->
   </body>
-=======
-			
-			$("#gogo").click(function(){
-				location.href = "/admin/joinForm";
-			});
-		});
-	</script>
-</body>
->>>>>>> refs/remotes/origin/master
 </html>
