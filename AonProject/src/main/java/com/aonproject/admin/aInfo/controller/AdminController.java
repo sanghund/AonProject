@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -52,7 +53,7 @@ public class AdminController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/joinGo")
+	@RequestMapping(value = "/joinGo", method=RequestMethod.POST)
 	public String joinGo(@ModelAttribute AdminVO vo){
 		logger.info("joinGo 호출 성공");
 		
@@ -67,6 +68,24 @@ public class AdminController {
 		} 
 		else{
 			result = "fail";
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/overlapChk", method=RequestMethod.GET)
+	public String overlapChk(@ModelAttribute AdminVO vo){
+		logger.info("overlapChk 호출 성공");
+		
+		String result = "";
+		
+		int gogo = adminService.overlapChk(vo);
+		
+		if (gogo == 1){
+			result = "fail";
+		} 
+		else{
+			result = "success";
 		}
 		return result;
 	}

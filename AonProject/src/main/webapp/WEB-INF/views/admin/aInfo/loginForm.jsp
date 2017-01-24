@@ -45,7 +45,6 @@
 					
 					if (error) $("#loginError").text(message); 
 					if (error == false) {
-						alert(message);
 						var url = '${referer}'; 
 						if(url == '') url = returnUrl;
 						if(url == "") url = '<c:url value="/admin/main"/>';
