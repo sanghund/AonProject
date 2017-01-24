@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +29,7 @@ public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 	
 	@Autowired
 	private DataSource dataSource;
+	
 	@PostConstruct
 	void init(){
 		setDataSource(dataSource);
@@ -72,10 +74,16 @@ public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 		// TODO Auto-generated method stub
 		return getJdbcTemplate().query(getUsersByUsernameQuery(), new String[] {username}, new RowMapper<UserDetails>() {
 			public UserDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
-				String a_id = rs.getString(1);
-				String a_pwd = rs.getString(2);
-	
-				return new AdminVO(a_id, a_pwd, AuthorityUtils.NO_AUTHORITIES);
+				int a_no = rs.getInt(1);
+				String a_id = rs.getString(2);
+				String a_pwd = rs.getString(3);
+				String a_name = rs.getString(4);
+				String a_addr = rs.getString(5);
+				String a_tel = rs.getString(6);
+				String a_email = rs.getString(7);
+				String a_date = rs.getString(8);
+
+				return new AdminVO(a_no, a_id, a_pwd, a_name, a_addr, a_tel, a_email, a_date, AuthorityUtils.NO_AUTHORITIES);
 				}
 			});
 		}
@@ -94,5 +102,16 @@ public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 	protected List<GrantedAuthority> loadGroupAuthorities(String username) {
 		// TODO Auto-generated method stub
 		return super.loadGroupAuthorities(username);
+	}
+
+	// 아래서부터 AdminDAO 구현
+	
+	@Autowired
+	private SqlSession selSession;
+	
+	@Override
+	public int joinGo(AdminVO vo) {
+		// TODO Auto-generated method stub
+		return selSession.insert("joinGo",vo);
 	}
 }
