@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.aonproject.admin.ainfo.dao.AdminDAO">
-
-=======
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aonproject.admin.dao.AdminDAO">
@@ -17,5 +11,4 @@
 		values(#{no}, #{a_id}, #{a_pwd}, #{a_name}, #{a_addr}, #{a_tel}, #{a_email})
 	</insert>
 	
->>>>>>> refs/remotes/origin/master
 </mapper>
