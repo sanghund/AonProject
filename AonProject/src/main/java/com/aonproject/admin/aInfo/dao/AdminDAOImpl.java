@@ -81,13 +81,8 @@ public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 				int a_no = rs.getInt(1);
 				String a_id = rs.getString(2);
 				String a_pwd = rs.getString(3);
-				String a_name = rs.getString(4);
-				String a_addr = rs.getString(5);
-				String a_tel = rs.getString(6);
-				String a_email = rs.getString(7);
-				String a_date = rs.getString(8);
 
-				return new AdminVO(a_no, a_id, a_pwd, a_name, a_addr, a_tel, a_email, a_date, AuthorityUtils.NO_AUTHORITIES);
+				return new AdminVO(a_no, a_id, a_pwd, AuthorityUtils.NO_AUTHORITIES);
 				}
 			});
 		}
@@ -123,5 +118,17 @@ public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 	public int overlapChk(AdminVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("overlapChk", vo);
+	}
+
+	@Override
+	public int myInfoUpdate(AdminVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("myInfoUpdate", vo);
+	}
+
+	@Override
+	public AdminVO adminInfo(AdminVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adminInfo", vo);
 	}
 }

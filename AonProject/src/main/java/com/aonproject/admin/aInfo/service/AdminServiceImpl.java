@@ -26,4 +26,16 @@ public class AdminServiceImpl implements AdminService{
 		return adminDAO.overlapChk(vo);
 	}
 
+	@Override
+	public int myInfoUpdate(AdminVO vo) {
+		// TODO Auto-generated method stub
+		return adminDAO.myInfoUpdate(vo);
+	}
+
+	@Override
+	public AdminVO adminInfo(AdminVO vo) {
+		// TODO Auto-generated method stub
+		return adminDAO.adminInfo(vo);
+	}
+
 }
