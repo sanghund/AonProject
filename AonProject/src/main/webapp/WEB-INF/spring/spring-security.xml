@@ -10,17 +10,17 @@
 	<http pattern="/**/*.css" security="none"></http>
 	<http pattern="/image/**" security="none"></http>
 
-	<http auto-config="true" use-expressions="true" disable-url-rewriting="true">
-		<intercept-url pattern="/admin/login" access = "isAnonymous()" />
-		<intercept-url pattern="/admin/loginCheck" access = "isAnonymous()" />
-		<intercept-url pattern="/admin/logout" access="hasRole('admin')" />
+	<http auto-config="true" create-session="never" use-expressions="true" disable-url-rewriting="true">
+		<intercept-url pattern="/admin/login" access = "permitAll" />
+		<intercept-url pattern="/admin/logout" access = "permitAll" />
+		<intercept-url pattern="/admin/loginCheck" access = "permitAll" />
 		<intercept-url pattern="/admin/**" access="hasRole('admin')"/> 
 		<intercept-url pattern="/**" access="permitAll"/>
 		<form-login login-processing-url="/admin/loginChk" username-parameter="adminId" password-parameter="adminPwd" login-page="/admin/login" default-target-url="/admin/main" always-use-default-target="false" authentication-success-handler-ref="loginSuccessHandler" authentication-failure-handler-ref="loginFailureHandler" authentication-failure-url="/admin/login" />		
-		<logout logout-success-url="/admin/login" logout-url="/admin/logout" invalidate-session="true" />
-		<session-management invalid-session-url="/admin/login" session-fixation-protection="migrateSession">
-			<concurrency-control max-sessions="1" expired-url="/admin/login" />
+		<session-management session-authentication-error-url="/admin/login" invalid-session-url="/admin/main" session-fixation-protection="migrateSession">
+			<concurrency-control max-sessions="1" expired-url="/error2" />
 		</session-management>
+		<logout logout-success-url="/admin/main" logout-url="/admin/logout" invalidate-session="true" />
 	</http>
 	
 	<beans:bean id = "logDataSource_pos" class = "org.springframework.jndi.JndiObjectFactoryBean">
