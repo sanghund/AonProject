@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,11 +22,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.stereotype.Repository;
 
+import com.aonproject.admin.aInfo.controller.AdminController;
 import com.aonproject.admin.aInfo.vo.AdminVO;
 
 
 @Repository
 public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
+	
+	private Logger logger = Logger.getLogger(AdminController.class);
 	
 	@Autowired
 	private DataSource dataSource;
@@ -77,13 +81,8 @@ public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 				int a_no = rs.getInt(1);
 				String a_id = rs.getString(2);
 				String a_pwd = rs.getString(3);
-				String a_name = rs.getString(4);
-				String a_addr = rs.getString(5);
-				String a_tel = rs.getString(6);
-				String a_email = rs.getString(7);
-				String a_date = rs.getString(8);
 
-				return new AdminVO(a_no, a_id, a_pwd, a_name, a_addr, a_tel, a_email, a_date, AuthorityUtils.NO_AUTHORITIES);
+				return new AdminVO(a_no, a_id, a_pwd, AuthorityUtils.NO_AUTHORITIES);
 				}
 			});
 		}
@@ -107,11 +106,29 @@ public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 	// 아래서부터 AdminDAO 구현
 	
 	@Autowired
-	private SqlSession selSession;
+	private SqlSession sqlSession;
 	
 	@Override
 	public int joinGo(AdminVO vo) {
 		// TODO Auto-generated method stub
-		return selSession.insert("joinGo",vo);
+		return sqlSession.insert("joinGo",vo);
+	}
+
+	@Override
+	public int overlapChk(AdminVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("overlapChk", vo);
+	}
+
+	@Override
+	public int myInfoUpdate(AdminVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("myInfoUpdate", vo);
+	}
+
+	@Override
+	public AdminVO adminInfo(AdminVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adminInfo", vo);
 	}
 }
