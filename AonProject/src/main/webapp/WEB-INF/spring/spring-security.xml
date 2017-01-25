@@ -17,9 +17,6 @@
 		<intercept-url pattern="/admin/**" access="hasRole('admin')"/> 
 		<intercept-url pattern="/**" access="permitAll"/>
 		<form-login login-processing-url="/admin/loginChk" username-parameter="adminId" password-parameter="adminPwd" login-page="/admin/login" default-target-url="/admin/main" always-use-default-target="false" authentication-success-handler-ref="loginSuccessHandler" authentication-failure-handler-ref="loginFailureHandler" authentication-failure-url="/admin/login" />		
-		<session-management session-authentication-error-url="/admin/login" invalid-session-url="/admin/main" session-fixation-protection="migrateSession">
-			<concurrency-control max-sessions="1" expired-url="/error2" />
-		</session-management>
 		<logout logout-success-url="/admin/main" logout-url="/admin/logout" invalidate-session="true" />
 	</http>
 	
