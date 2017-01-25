@@ -98,7 +98,6 @@
 					<td>할인율</td>
 					<td>소재</td>
 					<td>주의사항</td>
-					<td>매입번호</td>
 					<td>등록일</td>
 				</tr>
 			</thead>
@@ -118,7 +117,6 @@
 								<td>${product.p_discount}</td>
 								<td>${product.p_fabric}</td>
 								<td>${product.p_caution}</td>
-								<td>${product.su_no}</td>
 								<td>${product.p_date}</td>
 							</tr>
 						</c:forEach>

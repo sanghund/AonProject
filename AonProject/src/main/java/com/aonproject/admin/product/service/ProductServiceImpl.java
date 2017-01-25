@@ -23,12 +23,21 @@ public class ProductServiceImpl implements ProductService {
 		productList = productDAO.productList(pvo);
 		return productList;
 	}
-
+	
+	/*상품  디테일 구현*/
 	@Override
 	public ProductVO productDetail(ProductVO pvo) {
 		ProductVO productDetail = null;
 		productDetail = productDAO.productDetail(pvo);
 		return productDetail;
+	}
+	
+	/*상품 업데이트 구현*/
+	@Override
+	public int productUpdate(ProductVO pvo) {
+		int result = 0; 
+		result = productDAO.productUpdate(pvo);
+		return result;
 	}
 
 }

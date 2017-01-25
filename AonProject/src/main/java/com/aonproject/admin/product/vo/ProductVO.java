@@ -11,7 +11,6 @@ public class ProductVO {
 	private String p_caution;	//주의사항
 	private String p_date;		//등록일
 	private int ca_no;			//카테고리 번호
-	private int su_no;			//거래처 번호
 	
 	public String getP_no() {
 		return p_no;
@@ -73,12 +72,7 @@ public class ProductVO {
 	public void setCa_no(int ca_no) {
 		this.ca_no = ca_no;
 	}
-	public int getSu_no() {
-		return su_no;
-	}
-	public void setSu_no(int su_no) {
-		this.su_no = su_no;
-	}
+
 	
 	
 }

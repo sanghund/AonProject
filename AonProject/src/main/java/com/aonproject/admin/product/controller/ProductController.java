@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -50,35 +48,20 @@ public class ProductController {
 		return "admin/product/detail";
 	}
 	
-	/*@ResponseBody
-	@RequestMapping(value = "/productDetail", method=RequestMethod.POST)
-	public ProductVO itemDetil(@RequestBody ProductVO pvo, Model model){
-		logger.info("itemDetail 호출 성공");
-		logger.info("p_no= "+pvo.getP_no());
+	/*상품 업데이트*/
+	@ResponseBody
+	@RequestMapping(value = "/productUpdate", method=RequestMethod.POST)
+	public String itemUpdate (@RequestBody ProductVO pvo){
+		logger.info("itemUpdate 호출 성공!");
+		logger.info("pvo="+pvo.getP_no());
 		
-		ProductVO productDetail = productService.productDetail(pvo);
-		logger.info("productDetail= "+productDetail);
+		int result = 0;
 		
-		model.addAttribute("productDetail" , productDetail);
+		result = productService.productUpdate(pvo);
 		
-		return 	productDetail;
-	}*/
+		return result+"";
+	}
 	
-	/*@RequestMapping(value = "/productDetail")
-	public ResponseEntity<ProductVO> itemDetil(@RequestBody ProductVO pvo, Model model){
-		logger.info("itemDetail 호출 성공");
-		ResponseEntity<ProductVO> entity = null;
-		try{
-			entity = new ResponseEntity<>(productService.productDetail(pvo), HttpStatus.OK);
-		}catch(Exception e){
-			e.printStackTrace();
-			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-				
-		model.addAttribute("productDetail", entity);
-		
-		return 	entity;
-	}*/
 	
 			
 }

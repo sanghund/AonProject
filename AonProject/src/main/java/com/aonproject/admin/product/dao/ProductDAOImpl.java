@@ -29,4 +29,9 @@ public class ProductDAOImpl implements ProductDAO {
 		return (ProductVO)session.selectOne("productDetail", pvo);
 	}
 
+	@Override
+	public int productUpdate(ProductVO pvo) {
+		return session.update("productUpdate", pvo);
+	}
+
 }
