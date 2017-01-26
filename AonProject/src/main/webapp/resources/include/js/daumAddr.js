@@ -1,5 +1,5 @@
 /* 
-	다음 주소 제공 api 
+	다음 제공 _ 주소 검색
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>를 먼저 호출.
 	dom트리에 a_addr1, a_addr1, a_addr1 아이디 요소가 필요.
 */

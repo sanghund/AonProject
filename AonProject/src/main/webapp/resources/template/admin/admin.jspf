@@ -1,0 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset=UTF-8>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>A O N !</title>
+	
+	
+	<link rel="stylesheet" href="/resources/include/css/reset.css">
+<!-- Bootstrap --->
+    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/resources/bootstrap/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/resources/bootstrap/css/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/resources/bootstrap/css/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="/resources/bootstrap/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="/resources/bootstrap/css/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="/resources/bootstrap/css/daterangepicker.css" rel="stylesheet">
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Custom Theme Style -->
+    <link href="/resources/bootstrap/css/custom.min.css" rel="stylesheet">
+    
+    

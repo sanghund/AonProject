@@ -61,9 +61,10 @@
 			<input type = "hidden" id = "a_addr" name = "a_addr">
 		</form>
 		<div id = "gogoJoin">
-			<input type = "button" id = "gogo" name = "gogo" value=  "회원가입">
+			<input type = "button" id = "gogo" name = "gogo" value = "회원가입">
 		</div>
 	</div>
+	
 	
 	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 	<script src = "/resources/include/js/inputChk.js"></script>
