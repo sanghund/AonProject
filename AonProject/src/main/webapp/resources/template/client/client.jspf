@@ -1,0 +1,34 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="/resources/include/css/userpage_main.css">
+	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			 $('#header').hover(
+				function() {
+					$('#header').css("background", "rgba(255,255,255,0.9)", "color", "black");
+					
+				},
+					function () {    
+					$('#header').css("background", "rgba(255,255,255,0)", "color", "white"); /* 상단 처음 투명도 */
+					
+		        }
+			 );
+			
+			$('#left').hover(
+				function() {
+					$('#left').css("background", "rgba(255,255,255,0.9)", "color", "black");
+					
+				},
+				function () {    
+					 $('#left').css("background", "rgba(255,255,255,0)", "color", "white"); /* 상단 처음 투명도 */
+		        }
+		 	);		
+	});
+	</script>
+<title>A O N</title>

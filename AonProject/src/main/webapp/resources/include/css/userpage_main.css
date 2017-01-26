@@ -1,0 +1,252 @@
+@CHARSET "UTF-8";
+
+	body{
+		color:#353535;
+		margin:0;
+		padding:0;
+		}
+	li{
+		list-style:none;
+		}
+	#header{
+		width:100%;
+		height:70px;
+		position:fixed;
+		top:0;
+		left:0;
+		z-index:999;
+		transition:  all 1s;
+		}
+	.inner{
+		position:relative;
+		width:97%;
+		height:70px;
+		margin:0px auto 0;
+		}
+	#top_category{
+		position:absolute;
+		left:1150px;
+		top:0;
+		padding:0px 0;
+		border:0px solid #333;
+		}
+	#top_category .position > ul{
+		text-align:left;
+		font-size:0;
+		}
+	#top_category .position > ul > li{
+		position:relative;
+		z-index:999;
+		display:inline-block;
+		margin:0 0px 0 0;
+		line-height:21px;
+		padding:25px 0;
+		}
+	#top_category .position > ul > li >a{
+		color:#000;
+		font-size:13px;
+		letter-spacing:0.3px;
+		line-height:21px;
+		font-weight:400;
+		padding:25px 13px;
+		}
+	a{
+		text-decoration:none;
+		}
+	#top_category .position > ul > li >a:hover{
+		background:#d1d1d1;
+		color:#fff;
+		border:1px solid #d1d1d1;
+		text-decoration:none;
+		font-weight:bold;
+		}
+	
+	#header .header_search{
+		position:absolute;
+		top:12px;
+		left:1600px;
+		height:40px;
+		display:inline-block;
+		}
+	legend{
+		display:none;
+	}
+	#header .header_search #hf_search > fieldset >a >input{
+		vertical-align:middle;
+		}
+/**************************************************************/	
+	#left{
+		position:fixed;
+		border-right:0px solid #dddddd;
+		z-index:99;
+		display:block;
+		font-size:12px;
+		transition:  all 1s;
+		}
+	.left_inner{
+		/* background-color:#fff; */
+		width:230px;
+		height:100vh;
+		}
+	.main_logo{
+		padding-top:50px;
+		text-align:center;
+		padding-top:70px;
+		padding-left: 10px;
+		width:175px;
+		margin-left: 15px;
+    	margin-bottom: 20px;
+		}
+	#left .left_inner .main_logo>a{
+		text-decoration:none;
+		color:#404040;
+		font-size:40px;
+		}
+	#left .left_inner .left_category{
+		border-bottom:0px solid #dddddd;
+		padding:10px 0;
+		margin-left: 40px;
+    	margin-top: 40px;
+		}
+	#left .left_inner .left_category ul{
+		margin-bottom:25px;
+		}
+	#left .left_inner .left_category ul>li{
+		margin-bottom:10px;
+		list-style:none;
+		}
+	#left .left_inner .left_category ul>li>a{
+		color:#777;
+		text-decoration:none;
+		}
+	#left .left_inner .left_category ul>li>a:hover{
+		color:#191919;
+		font-weight:bold;
+		text-decoration:none;
+		}
+	
+	
+	.footer{
+		width:100%;
+		background-color:#fafafa;
+		height: 340px;
+		}
+	.footer_inner{
+		width:1650px;
+		margin-left:auto;
+		margin-left: auto;
+		overflow:hidden;
+		font-size:12px;	
+		padding-top:30px;
+		}
+	.inner_content{
+		overflow:hidden;
+		padding-top:20px;
+		padding-bottom: 10px;
+		float: left;
+		padding-bottom: 100px;
+   		margin-top: 30px;
+   		width:150px;
+   		margin-right: 40px;
+   		text-align: center;
+		}	
+	.footer	.footer_inner .inner_content>a{
+		text-decoration:none;
+		color:#666;
+		font-size:40px;
+		}
+	
+	.footer	.footer_inner .inner_content>a>img{
+		padding-right:60px;
+		padding-left:50px;
+		}
+	.info{
+		border-bottom:solid 1px #e5e5e5;
+		overflow:hidden;
+		}
+	.cs{
+		overflow:hidden;
+		float:left;
+		padding:0px 30px 0px 0px;
+		width:470px;
+		}
+	.client{
+		padding-bottom:10px;
+		}
+	.footer	.footer_inner .info .cs>p{
+		line-height:17px;
+		list-style:none;
+		}
+	.menu{
+		padding-top:4px;
+		padding-left:0;
+		margin:0;
+		overflow: hidden;
+	    float: left;
+	    padding: 0px 30px 0px 0px;
+		}
+	.footer	.footer_inner .info .cs .menu > ul,li{
+		list-style:none;
+		margin:0;
+		padding: 0;
+		}
+	.footer	.footer_inner .info .cs .menu > ul>li{
+		float: left;
+    	margin-right: 2px;
+		}
+	.footer	.footer_inner .info .cs .menu > ul>li>a{
+		background-color: #e2e2e2;
+	    border-bottom: 2px solid #d6d6d6;
+	    color: #444;
+	    vertical-align: bottom;
+	    padding: 10px 13px;
+	    display: block;
+	    text-decoration: none;
+		}
+	.footer	.footer_inner .info .cs .menu > ul>li>a:hover{
+		background:#d1d1d1;
+		color:#fff;
+		border:1px solid #d1d1d1;
+		text-decoration:none;
+		font-weight:bold;
+		}
+		
+	.bank{
+		overflow: hidden;
+	    float: left;
+	    padding: 0px 30px 0px 0px;
+	    width: 300px;
+		}
+	.footer	.footer_inner .info .bank>p{
+		line-height: 17px;
+		list-style: none;
+	    margin: 0;
+	    padding: 0;
+	    color: #666;
+		}
+	
+	.notics{
+		padding-right: 0px;	
+    	width: 300px;
+   		height: 200px;
+   		overflow: hidden;
+		}	
+	.footer	.footer_inner .info .notics >p{
+		color: #666;
+        line-height: 17px;
+        text-decoration: none;
+        margin: 0;
+	    padding: 0;
+		}
+	.company{
+		padding-top: 10px;
+		}	
+	.company > a{
+		text-decoration: none;
+    	color: #666;
+		}
+		
+		
+		
+		
+		
