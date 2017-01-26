@@ -32,19 +32,14 @@ public class AdminVO implements UserDetails{
 	
 	public AdminVO() {}
 	
-	public AdminVO(int a_no, String a_id, String a_pwd, String a_name, String a_addr, String a_tel, String a_email,
-			String a_date, Collection<? extends GrantedAuthority> authorities) {
+	public AdminVO(int a_no, String a_id, String a_pwd, Collection<? extends GrantedAuthority> authorities) {
 		super();
 		this.a_no = a_no;
 		this.a_id = a_id;
 		this.a_pwd = a_pwd;
-		this.a_name = a_name;
-		this.a_addr = a_addr;
-		this.a_tel = a_tel;
-		this.a_email = a_email;
-		this.a_date = a_date;
 		this.authorities = Collections.unmodifiableSet(sortAuthorities(authorities));
 	}
+
 
 	private static SortedSet<GrantedAuthority> sortAuthorities(Collection<? extends GrantedAuthority> authorities){
 		Assert.notNull(authorities, "Cannot pass a null GrantedAuthority collection");

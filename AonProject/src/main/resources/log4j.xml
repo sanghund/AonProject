@@ -11,26 +11,18 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.aonproject.admin">
+	<logger name="com.aonproject.admin.util">
 		<level value="info" />
 	</logger>
-	<logger name="com.aonproject.admin.dao">
+	<logger name="com.aonproject.admin.aInfo">
+		<level value="info" />
+	</logger>
+	<logger name="com.aonproject.admin.aInfo.dao">
 		<level value="TRACE"></level>
 	</logger>
 	
-	<logger name="com.aonproject.member">
-		<level value="info" />
-	</logger>
-	<logger name="com.aonproject.member.dao">
-		<level value="TRACE"></level>
-	</logger>
 	
-	<logger name="com.aonproject.nonMember">
-		<level value="info" />
-	</logger>
-	<logger name="com.aonproject.nonMember.dao">
-		<level value="TRACE"></level>
-	</logger>
+	
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
