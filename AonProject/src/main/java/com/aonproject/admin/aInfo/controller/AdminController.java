@@ -29,13 +29,13 @@ public class AdminController {
 	
 	@RequestMapping(value = "/login")
 	public String loginForm(){
-		logger.info("loginForm 龋免 己傍");
+		logger.info("loginForm 順胳稖靹标车");
 		return "admin/aInfo/loginForm";
 	}
 	
 	@RequestMapping(value = "/main")
 	public ModelAndView main(Authentication auth){
-		logger.info("main 龋免 己傍");
+		logger.info("main 順胳稖靹标车");
 		ModelAndView mav = new ModelAndView();
 		if(auth != null){
 			UserDetails vo = (AdminVO) auth.getPrincipal();
@@ -47,14 +47,14 @@ public class AdminController {
 	
 	@RequestMapping(value = "/joinForm")
 	public String joinForm(){
-		logger.info("joinForm 龋免 己傍");
+		logger.info("joinForm 順胳稖靹标车");
 		return "admin/aInfo/joinForm";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/joinGo")
 	public String joinGo(@ModelAttribute AdminVO vo){
-		logger.info("joinGo 龋免 己傍");
+		logger.info("joinGo 順胳稖靹标车");
 		
 		vo.setA_pwd(encoder.encoding(vo.getA_pwd()));
 	
@@ -69,6 +69,11 @@ public class AdminController {
 			result = "fail";
 		}
 		return result;
+	}
+	
+	@RequestMapping(value = "/memberInquiry")
+	public String process() {
+		return "admin/member/memberInquiry";
 	}
 	
 }
