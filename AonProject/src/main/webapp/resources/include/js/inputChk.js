@@ -23,6 +23,21 @@ function vacuumChk(main, msg, item, choice){
 }
 
 /*
+메시지 출력 제거 체크
+main : 검사 대상
+item : 메시지를 지울 대상
+*/
+function vacuumChk2(main, item){
+if(main.val().replace(/\s/g,"")==""){
+	main.val("");
+	}
+else{
+	item.html("");
+}
+}
+
+
+/*
 	아이디 중복 체크
 	main : 검사 대상
 	item : 메시지를 출력할 대상

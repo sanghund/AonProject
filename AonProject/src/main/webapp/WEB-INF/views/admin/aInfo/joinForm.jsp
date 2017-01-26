@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<html>
-<head>
-<meta charset=UTF-8>
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page trimDirectiveWhitespaces="true" %>
 	<div class = "main">
 		<h2>회원가입</h2>
 		<form id = "joinForm" name = "joinForm">
@@ -211,5 +206,3 @@
     	});
     	
 	</script>
-</body>
-</html>

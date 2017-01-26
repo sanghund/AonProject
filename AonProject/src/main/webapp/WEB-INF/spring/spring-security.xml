@@ -6,9 +6,7 @@
       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
       
-   <http pattern="/**/*.js" security="none"></http>
-   <http pattern="/**/*.css" security="none"></http>
-   <http pattern="/image/**" security="none"></http>
+   <http pattern="/resources/**" security="none"></http>
 
    <http auto-config="true" create-session="never" use-expressions="true" disable-url-rewriting="true">
       <intercept-url pattern="/admin/login" access = "permitAll" />

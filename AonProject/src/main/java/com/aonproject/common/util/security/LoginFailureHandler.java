@@ -31,7 +31,7 @@ public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler{
 		// TODO Auto-generated method stub
 		String accept = request.getHeader("accept");
 		String error = "true";
-		String message = "로그인에 실패하였습니다.";
+		String message = "아이디와 비밀번호를 다시 확인하세요.";
 		
 		if(StringUtils.indexOf(accept, "html") > -1){
 			String redirectUrl = request.getParameter(this.targetUrlPatameter);

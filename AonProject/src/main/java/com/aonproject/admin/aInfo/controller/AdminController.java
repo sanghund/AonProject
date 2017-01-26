@@ -30,13 +30,13 @@ public class AdminController {
 	
 	@RequestMapping(value = "/login")
 	public String loginForm(){
-		logger.info("loginForm �샇異쒖꽦怨�");
+		logger.info("loginForm 호출 성공");
 		return "admin/aInfo/loginForm";
 	}
 	
 	@RequestMapping(value = "/main")
 	public ModelAndView main(Authentication auth){
-		logger.info("main �샇異쒖꽦怨�");
+		logger.info("main 호출 성공");
 		ModelAndView mav = new ModelAndView();
 		if(auth != null){
 			UserDetails vo = (AdminVO) auth.getPrincipal();
@@ -47,15 +47,21 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/joinForm")
-	public String joinForm(){
-		logger.info("joinForm �샇異쒖꽦怨�");
-		return "admin/aInfo/joinForm";
+	public ModelAndView joinForm(Authentication auth){
+		logger.info("joinForm 호출 성공");
+		
+		ModelAndView mav = new ModelAndView();
+		AdminVO vo = (AdminVO) auth.getPrincipal();
+		mav.addObject("vo", vo);
+		mav.setViewName("admin/aInfo/joinForm");
+		
+		return mav;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/joinGo", method=RequestMethod.POST)
 	public String joinGo(@ModelAttribute AdminVO vo){
-		logger.info("joinGo �샇異쒖꽦怨�");
+		logger.info("joinGo 호출 성공");
 		
 		vo.setA_pwd(encoder.encoding(vo.getA_pwd()));
 	
@@ -71,12 +77,7 @@ public class AdminController {
 		}
 		return result;
 	}
-	
-	@RequestMapping(value = "/memberInquiry")
-	public String process() {
-		return "admin/member/memberInquiry";
-	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/overlapChk", method=RequestMethod.GET)
 	public String overlapChk(@ModelAttribute AdminVO vo){
