@@ -19,10 +19,8 @@
 
     <!-- Custom Theme Style -->
     <link href="/resources/bootstrap/css/custom.min.css" rel="stylesheet">
+    
 
-  <body class="nav-md">
-
-        <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
@@ -532,10 +530,8 @@
             </div>
           </div>
 
-        <!-- /page content -->
-
-      </div>
-    </div>
+     <!--  </div>
+    </div> -->
 
     <!-- jQuery -->
     <script src="/resources/bootstrap/js/jquery.min.js"></script>
@@ -600,7 +596,6 @@
             });
           }
         };
-
         TableManageButtons = function() {
           "use strict";
           return {
@@ -609,15 +604,11 @@
             }
           };
         }();
-
         $('#datatable').dataTable();
-
         $('#datatable-keytable').DataTable({
           keys: true
         });
-
         $('#datatable-responsive').DataTable();
-
         $('#datatable-scroller').DataTable({
           ajax: "js/datatables/json/scroller-demo.json",
           deferRender: true,
@@ -625,13 +616,10 @@
           scrollCollapse: true,
           scroller: true
         });
-
         $('#datatable-fixed-header').DataTable({
           fixedHeader: true
         });
-
         var $datatable = $('#datatable-checkbox');
-
         $datatable.dataTable({
           'order': [[ 1, 'asc' ]],
           'columnDefs': [
@@ -643,9 +631,8 @@
             checkboxClass: 'icheckbox_flat-green'
           });
         });
-
         TableManageButtons.init();
       });
     </script>
     <!-- /Datatables -->
-  </body>
+ 
