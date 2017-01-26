@@ -11,7 +11,24 @@ public class ProductVO {
 	private String p_caution;	//주의사항
 	private String p_date;		//등록일
 	private int ca_no;			//카테고리 번호
+	private String p_type;		//상품타입
 	
+	//카테고리 노출 필드 선언
+	private String ca_name;		//카테고리 이름
+
+	
+	public String getCa_name() {
+		return ca_name;
+	}
+	public void setCa_name(String ca_name) {
+		this.ca_name = ca_name;
+	}
+	public String getP_type() {
+		return p_type;
+	}
+	public void setP_type(String p_type) {
+		this.p_type = p_type;
+	}
 	public String getP_no() {
 		return p_no;
 	}

@@ -5,16 +5,25 @@
 	<!-- 상품 리스트 조회 -->
 	<select id="productList" resultType="product" parameterType="product">
 		/* product - productList */
-		select p_no, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_date, ca_no 
-		from product
+		<!-- select p_no, p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_date, product.ca_no 
+		from product inner join category on product.ca_no = category.ca_no order by product.ca_no desc --> 
+		select p_no, category.ca_name, p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_Date
+		from product inner join category on product.ca_no = category.ca_no
 	</select>
 	
 	<!-- 상품  디테일 조회 -->
 	<select id="productDetail" resultType="product" parameterType="product">
 		/* product - productDetail */
-		select p_no, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_date, ca_no 
+		select p_no,  p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_date, ca_no 
 		from product where p_no like #{p_no}
 	</select>
+	
+	<!-- 상품 신규등록 -->
+	<insert id="productInsert" parameterType="product">
+		/* product - productInsert */
+		insert into product(p_no, p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, ca_no) 
+					 values(#{p_no}, #{p_type}, #{p_name}, #{p_price}, #{p_discount}, #{color_code}, #{size_code}, #{p_fabric}, #{p_caution}, #{ca_no})
+	</insert>
 	
 	<!-- 상품 정보 업데이트 -->
 	<update id="productUpdate" parameterType="product">
@@ -26,7 +35,8 @@
 						   size_code = #{size_code},
 						   p_fabric = #{p_fabric},
 						   p_caution = #{p_caution},
-						   ca_no = #{ca_no}
+						   ca_no = #{ca_no},
+						   p_type = #{p_type}
 		where p_no = #{p_no}
 	</update>
 </mapper>

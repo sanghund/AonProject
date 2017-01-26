@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aonproject.admin.category.dao.CategoryDAO;
 import com.aonproject.admin.product.dao.ProductDAO;
 import com.aonproject.admin.product.vo.ProductVO;
 
@@ -15,6 +16,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private ProductDAO productDAO;
+	
+	/*카테고리 리스트 구현*/
+	
 	
 	/*상품 리스트 구현*/
 	@Override
@@ -32,6 +36,14 @@ public class ProductServiceImpl implements ProductService {
 		return productDetail;
 	}
 	
+	/*상품 신규등록 구현*/
+	@Override
+	public int productInsert(ProductVO pvo) {
+		int result = 0;
+		result = productDAO.productInsert(pvo);
+		return result;
+	}
+	
 	/*상품 업데이트 구현*/
 	@Override
 	public int productUpdate(ProductVO pvo) {
@@ -39,5 +51,7 @@ public class ProductServiceImpl implements ProductService {
 		result = productDAO.productUpdate(pvo);
 		return result;
 	}
+
+	
 
 }

@@ -22,5 +22,6 @@
 	</sec:authorize>
 	
 	<a href="/admin/product">제품목록</a>
+	<a href="/admin/category">카테고리</a>
 </body>
 </html>

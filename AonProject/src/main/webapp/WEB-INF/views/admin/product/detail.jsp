@@ -18,8 +18,19 @@
 <script type="text/javascript" src="/resources/include/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
 <script type="text/javascript">
+	var targetUrl = "";
 	$(function(){
-		inputDisable();
+		if("${mode}" == "insert"){
+			targetUrl = "/admin/productInsert"
+			inputEnable();
+			$("#deleteBtn").hide();
+			$("#updateBtn").attr("value", "등록");
+		}else if("${mode}" == "update"){
+			targetUrl = "/admin/productUpdate"
+			inputDisable();	
+			$("input[name='p_no']").attr("readonly","readonly");
+		}
+		
 
 		/* 수정버튼 클릭 - 수정폼 활성화 */
 		$("#updateBtn").click(function(){
@@ -29,30 +40,22 @@
 		
 		/* 수정사항 업데이트 */
 		$(document).on("click", "#update", function(){
-			alert($("#p_name").val());
-			/* alert( "p_no :"+ $("#p_no").val()+
-					"ca_no :"+ $("#ca_no").val()+
-					"p_type :"+  $("#p_type").val()+
-					"p_name :"+  $("#p_name").val()+
-					"color_code :"+  $("#color_code").val()+
-					"size_code :"+  $("#size_code").val()+
-					"p_price :"+  $("#p_price").val()+
-					"p_discount :"+  $("#p_discount").val()+
-					"p_fabric :"+  $("#p_fabric").val()+
-					"p_caution :"+  $("#p_caution").val()+
-					"pu_no :"+  $("#pu_no").val()) */
+			if("${mode}" == "insert"){
+				if(!chkSubmit($("#p_no"),"상품 번호를")) return;
+			}
+			
 			if(!chkSubmit($("#ca_no"),"카테고리 번호를")) return;
 			else if(!chkSubmit($("#p_type"),"상품타입을")) return;
-			/* else if(!chkSubmit($("#p_name"),"상품명을")) return
+			else if(!chkSubmit($("#p_name"),"상품명을")) return
 			else if(!chkSubmit($("#ca_no"),"상품색상을")) return
 			else if(!chkSubmit($("#p_name"),"상품사이즈를")) return
 			else if(!chkSubmit($("#p_price"),"가격을")) return
 			else if(!chkSubmit($("#p_fabric"),"소재를")) return
 			else if(!chkSubmit($("#p_caution"), "주의사항을")) return
-			else if(!chkSubmit($("#pu_no"), "거래처를")) return */
+			else if(!chkSubmit($("#pu_no"), "거래처를")) return
 			else {
 				$.ajax({
-					url		: "/admin/productUpdate",
+					url		: targetUrl,
 					type	: "post",
 					headers	: {
 						"Content-Type":"application/json",
@@ -75,7 +78,11 @@
 						alert("시스템 오류");
 					},
 					success : function(result){
-						alert(result);
+						if("${mode}" == "insert"){
+							location.href="/admin/product"
+						}else if("${mode}" == "insert"){
+							location.reload();
+						}
 					}
 				})
 			}
@@ -85,6 +92,11 @@
 		//상품 삭제
 		$("#deleteBtn").click(function(){
 			alert("hi");
+		});
+		
+		//listBtn click event
+		$("#listBtn").click(function(){
+			location.href = "/admin/product";
 		});
 	
 	})
@@ -109,24 +121,30 @@
 	td {border:1px solid #222; padding:1em;}
 </style>
 <body>
-	<h3>상품 디테일</h3>
+	<h2>상품 디테일</h2>
 	<!-- 상품 등록, 수정, 삭제 입력 폼 -->
 	<div id="detailContainer">
 		<form id="detailForm">
-			<input type="hidden" id="p_no" name="p_no" value="${productDetail.p_no}">
 			<table>
 				<tbody>
 					<tr>
 						<td>상품번호</td>
-						<td>${productDetail.p_no}</td>
+						<td><input type="text" id="p_no" name="p_no" value="${productDetail.p_no}"></td>
 					</tr>
 					<tr>
 						<td>카테고리분류</td>
 						<td>
-							<select name="ca_no" id="ca_no" value="${category.ca_no}">
+							<select name="ca_no" id="ca_no">
 								<c:choose>
-									<c:when test="${not empty category}">
-										<!-- 사이즈 리스트 출력 -->
+									<c:when test="${not empty categoryList}">
+										<c:forEach var="categoryList" items="${categoryList}">
+											<c:if test="${categoryList.ca_no != productDetail.ca_no}">
+												<option value="${categoryList.ca_no}">${categoryList.ca_name}</option>
+											</c:if>
+											<c:if test="${categoryList.ca_no == productDetail.ca_no}">
+												<option value="${categoryList.ca_no}" selected="selected">${categoryList.ca_name}</option>
+											</c:if>
+										</c:forEach>
 									</c:when>
 									<c:otherwise>
 										<option value="" selected="selected">등록된 카테고리가 없습니다.</option>
@@ -139,10 +157,10 @@
 					<tr>
 						<td>상품타입</td>
 						<td>
-							<select id="p_type" name="p_type" value="${product}">
+							<select id="p_type" name="p_type">
 								<c:choose>
 									<c:when test="${not empty product}">
-										<!-- 사이즈 리스트 출력 -->
+										<!-- product type 출력 -->
 									</c:when>
 									<c:otherwise>
 										<option value="">등록된 사이즈가 없습니다.</option>
@@ -159,10 +177,17 @@
 					<tr>
 						<td>색상</td>
 						<td>
-							<select id="color_code" name="color_code" id="color_code" value="${common_cd.cc_name}">
+							<select id="color_code" name="color_code" id="color_code">
 								<c:choose>
-									<c:when test="${not empty common}">
-										<!-- 색상리스트 출력 -->
+									<c:when test="${not empty commonCodeList}">
+										<c:forEach var="commonCodeList" items="${commonCodeList}">
+											<c:if test="${commonCodeList.cc_group} !=  ">
+												<option value="${categoryList.ca_no}">${categoryList.ca_name}</option>
+											</c:if>
+											<c:if test="${categoryList.ca_no == productDetail.ca_no}">
+												<option value="${categoryList.ca_no}" selected="selected">${categoryList.ca_name}</option>
+											</c:if>
+										</c:forEach>
 									</c:when>
 									<c:otherwise>
 										<option value="">등록된 색상이 없습니다.</option>
@@ -239,8 +264,9 @@
 	</div>
 	<!-- 상품 등록, 수정, 삭제 제어 버튼 -->
 	<div class="btnContainer">
-		<input type="button" id="updateBtn" value="수정">
+		<input type="button" id="updateBtn" value="상품수정">
 		<input type="button" id="deleteBtn" value="상품삭제">
+		<input type="button" id="listBtn" value="목록">
 	</div>
 
 </body>

@@ -4,5 +4,7 @@
 	<typeAliases>
 		<typeAlias type="com.aonproject.admin.aInfo.vo.AdminVO" alias="admin"/>	
 		<typeAlias type="com.aonproject.admin.product.vo.ProductVO" alias="product"/>
+		<typeAlias type="com.aonproject.admin.category.vo.CategoryVO" alias="category"/>
+		<typeAlias type="com.aonproject.admin.category.vo.CommonCodeVO" alias="commonCode"/>
 	</typeAliases>
 </configuration>

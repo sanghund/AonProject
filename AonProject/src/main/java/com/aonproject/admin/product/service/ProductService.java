@@ -10,5 +10,7 @@ public interface ProductService {
 	public List<ProductVO> productList(ProductVO pvo);
 	//public ProductVO productDetail(ProductVO pvo);
 	public ProductVO productDetail(ProductVO pvo);
+	public int productInsert(ProductVO pvo);
 	public int productUpdate(ProductVO pvo);
+	
 }

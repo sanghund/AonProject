@@ -23,15 +23,25 @@ public class ProductDAOImpl implements ProductDAO {
 	public List<ProductVO> productList(ProductVO pvo) {
 		return session.selectList("productList");
 	}
-
+	
+	//상품 디테일 구현
 	@Override
 	public ProductVO productDetail(ProductVO pvo) {
 		return (ProductVO)session.selectOne("productDetail", pvo);
 	}
-
+	
+	//상품 신규등록
+	@Override
+	public int productInsert(ProductVO pvo) {
+		return session.insert("productInsert", pvo);
+	}
+	
+	//상품 업데이트
 	@Override
 	public int productUpdate(ProductVO pvo) {
 		return session.update("productUpdate", pvo);
 	}
+
+	
 
 }
