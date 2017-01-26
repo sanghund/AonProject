@@ -65,6 +65,7 @@
 		</div>
 	</div>
 	
+	
 	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 	<script src = "/resources/include/js/inputChk.js"></script>
 	<script src = "/resources/include/js/keyEvent.js"></script>
