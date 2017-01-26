@@ -90,4 +90,45 @@ public class AdminController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/myPage")
+	public ModelAndView myPage(Authentication auth){
+		logger.info("myPage 호출 성공");
+	
+		ModelAndView mav = new ModelAndView();
+		
+		AdminVO authVO = (AdminVO)auth.getPrincipal();
+		
+		AdminVO vo =  adminService.adminInfo(authVO);
+		
+		mav.addObject("vo", vo);	
+		mav.setViewName("admin/aInfo/myPage");
+		
+		return mav;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value=  "/myInfoUpdate", method=RequestMethod.POST)
+	public String myInfoUpdate(@ModelAttribute AdminVO vo, Authentication auth){
+		logger.info("myInfoUpdate 호출 성공");
+		
+		AdminVO avo = (AdminVO) auth.getPrincipal();
+		vo.setA_no(avo.getA_no());
+		
+		if(vo.getA_pwd() != ""){
+			vo.setA_pwd(encoder.encoding(vo.getA_pwd()));
+		}
+		
+		String result = "";
+		
+		int gogo =  adminService.myInfoUpdate(vo);
+		
+		if (gogo == 1){
+			result = "success";
+		} 
+		else{
+			result = "fail";
+		}
+		return result;
+	}
+	
 }

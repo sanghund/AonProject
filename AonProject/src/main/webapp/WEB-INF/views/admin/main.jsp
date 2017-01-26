@@ -10,6 +10,7 @@
 	${vo.a_id }님<br />
 	<input type = "button" id = "logOut" value="로그아웃">
 	<input type="button" value="신규가입" id = "gogo">
+	<input type="button" value="내 정보" id = "myPage">
 	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -20,6 +21,9 @@
 			$("#gogo").click(function(){
 				location.href = "/admin/joinForm";
 			});
+			$("#myPage").click(function(){
+				location.href = "/admin/myPage";
+			})
 		});
 	</script>
 </body>
