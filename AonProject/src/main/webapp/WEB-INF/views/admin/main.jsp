@@ -4,9 +4,8 @@
 <style>
 	.temp {margin-left:70px;}
 </style>
-    
-<body class="nav-md">
-    <div class="temp right_col nav-md">
+ 
+ <div class="temp right_col nav-md">
     	<p>안녕하세요 메인입니다.</p>
     </div>
 <!-- </div> -->

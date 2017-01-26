@@ -3,7 +3,7 @@
 <%@ include file="/resources/template/admin/admin.jspf" %>
 
 </head>
-
+<body class = "nav-md">
 	<div class="container body">
 		<div class="main_container">
         	<div class="col-md-3 left_col">
@@ -11,17 +11,11 @@
           		  <div class="navbar nav_title" style="border: 0;">
                      <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>A O N !</span></a>
                   </div>
-					<div id = "includeMain1">
 						<tiles:insertAttribute name="nav"></tiles:insertAttribute>
-					</div>
-				</div>
+									</div>
 			</div>
-			<div id = "includeMain2">
 				<tiles:insertAttribute name="header"></tiles:insertAttribute>
-			</div>	
-			<div id = "includeMain">
 				<tiles:insertAttribute name="main"></tiles:insertAttribute>
-			</div>
 		</div>
 	</div>
 	
