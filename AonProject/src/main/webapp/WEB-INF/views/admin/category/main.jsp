@@ -28,5 +28,24 @@
 			<p>등록된 카테고리 없음</p>
 		</c:otherwise>
 	</c:choose>
+	<table>
+			<tbody>
+				<c:choose>
+					<c:when test="${not empty commonCodeList}">
+						<c:forEach var="commonCodeList" items="${commonCodeList}">
+							<tr data-no="${commonCodeList.cc_no}" class="commonCodeList">
+								<td>${commonCodeList.cc_no}</td>
+								<td>${commonCodeList.cc_name}</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<td>등록된 상품이 없습니다</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
+			</tbody>
+		</table>
 </body>
 </html>

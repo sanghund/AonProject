@@ -67,7 +67,7 @@
 </script>
 <style>
 	/* .itemList {width:800px; height:500px; overflow-x:hidden; overflow-y:auto;} */
-	table {border-collapse:collapes; width:800px;}
+	table {border-collapse:collapes; }
 	td {border:1px solid #222; padding:1em;}
 </style>
 </head>
@@ -116,12 +116,12 @@
 										</c:if>
 									</c:forEach> --%>
 								</td>
-								<td>${product.p_type}</td>
+								<td>${product.p_type_name}</td>
 								<td>${product.p_name}</td>
-								<td>${product.color_code}</td>
-								<td>${product.size_code}</td>
+								<td>${product.color}</td>
+								<td>${product.size}</td>
 								<td>${product.p_price}</td>
-								<td>${product.p_discount}</td>
+								<td>${product.p_discount}%</td>
 								<td>${product.p_fabric}</td>
 								<td>${product.p_caution}</td>
 								<td>${product.p_date}</td>
@@ -134,15 +134,6 @@
 						</tr>
 					</c:otherwise>
 				</c:choose>
-				<%-- <c:choose>
-					<c:when test="${not empty categoryList}">
-						<c:forEach var="category" items="${categoryList}">
-							<tr>
-								<td>${category.ca_name}</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-				</c:choose> --%>
 			</tbody>
 		</table>
 	</div>

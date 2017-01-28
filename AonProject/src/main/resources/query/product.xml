@@ -5,10 +5,14 @@
 	<!-- 상품 리스트 조회 -->
 	<select id="productList" resultType="product" parameterType="product">
 		/* product - productList */
-		<!-- select p_no, p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_date, product.ca_no 
-		from product inner join category on product.ca_no = category.ca_no order by product.ca_no desc --> 
-		select p_no, category.ca_name, p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_Date
-		from product inner join category on product.ca_no = category.ca_no
+		<!-- select p_no, category.ca_name, p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_Date
+		from product inner join category on product.ca_no = category.ca_no -->
+		select p_no, category.ca_name, p_type_cd.cc_name "p_type_name", p_name, p_price, p_discount, color_cd.cc_name "color", size_cd.cc_name "size", p_fabric, p_caution, to_char(p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date
+		from product 
+		left join category on product.ca_no = category.ca_no 
+		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
+		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
+		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no) order by p_date desc
 	</select>
 	
 	<!-- 상품  디테일 조회 -->
@@ -22,7 +26,7 @@
 	<insert id="productInsert" parameterType="product">
 		/* product - productInsert */
 		insert into product(p_no, p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, ca_no) 
-					 values(#{p_no}, #{p_type}, #{p_name}, #{p_price}, #{p_discount}, #{color_code}, #{size_code}, #{p_fabric}, #{p_caution}, #{ca_no})
+					 values(upper(#{p_no}), #{p_type}, #{p_name}, #{p_price}, #{p_discount}, #{color_code}, #{size_code}, #{p_fabric}, #{p_caution}, #{ca_no})
 	</insert>
 	
 	<!-- 상품 정보 업데이트 -->

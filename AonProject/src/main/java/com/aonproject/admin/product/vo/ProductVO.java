@@ -1,5 +1,7 @@
 package com.aonproject.admin.product.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ProductVO {
 	private String p_no;		//상품 코드
 	private String p_name;		//상품명
@@ -15,8 +17,48 @@ public class ProductVO {
 	
 	//카테고리 노출 필드 선언
 	private String ca_name;		//카테고리 이름
-
 	
+	//공통코드 필드 선언
+	private String p_type_name;	//상품종류
+	private String color;		//색상
+	private String size;		//사이즈
+	
+	//파일 업로드 위한 속성
+	private MultipartFile file;	//첨부파일
+	private String b_file =""; 	//실제 서버에 저장한 파일명
+	
+	
+	
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	public String getB_file() {
+		return b_file;
+	}
+	public void setB_file(String b_file) {
+		this.b_file = b_file;
+	}
+	public String getP_type_name() {
+		return p_type_name;
+	}
+	public void setP_type_name(String p_type_name) {
+		this.p_type_name = p_type_name;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	public String getSize() {
+		return size;
+	}
+	public void setSize(String size) {
+		this.size = size;
+	}
 	public String getCa_name() {
 		return ca_name;
 	}

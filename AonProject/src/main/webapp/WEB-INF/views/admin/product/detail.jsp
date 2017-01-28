@@ -18,7 +18,8 @@
 <script type="text/javascript" src="/resources/include/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
 <script type="text/javascript">
-	var targetUrl = "";
+	var targetUrl = "";		//요청 url 지정
+	var fileCnt = 1;
 	$(function(){
 		if("${mode}" == "insert"){
 			targetUrl = "/admin/productInsert"
@@ -30,7 +31,6 @@
 			inputDisable();	
 			$("input[name='p_no']").attr("readonly","readonly");
 		}
-		
 
 		/* 수정버튼 클릭 - 수정폼 활성화 */
 		$("#updateBtn").click(function(){
@@ -52,7 +52,6 @@
 			else if(!chkSubmit($("#p_price"),"가격을")) return
 			else if(!chkSubmit($("#p_fabric"),"소재를")) return
 			else if(!chkSubmit($("#p_caution"), "주의사항을")) return
-			else if(!chkSubmit($("#pu_no"), "거래처를")) return
 			else {
 				$.ajax({
 					url		: targetUrl,
@@ -80,11 +79,9 @@
 					success : function(result){
 						if("${mode}" == "insert"){
 							location.href="/admin/product"
-						}else if("${mode}" == "insert"){
-							location.reload();
 						}
 					}
-				})
+				})//end ajax
 			}
 		});
 
@@ -98,9 +95,33 @@
 		$("#listBtn").click(function(){
 			location.href = "/admin/product";
 		});
+		
+		//addFileBtn click event
+		$(document).on("click", ".addFileBtn", function(){
+			addFile();
+		});
+		
+		//removeFileBtn click event
+		$(document).on("click", ".removeFileBtn", function(){
+			$(this).parent().remove();
+		})
 	
 	})
 	
+	//파일첨부 추가 버튼 생성
+	function addFile(){
+		var fileInput = $("<input>");
+		fileInput.attr({"type":"file", "name":"p_file"+(fileCnt++)});
+		var fileAddBtn = $("<input>")
+		fileAddBtn.attr({"type":"button", "class":"addFileBtn", "value":"+"});
+		var fileRemoveBtn = $("<input>")
+		fileRemoveBtn.attr({"type":"button", "class":"removeFileBtn", "value":"-"});
+		var fileContainer = $("<div>");
+		fileContainer.append(fileInput).append(fileAddBtn).append(fileRemoveBtn);
+		$(".fileUploadContainer").append(fileContainer);
+	}
+	
+	//텍스트입력 비활성화
 	function inputDisable(){
 		$("input[type='text']").attr("disabled","disabled");
 		$("input[type='number']").attr("disabled","disabled");
@@ -108,6 +129,7 @@
 		$("select option").not(":selected").attr("disabled","disabled");
 	}
 	
+	//텍스트입력 활성화
 	function inputEnable(){
 		$("input[type='text']").removeAttr("disabled");
 		$("input[type='number']").removeAttr("disabled");
@@ -124,7 +146,7 @@
 	<h2>상품 디테일</h2>
 	<!-- 상품 등록, 수정, 삭제 입력 폼 -->
 	<div id="detailContainer">
-		<form id="detailForm">
+		<form id="detailForm" enctype="multipart/form-data">
 			<table>
 				<tbody>
 					<tr>
@@ -159,12 +181,20 @@
 						<td>
 							<select id="p_type" name="p_type">
 								<c:choose>
-									<c:when test="${not empty product}">
-										<!-- product type 출력 -->
+									<c:when test="${not empty commonCodeList}">
+										<c:forEach var="commonCodeList" items="${commonCodeList}">
+											<c:if test="${commonCodeList.cc_group eq 'p_type'}">
+												<c:if test="${commonCodeList.cc_no ne productDetail.p_type}">
+													<option value="${commonCodeList.cc_no}">${commonCodeList.cc_name}</option>
+												</c:if>
+												<c:if test="${commonCodeList.cc_no eq productDetail.p_type}">
+													<option value="${commonCodeList.cc_no}" selected="selected">${commonCodeList.cc_name}</option>
+												</c:if>
+											</c:if>
+										</c:forEach>
 									</c:when>
 									<c:otherwise>
-										<option value="">등록된 사이즈가 없습니다.</option>
-										<option value="T">상의</option>
+										<option value="">등록된 색상이 없습니다.</option>
 									</c:otherwise>
 								</c:choose>
 							</select>
@@ -181,17 +211,18 @@
 								<c:choose>
 									<c:when test="${not empty commonCodeList}">
 										<c:forEach var="commonCodeList" items="${commonCodeList}">
-											<c:if test="${commonCodeList.cc_group} !=  ">
-												<option value="${categoryList.ca_no}">${categoryList.ca_name}</option>
-											</c:if>
-											<c:if test="${categoryList.ca_no == productDetail.ca_no}">
-												<option value="${categoryList.ca_no}" selected="selected">${categoryList.ca_name}</option>
+											<c:if test="${commonCodeList.cc_group eq 'color'}">
+												<c:if test="${commonCodeList.cc_no ne productDetail.color_code}">
+													<option value="${commonCodeList.cc_no}">${commonCodeList.cc_name}</option>
+												</c:if>
+												<c:if test="${commonCodeList.cc_no eq productDetail.color_code}">
+													<option value="${commonCodeList.cc_no}" selected="selected">${commonCodeList.cc_name}</option>
+												</c:if>
 											</c:if>
 										</c:forEach>
 									</c:when>
 									<c:otherwise>
 										<option value="">등록된 색상이 없습니다.</option>
-										<option value="C1">NAVI</option>
 									</c:otherwise>
 								</c:choose>
 							</select>
@@ -202,12 +233,20 @@
 						<td>
 							<select id="size_code" name="size_code" id="size_code" value="${common_cd.cc_name}">
 								<c:choose>
-									<c:when test="${not empty category}">
-										<!-- 사이즈 리스트 출력 -->
+									<c:when test="${not empty commonCodeList}">
+										<c:forEach var="commonCodeList" items="${commonCodeList}">
+											<c:if test="${commonCodeList.cc_group eq 'size'}">
+												<c:if test="${commonCodeList.cc_no ne productDetail.size_code}">
+													<option value="${commonCodeList.cc_no}">${commonCodeList.cc_name}</option>
+												</c:if>
+												<c:if test="${commonCodeList.cc_no eq productDetail.size_code}">
+													<option value="${commonCodeList.cc_no}" selected="selected">${commonCodeList.cc_name}</option>
+												</c:if>
+											</c:if>
+										</c:forEach>
 									</c:when>
 									<c:otherwise>
 										<option value="">등록된 사이즈가 없습니다.</option>
-										<option value="S1">M</option>
 									</c:otherwise>
 								</c:choose>
 							</select>
@@ -220,13 +259,20 @@
 					<tr>
 						<td>할인율</td>
 						<td>
-							<select id="p_discount" value="${product.p_discount}">
+							<select id="p_discount">
+								<c:choose>
+									<c:when test="${not empty productDetail}">
+										<c:if test="${productDetail.p_discount ne '0'}">
+											<option value="${productDetail.p_discount}" selected="selected" style="background:pink;">${productDetail.p_discount}%</option>
+										</c:if>	
+									</c:when>
+								</c:choose>
 								<option value="0">0%</option>
 								<option value="10">10%</option>
 								<option value="20">20%</option>
 								<option value="30">30%</option>
 								<option value="50">50%</option>
-								<option value="70">70%</option>
+								<option value="70">70%</option>	
 							</select>
 						</td>
 					</tr>
@@ -239,19 +285,11 @@
 						<td><textarea id="p_caution" name="p_caution">${productDetail.p_caution}</textarea></td>
 					</tr>
 					<tr>
-						<td>거래처</td>
+						<td>상품이미지</td>
 						<td>
-							<select id="pu_no" name="pu_no" value="${purchase.pu_no}">
-								<c:choose>
-									<c:when test="${not empty purchase}">
-										<!-- 사이즈 리스트 출력 -->
-									</c:when>
-									<c:otherwise>
-										<option value="">등록된 거래처가 없습니다.</option>
-										<option value="2">서울 현대</option>
-									</c:otherwise>
-								</c:choose>
-							</select>
+							<div class="fileUploadContainer">
+								<input type="file" id="p_file" name="p_file" multiple="multiple"><input type="button" class="addFileBtn" value="+">
+							</div>
 						</td>
 					</tr>
 					<tr>

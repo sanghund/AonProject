@@ -1,6 +1,9 @@
 package com.aonproject.admin.product.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ import com.aonproject.admin.category.vo.CategoryVO;
 import com.aonproject.admin.category.vo.CommonCodeVO;
 import com.aonproject.admin.product.service.ProductService;
 import com.aonproject.admin.product.vo.ProductVO;
+import com.aonproject.common.util.upload.FileUpload;
+import com.aonproject.common.util.upload.vo.UploadVO;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -28,6 +33,7 @@ public class ProductController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
 	
 	/*상품리스트 구현*/
 	@RequestMapping(value = "/product", method=RequestMethod.GET)
@@ -67,11 +73,14 @@ public class ProductController {
 	/*상품 신규등록*/
 	@ResponseBody
 	@RequestMapping(value = "/productInsert", method=RequestMethod.POST)
-	public String itemInsert (@RequestBody ProductVO pvo, Model model){
+	public String itemInsert (@RequestBody ProductVO pvo, Model model, HttpServletRequest request) throws IllegalStateException, IOException {
 		logger.info("itemInsert 호출 성공!");
 		
 		int result = 0;
 		result = productService.productInsert(pvo);
+		
+		/*String img_file = FileUpload.fileUpload(uvo.getFile(), request);
+		uvo.setPi_file(img_file)*/;
 		
 		model.addAttribute("mode", "update");
 		

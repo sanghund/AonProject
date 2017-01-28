@@ -24,12 +24,14 @@ public class CategoryServiceImpl implements CategoryService {
 		categoryList = categoryDAO.categoryList(cvo);
 		return categoryList;
 	}
-
+	
+	/*공통코드 리스트 구현*/
 	@Override
 	public List<CommonCodeVO> commonCodeList(CommonCodeVO cvo) {
 		List<CommonCodeVO> commonCodeList = null;
 		commonCodeList = categoryDAO.commonCodeList(cvo);
 		return commonCodeList;
 	}
+	
 	
 }
