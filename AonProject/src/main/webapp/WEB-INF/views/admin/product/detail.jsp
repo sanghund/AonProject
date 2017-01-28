@@ -19,7 +19,7 @@
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
 <script type="text/javascript">
 	var targetUrl = "";		//요청 url 지정
-	var fileCnt = 1;
+	var fileCnt = 0;
 	$(function(){
 		if("${mode}" == "insert"){
 			targetUrl = "/admin/productInsert"
@@ -53,6 +53,21 @@
 			else if(!chkSubmit($("#p_fabric"),"소재를")) return
 			else if(!chkSubmit($("#p_caution"), "주의사항을")) return
 			else {
+				var imgFirst = $(".p_file0").val();
+				var imgContainer = "";
+				
+				if(fileCnt>=1){
+					for(var i=1; i<=fileCnt; i++){
+						if($(".p_file"+i).val()==""){
+							i++;
+						}
+						imgContainer = imgContainer+"@"+$(".p_file"+i).val();
+					}
+					imgFirst += imgContainer
+				}
+				
+				alert(imgFirst);
+				
 				$.ajax({
 					url		: targetUrl,
 					type	: "post",
@@ -72,6 +87,8 @@
 						p_discount	: $("#p_discount").val(),
 						p_fabric	: $("#p_fabric").val(),
 						p_caution	: $("#p_caution").val(),
+						pi_file		: imgFirst
+						//pi_file		: $(".p_file").val()
 					}),
 					error	: function(){
 						alert("시스템 오류");
@@ -111,7 +128,7 @@
 	//파일첨부 추가 버튼 생성
 	function addFile(){
 		var fileInput = $("<input>");
-		fileInput.attr({"type":"file", "name":"p_file"+(fileCnt++)});
+		fileInput.attr({"type":"file", "name":"p_file"+(++fileCnt), "class":"p_file"+(fileCnt)});
 		var fileAddBtn = $("<input>")
 		fileAddBtn.attr({"type":"button", "class":"addFileBtn", "value":"+"});
 		var fileRemoveBtn = $("<input>")
@@ -288,7 +305,7 @@
 						<td>상품이미지</td>
 						<td>
 							<div class="fileUploadContainer">
-								<input type="file" id="p_file" name="p_file" multiple="multiple"><input type="button" class="addFileBtn" value="+">
+								<input type="file" class="p_file0" name="p_file" multiple="multiple"><input type="button" class="addFileBtn" value="+">
 							</div>
 						</td>
 					</tr>

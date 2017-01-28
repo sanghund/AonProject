@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
-import com.aonproject.admin.category.vo.CommonCodeVO;
+import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -33,15 +33,6 @@ public class CategoryController {
 		return "admin/category/main";
 	}
 	
-	/*공통코드 리스트 구현*/
-	@RequestMapping(value = "/commonCode", method=RequestMethod.GET)
-	public String commonCodeList(@ModelAttribute CommonCodeVO cvo, Model model){
-		logger.info("commonCode 호출 성공!");
-		List<CommonCodeVO> commonCodeList = categoryService.commonCodeList(cvo);
-		
-		model.addAttribute("commonCodeList", commonCodeList);
-		
-		return "admin/category/main";
-	}
+	
 	
 }

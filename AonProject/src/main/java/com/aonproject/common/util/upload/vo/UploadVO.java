@@ -9,15 +9,14 @@ public class UploadVO {
 	private String p_no;
 	private String pi_route;
 	private String pi_file;
-	private List<MultipartFile> file;
+	private MultipartFile file;
 	private String pi_Date;
 	
 	
-
-	public List<MultipartFile> getFile() {
+	public MultipartFile getFile() {
 		return file;
 	}
-	public void setFile(List<MultipartFile> file) {
+	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
 	public int getPi_no() {

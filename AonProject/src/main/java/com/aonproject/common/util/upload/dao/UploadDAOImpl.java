@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.aonproject.common.util.upload.controller.UploadController;
 import com.aonproject.common.util.upload.vo.UploadVO;
@@ -24,9 +23,8 @@ public class UploadDAOImpl implements UploadDAO {
 	}
 
 	@Override
-	public int uploadInsert(UploadVO uvo, List<MultipartFile> getFileList) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int uploadInsert(UploadVO uvo) {
+		return session.insert("uploadInsert", uvo);
 	}
 
 	

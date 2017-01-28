@@ -2,8 +2,6 @@ package com.aonproject.common.util.upload.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,11 +38,11 @@ public class UploadController {
 	/*이미지 업로드 구현*/
 	@ResponseBody
 	@RequestMapping(value = "/imgUploadInsert")
-	public String imgInsert (@RequestBody UploadVO uvo, HttpServletRequest request){
+	public String imgInsert (@RequestBody UploadVO uvo){
 		logger.info("uploadInsert 호출 성공!");
 		
 		int result = 0;
-		result = uploadService.uploadInsert(uvo, request);
+		result = uploadService.uploadInsert(uvo);
 		
 		return result+"";
 	}

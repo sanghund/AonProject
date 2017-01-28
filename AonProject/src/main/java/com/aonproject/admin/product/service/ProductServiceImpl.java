@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aonproject.admin.category.dao.CategoryDAO;
 import com.aonproject.admin.product.dao.ProductDAO;
 import com.aonproject.admin.product.vo.ProductVO;
 

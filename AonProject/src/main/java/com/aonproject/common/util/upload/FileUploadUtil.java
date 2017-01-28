@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
-public class FileUpload {
-	static Logger logger = Logger.getLogger(FileUpload.class);
+public class FileUploadUtil {
+	static Logger logger = Logger.getLogger(FileUploadUtil.class);
 	
 	/*파일 업로드 메서드*/
 	public static String fileUpload(MultipartFile file, HttpServletRequest request) throws IOException{
@@ -19,11 +19,14 @@ public class FileUpload {
 		String org_name = file.getOriginalFilename();
 		logger.info("org_name= "+org_name);
 		
+		String imgRoot = null;
+		
 		//파일명 변경
 		if(org_name != null && (!org_name.equals(""))){
 			real_name = System.currentTimeMillis()+"_"+org_name; 
 			
 			String docRoot = request.getSession().getServletContext().getRealPath("/productUpload");
+			imgRoot = docRoot.toString();
 			File fileDir = new File(docRoot);
 			if(!fileDir.exists()){
 				fileDir.mkdirs();
@@ -33,7 +36,7 @@ public class FileUpload {
 			
 			file.transferTo(fileAdd);
 		}
-		return real_name;
+		return imgRoot+"/"+real_name;
 	}
 	
 	/*파일 삭제 메서드*/

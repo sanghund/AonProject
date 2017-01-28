@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
-import com.aonproject.admin.category.vo.CommonCodeVO;
+import com.aonproject.admin.commoncode.service.CommonCodeService;
+import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 import com.aonproject.admin.product.service.ProductService;
 import com.aonproject.admin.product.vo.ProductVO;
-import com.aonproject.common.util.upload.FileUpload;
+import com.aonproject.common.util.upload.FileUploadUtil;
+import com.aonproject.common.util.upload.service.UploadService;
 import com.aonproject.common.util.upload.vo.UploadVO;
 
 @Controller
@@ -34,6 +37,11 @@ public class ProductController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	@Autowired
+	private CommonCodeService commonCodeService;
+	
+	@Autowired
+	private UploadService uploadService;
 	
 	/*상품리스트 구현*/
 	@RequestMapping(value = "/product", method=RequestMethod.GET)
@@ -41,9 +49,7 @@ public class ProductController {
 		logger.info("itemList 호출 성공!");
 		
 		List<ProductVO> productList = productService.productList(pvo);
-		//List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("productList", productList);
-		//model.addAttribute("categoryList", categoryList);
 		
 		return "admin/product/main";
 	}
@@ -64,7 +70,7 @@ public class ProductController {
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		List<CommonCodeVO> commonCodeList = categoryService.commonCodeList(ovo);
+		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(ovo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
 		return "admin/product/detail";
@@ -73,14 +79,26 @@ public class ProductController {
 	/*상품 신규등록*/
 	@ResponseBody
 	@RequestMapping(value = "/productInsert", method=RequestMethod.POST)
-	public String itemInsert (@RequestBody ProductVO pvo, Model model, HttpServletRequest request) throws IllegalStateException, IOException {
+	public String itemInsert (@RequestBody ProductVO pvo, @RequestBody UploadVO uvo, Model model, HttpServletRequest request) throws IllegalStateException, IOException {
 		logger.info("itemInsert 호출 성공!");
 		
 		int result = 0;
 		result = productService.productInsert(pvo);
 		
-		/*String img_file = FileUpload.fileUpload(uvo.getFile(), request);
-		uvo.setPi_file(img_file)*/;
+		String[] imgFileArray = uvo.getPi_file().split("@");
+		
+		if(imgFileArray.length != 0){
+			for(int i=0; i<imgFileArray.length; i++){
+				String imgFile = FileUploadUtil.fileUpload(uvo.getFile(), request);
+			}
+			
+			
+			
+			uvo.setP_no(pvo.getP_no());
+			uvo.setPi_route(imgFileArray[0]);
+			uvo.setPi_file(imgFileArray[1]);
+			uploadService.uploadInsert(uvo);
+		}
 		
 		model.addAttribute("mode", "update");
 		

@@ -1,4 +1,4 @@
-package com.aonproject.admin.category.vo;
+package com.aonproject.admin.commoncode.vo;
 
 public class CommonCodeVO {
 	//공통코드마스터
