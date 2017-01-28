@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ page trimDirectiveWhitespaces="true" %>
 	<style type = "text/css">
+		.main{
+			height: 704px;
+		}
 		#mTitle {
 			font-size: 3rem;
 			display: inline-block;
@@ -10,8 +13,6 @@
 			margin-bottom: 3rem;
 		}
 		#update > div{
-			min-width : 1162px;
-			
 			font-size : 1.8rem;
 			padding : 1rem 0;
 			border-top: 1px solid #73879C;
@@ -31,6 +32,7 @@
 			
 		}
 		.ver{
+			width : 100%;
 			display: table;
 		}
 		#forAdress > *{
@@ -41,13 +43,31 @@
 			vertical-align: middle;
 		}
 		#gogoUpdate{
-			margin-top : 3rem;
+			margin-top : 5rem;
 			text-align: center;
 		}
 		#gogo{
 			font-size :2rem;
 			width : 150px;
 			
+		}
+		
+		#a_tel1,#a_tel2,#a_tel3{
+			width: 75px;
+		}
+		#a_addr1,#a_addr2{
+			margin-bottom: 1rem;
+			
+		}
+		#a_addr1{
+			width: 75px;
+		}
+		#a_addr2,#a_addr3{
+			width: 500px;
+		}
+		#choiceEmailType{
+			height: 32px;
+					
 		}
 }
 	</style>
@@ -61,15 +81,13 @@
 				<div><span class = "array">비밀번호 확인</span><input type = "password" maxlength="20"  id = "a_pwd2" name = "a_pwd2"><span id = "pwdChkMsg2"></span></div>		
 				<div><span class = "array">이름</span><input type = "text" value= "${vo.a_name }" maxlength="20"  id = "a_name" name = "a_name"><span id = "nameChkMsg"></span></div>		
 				<div>
-					<span class = "array">핸드폰</span>
-					<input type = "text" maxlength="4" id = "a_tel1" name = "a_tel1">
+					<span class = "array">핸드폰</span><input type = "text" maxlength="4" id = "a_tel1" name = "a_tel1">
 					<input type = "text" maxlength="4" id = "a_tel2" name = "a_tel2">
 					<input type = "text" maxlength="4" id = "a_tel3" name = "a_tel3">
 					<span id = "telChkMsg"></span>
 				</div>		
 				<div>
-					<span class = "array">이메일</span>
-					<input type = "text" maxlength="30" id = "a_email1" name = "a_email1">
+					<span class = "array">이메일</span><input type = "text" maxlength="30" id = "a_email1" name = "a_email1">
 					<span id = "arroba">@</span>
 					<input type = "text" maxlength="30"  id = "a_email2" name = "a_email2">
 					<span id = "addrChkMsg"></span>
@@ -213,7 +231,7 @@
     			else{
     				pwdSameChk = true;
     			}
-    			if(!vacuumChk($("#a_name"), "이름을", $("#pwdChkMsg2"), true)) return;
+    			if(!vacuumChk($("#a_name"), "이름을", $("#nameChkMsg"), true)) return;
     			else if(!vacuumChk($("#a_tel1"), "휴대폰 번호를", $("#telChkMsg"), true)) return;
     			else if(!vacuumChk($("#a_tel2"), "휴대폰 번호를", $("#telChkMsg"), true)) return;
     			else if(!vacuumChk($("#a_tel3"), "휴대폰 번호를", $("#telChkMsg"), true)) return;

@@ -1,30 +1,92 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
+	<style type = "text/css">
+		.main{
+			height: 100%;	
+		}
+		#mTitle {
+			font-size: 3rem;
+			display: inline-block;
+			border-bottom: 1px solid #73879C;
+			margin-bottom: 3rem;
+		}
+		#join > div{
+			font-size : 1.8rem;
+			padding : 1rem 0;
+			border-top: 1px solid #73879C;
+		}
+		#join > div:LAST-CHILD {
+			border-bottom: 1px solid #73879C;
+		} 	
+		.array{
+			display : inline-block;
+			width: 200px;
+		}
+		#forAdress{
+			display: inline-block;
+			
+		}
+		.ver{
+			width : 100%;
+			display: table;
+		}
+		#forAdress > *{
+			display: block;
+		}
+		#forAddr{
+			display : table-cell;
+			vertical-align: middle;
+		}
+		#gogoJoin{
+			text-align: center;
+			margin-top : 5rem;
+		}
+		#gogo{
+			margin-bottom: 2rem;
+			font-size :2rem;
+			width : 150px;
+		}
+		#a_tel1,#a_tel2,#a_tel3{
+			width: 75px;
+		}
+		#a_addr1,#a_addr2{
+			margin-bottom: 1rem;
+		}
+		#a_addr1{
+			width: 75px;
+		}
+		#a_addr2,#a_addr3{
+			width: 500px;
+		}
+		#choiceEmailType{
+			height: 32px;
+		}
+}
+	</style>
+	
 	<div class = "main">
-		<h2>회원가입</h2>
+		<h2 id = "mTitle">회원가입</h2>
 		<form id = "joinForm" name = "joinForm">
 			<div class = "policy">
 				<!-- 약관 들어가야함 -->
 			</div>
 			<div id = "join">
 				<h3>회원 정보 입력</h3>
-				<div><span>아이디</span><input type = "text" maxlength="20" width="145px" id = "a_id" name = "a_id"><span id = "idChkMsg"></span></div>	
-				<div><span>비밀번호</span><input type = "password" maxlength="20" width="145px" id = "a_pwd" name = "a_pwd"><span id = "pwdChkMsg1"></span></div>	
-				<div><span>비밀번호 확인</span><input type = "password" maxlength="20" width="145px" id = "a_pwd2" name = "a_pwd2"><span id = "pwdChkMsg2"></span></div>		
-				<div><span>이름</span><input type = "text" maxlength="20" width="145px" id = "a_name" name = "a_name"><span id = "nameChkMsg"></span></div>		
+				<div><span class = "array">아이디</span><input type = "text" maxlength="20" id = "a_id" name = "a_id"><span id = "idChkMsg"></span></div>	
+				<div><span class = "array">비밀번호</span><input type = "password" maxlength="20" id = "a_pwd" name = "a_pwd"><span id = "pwdChkMsg1"></span></div>	
+				<div><span class = "array">비밀번호 확인</span><input type = "password" maxlength="20" id = "a_pwd2" name = "a_pwd2"><span id = "pwdChkMsg2"></span></div>		
+				<div><span class = "array">이름</span><input type = "text" maxlength="20" id = "a_name" name = "a_name"><span id = "nameChkMsg"></span></div>		
 				<div>
-					<span>핸드폰</span>
-					<input type = "text" maxlength="4" width="145px" id = "a_tel1" name = "a_tel1">
-					<input type = "text" maxlength="4" width="145px" id = "a_tel2" name = "a_tel2">
-					<input type = "text" maxlength="4" width="145px" id = "a_tel3" name = "a_tel3">
+					<span class = "array">핸드폰</span><input type = "text" maxlength="4" id = "a_tel1" name = "a_tel1">
+					<input type = "text" maxlength="4" id = "a_tel2" name = "a_tel2">
+					<input type = "text" maxlength="4" id = "a_tel3" name = "a_tel3">
 					<span id = "telChkMsg"></span>
 				</div>		
 				<div>
-					<span>이메일</span>
-					<input type = "text" maxlength="30" width="145px" id = "a_email1" name = "a_email1">
+					<span class = "array">이메일</span><input type = "text" maxlength="30" id = "a_email1" name = "a_email1">
 					<span id = "arroba">@</span>
-					<input type = "text" maxlength="30" width="145px" id = "a_email2" name = "a_email2">
+					<input type = "text" maxlength="30" id = "a_email2" name = "a_email2">
 					<span id = "addrChkMsg"></span>
 					<select id = "choiceEmailType" name = "choiceEmailType">
 						<option value="none" selected="selected">직접입력</option>
@@ -37,11 +99,11 @@
 					</select>
 					<span id = "emailChkMsg"></span>
 				</div>	
-				<div>
-					<span>주소</span>
+				<div class = "ver">
+					<span class = "array" id = "forAddr">주소</span>
 					<div id = "forAdress">
 						<span id = "daumApi">
-							<input type = "text" width="145px" id = "a_addr1" name = "a_addr1" readonly="readonly">
+							<input type = "text" id = "a_addr1" name = "a_addr1" readonly="readonly">
 							<input type = "button" id = "go" name = "go" value = "주소 검색">
 							<span id = "addrChkMsg1"></span>
 						</span>

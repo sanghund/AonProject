@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.aonproject.admin.util">
+	<logger name="com.aonproject.common.util">
 		<level value="info" />
 	</logger>
 	<logger name="com.aonproject.admin.aInfo">
@@ -20,9 +20,6 @@
 	<logger name="com.aonproject.admin.aInfo.dao">
 		<level value="TRACE"></level>
 	</logger>
-	
-	
-	
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">

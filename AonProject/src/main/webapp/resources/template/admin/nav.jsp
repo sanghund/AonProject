@@ -46,6 +46,12 @@
                       <li><a href="calendar.html">null</a></li>
                     </ul>
                   </li>
+                  <li><a><i class="fa fa-address-book-o" aria-hidden="true"></i> 약관관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="media_gallery.html">약관목록</a></li>
+                      <li><a href="media_gallery.html">약관여부</a></li>
+                    </ul>
+                  </li>
                   <li><a><i class="fa fa-table"></i> 재고관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="tables.html">null</a></li>
