@@ -25,7 +25,7 @@ public class ProductVO {
 	
 	//파일 업로드 위한 속성
 	private MultipartFile file;	//첨부파일
-	private String b_file =""; 	//실제 서버에 저장한 파일명
+	private String pi_file =""; 	//실제 서버에 저장한 파일명
 	
 	
 	
@@ -35,11 +35,11 @@ public class ProductVO {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	public String getB_file() {
-		return b_file;
+	public String getPi_file() {
+		return pi_file;
 	}
-	public void setB_file(String b_file) {
-		this.b_file = b_file;
+	public void setPi_file(String pi_file) {
+		this.pi_file = pi_file;
 	}
 	public String getP_type_name() {
 		return p_type_name;

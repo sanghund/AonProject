@@ -18,33 +18,9 @@
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
 <script type="text/javascript">
 	$(function(){
-		/* 신청폼 디폴트 숨김 */
-		$("#dataFormContainer").hide();
-		
-		//상품 등록창 호출 버튼
-		$("#insertBtn").click(function(){
-			$("#dataFormContainer").show();
-		});
-		
-		//상품 등록
-		$(".insertBtn").click(function(){
-			if(!chkSubmit($("#ca_no"),"카테고리를")) return
-			else if(!chkSubmit($("#p_type"),"상품타입을")) return
-			else if(!chkSubmit($("#p_name"),"상품명을")) return
-			else if(!chkSubmit($("#p_name"),"상품색상을")) return
-			else if(!chkSubmit($("#p_name"),"상품사이즈를")) return
-			else if(!chkSubmit($("#p_price"),"가격을")) return
-			else if(!chkSubmit($("#p_fabric"),"소재를")) return
-			else if(!chkSubmit($("#p_caution"), "주의사항을")) return
-			else if(!chkSubmit($("#pu_no"), "거래처를")) return
-			
-		});
-		
 		//신규 등록 버튼 이벤트 처리
 		$("#insertBtn").click(function(){
-			$("#p_no").val("");
-			$("#detailForm").attr({"method":"post", "action":"/admin/productDetail"});
-			$("#detailForm").submit();
+			location.href="/admin/writeForm";
 		})
 		
 		//상품 디테일 호출(삭제, 업데이트)
@@ -60,8 +36,7 @@
 			$("#detailForm").attr({"method":"post", "action":"/admin/productDetail"});
 			$("#detailForm").submit(); 
 			console.log(product_no);
-			
-		
+
 		})
 	})
 </script>
@@ -105,17 +80,7 @@
 						<c:forEach var="product" items="${productList}">
 							<tr data-no="${product.p_no}" class="productPack">
 								<td>${product.p_no}</td>
-								<td>${product.ca_name}
-									<%-- <c:set var= "loop" value="false"></c:set>
-									<c:forEach var="category" items="${categoryList }">
-										<c:if test="${not loop}">
-											<c:if test="${product.ca_no eq category.ca_no  }">
-												<c:set var= "loop" value="true"></c:set>
-												${category.ca_name}			
-											</c:if>
-										</c:if>
-									</c:forEach> --%>
-								</td>
+								<td>${product.ca_name}</td>
 								<td>${product.p_type_name}</td>
 								<td>${product.p_name}</td>
 								<td>${product.color}</td>

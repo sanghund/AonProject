@@ -22,25 +22,10 @@
 	var targetUrl = "";		//요청 url 지정
 	var fileCnt = 0;
 	$(function(){
-		if("${mode}" == "update"){
-			inputDisable();	
-			$("input[name='p_no']").attr("readonly","readonly");
-		}
-
-		/* 수정버튼 클릭 - 수정폼 활성화 */
-		$("#updateBtn").click(function(){
-			inputEnable();
-			//$("#updateBtn").attr({"id":"update", "value":"수정완료"});
-			var updateExecute = $("<input>");
-			updateExecute.attr({"type":"button", "id":"update", "value":"수정완료"});
-			updateExecute.css("margin-right","6px");
-			$("#deleteBtn").before(updateExecute);
-			$("#updateBtn").hide();
-		})
-		
-		/* 수정사항 업데이트 */
-		$(document).on("click", "#update", function(){
-			if(!chkSubmit($("#ca_no"),"카테고리 번호를")) return;
+		/* 신규상품 등록 */
+		$(document).on("click", "#insertBtn", function(){
+			if(!chkSubmit($("#p_no"),"상품 번호를")) return;
+			else if(!chkSubmit($("#ca_no"),"카테고리 번호를")) return;
 			else if(!chkSubmit($("#p_type"),"상품타입을")) return;
 			else if(!chkSubmit($("#p_name"),"상품명을")) return;
 			else if(!chkSubmit($("#ca_no"),"상품색상을")) return;
@@ -49,11 +34,11 @@
 			else if(!chkSubmit($("#p_fabric"),"소재를")) return;
 			else if(!chkSubmit($("#p_caution"), "주의사항을")) return;
 			else {
-				$("#detailForm").attr({
+				$("#insertForm").attr({
 					"method" : "post",
-					"action" : "/admin/productUpdate"
+					"action" : "/admin/productInsert"
 				});
-				$("#detailForm").submit();
+				$("#insertForm").submit();
 				fileCnt = 0;
 			}
 		});
@@ -93,22 +78,6 @@
 		fileContainer.append(fileInput).append(fileAddBtn).append(fileRemoveBtn);
 		$(".fileUploadContainer").append(fileContainer);
 	}
-	
-	//텍스트입력 비활성화
-	function inputDisable(){
-		$("input[type='text']").attr("disabled","disabled");
-		$("input[type='number']").attr("disabled","disabled");
-		$("textarea").attr("disabled","disabled");
-		$("select option").not(":selected").attr("disabled","disabled");
-	}
-	
-	//텍스트입력 활성화
-	function inputEnable(){
-		$("input[type='text']").removeAttr("disabled");
-		$("input[type='number']").removeAttr("disabled");
-		$("textarea").removeAttr("disabled");
-		$("select option").not(":selected").removeAttr("disabled");
-	}
 </script>
 </head>
 <style>
@@ -119,7 +88,7 @@
 	<h2>상품 디테일</h2>
 	<!-- 상품 등록, 수정, 삭제 입력 폼 -->
 	<div id="detailContainer">
-		<form id="detailForm" enctype="multipart/form-data">
+		<form id="insertForm" enctype="multipart/form-data">
 			<table>
 				<tbody>
 					<tr>
@@ -232,7 +201,7 @@
 					<tr>
 						<td>할인율</td>
 						<td>
-							<select id="p_discount">
+							<select id="p_discount" name="p_discount">
 								<c:choose>
 									<c:when test="${not empty productDetail}">
 										<c:if test="${productDetail.p_discount ne '0'}">
@@ -261,16 +230,7 @@
 						<td>상품이미지</td>
 						<td>
 							<div class="fileUploadContainer">
-								<%-- <input type="file" class="file" name="file" value="${uploadList.pi_file}"><input type="button" class="addFileBtn" value="+"> --%>
-								<c:choose>
-									<c:when test="${not empty uploadList}">
-										<c:forEach var="uploadList" items="${uploadList}">
-											<input type="file" class="file" name="files[0]" value="${uploadList.pi_file}"><input type="button" class="addFileBtn" value="+">
-											<img src="/productUpload/${uploadList.pi_file}" width="300" >
-											<!-- /productUpload/ -->${uploadList.pi_file}
-										</c:forEach>
-									</c:when>
-								</c:choose>
+								<input type="file" class="file" name="files[0]" multiple="multiple"><input type="button" class="addFileBtn" value="+">
 							</div>
 						</td>
 					</tr>
@@ -284,8 +244,8 @@
 	</div>
 	<!-- 상품 등록, 수정, 삭제 제어 버튼 -->
 	<div class="btnContainer">
-		<input type="button" id="updateBtn" value="상품수정">
-		<input type="button" id="deleteBtn" value="상품삭제">
+		<input type="button" id="insertBtn" value="상품등록">
+		<input type="button" id="resetBtn" value="초기화">
 		<input type="button" id="listBtn" value="목록">
 	</div>
 

@@ -8,4 +8,5 @@ public interface UploadService {
 	public List<UploadVO> uploadList(UploadVO uvo);
 	
 	public int uploadInsert(UploadVO uvo);
+	public int uploadUpdate(UploadVO uvo);
 }

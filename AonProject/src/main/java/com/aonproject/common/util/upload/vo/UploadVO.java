@@ -9,10 +9,17 @@ public class UploadVO {
 	private String p_no;
 	private String pi_route;
 	private String pi_file;
+	private List<MultipartFile> files;
 	private MultipartFile file;
 	private String pi_Date;
 	
 	
+	public List<MultipartFile> getFiles() {
+		return files;
+	}
+	public void setFiles(List<MultipartFile> files) {
+		this.files = files;
+	}
 	public MultipartFile getFile() {
 		return file;
 	}

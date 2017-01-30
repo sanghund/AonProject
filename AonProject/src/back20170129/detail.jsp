@@ -22,7 +22,13 @@
 	var targetUrl = "";		//요청 url 지정
 	var fileCnt = 0;
 	$(function(){
-		if("${mode}" == "update"){
+		if("${mode}" == "insert"){
+			targetUrl = "/admin/productInsert"
+			inputEnable();
+			$("#deleteBtn").hide();
+			$("#updateBtn").attr("value", "등록");
+		}else if("${mode}" == "update"){
+			targetUrl = "/admin/productUpdate"
 			inputDisable();	
 			$("input[name='p_no']").attr("readonly","readonly");
 		}
@@ -30,31 +36,91 @@
 		/* 수정버튼 클릭 - 수정폼 활성화 */
 		$("#updateBtn").click(function(){
 			inputEnable();
-			//$("#updateBtn").attr({"id":"update", "value":"수정완료"});
-			var updateExecute = $("<input>");
-			updateExecute.attr({"type":"button", "id":"update", "value":"수정완료"});
-			updateExecute.css("margin-right","6px");
-			$("#deleteBtn").before(updateExecute);
-			$("#updateBtn").hide();
+			$("#updateBtn").attr({"id":"update", "value":"수정완료"});
 		})
 		
 		/* 수정사항 업데이트 */
 		$(document).on("click", "#update", function(){
+			if("${mode}" == "insert"){
+				if(!chkSubmit($("#p_no"),"상품 번호를")) return;
+			}
+			
 			if(!chkSubmit($("#ca_no"),"카테고리 번호를")) return;
 			else if(!chkSubmit($("#p_type"),"상품타입을")) return;
-			else if(!chkSubmit($("#p_name"),"상품명을")) return;
-			else if(!chkSubmit($("#ca_no"),"상품색상을")) return;
-			else if(!chkSubmit($("#p_name"),"상품사이즈를")) return;
-			else if(!chkSubmit($("#p_price"),"가격을")) return;
-			else if(!chkSubmit($("#p_fabric"),"소재를")) return;
-			else if(!chkSubmit($("#p_caution"), "주의사항을")) return;
+			else if(!chkSubmit($("#p_name"),"상품명을")) return
+			else if(!chkSubmit($("#ca_no"),"상품색상을")) return
+			else if(!chkSubmit($("#p_name"),"상품사이즈를")) return
+			else if(!chkSubmit($("#p_price"),"가격을")) return
+			else if(!chkSubmit($("#p_fabric"),"소재를")) return
+			else if(!chkSubmit($("#p_caution"), "주의사항을")) return
 			else {
-				$("#detailForm").attr({
-					"method" : "post",
-					"action" : "/admin/productUpdate"
-				});
-				$("#detailForm").submit();
-				fileCnt = 0;
+				/* var imgFirst = $(".p_file0").val();
+				var imgContainer = "";
+				if(fileCnt>=1){
+					for(var i=1; i<=fileCnt; i++){
+						if($(".p_file"+i).val()==""){
+							i++;
+						}
+						imgContainer = imgContainer+"@"+$(".p_file"+i).val();
+					}
+					imgFirst += imgContainer
+				}
+				alert(imgFirst); */
+				
+				/* var $data = $("#detailForm").serialize();
+				$.ajax({
+					url		: targetUrl,
+					type	: "post",
+					enctype	: "multipart/form-data",
+					headers	: {
+						"Content-Type":"application/json",
+						"X-HTTP-Method-Override" : "post",
+					},
+					dataType: "text",
+					data	: $data,
+					error	: function(){
+						alert("시스템 오류");
+					},
+					success : function(result){
+						if("${mode}" == "insert"){
+							location.href="/admin/product"
+						}
+					}
+				})//end ajax
+				//$("$detailForm").submit(); */
+				
+				$.ajax({
+					url		: targetUrl,
+					type	: "post",
+					enctype	: "multipart/form-data",
+					headers	: {
+						"Content-Type":"application/json",
+						"X-HTTP-Method-Override" : "post",
+					},
+					dataType: "text",
+						data	: JSON.stringify({
+						p_no 		: $("#p_no").val(),
+						ca_no		: $("#ca_no").val(),
+						p_type		: $("#p_type").val(),
+						p_name		: $("#p_name").val(),
+						color_code	: $("#color_code").val(),
+						size_code	: $("#size_code").val(),
+						p_price		: $("#p_price").val(),
+						p_discount	: $("#p_discount").val(),
+						p_fabric	: $("#p_fabric").val(),
+						p_caution	: $("#p_caution").val(),
+						//pi_file		: imgFirst
+						file		: $(".file").val()
+					}), 
+					error	: function(){
+						alert("시스템 오류");
+					},
+					success : function(result){
+						if("${mode}" == "insert"){
+							location.href="/admin/product"
+						}
+					}
+				})//end ajax
 			}
 		});
 
@@ -84,7 +150,7 @@
 	//파일첨부 추가 버튼 생성
 	function addFile(){
 		var fileInput = $("<input>");
-		fileInput.attr({"type":"file", "name":"files["+(++fileCnt)+"]", "class":"file"});
+		fileInput.attr({"type":"file", "name":"p_file"+(++fileCnt), "class":"p_file"+(fileCnt)});
 		var fileAddBtn = $("<input>")
 		fileAddBtn.attr({"type":"button", "class":"addFileBtn", "value":"+"});
 		var fileRemoveBtn = $("<input>")
@@ -261,16 +327,7 @@
 						<td>상품이미지</td>
 						<td>
 							<div class="fileUploadContainer">
-								<%-- <input type="file" class="file" name="file" value="${uploadList.pi_file}"><input type="button" class="addFileBtn" value="+"> --%>
-								<c:choose>
-									<c:when test="${not empty uploadList}">
-										<c:forEach var="uploadList" items="${uploadList}">
-											<input type="file" class="file" name="files[0]" value="${uploadList.pi_file}"><input type="button" class="addFileBtn" value="+">
-											<img src="/productUpload/${uploadList.pi_file}" width="300" >
-											<!-- /productUpload/ -->${uploadList.pi_file}
-										</c:forEach>
-									</c:when>
-								</c:choose>
+								<input type="file" class="file" name="file"><input type="button" class="addFileBtn" value="+">
 							</div>
 						</td>
 					</tr>

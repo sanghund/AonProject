@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
@@ -43,8 +42,6 @@ public class ProductController {
 	@Autowired
 	private UploadService uploadService;
 	
-	String mode = "";
-	
 	/*상품리스트 구현*/
 	@RequestMapping(value = "/product", method=RequestMethod.GET)
 	public String itemList(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, Model model){
@@ -57,8 +54,8 @@ public class ProductController {
 	}
 	
 	/*상품상세 호출*/
-	@RequestMapping(value = "/productDetail")
-	public String itemDetail(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, @ModelAttribute UploadVO uvo, Model model){
+	@RequestMapping(value = "/productDetail", method=RequestMethod.POST)
+	public String itemDetail(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
 		logger.info("itemDetail 호출 성공!");
 		if(pvo.getP_no() == ""){
 			logger.info("p_no: "+pvo.getP_no());
@@ -75,103 +72,87 @@ public class ProductController {
 		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(ovo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
-		List<UploadVO> uploadList = uploadService.uploadList(uvo);
-		model.addAttribute("uploadList", uploadList);
-		
 		return "admin/product/detail";
 	}
 	
-	/*상품등록 페이지 이동*/
-	@RequestMapping(value = "/writeForm")
-	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
-		logger.info("writeFrom 호출 성공!");
-		
-		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
-		model.addAttribute("categoryList", categoryList);
-		
-		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(ovo);
-		model.addAttribute("commonCodeList", commonCodeList);
-		
-		return "admin/product/write";
-	}
-	
+	/*상품 신규등록*/
+	/*@ResponseBody
 	@RequestMapping(value = "/productInsert")
-	public String itemInsert (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
+	public String itemInsert (@RequestBody ProductVO pvo, Model model) {
 		logger.info("itemInsert 호출 성공!");
-		mode = "insert";
+		
 		int result = 0;
-		
 		result = productService.productInsert(pvo);
-		if(result == 1){
-			List<MultipartFile> files = uvo.getFiles();
-			
-			if(files != null && files.size()>0){
-				for(MultipartFile file : files ){
-					uvo.setFile(file);
-					int fileResult = imgInsert(uvo, request);
-					logger.info(fileResult);
-				}
-			}
-		}else {
-			logger.info(result);
-		}
 		
-		String url = "product";
-		return "redirect:"+url;
-	}
-	
-	public int imgInsert(UploadVO uvo, HttpServletRequest request) throws IOException {
+		model.addAttribute("mode", "update");
+		
+		return result+"";
+	}*/
+	@ResponseBody
+	@RequestMapping(value = "/productInsert")
+	public String itemInsert (@RequestBody ProductVO pvo, @ModelAttribute UploadVO uvo, Model model, HttpServletRequest request) throws IllegalStateException, IOException {
+		logger.info("itemInsert 호출 성공!");
+		
+		int result = 0;
+		result = productService.productInsert(pvo);
+		
 		int fileResult = 0;
 		
-		logger.info(uvo.getFile());
-		
-		String pi_file = FileUploadUtil.fileUpload(uvo.getP_no(), uvo.getFile(), request);
+		uvo.setP_no(pvo.getP_no());
+		String pi_file = FileUploadUtil.fileUpload(uvo.getFile(), request);
 		uvo.setPi_file(pi_file);
-		if(pi_file != null){
-			if(mode == "insert"){
-				logger.info("mode="+mode);
-				fileResult = uploadService.uploadInsert(uvo);
-			}else if(mode == "update"){
-				logger.info("mode="+mode);
-				fileResult = uploadService.uploadUpdate(uvo);
-			}
-			if(fileResult == 1){
-				logger.info("fileResult="+fileResult);
-			}else{
-				logger.info("fileResult="+fileResult);
-			}
+		logger.info(uvo.getFile());
+		logger.info(uvo.getP_no());
+		
+		
+		fileResult = uploadService.uploadInsert(uvo);
+		if(fileResult == 1){
+			logger.info("fileResult="+fileResult);
+		}else{
+			logger.info("fileResult="+fileResult);
 		}
-		return fileResult;
+		model.addAttribute("mode", "update");
+		
+		return result+"";
 	}
+	/*@RequestMapping(value = "/productInsert")
+	public String itemInsert (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, Model model, HttpServletRequest request) throws IllegalStateException, IOException {
+		logger.info("itemInsert 호출 성공!");
+		
+		int result = 0;
+		result = productService.productInsert(pvo);
+		if(result == 1){
+			logger.info("result="+result);
+		}else{
+			logger.info("result="+result);
+		}
+		
+		int fileResult = 0;
+		String pi_file = FileUploadUtil.fileUpload(uvo.getFile(), request);
+		uvo.setP_no(pvo.getP_no());
+		uvo.setPi_file(pi_file);
+		fileResult = uploadService.uploadInsert(uvo);
+		if(fileResult == 1){
+			logger.info("fileResult="+fileResult);
+		}else{
+			logger.info("fileResult="+fileResult);
+		}
+		model.addAttribute("mode", "update");
+		
+		return "admin/product/main";
+	}*/
 	
 	/*상품 업데이트*/
-	@RequestMapping(value = "/productUpdate")
-	public String itemUpdate (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
-		mode = "update";
+	@ResponseBody
+	@RequestMapping(value = "/productUpdate", method=RequestMethod.POST)
+	public String itemUpdate (@RequestBody ProductVO pvo){
 		logger.info("itemUpdate 호출 성공!");
 		logger.info("pvo="+pvo.getP_no());
 		
 		int result = 0;
 		result = productService.productUpdate(pvo);
 		
-		if(result == 1){
-			List<MultipartFile> files = uvo.getFiles();
-			
-			if(files != null && files.size()>0){
-				FileUploadUtil.fileDelete(uvo.getPi_file(), request);
-				for(MultipartFile file : files ){
-					uvo.setFile(file);
-					int fileResult = imgInsert(uvo, request);
-					logger.info(fileResult);
-				}
-			}
-		}else {
-			logger.info(result);
-		}
-		
-		String url = "productDetail?p_no="+pvo.getP_no();
-		
-		return "redirect:"+url;
+		return result+"";
 	}
 	
 	
