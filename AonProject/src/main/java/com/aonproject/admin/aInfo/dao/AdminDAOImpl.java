@@ -29,7 +29,7 @@ import com.aonproject.admin.aInfo.vo.AdminVO;
 @Repository
 public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 	
-	private Logger logger = Logger.getLogger(AdminDAOImpl.class);
+	private Logger logger = Logger.getLogger(AdminController.class);
 	
 	@Autowired
 	private DataSource dataSource;
