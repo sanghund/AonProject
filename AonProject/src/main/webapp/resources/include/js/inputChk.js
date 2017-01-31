@@ -57,7 +57,7 @@ function checkboxChk(main, msg, choice){
 		if(choice == true){
 			main.focus();
 		}
-		alert(msg + "를 선택해 주세요.");
+		alert(msg + " 선택해 주세요.");
 		return false;
 	}
 	else{

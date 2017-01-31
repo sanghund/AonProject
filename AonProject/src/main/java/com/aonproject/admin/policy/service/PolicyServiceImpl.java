@@ -1,9 +1,12 @@
 package com.aonproject.admin.policy.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.admin.policy.dao.PolicyDAO;
 import com.aonproject.admin.policy.vo.PolicyVO;
 
@@ -30,6 +33,18 @@ public class PolicyServiceImpl implements PolicyService{
 	public PolicyVO policyView2() {
 		// TODO Auto-generated method stub
 		return policyDAO.policyView2();
+	}
+
+	@Override
+	public int pagr(AdminVO avo) {
+		// TODO Auto-generated method stub
+		return policyDAO.pagr(avo);
+	}
+
+	@Override
+	public List<AdminVO> adminList(AdminVO avo) {
+		// TODO Auto-generated method stub
+		return policyDAO.adminList(avo);
 	}
 
 }

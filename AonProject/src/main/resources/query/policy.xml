@@ -3,10 +3,10 @@
 <mapper namespace="com.aonproject.admin.policy.dao.PolicyDAO">
 	<!-- 약관 조회 -->
 	<select id="policyView1" resultType="policy">
-		select * from (select po_name, po_content from policy where po_type = '1' order by po_no desc) where rownum = 1
+		select * from (select po_no, po_name, po_content from policy where po_type = '1' order by po_no desc) where rownum = 1
 	</select>
 	<select id="policyView2" resultType="policy">
-		select * from (select po_name, po_content from policy where po_type = '2' order by po_no desc) where rownum = 1
+		select * from (select po_no, po_name, po_content from policy where po_type = '2' order by po_no desc) where rownum = 1
 	</select>
 	
 	<!-- 약관 변경 -->
@@ -17,4 +17,14 @@
 		insert into policy(po_no, po_name, po_content, po_type) 
 		values (#{po_no}, #{po_name}, #{po_content}, #{po_type})
 	</insert>
+	
+	<!-- 약관 동의 -->
+	<insert id="pagr" parameterType="policy">
+		insert into policy_agr(po_no, a_no, pa_confirm) values(#{po_no}, #{a_no}, #{pa_confirm})
+	</insert>
+	
+	<!-- 최근 약관 동의 확인 _ 관리자 -->
+	<select id="adminList">
+		select po_no, a_no, pa_confirm
+	</select>
 </mapper>

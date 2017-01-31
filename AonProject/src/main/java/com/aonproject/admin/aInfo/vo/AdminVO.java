@@ -13,7 +13,9 @@ import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
-public class AdminVO implements UserDetails{
+import com.aonproject.common.util.vo.PolicyAgrVO;
+
+public class AdminVO extends PolicyAgrVO implements UserDetails{
 	
 	/**
 	 * 

@@ -49,7 +49,6 @@ public class PolicyController {
 		else if(vo.getPo_type().equals("2")){
 			vo.setPo_name("개인정보 수집●이용 등에 대한 동의");
 		}
-		logger.info(vo.toString());
 		int gogo = policyService.newPolicy(vo);
 		
 		if(gogo == 1){
@@ -59,5 +58,21 @@ public class PolicyController {
 			result = "fail";
 		}
 		return result;
+	}
+	
+	@RequestMapping(value="/policyAgr")
+	public ModelAndView policyAgr(Authentication auth, @ModelAttribute AdminVO avo){
+		logger.info("policyAgr 호출 성공");
+		ModelAndView mav = new ModelAndView();
+		UserDetails vo = (AdminVO) auth.getPrincipal();
+		mav.addObject("vo", vo);
+		mav.addObject("adminAgr", policyService.adminList(avo));
+		/*mav.addObject("memberAgr", policyService.memberList());
+		mav.addObject("nonmemberAgr", policyService.nonmemberList());
+		*/
+		
+		mav.setViewName("admin/policy/policyAgr");
+		
+		return mav;
 	}
 }
