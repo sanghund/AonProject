@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.aonproject.admin.aInfo.service.AdminService;
 import com.aonproject.admin.aInfo.vo.AdminVO;
+import com.aonproject.admin.policy.service.PolicyService;
 import com.aonproject.common.util.security.ShaEncoder;
 
 @Controller
@@ -27,6 +28,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private PolicyService policyService;
 	
 	@RequestMapping(value = "/login")
 	public String loginForm(){
@@ -53,6 +57,7 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView();
 		AdminVO vo = (AdminVO) auth.getPrincipal();
 		mav.addObject("vo", vo);
+		mav.addObject("view2", policyService.policyView2());
 		mav.setViewName("admin/aInfo/joinForm");
 		
 		return mav;

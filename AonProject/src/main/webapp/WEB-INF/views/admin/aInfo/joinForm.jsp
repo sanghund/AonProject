@@ -62,15 +62,25 @@
 		#choiceEmailType{
 			height: 32px;
 		}
+		.policy{
+			margin-top: 30px;
+			
+		}
+		#privacy{
+			border: 1px solid #73879C;
+			padding: 10px;
+		}
+		#privacy textarea{
+			resize: none;
+			width: 100%;
+			height: 200px;
+		}
 }
 	</style>
 	
 	<div class = "main">
 		<h2 id = "mTitle">회원가입</h2>
 		<form id = "joinForm" name = "joinForm">
-			<div class = "policy">
-				<!-- 약관 들어가야함 -->
-			</div>
 			<div id = "join">
 				<h3>회원 정보 입력</h3>
 				<div><span class = "array">아이디</span><input type = "text" maxlength="20" id = "a_id" name = "a_id"><span id = "idChkMsg"></span></div>	
@@ -113,6 +123,16 @@
 					</div>
 				</div>	
 			</div>
+			<div class = "policy">
+				<div id = "privacy">
+					<h3>${view2.po_name }</h3>
+						<textarea readonly="readonly" class = "po_content" name = "po_content">${view2.po_content }</textarea>
+					<div class = "chkLine">
+						<input type="checkbox" id = "privacyChk" name = "privacyChk">
+						<label for="privacyChk">개인정보 수집에 동의합니다.</label>
+					</div>
+				</div>
+			</div>
 			<input type = "hidden" id = "a_tel" name = "a_tel">
 			<input type = "hidden" id = "a_email" name = "a_email">
 			<input type = "hidden" id = "a_addr" name = "a_addr">
@@ -131,6 +151,8 @@
 	<script type="text/javascript">
     	$(document).ready(function(){
     		var omg = "#!@@!#";
+    		
+    		$(".policy textarea").attr("readonly", "readonly");
     		
     		// 다음 포커스
     		$("#a_id").keydown(function(event){
@@ -239,6 +261,9 @@
     			}
     			else if(!pwdSameChk){
     				$("#a_pwd2").focus();
+    				return;
+    			}
+    			else if(!checkboxChk($("#privacyChk"), "개인정보 약관을")){
     				return;
     			}
     			else{

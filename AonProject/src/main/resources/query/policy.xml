@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aonproject.admin.policy.dao.PolicyDAO">
+	<!-- 약관 조회 -->
+	<select id="policyView1" resultType="policy">
+		select * from (select po_name, po_content from policy where po_type = '1' order by po_no desc) where rownum = 1
+	</select>
+	<select id="policyView2" resultType="policy">
+		select * from (select po_name, po_content from policy where po_type = '2' order by po_no desc) where rownum = 1
+	</select>
+	
+	<!-- 약관 변경 -->
+	<insert id="newPolicy" parameterType="policy">
+		<selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="po_no">
+			select policy_seq.nextval from dual
+		</selectKey>
+		insert into policy(po_no, po_name, po_content, po_type) 
+		values (#{po_no}, #{po_name}, #{po_content}, #{po_type})
+	</insert>
+</mapper>
