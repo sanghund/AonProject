@@ -20,4 +20,9 @@
 		/* upload - uploadUpdate */
 		update product_img set pi_file = #{pi_file} where pi_no = #{pi_no} and p_no = #{p_no}
 	</update>
+	
+	<delete id="uploadDelete" parameterType="upload">
+		/* upload - uploadDelete */
+		delete from product_img where p_no = #{p_no}
+	</delete>
 </mapper>

@@ -14,6 +14,7 @@ public class ProductVO {
 	private String p_date;		//등록일
 	private int ca_no;			//카테고리 번호
 	private String p_type;		//상품타입
+	private String p_del;		//상품삭제여부
 	
 	//카테고리 노출 필드 선언
 	private String ca_name;		//카테고리 이름
@@ -29,6 +30,12 @@ public class ProductVO {
 	
 	
 	
+	public String getP_del() {
+		return p_del;
+	}
+	public void setP_del(String p_del) {
+		this.p_del = p_del;
+	}
 	public MultipartFile getFile() {
 		return file;
 	}

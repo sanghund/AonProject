@@ -9,4 +9,5 @@ public interface ProductDAO {
 	public ProductVO productDetail(ProductVO pvo);
 	public int productInsert(ProductVO pvo);
 	public int productUpdate(ProductVO pvo);
+	public int productDelete(ProductVO pvo);
 }

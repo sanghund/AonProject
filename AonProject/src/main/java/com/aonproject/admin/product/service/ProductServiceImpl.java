@@ -50,6 +50,14 @@ public class ProductServiceImpl implements ProductService {
 		result = productDAO.productUpdate(pvo);
 		return result;
 	}
+	
+	/*상품 삭제 구현*/
+	@Override
+	public int productDelete(ProductVO pvo) {
+		int result = 0;
+		result = productDAO.productDelete(pvo);
+		return result;
+	}
 
 	
 

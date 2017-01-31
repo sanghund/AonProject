@@ -45,8 +45,17 @@
 
 		
 		//상품 삭제
-		$("#deleteBtn").click(function(){
-			alert("hi");
+		$("#resetBtn").click(function(){
+			$("#p_no").val("");
+			$("#p_name").val("");
+			$("#p_price").val("");
+			$("#p_fabric").val("");
+			$("#p_caution").val("");
+			$("#ca_no option:eq(0)").attr("selected", "selected");
+			$("#p_type option:eq(0)").attr("selected", "selected");
+			$("#size_code option:eq(0)").attr("selected", "selected");
+			$("#color_code option:eq(0)").attr("selected", "selected");
+			$("#p_discount option:eq(0)").attr("selected", "selected");
 		});
 		
 		//listBtn click event
@@ -89,6 +98,7 @@
 	<!-- 상품 등록, 수정, 삭제 입력 폼 -->
 	<div id="detailContainer">
 		<form id="insertForm" enctype="multipart/form-data">
+			<input type="hidden" id="p_del" name="p_del" value="n">
 			<table>
 				<tbody>
 					<tr>
@@ -233,10 +243,6 @@
 								<input type="file" class="file" name="files[0]" multiple="multiple"><input type="button" class="addFileBtn" value="+">
 							</div>
 						</td>
-					</tr>
-					<tr>
-						<td>등록일</td>
-						<td>${productDetail.p_date}</td>
 					</tr>
 				</tbody>
 			</table>

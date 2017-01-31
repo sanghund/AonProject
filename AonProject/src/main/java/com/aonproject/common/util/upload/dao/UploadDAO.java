@@ -10,4 +10,5 @@ public interface UploadDAO {
 	
 	public int uploadInsert(UploadVO uvo);
 	public int uploadUpdate(UploadVO uvo);
+	public int uploadDelete(UploadVO uvo);
 }

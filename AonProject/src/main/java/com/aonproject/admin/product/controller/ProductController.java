@@ -95,13 +95,19 @@ public class ProductController {
 		return "admin/product/write";
 	}
 	
+	/*상품 등록*/
 	@RequestMapping(value = "/productInsert")
 	public String itemInsert (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
 		logger.info("itemInsert 호출 성공!");
 		mode = "insert";
 		int result = 0;
 		
+		pvo.setP_no(pvo.getP_no()+pvo.getColor_code()+pvo.getSize_code());
+		logger.info((pvo.getP_no()+pvo.getColor_code()));
 		result = productService.productInsert(pvo);
+		
+		uvo.setP_no(pvo.getP_no());
+		logger.info(uvo.getP_no());
 		if(result == 1){
 			List<MultipartFile> files = uvo.getFiles();
 			
@@ -120,30 +126,6 @@ public class ProductController {
 		return "redirect:"+url;
 	}
 	
-	public int imgInsert(UploadVO uvo, HttpServletRequest request) throws IOException {
-		int fileResult = 0;
-		
-		logger.info(uvo.getFile());
-		
-		String pi_file = FileUploadUtil.fileUpload(uvo.getP_no(), uvo.getFile(), request);
-		uvo.setPi_file(pi_file);
-		if(pi_file != null){
-			if(mode == "insert"){
-				logger.info("mode="+mode);
-				fileResult = uploadService.uploadInsert(uvo);
-			}else if(mode == "update"){
-				logger.info("mode="+mode);
-				fileResult = uploadService.uploadUpdate(uvo);
-			}
-			if(fileResult == 1){
-				logger.info("fileResult="+fileResult);
-			}else{
-				logger.info("fileResult="+fileResult);
-			}
-		}
-		return fileResult;
-	}
-	
 	/*상품 업데이트*/
 	@RequestMapping(value = "/productUpdate")
 	public String itemUpdate (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
@@ -157,8 +139,15 @@ public class ProductController {
 		if(result == 1){
 			List<MultipartFile> files = uvo.getFiles();
 			
-			if(files != null && files.size()>0){
+			logger.info("filesSize="+files.size());
+			/*파일명 확인*/
+			logger.info("files="+files.get(0).getOriginalFilename().toString());
+			
+			String fileChk = files.get(0).getOriginalFilename().toString();
+			
+			if(fileChk != ""){
 				FileUploadUtil.fileDelete(uvo.getPi_file(), request);
+				uploadService.uploadDelete(uvo);
 				for(MultipartFile file : files ){
 					uvo.setFile(file);
 					int fileResult = imgInsert(uvo, request);
@@ -173,6 +162,54 @@ public class ProductController {
 		
 		return "redirect:"+url;
 	}
+	
+	/*상품이미지 등록, 수정*/
+	public int imgInsert(UploadVO uvo, HttpServletRequest request) throws IOException {
+		int fileResult = 0;
+		
+		logger.info(uvo.getFile());
+		String pi_file = FileUploadUtil.fileUpload(uvo.getP_no(), uvo.getFile(), request);
+		uvo.setPi_file(pi_file);
+		if(pi_file != null){
+			if(mode == "insert"){
+				logger.info("mode="+mode);
+				fileResult = uploadService.uploadInsert(uvo);
+			}else if(mode == "update"){
+				logger.info("mode="+mode);
+				//fileResult = uploadService.uploadUpdate(uvo);
+				fileResult = uploadService.uploadInsert(uvo);
+			}
+			if(fileResult == 1){
+				logger.info("fileResult="+fileResult);
+			}else{
+				logger.info("fileResult="+fileResult);
+			}
+		}
+		return fileResult;
+	}
+	
+	/*상품 삭제*/
+	@RequestMapping(value = "/productDelete")
+	public String itemDelete (@ModelAttribute ProductVO pvo) {
+		mode = "update";
+		logger.info("itemDelete 호출 성공!");
+		logger.info("p_no="+pvo.getP_no());
+		logger.info("p_name="+pvo.getP_name());
+		logger.info("p_del="+pvo.getP_del());
+		
+		int result = 0;
+		result = productService.productDelete(pvo);
+		
+		if(result == 1){
+			logger.info("success = "+result);
+		}else {
+			logger.info("fail = "+result);
+		}
+		
+		String url = "product";
+		return "redirect:"+url;
+	}
+	
 	
 	
 			

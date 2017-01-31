@@ -38,6 +38,13 @@ public class UploadServiceImpl implements UploadService {
 		return result;
 	}
 
+	@Override
+	public int uploadDelete(UploadVO uvo) {
+		int result = 0;
+		result = uploadDAO.uploadDelete(uvo);
+		return result;
+	}
+
 
 	
 }

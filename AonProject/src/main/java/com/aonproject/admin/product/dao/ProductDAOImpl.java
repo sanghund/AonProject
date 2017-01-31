@@ -41,6 +41,12 @@ public class ProductDAOImpl implements ProductDAO {
 	public int productUpdate(ProductVO pvo) {
 		return session.update("productUpdate", pvo);
 	}
+	
+	//상품삭제
+	@Override
+	public int productDelete(ProductVO pvo) {
+		return session.delete("productDelete", pvo);
+	}
 
 	
 

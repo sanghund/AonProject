@@ -32,6 +32,11 @@ public class UploadDAOImpl implements UploadDAO {
 		return session.update("uploadUpdate", uvo);
 	}
 
+	@Override
+	public int uploadDelete(UploadVO uvo) {
+		return session.delete("uploadDelete", uvo);
+	}
+
 	
 	
 	

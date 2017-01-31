@@ -61,7 +61,13 @@
 		
 		//상품 삭제
 		$("#deleteBtn").click(function(){
-			alert("hi");
+			inputEnable();
+			$("#p_del").val("y");
+			$("#detailForm").attr({
+				"method" : "post",
+				"action" : "/admin/productDelete"
+			});
+			$("#detailForm").submit();
 		});
 		
 		//listBtn click event
@@ -78,9 +84,24 @@
 		$(document).on("click", ".removeFileBtn", function(){
 			$(this).parent().remove();
 		})
-	
+
+		//파일명 hover시 이미지 확인
+		var img = $("<img>");
+		$(".imgThumb").hover(function(){
+			var target = $(this).html();
+			$(this).css({"color" : "#ff0000"});
+			img.attr({
+				"src" 		: "/productUpload/"+target,
+				"display" 	: "block",
+				"width" 	: "300px"
+			});
+			$(this).parent().find(".imgThumbContainer").append(img);
+		},function(){
+			$(this).css({"color" : "#000000"});
+			img.remove();
+		})
 	})
-	
+		
 	//파일첨부 추가 버튼 생성
 	function addFile(){
 		var fileInput = $("<input>");
@@ -120,6 +141,7 @@
 	<!-- 상품 등록, 수정, 삭제 입력 폼 -->
 	<div id="detailContainer">
 		<form id="detailForm" enctype="multipart/form-data">
+			<input type="hidden" id="p_del" name="p_del">
 			<table>
 				<tbody>
 					<tr>
@@ -265,12 +287,15 @@
 								<c:choose>
 									<c:when test="${not empty uploadList}">
 										<c:forEach var="uploadList" items="${uploadList}">
-											<input type="file" class="file" name="files[0]" value="${uploadList.pi_file}"><input type="button" class="addFileBtn" value="+">
-											<img src="/productUpload/${uploadList.pi_file}" width="300" >
-											<!-- /productUpload/ -->${uploadList.pi_file}
+											<%-- <img src="/productUpload/${uploadList.pi_file}" width="300" > --%>
+											<div>
+												imgFile :<span class="imgThumb">${uploadList.pi_file}</span>
+												<div class="imgThumbContainer"></div>
+											</div>
 										</c:forEach>
 									</c:when>
 								</c:choose>
+								<input type="file" class="file" name="files[0]"><input type="button" class="addFileBtn" value="+">
 							</div>
 						</td>
 					</tr>
