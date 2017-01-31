@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="adminMain" template="/resources/template/adminLayout.jsp">
+		<put-attribute name="header" value="/resources/template/admin/header.jsp" />
+		<put-attribute name="nav" value="/resources/template/admin/nav.jsp" />
+		<put-attribute name="main" value="" />
+	</definition>
+	
+	<!-- main 페이지 -->
+	<definition name="admin/main" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/main.jsp" />
+	</definition>
+	<!-- 관리자 회원가입 페이지 -->
+	<definition name="admin/aInfo/joinForm" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/aInfo/joinForm.jsp" />
+	</definition>
+	<!-- 관리자 계정 정보 수정페이지 -->
+	<definition name="admin/aInfo/myPage" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/aInfo/myPage.jsp"></put-attribute>
+	</definition>
+	<!-- 약관 정보 페이지 -->
+	<definition name="admin/policy/policy" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/policy/policy.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 카테고리 리스트 페이지 -->
+	<definition name="admin/category/main" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/category/main.jsp"></put-attribute>
+	</definition>
+	
+	<!-- 상품 리스트 페이지 -->
+	<definition name="admin/product/main" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/product/main.jsp"></put-attribute>
+	</definition>
+	<!-- 상품 상세 페이지 -->
+	<definition name="admin/product/detail" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/product/detail.jsp"></put-attribute>
+	</definition>
+	<!-- 상품 신규 등록 페이지 -->
+	<definition name="admin/product/write" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/product/write.jsp"></put-attribute>
+	</definition>
+	
+</tiles-definitions>

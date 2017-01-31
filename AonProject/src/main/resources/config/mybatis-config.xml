@@ -7,5 +7,6 @@
 		<typeAlias type="com.aonproject.admin.category.vo.CategoryVO" alias="category"/>
 		<typeAlias type="com.aonproject.admin.commoncode.vo.CommonCodeVO" alias="commonCode"/>
 		<typeAlias type="com.aonproject.common.util.upload.vo.UploadVO" alias="upload"/>
+		<typeAlias type="com.aonproject.admin.policy.vo.PolicyVO" alias="policy"/>
 	</typeAliases>
 </configuration>

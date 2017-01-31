@@ -11,24 +11,19 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.aonproject.admin">
+	<logger name="com.aonproject.common.util">
 		<level value="info" />
 	</logger>
-	<logger name="com.aonproject.admin.dao">
+	<logger name="com.aonproject.admin.aInfo">
+		<level value="info" />
+	</logger>
+	<logger name="com.aonproject.admin.aInfo.dao">
 		<level value="TRACE"></level>
 	</logger>
-	
-	<logger name="com.aonproject.member">
+	<logger name="com.aonproject.admin.policy">
 		<level value="info" />
 	</logger>
-	<logger name="com.aonproject.member.dao">
-		<level value="TRACE"></level>
-	</logger>
-	
-	<logger name="com.aonproject.nonMember">
-		<level value="info" />
-	</logger>
-	<logger name="com.aonproject.nonMember.dao">
+	<logger name="com.aonproject.admin.policy.dao">
 		<level value="TRACE"></level>
 	</logger>
 	

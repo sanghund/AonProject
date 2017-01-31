@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
-import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 
 @Controller
 @RequestMapping(value = "/admin")
