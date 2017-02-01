@@ -23,4 +23,8 @@
 	<definition name="admin/policy/policy" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/policy/policy.jsp"></put-attribute>
 	</definition>
+	<!-- 약관 동의여부 목록 페이지 -->
+	<definition name="admin/policy/policyAgr" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/policy/policyAgr.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

@@ -129,7 +129,7 @@
 					<h3>${view2.po_name }</h3>
 						<textarea readonly="readonly" class = "po_content" name = "po_content">${view2.po_content }</textarea>
 					<div class = "chkLine">
-						<input type="checkbox" id = "privacyChk" name = "privacyChk" value="privacy">
+						<input type="checkbox" id = "privacyChk" name = "privacyChk" value="동의">
 						<label for="privacyChk">개인정보 수집에 동의합니다.</label>
 					</div>
 				</div>

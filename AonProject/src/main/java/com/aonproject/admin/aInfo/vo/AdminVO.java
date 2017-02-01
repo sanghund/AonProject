@@ -1,6 +1,7 @@
 package com.aonproject.admin.aInfo.vo;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,6 +33,15 @@ public class AdminVO extends PolicyAgrVO implements UserDetails{
 	private String a_date = ""; // 등록일
 	private Set<GrantedAuthority> authorities; // 계정이 가지고 있는 권한 목록
 	
+	@Override
+	public String toString() {
+		return "AdminVO [a_no=" + a_no + ", a_id=" + a_id + ", a_pwd=" + a_pwd + ", a_name=" + a_name + ", a_addr="
+				+ a_addr + ", a_tel=" + a_tel + ", a_email=" + a_email + ", a_date=" + a_date + ", authorities="
+				+ authorities + ", pageNum=" + pageNum + ", totalCount=" + totalCount + ", countList=" + countList
+				+ ", countPage=" + countPage + ", totalPage=" + totalPage + ", pageTotal=" + Arrays.toString(pageTotal)
+				+ ", start_data=" + start_data + ", end_data=" + end_data + "]";
+	}
+
 	public AdminVO() {}
 	
 	public AdminVO(int a_no, String a_id, String a_pwd, Collection<? extends GrantedAuthority> authorities) {
@@ -182,4 +192,62 @@ public class AdminVO extends PolicyAgrVO implements UserDetails{
 		return true;
 	}
 	
+	// 클래스 관계 설계 미스... 페이징
+	private String pageNum = "0"; // 페이지 번호
+	private int totalCount = 0; // 총 데이터 수
+	private int countList = 0; // 한 페이지당 보여줄 데이터 개수
+	private int countPage = 0; // 한 페이지당 보여줄 페이지 번호 수
+	private int totalPage = 0; // 보여줄 페이지 번호의 마지막 번호
+	private int[] pageTotal = null; // 보여줄 페이지 번호들
+	private int start_data = 0; // 한 페이지에 보여줄 데이터 시작 번호
+	private int end_data = 0; // // 한 페이지에 보여줄 데이터 끝 번호
+	
+	public String getPageNum() {
+		return pageNum;
+	}
+	public void setPageNum(String pageNum) {
+		this.pageNum = pageNum;
+	}
+	public int getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+	public int getCountList() {
+		return countList;
+	}
+	public void setCountList(int countList) {
+		this.countList = countList;
+	}
+	public int getCountPage() {
+		return countPage;
+	}
+	public void setCountPage(int countPage) {
+		this.countPage = countPage;
+	}
+	public int getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+	public int[] getPageTotal() {
+		return pageTotal;
+	}
+	public void setPageTotal(int[] pageTotal) {
+		this.pageTotal = pageTotal;
+	}
+	public int getStart_data() {
+		return start_data;
+	}
+	public void setStart_data(int start_data) {
+		this.start_data = start_data;
+	}
+	public int getEnd_data() {
+		return end_data;
+	}
+	public void setEnd_data(int end_data) {
+		this.end_data = end_data;
+	}
 }

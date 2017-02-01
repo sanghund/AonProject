@@ -47,4 +47,10 @@ public class PolicyServiceImpl implements PolicyService{
 		return policyDAO.adminList(avo);
 	}
 
+	@Override
+	public int adminListCnt(AdminVO avo) {
+		// TODO Auto-generated method stub
+		return policyDAO.adminListCnt(avo);
+	}
+
 }

@@ -11,4 +11,5 @@ public interface PolicyDAO {
 	public PolicyVO policyView2();
 	public int pagr(AdminVO avo);
 	public List<AdminVO> adminList(AdminVO avo);
+	public int adminListCnt(AdminVO avo);
 }

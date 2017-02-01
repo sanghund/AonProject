@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.admin.policy.service.PolicyService;
 import com.aonproject.admin.policy.vo.PolicyVO;
+import com.aonproject.client.mInfo.vo.MemberVO;
+import com.aonproject.common.util.paging.PagingSet;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -61,12 +63,17 @@ public class PolicyController {
 	}
 	
 	@RequestMapping(value="/policyAgr")
-	public ModelAndView policyAgr(Authentication auth, @ModelAttribute AdminVO avo){
+	public ModelAndView policyAgr(Authentication auth, @ModelAttribute AdminVO avo, @ModelAttribute MemberVO mvo){
 		logger.info("policyAgr 호출 성공");
 		ModelAndView mav = new ModelAndView();
 		UserDetails vo = (AdminVO) auth.getPrincipal();
 		mav.addObject("vo", vo);
+		
+		int adminCnt = policyService.adminListCnt(avo);
+		PagingSet.setPageing(avo, adminCnt);
 		mav.addObject("adminAgr", policyService.adminList(avo));
+		mav.addObject("adminVO", avo);
+		logger.info(avo.toString());
 		/*mav.addObject("memberAgr", policyService.memberList());
 		mav.addObject("nonmemberAgr", policyService.nonmemberList());
 		*/

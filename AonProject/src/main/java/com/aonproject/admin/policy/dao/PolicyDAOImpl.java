@@ -44,4 +44,10 @@ public class PolicyDAOImpl implements PolicyDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("adminList", avo);
 	}
+
+	@Override
+	public int adminListCnt(AdminVO avo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adminListCnt", avo);
+	}
 }

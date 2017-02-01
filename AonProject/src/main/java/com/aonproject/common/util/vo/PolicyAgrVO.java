@@ -6,6 +6,28 @@ public class PolicyAgrVO extends PolicyVO{
 	private String pa_confirm = "";
 	private String pa_date = "";
 	
+	private String adminSearch = "";
+	private String memberSearch = "";
+	private String nonmemberSearch = "";
+	
+	public String getAdminSearch() {
+		return adminSearch;
+	}
+	public void setAdminSearch(String adminSearch) {
+		this.adminSearch = adminSearch;
+	}
+	public String getMemberSearch() {
+		return memberSearch;
+	}
+	public void setMemberSearch(String memberSearch) {
+		this.memberSearch = memberSearch;
+	}
+	public String getNonmemberSearch() {
+		return nonmemberSearch;
+	}
+	public void setNonmemberSearch(String nonmemberSearch) {
+		this.nonmemberSearch = nonmemberSearch;
+	}
 	public String getPa_confirm() {
 		return pa_confirm;
 	}
