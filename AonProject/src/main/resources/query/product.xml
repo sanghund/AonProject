@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aonproject.admin.product.dao.ProductDAO">
+	<!-- 상품 리스트 조회 -->
+	<select id="productList" resultType="product" parameterType="product">
+		/* product - productList */
+		<!-- select p_no, category.ca_name, p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_Date
+		from product inner join category on product.ca_no = category.ca_no -->
+		select p_no, category.ca_name, p_type_cd.cc_name "p_type_name", p_name, p_price, p_discount, 
+			   color_cd.cc_name "color", upper(size_cd.cc_name) "size", p_fabric, p_caution, 
+			   to_char(p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date
+		from product 
+		left join category on product.ca_no = category.ca_no 
+		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
+		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
+		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no) 
+		where p_del = 'n'
+		order by p_date desc
+	</select>
+	
+	<!-- 상품  디테일 조회 -->
+	<select id="productDetail" resultType="product" parameterType="product">
+		/* product - productDetail */
+		select p_no,  p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_date, ca_no 
+		from product where p_no like #{p_no}
+	</select>
+	
+	<!-- 상품 신규등록 -->
+	<insert id="productInsert" parameterType="product">
+		/* product - productInsert */
+		insert into product(p_no, p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, ca_no, p_del) 
+					 values(upper(#{p_no}), #{p_type}, #{p_name}, #{p_price}, #{p_discount}, #{color_code}, #{size_code}, #{p_fabric}, #{p_caution}, #{ca_no}, #{p_del})
+	</insert>
+	
+	<!-- 상품 정보 업데이트 -->
+	<update id="productUpdate" parameterType="product">
+		/* product - productUpdate */
+		update product set p_name = #{p_name},
+						   p_price = #{p_price},
+						   p_discount = #{p_discount},
+						   color_code = #{color_code},
+						   size_code = #{size_code},
+						   p_fabric = #{p_fabric},
+						   p_caution = #{p_caution},
+						   ca_no = #{ca_no},
+						   p_type = #{p_type}
+		where p_no = #{p_no}
+	</update>
+	
+	<update id="productDelete" parameterType="product">
+		/* product - productDelete */
+		update product set p_del = #{p_del} where p_no = #{p_no}
+	</update>
+</mapper>
