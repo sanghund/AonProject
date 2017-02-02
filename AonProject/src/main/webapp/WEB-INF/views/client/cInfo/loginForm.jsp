@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,6 +60,31 @@
 	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 	<script type = "text/javascript">
 		$(document).ready(function(){
+			$("#gogoM").click(function(){
+				$.ajax({
+					url : "/mloginChk",
+					data : $("#memberLoginGo").serialize(),
+					type : "post",
+					dataType : "json",
+					beforeSend: function(xhr) { 
+						xhr.setRequestHeader("Accept", "application/json"); 
+					}
+				}).done(function(body){
+					var message = body.response.message; 
+					var error = body.response.error; 
+					var returnUrl = body.response.returnUrl;
+					
+					if (error) alert(message); 
+					if (error == false) {
+						var url = '${referer}'; 
+						if(url == '') url = returnUrl;
+						if(url == "") url = '<c:url value="/"/>';
+						location.href = url; 
+					}
+				})	
+			});
+			
+			
 			$("#newJoin").click(function(){
 				location.href = "/join"
 			});
