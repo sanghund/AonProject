@@ -1,7 +1,10 @@
 package com.aonproject.admin.policy.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -63,17 +66,24 @@ public class PolicyController {
 	}
 	
 	@RequestMapping(value="/policyAgr")
-	public ModelAndView policyAgr(Authentication auth, @ModelAttribute AdminVO avo, @ModelAttribute MemberVO mvo){
+	public ModelAndView policyAgr(Authentication auth, @ModelAttribute AdminVO avo, @ModelAttribute MemberVO mvo, HttpServletRequest request){
 		logger.info("policyAgr 호출 성공");
 		ModelAndView mav = new ModelAndView();
 		UserDetails vo = (AdminVO) auth.getPrincipal();
 		mav.addObject("vo", vo);
 		
+		
+		String adminPageNum = request.getParameter("adminPageNum");
+		if(adminPageNum != null){
+			avo.setPageNum(adminPageNum);
+		}
+		
 		int adminCnt = policyService.adminListCnt(avo);
 		PagingSet.setPageing(avo, adminCnt);
 		mav.addObject("adminAgr", policyService.adminList(avo));
 		mav.addObject("adminVO", avo);
-		logger.info(avo.toString());
+		
+		
 		/*mav.addObject("memberAgr", policyService.memberList());
 		mav.addObject("nonmemberAgr", policyService.nonmemberList());
 		*/

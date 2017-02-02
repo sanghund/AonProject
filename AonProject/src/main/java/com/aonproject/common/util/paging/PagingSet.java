@@ -9,7 +9,7 @@ public class PagingSet {
 		vo.setTotalCount(cnt);
 		
 		if(vo.getCountList() == 0) vo.setCountList(1);
-		if(vo.getCountPage() == 0) vo.setCountPage(5);
+		if(vo.getCountPage() == 0) vo.setCountPage(1);
 		
 		vo.setTotalPage(vo.getTotalCount() / vo.getCountList());
 		
@@ -63,7 +63,7 @@ public class PagingSet {
 		int pageNum;
 		vo.setTotalCount(cnt);
 		
-		if(vo.getCountList() == 0) vo.setCountList(1);
+		if(vo.getCountList() == 0) vo.setCountList(5);
 		if(vo.getCountPage() == 0) vo.setCountPage(5);
 		
 		vo.setTotalPage(vo.getTotalCount() / vo.getCountList());
