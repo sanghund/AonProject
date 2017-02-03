@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset=UTF-8>
-<title>Insert title here</title>
-</head>
-<body>
 	<div class = "main">
 		<h2 id = "aTitle">Aon</h2>
 		<div class = "loginBox">
@@ -23,13 +16,13 @@
 					<div class = "loginPwd">
 						<input type = "password" id = "memberPwd" name = "memberPwd">
 					</div>
-					<div class = "searchIdPwd">
-						<a href = "#">아이디/비밀번호 찾기</a>
-					</div>
-					<div id ="memberLoginBtn" class = "loginBtn">
-						<input type = "button" id = "gogoM" value="로그인">
-					</div>
 				</form>
+				<div class = "searchIdPwd">
+					<a href = "#">아이디/비밀번호 찾기</a>
+				</div>
+				<div id ="memberLoginBtn" class = "loginBtn">
+					<input type = "button" id = "gogoM" value="로그인">
+				</div>
 			</div>
 		</div>
 		<div class = "joinBox">
@@ -73,5 +66,3 @@
 			});
 		});
 	</script>
-</body>
-</html>

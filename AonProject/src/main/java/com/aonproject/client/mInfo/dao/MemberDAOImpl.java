@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,7 +21,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.stereotype.Repository;
 
-import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
 
 @Repository
@@ -45,7 +45,7 @@ public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
 			throw ue;
 		}
 		
-		AdminVO user = (AdminVO) users.get(0);
+		MemberVO user = (MemberVO) users.get(0);
 		
 		Set<GrantedAuthority> dbAuthsSet = new HashSet<GrantedAuthority>();
 		
@@ -88,6 +88,7 @@ public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
 	return getJdbcTemplate().query(getAuthoritiesByUsernameQuery(), new String[] {username}, new RowMapper<GrantedAuthority>() {
 		public GrantedAuthority mapRow(ResultSet rs, int rowNum) throws SQLException {
 			String roleName = getRolePrefix() + rs.getString(1);
+
 			return new SimpleGrantedAuthority(roleName);
 			}
 		});
@@ -97,7 +98,24 @@ public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
 		// TODO Auto-generated method stub
 		return super.loadGroupAuthorities(username);
 	}
+	
 
 	// 아래서부터 MemberDAO 구현
+	
+	@Autowired
+	private SqlSession sqlSession;
+	
+	@Override
+	public int joinGo(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("joinGo", vo);
+	}
+
+	@Override
+	public int newNo() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("newNo");
+	}
+
 
 }

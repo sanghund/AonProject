@@ -12,7 +12,7 @@ $(".noticeList").click(function() {
 <div id="left" >
 	<div class="left_inner">
 		<div class="main_logo">
-			<a href="/main">
+			<a href="/">
 				All <br>OR Nothing
 			</a>
 		</div>

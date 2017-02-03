@@ -52,7 +52,7 @@ public class PolicyController {
 			vo.setPo_name("이용약관 및 청약철회 방침");
 		}
 		else if(vo.getPo_type().equals("2")){
-			vo.setPo_name("개인정보 수집●이용 등에 대한 동의");
+			vo.setPo_name("개인정보 수집·이용 등에 대한 동의");
 		}
 		int gogo = policyService.newPolicy(vo);
 		

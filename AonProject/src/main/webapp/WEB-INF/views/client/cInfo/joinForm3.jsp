@@ -63,27 +63,27 @@
 		<form id = "joinForm" name = "joinForm">
 			<div id = "join">
 				<h3>회원 정보 입력</h3>
-				<div><span class = "array">아이디</span><input type = "text" maxlength="20" id = "m_id" name = "m_id"><span id = "idChkMsg"></span></div>	
-				<div><span class = "array">비밀번호</span><input type = "password" maxlength="20" id = "m_pwd" name = "m_pwd"><span id = "pwdChkMsg1"></span></div>	
-				<div><span class = "array">비밀번호 확인</span><input type = "password" maxlength="20" id = "m_pwd2" name = "m_pwd2"><span id = "pwdChkMsg2"></span></div>		
-				<div><span class = "array">이름</span><input type = "text" maxlength="20" id = "m_name" name = "m_name"><span id = "nameChkMsg"></span></div>		
+				<div><span class = "array">아이디</span><input type = "text" maxlength="20" id = "a_id" name = "a_id"><span id = "idChkMsg"></span></div>	
+				<div><span class = "array">비밀번호</span><input type = "password" maxlength="20" id = "a_pwd" name = "a_pwd"><span id = "pwdChkMsg1"></span></div>	
+				<div><span class = "array">비밀번호 확인</span><input type = "password" maxlength="20" id = "a_pwd2" name = "a_pwd2"><span id = "pwdChkMsg2"></span></div>		
+				<div><span class = "array">이름</span><input type = "text" maxlength="20" id = "a_name" name = "a_name"><span id = "nameChkMsg"></span></div>		
 				<div>
-					<span class = "array">성별</span><input type = "radio" checked="checked" value="m" id = "m_gender1" name = "m_gender">
+					<span class = "array">성별</span><input type = "radio" checked="checked" maxlength="20" id = "m_gender1" name = "m_gender">
 					<label for = "m_gender1">남자</label>
-					<input type = "radio" maxlength="20" id = "m_gender2" name = "m_gender" value="f">
+					<input type = "radio" maxlength="20" id = "m_gender2" name = "m_gender">
 					<label for="m_gender2">여자</label>
 					<span id = "genderChkMsg"></span>
 				</div>
 				<div>
-					<span class = "array">핸드폰</span><input type = "text" maxlength="4" id = "m_tel1" name = "m_tel1">
-					<input type = "text" maxlength="4" id = "m_tel2" name = "m_tel2">
-					<input type = "text" maxlength="4" id = "m_tel3" name = "m_tel3">
+					<span class = "array">핸드폰</span><input type = "text" maxlength="4" id = "a_tel1" name = "a_tel1">
+					<input type = "text" maxlength="4" id = "a_tel2" name = "a_tel2">
+					<input type = "text" maxlength="4" id = "a_tel3" name = "a_tel3">
 					<span id = "telChkMsg"></span>
 				</div>		
 				<div>
-					<span class = "array">이메일</span><input type = "text" maxlength="30" id = "m_email1" name = "m_email1">
+					<span class = "array">이메일</span><input type = "text" maxlength="30" id = "a_email1" name = "a_email1">
 					<span id = "arroba">@</span>
-					<input type = "text" maxlength="30" id = "m_email2" name = "m_email2">
+					<input type = "text" maxlength="30" id = "a_email2" name = "a_email2">
 					<span id = "addrChkMsg"></span>
 					<select id = "choiceEmailType" name = "choiceEmailType">
 						<option value="none" selected="selected">직접입력</option>
@@ -128,9 +128,10 @@
 					</div>
 				</div>
 			</div>
-			<input type = "hidden" id = "m_tel" name = "m_tel">
-			<input type = "hidden" id = "m_email" name = "m_email">
-			<input type = "hidden" id = "m_addr" name = "m_addr">
+			<input type = "hidden" id = "a_tel" name = "a_tel">
+			<input type = "hidden" id = "a_email" name = "a_email">
+			<input type = "hidden" id = "a_addr" name = "a_addr">
+			<input type = "hidden" id = "po_no" name = "po_no">
 		</form> 
 		<div id = "gogoJoin">
 			<input type = "button" id = "gogo" name = "gogo" value = "회원가입">
@@ -138,22 +139,9 @@
 	</div>
 	
 	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
-	<script src = "/resources/include/js/daumAddr.js"></script>
-	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			var omg = "#!@@!#";
-			
-			// 주소 검색
-    		$("#go").click(function(){
-    			daumAddr();
-    		});
-			
-			// 회원가입 gogo
-			$("#gogo").click(function(){
-				$("#m_tel").val($("#m_tel1").val() + "-" + $("#m_tel2").val() + "-" + $("#m_tel3").val());
-				$("#m_email").val($("#m_email1").val() + $("#arroba").text() + $("#m_email2").val());
-				$("#m_addr").val($("#a_addr1").val() + omg + $("#a_addr2").val() + omg + $("#a_addr3").val());
+			$("#gogoJoin").click(function(){
 				$.ajax({
 					url : "/member/joinGo",
 					data : $("#joinForm").serialize(),
@@ -164,7 +152,7 @@
 					},
 					success : function(result){
 						if(result == "good"){
-							alert($("#m_id").val() + "님 회원가입을 축하드립니다!");
+							alert("회원가입에 성공하였습니다!");
 							location.href = "/";
 						}
 						else{
