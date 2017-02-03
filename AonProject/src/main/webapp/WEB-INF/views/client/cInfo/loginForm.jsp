@@ -31,23 +31,6 @@
 					</div>
 				</form>
 			</div>
-			<div id = "nonMemberLoginForm">
-				<h3>
-					비회원 로그인
-					<small>주문시 입력하신 이메일과 주문 번호로 주문내역을 확인하실수 있습니다.</small>
-				</h3>
-				<form id = "nonmemberLoginGo">
-					<div class = "loginId">
-						<input type = "text" id = "nonmemberId" name = "nonmemberId">
-					</div>
-					<div class = "loginPwd">
-						<input type = "password" id = "nonmemberPwd" name = "nonmemberPwd">
-					</div>
-					<div id ="memberLoginBtn" class = "loginBtn">
-						<input type = "button" id = "gogoNM" value="로그인">
-					</div>
-				</form>
-			</div>
 		</div>
 		<div class = "joinBox">
 			<h3>아직 AON 회원이 아니신가요?</h3>
@@ -62,7 +45,7 @@
 		$(document).ready(function(){
 			$("#gogoM").click(function(){
 				$.ajax({
-					url : "/mloginChk",
+					url : "/member/loginChk",
 					data : $("#memberLoginGo").serialize(),
 					type : "post",
 					dataType : "json",
@@ -86,7 +69,7 @@
 			
 			
 			$("#newJoin").click(function(){
-				location.href = "/join"
+				location.href = "/member/join"
 			});
 		});
 	</script>

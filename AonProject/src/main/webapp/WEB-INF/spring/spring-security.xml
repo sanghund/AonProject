@@ -18,10 +18,9 @@
    </http>
    
    <http authentication-manager-ref="memberManager" auto-config="true" create-session="never" use-expressions="true" disable-url-rewriting="true">
-      <intercept-url pattern="/member/**" access="hasRole('user')"/>
       <intercept-url pattern="/**" access="permitAll"/>
-      <form-login login-processing-url="/mloginChk" username-parameter="memberId" password-parameter="memberPwd" login-page="/login" default-target-url="/" always-use-default-target="false" authentication-success-handler-ref="loginSuccessHandler" authentication-failure-handler-ref="loginFailureHandler" authentication-failure-url="/login" />      
-      <logout logout-success-url="/" logout-url="/logout" invalidate-session="true" />
+      <form-login login-processing-url="/member/loginChk" username-parameter="memberId" password-parameter="memberPwd" login-page="/member/login" default-target-url="/" always-use-default-target="false" authentication-success-handler-ref="loginSuccessHandler" authentication-failure-handler-ref="loginFailureHandler" authentication-failure-url="/member/login" />      
+      <logout logout-success-url="/" logout-url="/member/logout" invalidate-session="true" />
    </http>
    
    <beans:bean id = "logDataSource_pos" class = "org.springframework.jndi.JndiObjectFactoryBean">
