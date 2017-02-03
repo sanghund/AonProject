@@ -1,7 +1,10 @@
 package com.aonproject.admin.policy.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.admin.policy.service.PolicyService;
 import com.aonproject.admin.policy.vo.PolicyVO;
+import com.aonproject.client.mInfo.vo.MemberVO;
+import com.aonproject.common.util.paging.PagingSet;
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -49,7 +54,6 @@ public class PolicyController {
 		else if(vo.getPo_type().equals("2")){
 			vo.setPo_name("개인정보 수집●이용 등에 대한 동의");
 		}
-		logger.info(vo.toString());
 		int gogo = policyService.newPolicy(vo);
 		
 		if(gogo == 1){
@@ -59,5 +63,33 @@ public class PolicyController {
 			result = "fail";
 		}
 		return result;
+	}
+	
+	@RequestMapping(value="/policyAgr")
+	public ModelAndView policyAgr(Authentication auth, @ModelAttribute AdminVO avo, @ModelAttribute MemberVO mvo, HttpServletRequest request){
+		logger.info("policyAgr 호출 성공");
+		ModelAndView mav = new ModelAndView();
+		UserDetails vo = (AdminVO) auth.getPrincipal();
+		mav.addObject("vo", vo);
+		
+		
+		String adminPageNum = request.getParameter("adminPageNum");
+		if(adminPageNum != null){
+			avo.setPageNum(adminPageNum);
+		}
+		
+		int adminCnt = policyService.adminListCnt(avo);
+		PagingSet.setPageing(avo, adminCnt);
+		mav.addObject("adminAgr", policyService.adminList(avo));
+		mav.addObject("adminVO", avo);
+		
+		
+		/*mav.addObject("memberAgr", policyService.memberList());
+		mav.addObject("nonmemberAgr", policyService.nonmemberList());
+		*/
+		
+		mav.setViewName("admin/policy/policyAgr");
+		
+		return mav;
 	}
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> %>
 <%@ page trimDirectiveWhitespaces="true" %>
 	<style type = "text/css">
 		.main{
@@ -128,7 +129,7 @@
 					<h3>${view2.po_name }</h3>
 						<textarea readonly="readonly" class = "po_content" name = "po_content">${view2.po_content }</textarea>
 					<div class = "chkLine">
-						<input type="checkbox" id = "privacyChk" name = "privacyChk">
+						<input type="checkbox" id = "privacyChk" name = "privacyChk" value="동의">
 						<label for="privacyChk">개인정보 수집에 동의합니다.</label>
 					</div>
 				</div>
@@ -136,7 +137,8 @@
 			<input type = "hidden" id = "a_tel" name = "a_tel">
 			<input type = "hidden" id = "a_email" name = "a_email">
 			<input type = "hidden" id = "a_addr" name = "a_addr">
-		</form>
+			<input type = "hidden" id = "po_no" name = "po_no">
+		</form> 
 		<div id = "gogoJoin">
 			<input type = "button" id = "gogo" name = "gogo" value = "회원가입">
 		</div>
@@ -270,6 +272,7 @@
     				$("#a_tel").val($("#a_tel1").val() + "-" + $("#a_tel2").val() + "-" + $("#a_tel3").val());
     				$("#a_email").val($("#a_email1").val() + $("#arroba").text() + $("#a_email2").val());
     				$("#a_addr").val($("#a_addr1").val() + omg + $("#a_addr2").val() + omg + $("#a_addr3").val());
+    				$("#po_no").val("<c:out value = '${view2.po_no }' />");
     				$.ajax({
     					url : "/admin/joinGo",
     					data : $("#joinForm").serialize(),

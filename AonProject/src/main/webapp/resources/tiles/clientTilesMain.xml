@@ -8,21 +8,8 @@
 		<put-attribute name="footer" value="/resources/template/clientMain/footer.jsp" />
 	</definition>
 	
-	<!-- 타일즈 샘플  -->
-	<!--
-	<definition name="admin/product/*" extends="adminMain">
-		<put-attribute name="main" value="/WEB-INF/views/admin/product/{1}.jsp"></put-attribute>
-	</definition>
-	-->
-	
-	<!-- main 페이지 -->
-	<!-- <definition name="client/*" extends="clientProduct">
-		<put-attribute name="main" value="/WEB-INF/views/client/main.jsp" />
-	</definition> -->
-	
 	<!-- 세부 페이지 -->
 	<definition name="*/*" extends="clientProduct">
 		<put-attribute name="main" value="/WEB-INF/views/client/{1}/{2}.jsp" />
 	</definition>
-	
 </tiles-definitions>

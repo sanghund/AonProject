@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -65,7 +66,7 @@ public class AdminController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/joinGo", method=RequestMethod.POST)
-	public String joinGo(@ModelAttribute AdminVO vo){
+	public String joinGo(@ModelAttribute AdminVO vo, @RequestParam("privacyChk") String privacy){
 		logger.info("joinGo 호출 성공");
 		
 		vo.setA_pwd(encoder.encoding(vo.getA_pwd()));
@@ -75,6 +76,14 @@ public class AdminController {
 		int gogo = adminService.joinGo(vo);
 		
 		if (gogo == 1){
+			if(privacy != null){
+				AdminVO avo = new AdminVO();
+				int a_no = adminService.newNo();
+				avo.setA_no(a_no);
+				avo.setPo_no(policyService.policyView2().getPo_no());
+				avo.setPa_confirm(privacy);
+				policyService.pagr(avo);
+			}
 			result = "success";
 		} 
 		else{

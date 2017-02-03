@@ -3,7 +3,7 @@
 
 <nav>
   <div class="logo alignC">
-    <a href="/main" class="brandLogo"><span class="bold">AON</span><br>PROJECT</a>
+    <a href="/" class="brandLogo"><span class="bold">AON</span><br>PROJECT</a>
   </div>
   <ul class="nav tc mb">
     <li><a href="">ABOUT</a></li>

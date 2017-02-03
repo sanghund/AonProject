@@ -8,25 +8,37 @@
       
    <http pattern="/resources/**" security="none"></http>
 
-   <http auto-config="true" create-session="never" use-expressions="true" disable-url-rewriting="true">
+   <http pattern="/admin/**" authentication-manager-ref="adminManager" auto-config="true" create-session="never" use-expressions="true" disable-url-rewriting="true" >
       <intercept-url pattern="/admin/login" access = "permitAll" />
       <intercept-url pattern="/admin/logout" access = "permitAll" />
       <intercept-url pattern="/admin/loginCheck" access = "permitAll" />
       <intercept-url pattern="/admin/**" access="hasRole('admin')"/> 
-      <intercept-url pattern="/**" access="permitAll"/>
       <form-login login-processing-url="/admin/loginChk" username-parameter="adminId" password-parameter="adminPwd" login-page="/admin/login" default-target-url="/admin/main" always-use-default-target="false" authentication-success-handler-ref="loginSuccessHandler" authentication-failure-handler-ref="loginFailureHandler" authentication-failure-url="/admin/login" />      
       <logout logout-success-url="/admin/main" logout-url="/admin/logout" invalidate-session="true" />
+   </http>
+   
+   <http authentication-manager-ref="memberManager" auto-config="true" create-session="never" use-expressions="true" disable-url-rewriting="true">
+      <intercept-url pattern="/**" access="permitAll"/>
+      <form-login login-processing-url="/member/loginChk" username-parameter="memberId" password-parameter="memberPwd" login-page="/member/login" default-target-url="/" always-use-default-target="false" authentication-success-handler-ref="loginSuccessHandler" authentication-failure-handler-ref="loginFailureHandler" authentication-failure-url="/member/login" />      
+      <logout logout-success-url="/" logout-url="/member/logout" invalidate-session="true" />
    </http>
    
    <beans:bean id = "logDataSource_pos" class = "org.springframework.jndi.JndiObjectFactoryBean">
       <beans:property name="jndiName" value="java:comp/env/jdbc/Oracle11g"></beans:property>
    </beans:bean>
    
-   <authentication-manager>
+   <authentication-manager id="adminManager">
       <authentication-provider user-service-ref="adminDAOImpl">
          <password-encoder ref="passwordEncoder"></password-encoder>
       </authentication-provider>
    </authentication-manager>
+   
+   <authentication-manager id="memberManager">
+      <authentication-provider user-service-ref="memberDAOImpl">
+         <password-encoder ref="passwordEncoder"></password-encoder>
+      </authentication-provider>
+   </authentication-manager>
+   
    
    <beans:bean id="adminDAOImpl" class="com.aonproject.admin.aInfo.dao.AdminDAOImpl">
       <beans:property name="dataSource" ref="logDataSource_pos" />
@@ -34,6 +46,15 @@
       <beans:property name="usersByUsernameQuery" value="select a_no, a_id, a_pwd from admin where a_id = ?" />
       
       <beans:property name="authoritiesByUsernameQuery" value = "select a_auth from admin where a_id = ?" />
+      <beans:property name="enableGroups" value="false" />
+   </beans:bean>
+   
+   <beans:bean id="memberDAOImpl" class="com.aonproject.client.mInfo.dao.MemberDAOImpl">
+      <beans:property name="dataSource" ref="logDataSource_pos" />
+      <beans:property name="rolePrefix" value="" />
+      <beans:property name="usersByUsernameQuery" value="select m_no, m_id, m_pwd from member where m_id = ?" />
+      
+      <beans:property name="authoritiesByUsernameQuery" value = "select auth from member, (select 'user' as auth from dual) where m_id = ?" />
       <beans:property name="enableGroups" value="false" />
    </beans:bean>
    

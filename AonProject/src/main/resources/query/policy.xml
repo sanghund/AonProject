@@ -3,10 +3,10 @@
 <mapper namespace="com.aonproject.admin.policy.dao.PolicyDAO">
 	<!-- 약관 조회 -->
 	<select id="policyView1" resultType="policy">
-		select * from (select po_name, po_content from policy where po_type = '1' order by po_no desc) where rownum = 1
+		select * from (select po_no, po_name, po_content from policy where po_type = '1' order by po_no desc) where rownum = 1
 	</select>
 	<select id="policyView2" resultType="policy">
-		select * from (select po_name, po_content from policy where po_type = '2' order by po_no desc) where rownum = 1
+		select * from (select po_no, po_name, po_content from policy where po_type = '2' order by po_no desc) where rownum = 1
 	</select>
 	
 	<!-- 약관 변경 -->
@@ -17,4 +17,41 @@
 		insert into policy(po_no, po_name, po_content, po_type) 
 		values (#{po_no}, #{po_name}, #{po_content}, #{po_type})
 	</insert>
+	
+	<!-- 약관 동의 -->
+	<insert id="pagr" parameterType="policy">
+		insert into policy_agr(po_no, a_no, pa_confirm) values(#{po_no}, #{a_no}, #{pa_confirm})
+	</insert>
+	
+	<!-- 최근 개인정보 이용 약관 동의 확인 _ 관리자 -->
+	<select id="adminList" parameterType="admin" resultType="admin">
+		select c.rnum, c.a_no, c.a_id, c.a_name, c.a_tel, c.a_email, c.po_name, c.pa_confirm, c.pa_date from 
+		(select rownum as rnum, b.a_no, b.a_id, b.a_name, b.a_tel, b.a_email, b.po_name, b.pa_confirm, b.pa_date from 
+		(select a_no, a_id, a_name, a_tel, a_email, po_name, p1.pa_confirm ,to_char(p1.pa_date, 'yyyy-MM-dd hh24:mm:ss') pa_date from 
+		<![CDATA[((select * from (select * from policy where po_type = '2' order by po_no desc) where rownum = 1)]]>
+		INNER join policy_agr p1 using(po_no)) inner join 
+		(select * from admin inner join policy_agr using(a_no)) USING(a_no)
+		<where>
+			<if test="adminSearch != ''">
+				a_id like '%'||#{adminSearch}||'%'
+			</if>
+		</where> 
+		<![CDATA[order by pa_date desc) b where rownum <= #{end_data}) c where c.rnum >= #{start_data}]]>
+		
+	</select>
+	
+	<!-- 최근 개인정보 이용 약관 동의 확인 수 _ 관리자 -->
+	<select id="adminListCnt" parameterType="admin" resultType="java.lang.Integer">
+		select count(*) from 
+		(select a_no, a_id, a_name, a_tel, a_email, po_name, p1.pa_confirm ,to_char(p1.pa_date, 'yyyy-MM-dd hh24:mm:ss') pa_date from 
+		((select * from (select * from policy where po_type = '2' order by po_no desc) where rownum = 1) 
+		INNER join policy_agr p1 using(po_no)) inner join 
+		(select * from admin inner join policy_agr using(a_no)) USING(a_no) 
+		<where>
+			<if test="adminSearch != ''">
+				a_id like '%'||#{adminSearch}||'%'
+			</if>
+		</where>
+		order by pa_date desc)	
+	</select>
 </mapper>
