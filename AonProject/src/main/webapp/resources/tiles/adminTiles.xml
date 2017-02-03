@@ -4,17 +4,31 @@
 	<definition name="adminMain" template="/resources/template/adminLayout.jsp">
 		<put-attribute name="header" value="/resources/template/admin/header.jsp" />
 		<put-attribute name="nav" value="/resources/template/admin/nav.jsp" />
-		<put-attribute name="main" value="" />
+		<put-attribute name="body" value="" />
 	</definition>
 	
 	<definition name="admin/main" extends="adminMain">
-		<put-attribute name="main" value="/WEB-INF/views/admin/main.jsp" />
-	</definition>
-	<definition name="admin/aInfo/joinForm" extends="adminMain">
-		<put-attribute name="main" value="/WEB-INF/views/admin/aInfo/joinForm.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/main.jsp" />
 	</definition>
 	
-	<definition name="admin/member/memberInquiry" extends="adminMain">
-		<put-attribute name="main" value="/WEB-INF/views/admin/member/memberInquiry.jsp" />
+	<definition name="admin/aInfo/joinForm" extends="adminMain">
+		<put-attribute name="body" value="/WEB-INF/views/admin/aInfo/joinForm.jsp" />
 	</definition>
+	
+	<definition name="admin/cboard/cboard" extends="adminMain">
+		<put-attribute name="body" value="/WEB-INF/views/admin/cboard/cboard.jsp" />
+	</definition>
+	
+	<definition name="admin/notice/noticeList" extends="adminMain">
+		<put-attribute name="body" value="/WEB-INF/views/admin/notice/noticeList.jsp" />
+	</definition>
+	
+	<definition name="admin/notice/writeForm" extends="adminMain">
+		<put-attribute name="body" value="/WEB-INF/views/admin/notice/writeForm.jsp" />
+	</definition>
+	
+	<definition name="admin/notice/detailForm" extends="adminMain">
+		<put-attribute name="body" value="/WEB-INF/views/admin/notice/detailForm.jsp" />
+	</definition>
+	
 </tiles-definitions>

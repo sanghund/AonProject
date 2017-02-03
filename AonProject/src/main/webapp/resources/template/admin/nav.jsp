@@ -1,16 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+
 <script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript">
+<script type="text/javascript">
 	  $(function() {
 		  // 회원조회 클릭 시
-		  $(".memberI").click(function() {
-			  location.href = "/admin/memberInquiry";
+		  $(".cboard").click(function() {
+			  location.href = "/admin/cboard";
+		  });
+		  
+		  $(".notice").click(function() {
+			  location.href = "/admin/noticeList";
 		  });
 	  });
 	</script>
 
   <!-- sidebar menu -->
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+        
+            <div class="clearfix"></div>
+  
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <p>&nbsp;</p>
@@ -35,7 +45,7 @@
                   </li>
                   <li><a><i class="fa fa-address-book-o" aria-hidden="true"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a class="memberI" id="memberI">회원조회</a></li>
+                      <li><a class="cboard" id="cboard">회원조회</a></li>
                       <li><a href="media_gallery.html">null</a></li>
                       <li><a href="typography.html">null</a></li>
                       <li><a href="icons.html">null</a></li>
@@ -69,7 +79,7 @@
                   </li>
                   <li><a><i class="fa fa-bug"></i> 게시판관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="e_commerce.html">공지사항관리</a></li>
+                      <li><a class="notice" id="notice">공지사항관리</a></li>
                       <li><a href="projects.html">후기관리</a></li>
                       <li><a href="project_detail.html">문의관리</a></li>
                       <li><a href="contacts.html">null</a></li>
@@ -126,4 +136,6 @@
                 </ul>
               </div>
             </div>
+          </div>
+        </div>
             <!-- /sidebar menu -->

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aonproject.admin.notice.dao.NoticeDAO">
+
+    <sql id="noticeCommon">
+		select NO_NUM, NO_TITLE, NO_CONTENT, NO_DATE, A_NO
+		from NOTICE
+		<where>
+			<if test="search=='NO_TITLE'">
+				<![CDATA[ NO_TITLE like '%'|| #{keyword} ||'%' ]]>
+			</if>
+			<if test="search=='NO_CONTENT'">
+				<![CDATA[ NO_CONTENT like '%'|| #{keyword} ||'%' ]]>
+			</if>
+			<if test="search=='A_NO'">
+				<![CDATA[ A_NO like '%'|| #{keyword} ||'%' ]]>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="noticeList" parameterType="notice" resultType="notice">
+		select NO_NUM, A_NO, NO_TITLE,
+			to_char(NO_DATE, 'YYYY-MM-DD HH24:MI:SS') as NO_DATE
+		from 
+			(select list.*, rownum as rnum
+				from (
+					<include refid="noticeCommon"></include>
+					<choose>
+						<when test="order_by=='NO_NUM'">
+							order by NO_NUM
+						</when>
+						<when test="order_by=='NO_DATE'">
+							order by NO_DATE
+						</when>
+					</choose>
+					<choose>
+						<when test="order_sc=='ASC'">
+							ASC
+						</when>
+						<when test="order_sc=='ESC'">
+							DESC
+						</when>
+					</choose>
+				) list
+			)
+			<where>
+				<if test="start_row != null and start_row != ''">
+					<if test="end_row != null and end_row != ''">
+						rnum between #{start_row} and #{end_row}
+					</if>
+				</if>
+			</where>
+	</select>
+	
+	<!-- 전체 레코드 수 조회 -->
+	<select id="noticeListCnt" parameterType="notice" resultType="int">
+	  /* Board - noticeListCnt */
+	  SELECT NVL(count(1), 0) FROM
+	  (  SELECT list.*, ROWNUM AS RNUM
+	     FROM (
+	           <include refid="noticeCommon"></include>
+	           ORDER BY NO_NUM desc
+	     ) list
+	  )
+	</select>
+	
+	<!-- 글입력  -->
+	<insert id="noticeInsert" parameterType="notice">
+		<selectKey keyProperty="no_num" resultType="int" order="BEFORE">
+			select notice_seq.nextval from dual
+		</selectKey>
+		insert into notice(
+					no_num,
+					no_title, 
+					no_content,
+					a_no
+				) 
+				values(
+					#{no_num}, 
+					#{no_title}, 
+					#{no_content}, 
+					#{a_no}
+					)
+	</insert>
+	
+	<!-- 게시물 상세 페이지  -->
+	<select id="detailForm" resultType="notice" parameterType="notice">
+		select no_num, no_title, no_content, a_no,
+		to_char(no_date, 'YYYY-MM-DD HH24:MI:SS') as no_date 
+		from notice 
+		where no_num = #{no_num}
+	</select>
+	
+	<!-- 수정, 삭제 -->
+	<update id="noticeUpdate" parameterType="notice">
+		update notice set 
+				 no_title = #{no_title}
+				,no_content = #{no_content}
+				,no_date = sysdate
+			where no_num = #{no_num}
+	</update>
+	
+	<delete id="noticeDelete" parameterType="int">
+		delete from notice where no_num = #{no_num}
+	</delete>
+</mapper>

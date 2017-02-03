@@ -2,6 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Congif 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.aonproject.admin.aInfo.vo.AdminVO" alias="admin"/>	
+		<typeAlias type="com.aonproject.admin.aInfo.vo.AdminVO" alias="admin"/>
+		<typeAlias type="com.aonproject.admin.notice.vo.NoticeVO" alias="notice"/>
 	</typeAliases>
 </configuration>

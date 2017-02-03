@@ -3,21 +3,46 @@
 <%@ include file="/resources/template/admin/admin.jspf" %>
 
 </head>
-<body class = "nav-md">
-	<div class="container body">
-		<div class="main_container">
-        	<div class="col-md-3 left_col">
-          		<div class="left_col scroll-view">
-          		  <div class="navbar nav_title" style="border: 0;">
-                     <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>A O N !</span></a>
-                  </div>
-						<tiles:insertAttribute name="nav"></tiles:insertAttribute>
-									</div>
+
+<!-- Bootstrap -->
+    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/resources/bootstrap/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/resources/bootstrap/css/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/resources/bootstrap/css/green.css" rel="stylesheet">
+    
+    <!-- Custom Theme Style -->
+    <link href="/resources/bootstrap/css/custom.min.css" rel="stylesheet">
+    
+    <!-- Datatables -->
+    <link href="/resources/bootstrap/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/bootstrap/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/bootstrap/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/bootstrap/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/bootstrap/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    
+<body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>A O N !</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+            
+				<tiles:insertAttribute name="nav"></tiles:insertAttribute>
 			</div>
-				<tiles:insertAttribute name="header"></tiles:insertAttribute>
-				<tiles:insertAttribute name="main"></tiles:insertAttribute>
 		</div>
+				<tiles:insertAttribute name="header"></tiles:insertAttribute>
+				<tiles:insertAttribute name="body"></tiles:insertAttribute>
+	  </div>
 	</div>
+</body>
 	
 	<!-- jQuery -->
     <script src="/resources/bootstrap/js/jquery.min.js"></script>
@@ -319,5 +344,5 @@
       gauge.setTextField(document.getElementById("gauge-text"));
     </script> -->
     <!-- /gauge.js -->
-</body>
+
 </html>

@@ -72,15 +72,10 @@ public class AdminController {
 		return result;
 	}
 	
-<<<<<<< HEAD
-	@RequestMapping(value = "/memberInquiry")
-	public String process() {
-		return "admin/member/memberInquiry";
-=======
 	@ResponseBody
 	@RequestMapping(value = "/overlapChk", method=RequestMethod.GET)
 	public String overlapChk(@ModelAttribute AdminVO vo){
-		logger.info("overlapChk 龋免 己傍");
+		logger.info("overlapChk 順胳稖靹标车");
 		
 		String result = "";
 		
@@ -97,7 +92,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/myPage")
 	public ModelAndView myPage(Authentication auth){
-		logger.info("myPage 龋免 己傍");
+		logger.info("myPage 順胳稖靹标车");
 	
 		ModelAndView mav = new ModelAndView();
 		
@@ -114,7 +109,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value=  "/myInfoUpdate", method=RequestMethod.POST)
 	public String myInfoUpdate(@ModelAttribute AdminVO vo, Authentication auth){
-		logger.info("myInfoUpdate 龋免 己傍");
+		logger.info("myInfoUpdate 順胳稖靹标车");
 		
 		AdminVO avo = (AdminVO) auth.getPrincipal();
 		vo.setA_no(avo.getA_no());
@@ -134,7 +129,6 @@ public class AdminController {
 			result = "fail";
 		}
 		return result;
->>>>>>> refs/remotes/origin/master
 	}
 	
 }
