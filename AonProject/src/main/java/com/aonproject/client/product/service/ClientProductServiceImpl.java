@@ -11,7 +11,7 @@ import com.aonproject.admin.product.vo.ProductVO;
 
 @Service
 @Transactional
-public class _ProductServiceImpl implements _ProductService {
+public class ClientProductServiceImpl implements ClientProductService {
 	
 	@Autowired
 	private ProductDAO productDAO;

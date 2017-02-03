@@ -100,7 +100,13 @@ public class ProductController {
 		mode = "insert";
 		int result = 0;
 		
-		pvo.setP_no(pvo.getP_no()+pvo.getColor_code()+pvo.getSize_code());
+		//상품번호(p_no) 생성
+		String createP_no = productService.createP_no();
+		//상품번호 p_no : 생성된p_no(10000부터 시퀀스 생성) + 색상코드 + 사이즈코드	
+		//ex)10001C1S1 
+		pvo.setP_no(createP_no+pvo.getColor_code()+pvo.getSize_code());
+		
+		//pvo.setP_no(pvo.getP_no()+pvo.getColor_code()+pvo.getSize_code());
 		logger.info((pvo.getP_no()+pvo.getColor_code()));
 		result = productService.productInsert(pvo);
 		

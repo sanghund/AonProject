@@ -10,8 +10,9 @@
 	$(function(){
 		/* 신규상품 등록 */
 		$(document).on("click", "#insertBtn", function(){
-			if(!chkSubmit($("#p_no"),"상품 번호를")) return;
-			else if(!chkSubmit($("#ca_no"),"카테고리 번호를")) return;
+			/* if(!chkSubmit($("#p_no"),"상품 번호를")) return;
+			else  */
+			if(!chkSubmit($("#ca_no"),"카테고리 번호를")) return;
 			else if(!chkSubmit($("#p_type"),"상품타입을")) return;
 			else if(!chkSubmit($("#p_name"),"상품명을")) return;
 			else if(!chkSubmit($("#ca_no"),"상품색상을")) return;
@@ -85,10 +86,10 @@
 			<input type="hidden" id="p_del" name="p_del" value="n">
 			<table>
 				<tbody>
-					<tr>
+					<%-- <tr>
 						<td>상품번호</td>
 						<td><input type="text" id="p_no" name="p_no" value="${productDetail.p_no}"></td>
-					</tr>
+					</tr> --%>
 					<tr>
 						<td>카테고리분류</td>
 						<td>
@@ -167,7 +168,7 @@
 					<tr>
 						<td>사이즈</td>
 						<td>
-							<select id="size_code" name="size_code" id="size_code" value="${common_cd.cc_name}">
+							<select id="size_code" name="size_code" id="size_code">
 								<c:choose>
 									<c:when test="${not empty commonCodeList}">
 										<c:forEach var="commonCodeList" items="${commonCodeList}">

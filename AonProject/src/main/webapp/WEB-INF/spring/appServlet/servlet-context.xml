@@ -24,6 +24,7 @@
          <beans:list>
             <beans:value>/resources/tiles/adminTiles.xml</beans:value>
             <beans:value>/resources/tiles/clientTiles.xml</beans:value>
+            <beans:value>/resources/tiles/clientTilesMain.xml</beans:value>
          </beans:list>
       </beans:property>
    </beans:bean>
