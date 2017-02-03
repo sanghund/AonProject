@@ -47,6 +47,7 @@ public class ProductController {
 	@RequestMapping(value = "/product", method=RequestMethod.GET)
 	public String itemList(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, Model model){
 		logger.info("itemList 호출 성공!");
+		logger.info(pvo.getCa_no());
 		
 		List<ProductVO> productList = productService.productList(pvo);
 		model.addAttribute("productList", productList);

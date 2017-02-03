@@ -16,7 +16,7 @@
 				</div>
 			</div>
 			
-			<div class="header_search">
+			<!-- <div class="header_search">
 				<form name="search" id="hf_search">
 					<fieldset>
 						<legend>검색 폼</legend>
@@ -26,6 +26,6 @@
 						</a>
 					</fieldset>
 				</form>
-			</div>
+			</div> -->
 		</div>
 <!-- ================== header END ===========================-->

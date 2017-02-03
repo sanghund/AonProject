@@ -4,7 +4,7 @@
 <mapper namespace="com.aonproject.common.util.upload.dao.UploadDAO">
 	<!-- 이미지 리스트 호출 -->
 	<select id="uploadList" parameterType="upload" resultType="upload">
-	select * from product_img where p_no = #{p_no}
+	select * from product_img where p_no = #{p_no} order by pi_no asc
 	</select>
 	
 	<!-- 이미지 신규등록 -->

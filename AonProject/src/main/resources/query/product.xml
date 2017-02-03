@@ -14,9 +14,23 @@
 		left join category on product.ca_no = category.ca_no 
 		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
 		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
-		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no) 
-		where p_del = 'n'
+		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no)
+		<where>
+			<if test="ca_no != 0">
+				product.ca_no = #{ca_no} and
+			</if>
+			p_del = 'n'
+		</where> 
 		order by p_date desc
+		
+		<!-- select p_no, (select pi_file from product_img where p_no = p_no and rownum = 1) as pi_file, category.ca_name, 
+       	p_type_cd.cc_name "p_type_name", p_name, p_price, p_discount, color_cd.cc_name "color", size_cd.cc_name "size", 
+       	p_fabric, p_caution, to_char(p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date, p_del
+		from product 
+		left join category on product.ca_no = category.ca_no 
+		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
+		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
+		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no); -->
 	</select>
 	
 	<!-- 상품  디테일 조회 -->
