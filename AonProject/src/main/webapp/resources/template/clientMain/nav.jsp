@@ -16,7 +16,7 @@
 					<li><a href="/category?no=${categoryList.ca_no}">${categoryList.ca_name}</a></li>
 				</c:forEach>
 			</c:when>
-		</c:choose>
+		</c:choose> 
 	</ul>
   <ul class="nav tc mb">
     <li><a href="">NOTICE</a></li>
