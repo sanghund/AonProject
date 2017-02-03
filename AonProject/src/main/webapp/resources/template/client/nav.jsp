@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+$(".noticeList").click(function() {
+			  location.href = "/client/noticeList";
+		  });
+</script>
+
 <!-- ================== left start ===========================-->
 <div id="left" >
 	<div class="left_inner">
@@ -24,7 +31,7 @@
 				</c:choose>
 				
 				<li>&nbsp;</li>
-				<li><a href="#">NOTICE</a></li>
+				<li><a class="noticeList" id="noticeList">NOTICE</a></li>
 				<li><a href="#">REVIEW</a></li>
 				<li><a href="#">Q&amp;A</a></li>
 			</ul>
