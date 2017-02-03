@@ -30,16 +30,17 @@
 	</definition>
 	
 	<!-- 상품 리스트 페이지 -->
-	<definition name="admin/product/main" extends="adminMain">
-		<put-attribute name="main" value="/WEB-INF/views/admin/product/main.jsp"></put-attribute>
+	<definition name="admin/product/*" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/product/{1}.jsp"></put-attribute>
 	</definition>
 	<!-- 상품 상세 페이지 -->
-	<definition name="admin/product/detail" extends="adminMain">
-		<put-attribute name="main" value="/WEB-INF/views/admin/product/detail.jsp"></put-attribute>
+	<definition name="admin/product/*" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/product/{1}.jsp"></put-attribute>
 	</definition>
 	<!-- 상품 신규 등록 페이지 -->
-	<definition name="admin/product/write" extends="adminMain">
-		<put-attribute name="main" value="/WEB-INF/views/admin/product/write.jsp"></put-attribute>
+	<definition name="admin/product/*" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/product/{1}.jsp"></put-attribute>
 	</definition>
+	
 	
 </tiles-definitions>

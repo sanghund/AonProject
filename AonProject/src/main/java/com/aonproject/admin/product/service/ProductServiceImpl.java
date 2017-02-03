@@ -59,6 +59,13 @@ public class ProductServiceImpl implements ProductService {
 		return result;
 	}
 
+	@Override
+	public String createP_no() {
+		String createP_no = "";
+		createP_no = productDAO.createP_no();
+		return createP_no;
+	}
+
 	
 
 }

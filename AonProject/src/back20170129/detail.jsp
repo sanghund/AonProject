@@ -270,7 +270,7 @@
 					<tr>
 						<td>사이즈</td>
 						<td>
-							<select id="size_code" name="size_code" id="size_code" value="${common_cd.cc_name}">
+							<select id="size_code" name="size_code" id="size_code">
 								<c:choose>
 									<c:when test="${not empty commonCodeList}">
 										<c:forEach var="commonCodeList" items="${commonCodeList}">

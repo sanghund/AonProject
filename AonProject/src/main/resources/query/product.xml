@@ -26,6 +26,11 @@
 		from product where p_no like #{p_no}
 	</select>
 	
+	<!-- 상품번호 생성 -->
+	<select id="createP_no" resultType="String">
+		select product_seq.nextval from dual
+	</select>
+	
 	<!-- 상품 신규등록 -->
 	<insert id="productInsert" parameterType="product">
 		/* product - productInsert */
