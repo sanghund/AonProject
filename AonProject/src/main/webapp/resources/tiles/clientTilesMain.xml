@@ -9,7 +9,7 @@
 	</definition>
 	
 	<!-- 세부 페이지 -->
-	<definition name="*/*" extends="clientProduct">
+	<definition name="client/*/*" extends="clientProduct">
 		<put-attribute name="main" value="/WEB-INF/views/client/{1}/{2}.jsp" />
 	</definition>
 </tiles-definitions>

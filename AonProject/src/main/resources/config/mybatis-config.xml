@@ -9,5 +9,7 @@
 		<typeAlias type="com.aonproject.admin.commoncode.vo.CommonCodeVO" alias="commonCode"/>
 		<typeAlias type="com.aonproject.common.util.upload.vo.UploadVO" alias="upload"/>
 		<typeAlias type="com.aonproject.admin.policy.vo.PolicyVO" alias="policy"/>
+		<typeAlias type="com.aonproject.common.util.vo.PolicyAgrVO" alias="policyAgr"/>
+		<typeAlias type="com.aonproject.client.mInfo.vo.MemberVO" alias="member"/>
 	</typeAliases>
 </configuration>

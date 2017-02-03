@@ -18,9 +18,14 @@
 		values (#{po_no}, #{po_name}, #{po_content}, #{po_type})
 	</insert>
 	
-	<!-- 약관 동의 -->
+	<!-- 관리자 약관 동의 -->
 	<insert id="pagr" parameterType="policy">
 		insert into policy_agr(po_no, a_no, pa_confirm) values(#{po_no}, #{a_no}, #{pa_confirm})
+	</insert>
+	
+	<!-- 일반 유저 약관 동의 -->
+	<insert id="pagr2" parameterType="policyAgr">
+		insert into policy_agr(po_no, m_no, pa_confirm) values(#{po_no}, #{m_no}, #{pa_confirm})
 	</insert>
 	
 	<!-- 최근 개인정보 이용 약관 동의 확인 _ 관리자 -->

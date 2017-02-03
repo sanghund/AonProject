@@ -1,5 +1,8 @@
 package com.aonproject.client.mInfo.service;
 
-public interface MemberService {
+import com.aonproject.client.mInfo.vo.MemberVO;
 
+public interface MemberService {
+	public int joinGo(MemberVO vo);
+	public int newNo();
 }
