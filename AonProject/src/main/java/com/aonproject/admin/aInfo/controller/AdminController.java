@@ -90,13 +90,12 @@ public class AdminController {
 			result = "fail";
 		}
 		return result;
-	}
-
+	}	
+	
 	@ResponseBody
 	@RequestMapping(value = "/overlapChk", method=RequestMethod.GET)
 	public String overlapChk(@ModelAttribute AdminVO vo){
-		logger.info("overlapChk 호출 성공");
-		
+		logger.info("overlapChk 호출성공");
 		String result = "";
 		
 		int gogo = adminService.overlapChk(vo);
@@ -112,8 +111,8 @@ public class AdminController {
 	
 	@RequestMapping(value = "/myPage")
 	public ModelAndView myPage(Authentication auth){
-		logger.info("myPage 호출 성공");
-	
+		logger.info("myPage 호출성공");
+
 		ModelAndView mav = new ModelAndView();
 		
 		AdminVO authVO = (AdminVO)auth.getPrincipal();
@@ -129,8 +128,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value=  "/myInfoUpdate", method=RequestMethod.POST)
 	public String myInfoUpdate(@ModelAttribute AdminVO vo, Authentication auth){
-		logger.info("myInfoUpdate 호출 성공");
-		
+		logger.info("myInfoUpdate 호출성공");		
 		AdminVO avo = (AdminVO) auth.getPrincipal();
 		vo.setA_no(avo.getA_no());
 		
