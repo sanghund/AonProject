@@ -7,4 +7,5 @@ public interface AdminService {
 	public int overlapChk(AdminVO vo);
 	public int myInfoUpdate(AdminVO vo);
 	public AdminVO adminInfo(AdminVO vo);
+	public int newNo();
 }

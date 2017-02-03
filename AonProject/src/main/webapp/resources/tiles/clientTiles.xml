@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="clientMain" template="/resources/template/clientLayout.jsp">
+		<put-attribute name="header" value="/resources/template/client/header.jsp" />
+		<put-attribute name="nav" value="/resources/template/client/nav.jsp" />
+		<put-attribute name="main" value="" />
+		<put-attribute name="footer" value="/resources/template/client/footer.jsp" />
+	</definition>
+	
+	<!-- main 페이지 -->
+	<definition name="client/index" extends="clientMain">
+		<put-attribute name="main" value="/WEB-INF/views/client/main.jsp" />
+	</definition>
+	
+</tiles-definitions>

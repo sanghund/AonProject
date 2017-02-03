@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/resources/template/admin/admin.jspf" %>
-
 </head>
-
 <!-- Bootstrap -->
     <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -23,24 +22,24 @@
     <link href="/resources/bootstrap/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="/resources/bootstrap/css/scroller.bootstrap.min.css" rel="stylesheet">
 
-    
-<body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-        <div class="col-md-3 left_col">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>A O N !</span></a>
-            </div>
-
-            <div class="clearfix"></div>
-            
-				<tiles:insertAttribute name="nav"></tiles:insertAttribute>
+<body class = "nav-md">
+	<div class="container body">
+		<div class="main_container">
+        	<div class="col-md-3 left_col">
+          		<div class="left_col scroll-view">
+          		  <div class="navbar nav_title" style="border: 0;">
+                     <a href="/admin/main" class="site_title"><i class="fa fa-paw"></i> <span>A O N !</span></a>
+                  </div>
+                  <div class="clearfix"></div>
+       
+						<tiles:insertAttribute name="nav"></tiles:insertAttribute>
+									</div>
 			</div>
-		</div>
 				<tiles:insertAttribute name="header"></tiles:insertAttribute>
-				<tiles:insertAttribute name="body"></tiles:insertAttribute>
-	  </div>
+				<div class = "temp right_col nav-md">
+					<tiles:insertAttribute name="main"></tiles:insertAttribute>
+				</div>
+		</div>
 	</div>
 </body>
 	

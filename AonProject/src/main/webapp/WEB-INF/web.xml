@@ -33,6 +33,16 @@
       <url-pattern>/</url-pattern>
    </servlet-mapping>
    
+   <!-- 시큐리티 리스너 -->
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+   
+   <!-- 세션 만료 시간 -->
+   <session-config>
+        <session-timeout>10000</session-timeout>
+   </session-config>
+   
    <!-- 인코딩 필터 -->
    <filter>
       <filter-name>encodingFilter</filter-name>

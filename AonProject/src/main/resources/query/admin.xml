@@ -16,6 +16,11 @@
 		values(#{a_no}, #{a_id}, #{a_pwd}, #{a_name}, #{a_addr}, #{a_tel}, #{a_email})
 	</insert>
 	
+	<!-- 최신 관리자 회원 번호 조회 -->
+	<select id="newNo" resultType="java.lang.Integer">
+		select * from (select a_no from admin order by a_no desc) where rownum = 1
+	</select>
+	
 	<!-- 관리자 회원가입 _ 아이디 중복체크 -->
 	<select id="overlapChk" resultType="java.lang.Integer" parameterType="admin">
 		select nvl((select count(*) from admin where a_id = #{a_id}), 0) from dual

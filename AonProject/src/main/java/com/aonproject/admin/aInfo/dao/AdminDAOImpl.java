@@ -131,4 +131,10 @@ public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("adminInfo", vo);
 	}
+
+	@Override
+	public int newNo() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("newNo");
+	}
 }

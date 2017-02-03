@@ -10,11 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.aonproject.admin.aInfo.service.AdminService;
 import com.aonproject.admin.aInfo.vo.AdminVO;
+import com.aonproject.admin.policy.service.PolicyService;
 import com.aonproject.common.util.security.ShaEncoder;
 
 @Controller
@@ -28,15 +30,18 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+	@Autowired
+	private PolicyService policyService;
+	
 	@RequestMapping(value = "/login")
 	public String loginForm(){
-		logger.info("loginForm 호출성공");
+		logger.info("loginForm 호출 성공");
 		return "admin/aInfo/loginForm";
 	}
 	
 	@RequestMapping(value = "/main")
 	public ModelAndView main(Authentication auth){
-		logger.info("main 호출성공");
+		logger.info("main 호출 성공");
 		ModelAndView mav = new ModelAndView();
 		if(auth != null){
 			UserDetails vo = (AdminVO) auth.getPrincipal();
@@ -47,15 +52,22 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "/joinForm")
-	public String joinForm(){
-		logger.info("joinForm 호출성공");
-		return "admin/aInfo/joinForm";
+	public ModelAndView joinForm(Authentication auth){
+		logger.info("joinForm 호출 성공");
+		
+		ModelAndView mav = new ModelAndView();
+		AdminVO vo = (AdminVO) auth.getPrincipal();
+		mav.addObject("vo", vo);
+		mav.addObject("view2", policyService.policyView2());
+		mav.setViewName("admin/aInfo/joinForm");
+		
+		return mav;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/joinGo", method=RequestMethod.POST)
-	public String joinGo(@ModelAttribute AdminVO vo){
-		logger.info("joinGo 호출성공");
+	public String joinGo(@ModelAttribute AdminVO vo, @RequestParam("privacyChk") String privacy){
+		logger.info("joinGo 호출 성공");
 		
 		vo.setA_pwd(encoder.encoding(vo.getA_pwd()));
 	
@@ -64,19 +76,26 @@ public class AdminController {
 		int gogo = adminService.joinGo(vo);
 		
 		if (gogo == 1){
+			if(privacy != null){
+				AdminVO avo = new AdminVO();
+				int a_no = adminService.newNo();
+				avo.setA_no(a_no);
+				avo.setPo_no(policyService.policyView2().getPo_no());
+				avo.setPa_confirm(privacy);
+				policyService.pagr(avo);
+			}
 			result = "success";
 		} 
 		else{
 			result = "fail";
 		}
 		return result;
-	}
+	}	
 	
 	@ResponseBody
 	@RequestMapping(value = "/overlapChk", method=RequestMethod.GET)
 	public String overlapChk(@ModelAttribute AdminVO vo){
 		logger.info("overlapChk 호출성공");
-		
 		String result = "";
 		
 		int gogo = adminService.overlapChk(vo);
@@ -93,7 +112,7 @@ public class AdminController {
 	@RequestMapping(value = "/myPage")
 	public ModelAndView myPage(Authentication auth){
 		logger.info("myPage 호출성공");
-	
+
 		ModelAndView mav = new ModelAndView();
 		
 		AdminVO authVO = (AdminVO)auth.getPrincipal();
@@ -109,8 +128,7 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value=  "/myInfoUpdate", method=RequestMethod.POST)
 	public String myInfoUpdate(@ModelAttribute AdminVO vo, Authentication auth){
-		logger.info("myInfoUpdate 호출성공");
-		
+		logger.info("myInfoUpdate 호출성공");		
 		AdminVO avo = (AdminVO) auth.getPrincipal();
 		vo.setA_no(avo.getA_no());
 		

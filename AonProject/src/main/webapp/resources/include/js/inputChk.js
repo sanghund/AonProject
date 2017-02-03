@@ -23,6 +23,64 @@ function vacuumChk(main, msg, item, choice){
 }
 
 /*
+공백 체크2
+main : 검사 대상
+msg : 출력할 메시지 앞
+choice : focus 유무
+*/
+function vacuumChkAlert(main, msg, choice){
+if(main.val().replace(/\s/g,"")==""){
+	main.val("");
+    if(choice == true){
+    	main.focus();  
+    	alert(msg+" 입력해 주세요.");
+    } 
+    else{
+    	alert(msg+" 선택해 주세요.");
+    	}
+    return false;
+   }
+else{
+	return true;
+}
+}
+
+/*
+체크박스 체크 여부
+main : 검사 대상
+msg : 출력할 메시지 앞
+choice : foucs 유무
+*/
+
+function checkboxChk(main, msg, choice){
+	if(!main.is(":checked")){
+		if(choice == true){
+			main.focus();
+		}
+		alert(msg + " 선택해 주세요.");
+		return false;
+	}
+	else{
+		return true;
+	}
+}
+
+/*
+메시지 출력 제거 체크
+main : 검사 대상
+item : 메시지를 지울 대상
+*/
+function vacuumChk2(main, item){
+if(main.val().replace(/\s/g,"")==""){
+	main.val("");
+	}
+else{
+	item.html("");
+}
+}
+
+
+/*
 	아이디 중복 체크
 	main : 검사 대상
 	item : 메시지를 출력할 대상

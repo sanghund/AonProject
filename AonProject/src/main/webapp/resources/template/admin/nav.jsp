@@ -28,9 +28,7 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-gift"></i> 상품관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="index.html">null</a></li>
-                      <li><a href="index2.html">null</a></li>
-                      <li><a href="index3.html">null</a></li>
+                      <li><a href="/admin/product">상품관리</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-edit"></i> 주문관리 <span class="fa fa-chevron-down"></span></a>
@@ -54,6 +52,12 @@
                       <li><a href="invoice.html">null</a></li>
                       <li><a href="inbox.html">null</a></li>
                       <li><a href="calendar.html">null</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-address-book-o" aria-hidden="true"></i> 약관관리 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="/admin/policy">약관목록</a></li>
+                      <li><a href="/admin/policyAgr">약관여부</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-table"></i> 재고관리 <span class="fa fa-chevron-down"></span></a>
@@ -88,7 +92,7 @@
                   </li>
                   <li><a><i class="fa fa-windows"></i> 공통코드관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="page_403.html">사이즈관리</a></li>
+                      <li><a href="/admin/commonCode">사이즈관리</a></li>
                       <li><a href="page_404.html">색상관리</a></li>
                       <li><a href="page_500.html">null</a></li>
                       <li><a href="plain_page.html">null</a></li>
@@ -108,11 +112,7 @@
                   </li>
                   <li><a><i class="fa fa-windows"></i> 카테고리관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="page_403.html">null</a></li>
-                      <li><a href="page_404.html">null</a></li>
-                      <li><a href="page_500.html">null</a></li>
-                      <li><a href="plain_page.html">null</a></li>
-                      <li><a href="login.html">null</a></li>
+                      <li><a href="/admin/category">카테고리</a></li>
                       <li><a href="pricing_tables.html">null</a></li>
                     </ul>
                   </li>

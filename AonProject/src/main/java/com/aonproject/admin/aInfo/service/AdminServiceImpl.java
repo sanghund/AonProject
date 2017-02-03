@@ -38,4 +38,10 @@ public class AdminServiceImpl implements AdminService{
 		return adminDAO.adminInfo(vo);
 	}
 
+	@Override
+	public int newNo() {
+		// TODO Auto-generated method stub
+		return adminDAO.newNo();
+	}
+
 }
