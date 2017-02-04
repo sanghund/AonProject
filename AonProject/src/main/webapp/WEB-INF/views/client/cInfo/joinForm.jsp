@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset=UTF-8>
-<title>Insert title here</title>
-	<link rel="stylesheet" href="/resources/include/css/reset.css">
+<%@ page trimDirectiveWhitespaces="true" %>
 	<style type = "text/css">
 		.step-panels{
 			display: block;
@@ -98,8 +93,6 @@
 		
 		}
 	</style>
-</head>
-<body>
 	<div class = "main">
 		<h2 id = "aTitle">회원가입</h2>
 		<div class = "step-panels">
@@ -184,7 +177,7 @@
 			});
 			
 			$("#gogoEmail").click(function(){
-				$("#m_email").val($("#m_email1").val() + "@" + $("#m_email2").val());
+				$("#m_email").val($("#m_email1").val() + $("#arroba").text() + $("#m_email2").val());
 				$.ajax({
 					url : "/member/join/emailCertification",
 					dataType : "text",
@@ -230,5 +223,3 @@
 			});
 		});
 	</script>
-</body>
-</html>

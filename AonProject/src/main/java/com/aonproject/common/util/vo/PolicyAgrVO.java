@@ -5,11 +5,20 @@ import com.aonproject.admin.policy.vo.PolicyVO;
 public class PolicyAgrVO extends PolicyVO{
 	private String pa_confirm = "";
 	private String pa_date = "";
+	private int m_no = 0;
 	
 	private String adminSearch = "";
 	private String memberSearch = "";
 	private String nonmemberSearch = "";
 	
+	
+	
+	public int getM_no() {
+		return m_no;
+	}
+	public void setM_no(int m_no) {
+		this.m_no = m_no;
+	}
 	public String getAdminSearch() {
 		return adminSearch;
 	}

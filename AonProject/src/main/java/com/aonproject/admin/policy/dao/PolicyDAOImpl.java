@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.admin.policy.vo.PolicyVO;
+import com.aonproject.common.util.vo.PolicyAgrVO;
 
 @Repository
 public class PolicyDAOImpl implements PolicyDAO {
@@ -49,5 +50,11 @@ public class PolicyDAOImpl implements PolicyDAO {
 	public int adminListCnt(AdminVO avo) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("adminListCnt", avo);
+	}
+
+	@Override
+	public int pagr2(PolicyAgrVO avo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("pagr2", avo);
 	}
 }
