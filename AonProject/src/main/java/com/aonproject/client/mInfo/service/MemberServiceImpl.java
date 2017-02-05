@@ -25,4 +25,34 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.newNo();
 	}
 
+	@Override
+	public int addAddr(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.addAddr(vo);
+	}
+
+	@Override
+	public MemberVO memberInfo(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.memberInfo(vo);
+	}
+
+	@Override
+	public int memberExpire(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.memberExpire(vo);
+	}
+
+	@Override
+	public int memberGoodBye(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.memberGoodBye(vo);
+	}
+
+	@Override
+	public int memberAddrGoodBye(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.memberAddrGoodBye(vo);
+	}
+
 }

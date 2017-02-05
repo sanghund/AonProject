@@ -60,20 +60,20 @@ public class MemberController {
 	@RequestMapping(value = "/join")
 	public String joinForm(@ModelAttribute CategoryVO cvo, HttpServletRequest request, Model model){
 		logger.info("joinForm 호출 성공");
-		
+
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
 		String mode = request.getParameter("mode");
-		if(mode == null || mode.trim().equals("")){
+		if((mode == null || mode.trim().equals("")) && request.getMethod().equals("GET")){
 			return "client/cInfo/joinForm";
 		}
-		else if(mode.equals("success")){
+		else if((mode.equals("success")) /*&& request.getMethod().equals("POST")*/){
 			model.addAttribute("view1", policyService.policyView1());
 			model.addAttribute("view2", policyService.policyView2());
 			return "client/cInfo/joinForm2";
 		}
-		else if(mode.equals("good")){
+		else if((mode.equals("good")) && request.getMethod().equals("POST")){
 			return "client/cInfo/joinForm3";
 		}
 		return "client/cInfo/joinForm";
@@ -141,6 +141,9 @@ public class MemberController {
 			if(privacy != null && tou != null){
 				PolicyAgrVO pavo = new PolicyAgrVO();
 				int m_no = memberService.newNo();
+				vo.setM_no(m_no);
+				memberService.addAddr(vo);
+		
 				pavo.setM_no(m_no);
 				pavo.setPo_no(policyService.policyView1().getPo_no());
 				pavo.setPa_confirm(tou);
