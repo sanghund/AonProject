@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aonproject.admin.review.dao.ReviewDAO">
+	<!-- <sql id="reviewList">
+		select re_no, re_title, 
+			to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') as re_date, re_chk
+		from review
+	</sql> -->
+	<select id="reviewList" resultType="review">
+		select re_no, re_title, re_content,
+			to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') as re_date, re_chk, re_file
+		from review order by re_no desc
+	</select>
+	
+	<insert id="reviewInsert" parameterType="review">
+		<selectKey keyProperty="re_no" resultType="int" order="BEFORE">
+			select review_seq.nextval from dual
+		</selectKey>
+		insert into review(re_no, re_title, re_content, re_pwd, re_file) 
+			values(review_seq.nextval, #{re_title}, #{re_content}, #{re_pwd}, #{re_file})
+	</insert>
+	
+	<!-- <select id="reviewDetail" parameterType="review" resultType="review">
+		select re_title, re_content, to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') as re_date
+		from review
+		where re_no = #{re_no}
+	</select> -->
+	
+	<!-- 비밀번호 확인 -->
+	<select id="pwdConfirm" resultType="int" parameterType="review">
+		select nvl((select 1 from review where re_no=#{re_no} and re_pwd=#{re_pwd}), 0)as state from dual
+	</select>
+	
+	<!-- 수정폼 -->
+	<update id="reviewUpdate" parameterType="review">
+		update review set
+			re_content = #{re_content},
+			re_date = sysdate,
+			<if test="re_file != '' or re_file != null">
+				re_file = #{re_file}
+			</if>
+		where re_no = #{re_no}
+	</update>
+	
+	<delete id="reviewDelete" parameterType="int">
+		delete from review where re_no=#{re_no}
+	</delete>
+</mapper>
