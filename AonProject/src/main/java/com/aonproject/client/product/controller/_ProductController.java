@@ -18,7 +18,6 @@ public class _ProductController {
 	
 	@Autowired
 	private ProductService productService;
-	
 	/*상품리스트 구현*/
 	@RequestMapping(value = "/itemList", method=RequestMethod.GET)
 	public String itemList(@ModelAttribute ProductVO pvo, Model model){
