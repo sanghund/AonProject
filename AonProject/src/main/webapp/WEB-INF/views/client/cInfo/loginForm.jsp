@@ -54,7 +54,7 @@
 					if (error == false) {
 						var url = '${referer}'; 
 						if(url == '') url = returnUrl;
-						if(url == "") url = '<c:url value="/"/>';
+						if(url == "") url = document.referrer;
 						location.href = url; 
 					}
 				})	

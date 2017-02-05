@@ -117,5 +117,35 @@ public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
 		return sqlSession.selectOne("newNo");
 	}
 
+	@Override
+	public int addAddr(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("addAddr", vo);
+	}
+
+	@Override
+	public MemberVO memberInfo(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberInfo", vo);
+	}
+
+	@Override
+	public int memberExpire(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberExpire", vo);
+	}
+
+	@Override
+	public int memberGoodBye(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberGoodBye", vo);
+	}
+
+	@Override
+	public int memberAddrGoodBye(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("memberAddrGoodBye", vo);
+	}
+
 
 }

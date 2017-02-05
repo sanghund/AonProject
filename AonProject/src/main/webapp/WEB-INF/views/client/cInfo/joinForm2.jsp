@@ -135,6 +135,9 @@
 		<div id = "gogoJoin">
 			<input type = "button" id = "gogo" name = "gogo" value = "회원가입">
 		</div>
+		<form id = "goNext">
+			<input type = "hidden" id = "mode" name = "mode">
+		</form>
 	</div>
 	
 	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
@@ -164,8 +167,12 @@
 					},
 					success : function(result){
 						if(result == "good"){
-							alert($("#m_id").val() + "님 회원가입을 축하드립니다!");
-							location.href = "/";
+							$("#goNext").attr({
+								"method" : "post",
+								"action" : "/member/join"
+							});
+							$("#mode").val(result);
+							$("#goNext").submit();
 						}
 						else{
 							alert("시스템 에러입니다.");

@@ -30,33 +30,88 @@
 	
 	<!-- 최근 개인정보 이용 약관 동의 확인 _ 관리자 -->
 	<select id="adminList" parameterType="admin" resultType="admin">
-		select c.rnum, c.a_no, c.a_id, c.a_name, c.a_tel, c.a_email, c.po_name, c.pa_confirm, c.pa_date from 
-		(select rownum as rnum, b.a_no, b.a_id, b.a_name, b.a_tel, b.a_email, b.po_name, b.pa_confirm, b.pa_date from 
-		(select a_no, a_id, a_name, a_tel, a_email, po_name, p1.pa_confirm ,to_char(p1.pa_date, 'yyyy-MM-dd hh24:mm:ss') pa_date from 
-		<![CDATA[((select * from (select * from policy where po_type = '2' order by po_no desc) where rownum = 1)]]>
-		INNER join policy_agr p1 using(po_no)) inner join 
-		(select * from admin inner join policy_agr using(a_no)) USING(a_no)
+		select * from(
+		select rownum as rnum, a_no,a_id, a_name, a_tel, a_email, po_name, pa_confirm, pa_date from(
+		select member.a_no, a_id, a_name, a_tel, a_email, po_name, pa_confirm, to_char(pa_date, 'yyyy-MM-dd hh24:mm:ss') pa_date from
+		(select a_no, po_name, pa_confirm, pa_date from
+		(select po_no, po_name from (select * from policy where po_type = 2 order by po_no desc) policy where rownum = 1) policy inner join
+		policy_agr 
+		on policy_agr.PO_NO = policy.po_no) addPolicy inner join
+		(select a_no, a_id, a_name, a_tel, a_email from admin 
 		<where>
 			<if test="adminSearch != ''">
 				a_id like '%'||#{adminSearch}||'%'
 			</if>
 		</where> 
-		<![CDATA[order by pa_date desc) b where rownum <= #{end_data}) c where c.rnum >= #{start_data}]]>
-		
+		order by a_no desc) member 
+		on addPolicy.a_no = member.a_no order by pa_date desc
+		) where rownum <![CDATA[<=]]> #{end_data})
+		where rnum <![CDATA[>=]]> #{start_data}
 	</select>
 	
 	<!-- 최근 개인정보 이용 약관 동의 확인 수 _ 관리자 -->
 	<select id="adminListCnt" parameterType="admin" resultType="java.lang.Integer">
 		select count(*) from 
-		(select a_no, a_id, a_name, a_tel, a_email, po_name, p1.pa_confirm ,to_char(p1.pa_date, 'yyyy-MM-dd hh24:mm:ss') pa_date from 
-		((select * from (select * from policy where po_type = '2' order by po_no desc) where rownum = 1) 
-		INNER join policy_agr p1 using(po_no)) inner join 
-		(select * from admin inner join policy_agr using(a_no)) USING(a_no) 
+		(
+		select admin.a_no, a_id, a_name, a_tel, a_email, po_name, pa_confirm, to_char(pa_date, 'yyyy-MM-dd hh24:mm:ss') pa_date from
+		(select a_no, po_name, pa_confirm, pa_date from
+		(select po_no, po_name from (select * from policy where po_type = 2 order by po_no desc) policy where rownum = 1) policy inner join
+		policy_agr 
+		on policy_agr.PO_NO = policy.po_no) addPolicy inner join
+		(select a_no, a_id, a_name, a_tel, a_email from admin
 		<where>
 			<if test="adminSearch != ''">
 				a_id like '%'||#{adminSearch}||'%'
 			</if>
-		</where>
-		order by pa_date desc)	
+		</where> 
+		order by a_no desc) admin 
+		on addPolicy.a_no = admin.a_no order by pa_date desc
+		)
 	</select>
+	
+	<!-- 최근 개인정보 이용 약관 동의 확인 _ 회원 -->
+	<select id="memberList" parameterType="member" resultType="policyAgr">
+		select * from(
+		select rownum as rnum, po_no, m_no, m_id, m_name, m_tel, m_email, po_name, pa_confirm, pa_date from(
+		select po_no, member.m_no, m_id, m_name, m_tel, m_email, po_name, pa_confirm, to_char(pa_date, 'yyyy-MM-dd hh24:mm:ss') pa_date from
+		(select policy.po_no, m_no, po_name, pa_confirm, pa_date from
+		(select po_no, po_name, po_type from policy inner join (select max(po_no) po_no from policy group by po_type) policyg using(po_no) order by po_type) policy inner join
+		policy_agr 
+		on policy_agr.PO_NO = policy.po_no) addPolicy inner join
+		(select m_no, m_id, m_name, m_tel, m_email from member
+		<where>
+			<if test="memberSearch != ''">
+				m_id like '%'||#{memberSearch}||'%'
+			</if>
+		</where>
+		order by m_no desc) member 
+		on addPolicy.m_no = member.m_no order by pa_date, m_id desc
+		) where rownum <![CDATA[<=]]> #{end_data})
+		where rnum <![CDATA[>=]]> #{start_data}
+	</select>
+	
+	<!-- 최근 개인정보 이용 약관 동의 확인 수 _ 회원 -->
+	<select id="memberListCnt" parameterType="member" resultType="java.lang.Integer">
+		select count(*) from 
+		(
+		select member.m_no, m_id, m_name, m_tel, m_email, po_name, pa_confirm, to_char(pa_date, 'yyyy-MM-dd hh24:mm:ss') pa_date from
+		(select m_no, po_name, pa_confirm, pa_date from
+		(select po_no, po_name, po_type from policy inner join (select max(po_no) po_no from policy group by po_type) policyg using(po_no) order by po_type) policy inner join
+		policy_agr 
+		on policy_agr.PO_NO = policy.po_no) addPolicy inner join
+		(select m_no, m_id, m_name, m_tel, m_email from member 
+		<where>
+			<if test="memberSearch != ''">
+				m_id like '%'||#{memberSearch}||'%'
+			</if>
+		</where> 
+		order by m_no desc) member 
+		on addPolicy.m_no = member.m_no order by pa_date, m_id desc
+		)
+	</select>
+	
+	<!-- 약관 거부 -->
+	<update id="policyAgrDenial" parameterType="policyAgr">
+		update policy_agr set pa_confirm = #{pa_confirm} where po_no = #{po_no} and m_no = #{m_no}
+	</update>
 </mapper>

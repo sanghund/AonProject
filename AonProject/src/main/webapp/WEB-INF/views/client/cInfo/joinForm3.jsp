@@ -40,7 +40,7 @@
 			color : white;
 		}
 		
-		#joinForm{
+		#celebration{
 			margin : 50px 0;
 			clear: both;
 		}
@@ -52,89 +52,18 @@
 				<div class = "step">
 					<span>본인인증</span>
 				</div>
-				<div class = "step action">
+				<div class = "step">
 					<span>회원정보 입력</span>
 				</div>
-				<div class = "step">
+				<div class = "step action">
 					<span>가입 완료</span>
 				</div>
 			</div>
 		</div>
-		<form id = "joinForm" name = "joinForm">
-			<div id = "join">
-				<h3>회원 정보 입력</h3>
-				<div><span class = "array">아이디</span><input type = "text" maxlength="20" id = "a_id" name = "a_id"><span id = "idChkMsg"></span></div>	
-				<div><span class = "array">비밀번호</span><input type = "password" maxlength="20" id = "a_pwd" name = "a_pwd"><span id = "pwdChkMsg1"></span></div>	
-				<div><span class = "array">비밀번호 확인</span><input type = "password" maxlength="20" id = "a_pwd2" name = "a_pwd2"><span id = "pwdChkMsg2"></span></div>		
-				<div><span class = "array">이름</span><input type = "text" maxlength="20" id = "a_name" name = "a_name"><span id = "nameChkMsg"></span></div>		
-				<div>
-					<span class = "array">성별</span><input type = "radio" checked="checked" maxlength="20" id = "m_gender1" name = "m_gender">
-					<label for = "m_gender1">남자</label>
-					<input type = "radio" maxlength="20" id = "m_gender2" name = "m_gender">
-					<label for="m_gender2">여자</label>
-					<span id = "genderChkMsg"></span>
-				</div>
-				<div>
-					<span class = "array">핸드폰</span><input type = "text" maxlength="4" id = "a_tel1" name = "a_tel1">
-					<input type = "text" maxlength="4" id = "a_tel2" name = "a_tel2">
-					<input type = "text" maxlength="4" id = "a_tel3" name = "a_tel3">
-					<span id = "telChkMsg"></span>
-				</div>		
-				<div>
-					<span class = "array">이메일</span><input type = "text" maxlength="30" id = "a_email1" name = "a_email1">
-					<span id = "arroba">@</span>
-					<input type = "text" maxlength="30" id = "a_email2" name = "a_email2">
-					<span id = "addrChkMsg"></span>
-					<select id = "choiceEmailType" name = "choiceEmailType">
-						<option value="none" selected="selected">직접입력</option>
-						<option value="naver.com">네이버</option>
-						<option value="daum.net">다음</option>
-						<option value="nate.com">네이트</option>
-						<option value="gmail.com">지메일</option>
-						<option value="hanmail.net">한메일</option> 
-						<option value="korea.com">코리아 닷컴</option>
-					</select>
-					<span id = "emailChkMsg"></span>
-				</div>	
-				<div class = "ver">
-					<span class = "array" id = "forAddr">주소</span>
-					<div id = "forAdress">
-						<span id = "daumApi">
-							<input type = "text" id = "a_addr1" name = "a_addr1" readonly="readonly">
-							<input type = "button" id = "go" name = "go" value = "주소 검색">
-							<span id = "addrChkMsg1"></span>
-						</span>
-						<input type = "text" width="500px" id = "a_addr2" name = "a_addr2" readonly="readonly">
-						<input type = "text" width="500px" id = "a_addr3" name = "a_addr3">
-						<span id = "addrChkMsg2"></span>
-					</div>
-				</div>	
-			</div>
-			<div class = "policy">
-				<div id = "tou">
-					<h3>${view1.po_name }</h3>
-						<textarea readonly="readonly" class = "po_content" name = "po_content">${view1.po_content }</textarea>
-					<div class = "chkLine">
-						<input type="checkbox" id = "touChk" name = "touChk" value="동의">
-						<label for="touChk">이용약관 및 청약철회 방침에 동의합니다.</label>
-					</div>
-				</div>
-				<div id = "privacy">
-					<h3>${view2.po_name }</h3>
-						<textarea readonly="readonly" class = "po_content" name = "po_content">${view2.po_content }</textarea>
-					<div class = "chkLine">
-						<input type="checkbox" id = "privacyChk" name = "privacyChk" value="동의">
-						<label for="privacyChk">개인정보 수집에 동의합니다.</label>
-					</div>
-				</div>
-			</div>
-			<input type = "hidden" id = "a_tel" name = "a_tel">
-			<input type = "hidden" id = "a_email" name = "a_email">
-			<input type = "hidden" id = "a_addr" name = "a_addr">
-			<input type = "hidden" id = "po_no" name = "po_no">
-		</form> 
-		<div id = "gogoJoin">
-			<input type = "button" id = "gogo" name = "gogo" value = "회원가입">
+		<div id = "celebration">
+			<div>
+				<div>회원가입을 축하드립니다!</div>
+			</div>		
 		</div>
 	</div>
 	
