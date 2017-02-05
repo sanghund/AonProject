@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<style>
+	.item {width:300px; float:left; margin:2em; background:#f00;}
+	.item > a > img {width:260px; margin:10px auto; display:block;}
+</style>
+
+
 <div class="menuTit">
 	<c:choose>
 		<c:when test="${not empty categorySelect}">
@@ -15,9 +21,12 @@
 	<c:choose>
 		<c:when test="${not empty productList}">
 			<c:forEach var="productList" items="${productList}">
-				<div>
-					<p>${productList.p_name}</p>
-					<p>${productList.p_price}</p>
+				<div class="item" data-num="${productList.p_no}">
+					<a href="/detail?no=${productList.p_no}">
+						<img src="http://dummyimage.com/260x400" />
+						<p>${productList.p_name}</p>
+						<p>${productList.p_price}</p>
+					</a>
 				</div>
 			</c:forEach>
 		</c:when>
