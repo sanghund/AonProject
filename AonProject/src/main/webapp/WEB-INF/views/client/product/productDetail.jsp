@@ -26,7 +26,6 @@
 	</c:choose>
 </div> --%>
 <div class="content">
-
 	<div class="imgContainer width40">
 		<img src="http://dummyimage.com/360x400" />
 	</div>
