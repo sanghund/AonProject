@@ -33,6 +33,16 @@ public class AdminVO extends PolicyAgrVO implements UserDetails{
 	private String a_date = ""; // 등록일
 	private Set<GrantedAuthority> authorities; // 계정이 가지고 있는 권한 목록
 	
+	private String adminSearch = ""; // 아이디 검색
+	
+	public String getAdminSearch() {
+		return adminSearch;
+	}
+
+	public void setAdminSearch(String adminSearch) {
+		this.adminSearch = adminSearch;
+	}
+
 	@Override
 	public String toString() {
 		return "AdminVO [a_no=" + a_no + ", a_id=" + a_id + ", a_pwd=" + a_pwd + ", a_name=" + a_name + ", a_addr="

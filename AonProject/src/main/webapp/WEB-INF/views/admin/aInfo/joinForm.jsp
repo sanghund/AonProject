@@ -87,7 +87,7 @@
 				<div><span class = "array">아이디</span><input type = "text" maxlength="20" id = "a_id" name = "a_id"><span id = "idChkMsg"></span></div>	
 				<div><span class = "array">비밀번호</span><input type = "password" maxlength="20" id = "a_pwd" name = "a_pwd"><span id = "pwdChkMsg1"></span></div>	
 				<div><span class = "array">비밀번호 확인</span><input type = "password" maxlength="20" id = "a_pwd2" name = "a_pwd2"><span id = "pwdChkMsg2"></span></div>		
-				<div><span class = "array">이름</span><input type = "text" maxlength="20" id = "a_name" name = "a_name"><span id = "nameChkMsg"></span></div>		
+				<div><span class = "array">이름</span><input type = "text" maxlength="20" id = "a_name" name = "a_name"><span id = "nameChkMsg"></span></div>				
 				<div>
 					<span class = "array">핸드폰</span><input type = "text" maxlength="4" id = "a_tel1" name = "a_tel1">
 					<input type = "text" maxlength="4" id = "a_tel2" name = "a_tel2">
@@ -137,7 +137,6 @@
 			<input type = "hidden" id = "a_tel" name = "a_tel">
 			<input type = "hidden" id = "a_email" name = "a_email">
 			<input type = "hidden" id = "a_addr" name = "a_addr">
-			<input type = "hidden" id = "po_no" name = "po_no">
 		</form> 
 		<div id = "gogoJoin">
 			<input type = "button" id = "gogo" name = "gogo" value = "회원가입">
@@ -272,7 +271,6 @@
     				$("#a_tel").val($("#a_tel1").val() + "-" + $("#a_tel2").val() + "-" + $("#a_tel3").val());
     				$("#a_email").val($("#a_email1").val() + $("#arroba").text() + $("#a_email2").val());
     				$("#a_addr").val($("#a_addr1").val() + omg + $("#a_addr2").val() + omg + $("#a_addr3").val());
-    				$("#po_no").val("<c:out value = '${view2.po_no }' />");
     				$.ajax({
     					url : "/admin/joinGo",
     					data : $("#joinForm").serialize(),

@@ -47,6 +47,12 @@ public class ProductDAOImpl implements ProductDAO {
 	public int productDelete(ProductVO pvo) {
 		return session.delete("productDelete", pvo);
 	}
+	
+	//상품번호 생성
+	@Override
+	public String createP_no() {
+		return session.selectOne("createP_no");
+	}
 
 	
 

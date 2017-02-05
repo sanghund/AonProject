@@ -1,7 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/resources/template/admin/admin.jspf" %>
 </head>
+<!-- Bootstrap -->
+    <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/resources/bootstrap/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/resources/bootstrap/css/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/resources/bootstrap/css/green.css" rel="stylesheet">
+    
+    <!-- Custom Theme Style -->
+    <link href="/resources/bootstrap/css/custom.min.css" rel="stylesheet">
+    
+    <!-- Datatables -->
+    <link href="/resources/bootstrap/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/bootstrap/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/bootstrap/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/bootstrap/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/bootstrap/css/scroller.bootstrap.min.css" rel="stylesheet">
+
 <body class = "nav-md">
 	<div class="container body">
 		<div class="main_container">
@@ -10,6 +30,8 @@
           		  <div class="navbar nav_title" style="border: 0;">
                      <a href="/admin/main" class="site_title"><i class="fa fa-paw"></i> <span>A O N !</span></a>
                   </div>
+                  <div class="clearfix"></div>
+       
 						<tiles:insertAttribute name="nav"></tiles:insertAttribute>
 									</div>
 			</div>
@@ -19,6 +41,7 @@
 				</div>
 		</div>
 	</div>
+</body>
 	
 	<!-- jQuery -->
     <script src="/resources/bootstrap/js/jquery.min.js"></script>
@@ -132,6 +155,7 @@
 
         function gd(year, month, day) {
           return new Date(year, month - 1, day).getTime();
+          
         }
       });
     </script>
@@ -320,5 +344,5 @@
       gauge.setTextField(document.getElementById("gauge-text"));
     </script> -->
     <!-- /gauge.js -->
-</body>
+
 </html>

@@ -4,6 +4,6 @@ import java.util.List;
 
 import com.aonproject.admin.product.vo.ProductVO;
 
-public interface _ProductService {
+public interface ClientProductService {
 	public List<ProductVO> productList(ProductVO pvo);
 }

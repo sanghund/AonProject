@@ -24,8 +24,8 @@
 		margin:0px auto 0;
 		}
 	#top_category{
-		position:absolute;
-		left:1150px;
+		position:relative;
+		float:right;
 		top:0;
 		padding:0px 0;
 		border:0px solid #333;

@@ -1,3 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="query.member"></mapper>
+<mapper namespace="com.aonproject.client.mInfo.dao.MemberDAO">
+	<!-- 유저 회원 가입 -->
+	<insert id="joinGo" parameterType="member">
+		<selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="m_no">
+			select member_seq.nextval from dual
+		</selectKey>
+		insert into member(m_no, m_id, m_pwd, m_name, m_gender, m_tel, m_email)
+		values(#{m_no}, #{m_id}, #{m_pwd}, #{m_name}, #{m_gender}, #{m_tel}, #{m_email})
+	</insert>
+	
+	<!-- 유저 주소 추가 -->
+	<insert id="addAddr" parameterType="member">
+		insert into member_addr(ma_no, m_no, m_addr)
+		values(member_addr_seq.nextval, #{m_no}, #{m_addr})
+	</insert>
+	
+	<!-- 최신 회원 번호 조회 -->
+	<select id="newNo" resultType="java.lang.Integer">
+		select * from (select m_no from member order by m_no desc) where rownum = 1
+	</select>
+	
+	<!-- 유저 정보 조회 -->
+	<select id = "memberInfo" parameterType="member" resultType="member">
+		select m_no, m_id, m_name, m_gender, m_email, m_date from member where m_no = #{m_no}
+	</select>
+	
+	<!-- 약관 거부시 계정 탈퇴 _ 탈퇴 테이블로 이동 -->
+	<insert id = "memberExpire" parameterType="member">
+		insert into member_expire(
+			me_no,
+			me_id,
+			me_name,
+			me_tel,
+			me_email
+			) values(
+			#{m_no},
+			#{m_id},
+			#{m_name},
+			#{m_tel},
+			#{m_email}
+			)
+	</insert>
+	
+	<!-- 약관 거부시 계정 탈퇴 _ 회원 테이블에서 데이터 제거 -->
+	<update id = "memberGoodBye" parameterType="member">
+		update member set
+			m_pwd = null,
+			m_name = null,
+			m_gender = null,
+			m_tel = null,
+			m_email = null,
+			m_leave = #{m_leave}
+			where m_no = #{m_no}
+	</update>
+	
+	<!-- 약관 거부시 계정 탈퇴 _ 회원 주소 테이블에서 데이터 제거 -->
+	<delete id="memberAddrGoodBye" parameterType="member">
+		delete from member_addr where m_no = #{m_no}
+	</delete>
+</mapper>

@@ -11,14 +11,33 @@
 	<definition name="admin/main" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/main.jsp" />
 	</definition>
+	
 	<!-- 관리자 회원가입 페이지 -->
 	<definition name="admin/aInfo/joinForm" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/aInfo/joinForm.jsp" />
 	</definition>
+	
 	<!-- 관리자 계정 정보 수정페이지 -->
 	<definition name="admin/aInfo/myPage" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/aInfo/myPage.jsp"></put-attribute>
 	</definition>
+	
+	<definition name="admin/cboard/cboard" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/cboard/cboard.jsp" />
+	</definition>
+	
+	<definition name="admin/notice/noticeList" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/notice/noticeList.jsp" />
+	</definition>
+	
+	<definition name="admin/notice/writeForm" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/notice/writeForm.jsp" />
+	</definition>
+	
+	<definition name="admin/notice/detailForm" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/notice/detailForm.jsp" />
+	</definition>
+	
 	<!-- 약관 정보 페이지 -->
 	<definition name="admin/policy/policy" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/policy/policy.jsp"></put-attribute>
@@ -36,16 +55,15 @@
 	</definition>
 	
 	<!-- 상품 리스트 페이지 -->
-	<definition name="admin/product/main" extends="adminMain">
-		<put-attribute name="main" value="/WEB-INF/views/admin/product/main.jsp"></put-attribute>
+	<definition name="admin/product/*" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/product/{1}.jsp"></put-attribute>
 	</definition>
 	<!-- 상품 상세 페이지 -->
-	<definition name="admin/product/detail" extends="adminMain">
-		<put-attribute name="main" value="/WEB-INF/views/admin/product/detail.jsp"></put-attribute>
+	<definition name="admin/product/*" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/product/{1}.jsp"></put-attribute>
 	</definition>
 	<!-- 상품 신규 등록 페이지 -->
-	<definition name="admin/product/write" extends="adminMain">
-		<put-attribute name="main" value="/WEB-INF/views/admin/product/write.jsp"></put-attribute>
+	<definition name="admin/product/*" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/product/{1}.jsp"></put-attribute>
 	</definition>
-
 </tiles-definitions>

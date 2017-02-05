@@ -2,12 +2,14 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Congif 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias type="com.aonproject.admin.notice.vo.NoticeVO" alias="notice"/>
 		<typeAlias type="com.aonproject.admin.aInfo.vo.AdminVO" alias="admin"/>	
 		<typeAlias type="com.aonproject.admin.product.vo.ProductVO" alias="product"/>
 		<typeAlias type="com.aonproject.admin.category.vo.CategoryVO" alias="category"/>
 		<typeAlias type="com.aonproject.admin.commoncode.vo.CommonCodeVO" alias="commonCode"/>
 		<typeAlias type="com.aonproject.common.util.upload.vo.UploadVO" alias="upload"/>
 		<typeAlias type="com.aonproject.admin.policy.vo.PolicyVO" alias="policy"/>
-		<typeAlias type="com.aonproject.admin.review.vo.ReviewVO" alias="review" />
+		<typeAlias type="com.aonproject.common.util.vo.PolicyAgrVO" alias="policyAgr"/>
+		<typeAlias type="com.aonproject.client.mInfo.vo.MemberVO" alias="member"/>
 	</typeAliases>
 </configuration>
