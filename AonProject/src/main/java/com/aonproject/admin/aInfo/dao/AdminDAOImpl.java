@@ -24,6 +24,7 @@ import org.springframework.stereotype.Repository;
 
 import com.aonproject.admin.aInfo.controller.AdminController;
 import com.aonproject.admin.aInfo.vo.AdminVO;
+import com.aonproject.common.util.vo.Numbers;
 
 
 @Repository
@@ -136,5 +137,11 @@ public class AdminDAOImpl extends JdbcDaoImpl implements AdminDAO{
 	public int newNo() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("newNo");
+	}
+
+	@Override
+	public List<Numbers> numbers() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("numbers");
 	}
 }

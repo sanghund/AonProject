@@ -30,7 +30,6 @@ import com.aonproject.common.util.vo.PolicyAgrVO;
 @Controller
 @RequestMapping(value = "/member")
 public class MemberController {
-	
 	Logger logger = Logger.getLogger(MemberController.class);
 	
 	@Resource(name = "shaEncoder")
