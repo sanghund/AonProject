@@ -15,6 +15,7 @@
 			if(!chkSubmit($("#ca_no"),"카테고리 번호를")) return;
 			else if(!chkSubmit($("#p_type"),"상품타입을")) return;
 			else if(!chkSubmit($("#p_name"),"상품명을")) return;
+			else if(!chkSubmit($("#p_info"),"상품설명을")) return;
 			else if(!chkSubmit($("#ca_no"),"상품색상을")) return;
 			else if(!chkSubmit($("#p_name"),"상품사이즈를")) return;
 			else if(!chkSubmit($("#p_price"),"가격을")) return;
@@ -35,6 +36,7 @@
 		$("#resetBtn").click(function(){
 			$("#p_no").val("");
 			$("#p_name").val("");
+			$("#p_info").val("");
 			$("#p_price").val("");
 			$("#p_fabric").val("");
 			$("#p_caution").val("");
@@ -86,10 +88,22 @@
 			<input type="hidden" id="p_del" name="p_del" value="n">
 			<table>
 				<tbody>
-					<%-- <tr>
+					<tr>
 						<td>상품번호</td>
-						<td><input type="text" id="p_no" name="p_no" value="${productDetail.p_no}"></td>
-					</tr> --%>
+						<td>
+							<select name="p_no" id="p_no">
+								<option value="">신규등록</option>
+								<c:forEach varStatus="status" items="${productList}">
+									<c:if test ="${status.index eq 0  }">
+										<option id="first" value="${productList[status.index].p_no}">${productList[status.index].p_name}</option>
+									</c:if>
+									<c:if test ="${status.index ne 0  }">
+										<option value="${productList[status.index].p_no}">${productList[status.index].p_name}</option>
+									</c:if>
+								</c:forEach>
+							</select>
+						</td>
+					</tr>
 					<tr>
 						<td>카테고리분류</td>
 						<td>
@@ -140,6 +154,10 @@
 					<tr>
 						<td>상품명</td>
 						<td><input type="text" name="p_name" id="p_name" value="${productDetail.p_name}"/></td>
+					</tr>
+					<tr>
+						<td>상품설명</td>
+						<td><textarea id="p_info" name="p_info">${productDetail.p_info}</textarea></td>
 					</tr>
 					<tr>
 						<td>색상</td>

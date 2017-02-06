@@ -17,6 +17,8 @@ import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 import com.aonproject.admin.product.service.ProductService;
 import com.aonproject.admin.product.vo.ProductVO;
 import com.aonproject.client.root.RootController;
+import com.aonproject.common.util.upload.service.UploadService;
+import com.aonproject.common.util.upload.vo.UploadVO;
 
 @Controller
 public class ClientProductController {
@@ -30,6 +32,9 @@ public class ClientProductController {
 	
 	@Autowired
 	private CommonCodeService commonCodeService;
+	
+	@Autowired
+	private UploadService uploadService;
 	
 	//상품 리스트 출력
 	@RequestMapping(value = "category")
@@ -48,18 +53,17 @@ public class ClientProductController {
 		
 		/*상품리스트 선택 카테고리 번호 삽입*/
 		pvo.setCa_no(no);
+		
 		/*상품 리스트 출력*/
-		List<ProductVO> productList = productService.productList(pvo);
-		model.addAttribute("productList", productList);
-		
-		/*상품 이미지 출력*/
-		
+		List<ProductVO> productForCategory = productService.productForCategory(pvo);
+		model.addAttribute("productForCategory", productForCategory);
+		logger.info(123);
 		return "client/product/productMain";
 	}
 	
 	//상품 디테일 출력
 	@RequestMapping(value = "detail")
-	public String productDetail (@ModelAttribute CategoryVO cvo, @ModelAttribute ProductVO pvo, @ModelAttribute CommonCodeVO cmvo, Model model, @RequestParam("no") String no){
+	public String productDetail (@ModelAttribute CategoryVO cvo, @ModelAttribute ProductVO pvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute UploadVO uvo, Model model, @RequestParam("no") String no){
 		/*카테고리 리스트 출력*/
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
@@ -71,7 +75,13 @@ public class ClientProductController {
 		
 		pvo.setP_no(no);
 		ProductVO productDetail = productService.productDetail(pvo);
+		productDetail.setP_no(pvo.getP_no().substring(0,7));
+		//logger.info("productDetail_pno:"+productDetail.getP_no());
 		model.addAttribute("productDetail", productDetail);
+		
+		uvo.setP_no(no);
+		List<UploadVO> uploadList = uploadService.uploadList(uvo);
+		model.addAttribute("uploadList", uploadList);
 		
 		return "client/product/productDetail";
 	}

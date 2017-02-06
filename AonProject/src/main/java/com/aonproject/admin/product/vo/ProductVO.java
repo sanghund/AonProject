@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductVO {
 	private String p_no;		//상품 코드
 	private String p_name;		//상품명
+	private String p_info;		//상품정보
 	private int	p_price;		//상품 가격
 	private int p_discount;		//상품 할인율
 	private String color_code;	//색상 코드
@@ -15,6 +16,8 @@ public class ProductVO {
 	private int ca_no;			//카테고리 번호
 	private String p_type;		//상품타입
 	private String p_del;		//상품삭제여부
+	
+	private String createP_no;	
 	
 	//카테고리 노출 필드 선언
 	private String ca_name;		//카테고리 이름
@@ -30,6 +33,18 @@ public class ProductVO {
 	
 	
 	
+	public String getCreateP_no() {
+		return createP_no;
+	}
+	public void setCreateP_no(String createP_no) {
+		this.createP_no = createP_no;
+	}
+	public String getP_info() {
+		return p_info;
+	}
+	public void setP_info(String p_info) {
+		this.p_info = p_info;
+	}
 	public String getP_del() {
 		return p_del;
 	}

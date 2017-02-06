@@ -5,10 +5,8 @@
 	<!-- 상품 리스트 조회 -->
 	<select id="productList" resultType="product" parameterType="product">
 		/* product - productList */
-		<!-- select p_no, category.ca_name, p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_Date
-		from product inner join category on product.ca_no = category.ca_no -->
-		select p_no, category.ca_name, p_type_cd.cc_name "p_type_name", p_name, p_price, p_discount, 
-			   color_cd.cc_name "color", upper(size_cd.cc_name) "size", p_fabric, p_caution, 
+		select substr(p_no,1,5) as p_no, category.ca_name, p_type_cd.cc_name "p_type_name", p_name, p_price, p_discount, 
+			   p_info, color_cd.cc_name "color", color_code, upper(size_cd.cc_name) "size", size_code, p_fabric, p_caution, 
 			   to_char(p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date
 		from product 
 		left join category on product.ca_no = category.ca_no 
@@ -22,22 +20,32 @@
 			p_del = 'n'
 		</where> 
 		order by p_date desc
-		
-		<!-- select p_no, (select pi_file from product_img where p_no = p_no and rownum = 1) as pi_file, category.ca_name, 
-       	p_type_cd.cc_name "p_type_name", p_name, p_price, p_discount, color_cd.cc_name "color", size_cd.cc_name "size", 
-       	p_fabric, p_caution, to_char(p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date, p_del
-		from product 
-		left join category on product.ca_no = category.ca_no 
-		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
-		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
-		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no); -->
+	</select>
+	
+	<!-- 상품 리스트 조회 -->
+	<select id="productForCategory" resultType="product" parameterType="product">
+		select product.p_no, product.p_name, product.p_type, product.p_price, product.p_discount, 
+		product.ca_no, p3.pi_file, product.p_caution, p_info
+		from (select * from product where ca_no = #{ca_no}) product 
+		inner join (select * from product_img inner join (select min(pi_no) pi_no 
+		from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no) p3 on product.p_no = p3.p_no
 	</select>
 	
 	<!-- 상품  디테일 조회 -->
 	<select id="productDetail" resultType="product" parameterType="product">
 		/* product - productDetail */
-		select p_no,  p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, p_date, ca_no 
-		from product where p_no like #{p_no}
+		<!-- select p_no,  p_type, p_name, p_price, p_discount, p_info, color_code, size_code, p_fabric, p_caution, p_date, ca_no 
+		from product where p_no like upper(#{p_no}) -->
+		
+		select p_no, category.ca_name, p_type_cd.cc_name "p_type_name", p_name, p_price, p_discount, 
+			   p_info, color_cd.cc_name "color", color_code, upper(size_cd.cc_name) "size", size_code, p_fabric, p_caution, 
+			   to_char(p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date
+		from product 
+		left join category on product.ca_no = category.ca_no 
+		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
+		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
+		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no)
+		where p_no = #{p_no}
 	</select>
 	
 	<!-- 상품번호 생성 -->
@@ -48,14 +56,15 @@
 	<!-- 상품 신규등록 -->
 	<insert id="productInsert" parameterType="product">
 		/* product - productInsert */
-		insert into product(p_no, p_type, p_name, p_price, p_discount, color_code, size_code, p_fabric, p_caution, ca_no, p_del) 
-					 values(upper(#{p_no}), #{p_type}, #{p_name}, #{p_price}, #{p_discount}, #{color_code}, #{size_code}, #{p_fabric}, #{p_caution}, #{ca_no}, #{p_del})
+		insert into product(p_no, p_type, p_name, p_info, p_price, p_discount, color_code, size_code, p_fabric, p_caution, ca_no, p_del) 
+					 values(upper(#{p_no}), #{p_type}, #{p_name}, #{p_info}, #{p_price}, #{p_discount}, #{color_code}, #{size_code}, #{p_fabric}, #{p_caution}, #{ca_no}, #{p_del})
 	</insert>
 	
 	<!-- 상품 정보 업데이트 -->
 	<update id="productUpdate" parameterType="product">
 		/* product - productUpdate */
 		update product set p_name = #{p_name},
+						   p_info = #{p_info},
 						   p_price = #{p_price},
 						   p_discount = #{p_discount},
 						   color_code = #{color_code},

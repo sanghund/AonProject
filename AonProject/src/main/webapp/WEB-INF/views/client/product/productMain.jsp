@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style>
-	.item {width:300px; float:left; margin:2em; background:#f00;}
+	.item {width:300px; float:left; margin:2em;}
 	.item > a > img {width:260px; margin:10px auto; display:block;}
+	.content ul {text-align:center; margin:1em 0;}
+	.content ul li {line-height:1.2rem;}
 </style>
 
 
@@ -19,14 +21,18 @@
 </div>
 <div class="content">
 	<c:choose>
-		<c:when test="${not empty productList}">
-			<c:forEach var="productList" items="${productList}">
-				<div class="item" data-num="${productList.p_no}">
-					<a href="/detail?no=${productList.p_no}">
-						<img src="http://dummyimage.com/260x400" />
-						<p>${productList.p_name}</p>
-						<p>${productList.p_price}</p>
+		<c:when test="${not empty productForCategory}">
+			<c:forEach items="${productForCategory}" varStatus="status">
+				<div class="item" data-num="${productForCategory[status.index].p_no}">
+					<a href="/detail?no=${productForCategory[status.index].p_no}">
+						<img src="/productUpload/${productForCategory[status.index].pi_file}" />
 					</a>
+					<ul>
+						<li class="bold">[AON PROJECT]</li>
+						<li class="bold">${productForCategory[status.index].p_name}</li>
+						<%-- <li>${productForCategory[status.index].p_info}</li> --%>
+						<li>CONSUMER PRICE: ${productForCategory[status.index].p_price}</li>
+					</ul>
 				</div>
 			</c:forEach>
 		</c:when>
