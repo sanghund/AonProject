@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.stereotype.Repository;
 
 import com.aonproject.client.mInfo.vo.MemberVO;
+import com.aonproject.common.util.vo.Numbers;
 
 @Repository
 public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
@@ -145,6 +146,12 @@ public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
 	public int memberAddrGoodBye(MemberVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.delete("memberAddrGoodBye", vo);
+	}
+
+	@Override
+	public List<Numbers> numbers() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("numbers");
 	}
 
 

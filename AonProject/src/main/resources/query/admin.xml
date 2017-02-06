@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aonproject.admin.aInfo.dao.AdminDAO">
+	<resultMap type="com.aonproject.common.util.vo.Numbers" id="numbersQ">
+		<result column="po_no" property="no" />
+	</resultMap>
+	
+	<!-- admin a_no 전체 가져오기 -->
+	<select id="numbers" resultMap="numbersQ">
+		select a_no from policy order by a_no desc
+	</select>
+	
 	
 	<!-- 관리자 정보조회 -->
 	<select id="adminInfo" resultType="admin" parameterType="admin">

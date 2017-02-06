@@ -301,13 +301,17 @@
 		<input type = "hidden" id = "memberSearch" name = "memberSearch" value="${memberVO.memberSearch }">
 	</form>
 	<div id = "excelGo">
-	
+		 <input type = "button" id="excel" value="엑셀 출력">
 	</div>
 </div>
 
 <script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 <script type = "text/javascript">
 	$(document).ready(function(){
+		$("#excel").click(function(){
+			location.href = "/admin/policyAgr/excel";
+		});
+		
 		$("#pageLow a").click(function(event){
 			event.preventDefault();
 			var adminPageNum = $(this).attr("data-num");

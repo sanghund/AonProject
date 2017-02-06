@@ -1,5 +1,8 @@
 package com.aonproject.admin.policy.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.aonproject.admin.aInfo.service.AdminService;
 import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.admin.policy.service.PolicyService;
 import com.aonproject.admin.policy.vo.PolicyVO;
@@ -21,6 +25,7 @@ import com.aonproject.client.mInfo.service.MemberService;
 import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.common.util.excel.ExcelList;
 import com.aonproject.common.util.paging.PagingSet;
+import com.aonproject.common.util.vo.Numbers;
 import com.aonproject.common.util.vo.PolicyAgrVO;
 
 @Controller
@@ -31,7 +36,11 @@ public class PolicyController {
 	@Autowired
 	private PolicyService policyService;
 	
-	@Autowired MemberService memberService;
+	@Autowired 
+	private MemberService memberService;
+	
+	@Autowired
+	private AdminService adminService;
 	
 	@RequestMapping(value = "/policy")
 	public ModelAndView policyList(Authentication auth){
@@ -62,6 +71,26 @@ public class PolicyController {
 		int gogo = policyService.newPolicy(vo);	
 	
 		if(gogo == 1){
+			int po_no = policyService.forLoop();
+			
+			List<Numbers> adminNs = adminService.numbers();
+			for(int i = 0; i < adminNs.size(); i++){
+				AdminVO pvo = new AdminVO();
+				pvo.setPo_no(po_no);
+				pvo.setA_no((int) adminNs.get(i).getNo());
+				pvo.setPa_confirm("동의");
+				policyService.pagr(pvo);
+			}
+			
+			List<Numbers> memberNs = memberService.numbers();
+			for(int i = 0; i < adminNs.size(); i++){
+				PolicyAgrVO pvo = new PolicyAgrVO();
+				pvo.setPo_no(po_no);
+				pvo.setM_no((int) memberNs.get(i).getNo());
+				pvo.setPa_confirm("동의");
+				policyService.pagr2(pvo);
+			}
+			
 			result = "success";
 		}
 		else {
@@ -131,8 +160,20 @@ public class PolicyController {
 	@RequestMapping(value="/policyAgr/excel")
 	public ModelAndView excel(){
 		logger.info("excel 호출 성공");
-		ModelAndView mav = new ModelAndView(new ExcelList());
+		List<Numbers> nList = policyService.numbers();
 		
+		ArrayList<List<PolicyAgrVO>> pagrList = new ArrayList<List<PolicyAgrVO>>();;
+		for(int i = 0; i < nList.size(); i++){
+			PolicyVO pvo = new PolicyVO();
+			pvo.setPo_no(nList.get(i).getNo());
+			List<PolicyAgrVO> excelList = policyService.excelList(pvo);
+			if(excelList != null) pagrList.add(excelList);
+		}
+		logger.info("시트 수 : " + pagrList.size());
+		ModelAndView mav = new ModelAndView(new ExcelList());
+		mav.addObject("pagrList", pagrList);
+		mav.addObject("file_name", "약관 동의 목록");
+		mav.addObject("nList", nList);
 		return mav;
 	};
 }
