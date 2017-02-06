@@ -24,4 +24,5 @@ public class ClientProductServiceImpl implements ClientProductService {
 		return productList;
 	}
 
+	
 }

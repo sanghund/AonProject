@@ -29,6 +29,7 @@
 			if(!chkSubmit($("#ca_no"),"카테고리 번호를")) return;
 			else if(!chkSubmit($("#p_type"),"상품타입을")) return;
 			else if(!chkSubmit($("#p_name"),"상품명을")) return;
+			else if(!chkSubmit($("#p_info"),"상품설명을")) return;
 			else if(!chkSubmit($("#ca_no"),"상품색상을")) return;
 			else if(!chkSubmit($("#p_name"),"상품사이즈를")) return;
 			else if(!chkSubmit($("#p_price"),"가격을")) return;
@@ -184,6 +185,10 @@
 						<td><input type="text" name="p_name" id="p_name" value="${productDetail.p_name}"/></td>
 					</tr>
 					<tr>
+						<td>상품설명</td>
+						<td><textarea id="p_info" name="p_info">${productDetail.p_info}</textarea></td>
+					</tr>
+					<tr>
 						<td>색상</td>
 						<td>
 							<select id="color_code" name="color_code" id="color_code">
@@ -238,7 +243,7 @@
 					<tr>
 						<td>할인율</td>
 						<td>
-							<select id="p_discount">
+							<select id="p_discount" name="p_discount">
 								<c:choose>
 									<c:when test="${not empty productDetail}">
 										<c:if test="${productDetail.p_discount ne '0'}">
@@ -260,7 +265,7 @@
 						<td><input type="text" id="p_fabric" name="p_fabric" value="${productDetail.p_fabric}"></td>
 					</tr>
 					<tr>
-						<td>주의사항</td>
+						<td>상품설명</td>
 						<td><textarea id="p_caution" name="p_caution">${productDetail.p_caution}</textarea></td>
 					</tr>
 					<tr>

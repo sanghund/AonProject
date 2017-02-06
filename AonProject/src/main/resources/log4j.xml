@@ -32,7 +32,11 @@
 	<logger name="com.aonproject.member.order">
 		<level value="info"></level>
 	</logger>
+	
 	<logger name="com.aonproject.admin.product.dao">
+		<level value="TRACE"></level>
+	</logger>
+	<logger name="com.aonproject.admin.product">
 		<level value="info"></level>
 	</logger>
 	
@@ -41,6 +45,10 @@
 	</logger>
 	<logger name="com.aonproject.client.mInfo.dao">
 		<level value="TRACE"></level>
+	</logger>
+	
+	<logger name="com.aonproject.client.root">
+		<level value="info"></level>
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
