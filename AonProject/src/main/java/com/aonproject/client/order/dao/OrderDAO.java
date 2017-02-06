@@ -1,5 +1,9 @@
 package com.aonproject.client.order.dao;
 
-public interface OrderDAO {
+import java.util.List;
 
+import com.aonproject.client.order.vo.Product_orderVO;
+
+public interface OrderDAO {
+	public List<Product_orderVO> orderList(Product_orderVO povo);
 }

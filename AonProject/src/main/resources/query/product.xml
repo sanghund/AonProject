@@ -45,7 +45,7 @@
 		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
 		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
 		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no)
-		where p_no = #{p_no}
+		where p_no = upper(#{p_no})
 	</select>
 	
 	<!-- 상품번호 생성 -->

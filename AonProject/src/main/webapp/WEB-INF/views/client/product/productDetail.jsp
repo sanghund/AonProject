@@ -11,7 +11,7 @@
 	.width40 {width:40%;}
 	.content {width:100%;}
 	.imgContainer {float:left; margin-right:2%; margin-bottom:2em; border-right:1px solid #dedede;}
-	.imgContainer img {margin:0 auto; display:block;}
+	.imgContainer img {margin:0 auto; display:block; width:350px;}
 	.itemOption {float:left;}
 		.itemOption form > h3 {font-size:1.4rem; padding:0 0 10px 0; border-bottom:1px solid #e1e1e1;}
 	.productImg {width:82%; clear:both;}
@@ -35,27 +35,24 @@
 			if($("#size").val()!=""){
 				var orderOption = $("<tr>");
 				var td = $("<td>");
-				var orderCnt = $("<td><input class='cnt' type='number' value='1'><input type='hidden' class='arrayP_no'><input type='button' class='cntUp' value='+'><input type='button' class='cntDown' value='-'></td>");
-				
+				var sizeNo = ($(this).find("option:selected").val()).toUpperCase();
+				var orderCnt = $("<td><input class='cnt' type='text' readonly value='1'><input type='hidden' class='arrayP_no' value='${productDetail.p_no}"+sizeNo+"'><input type='button' class='cntUp' value='+'><input type='button' class='cntDown' value='-'></td>");
 				orderOption.html("<td class='orderChk'>${productDetail.color}"+$("#size option:selected").html()+"</td>");
 				td.append(orderCnt)
 				orderOption.append(td);
-				totalCount()
+				totalCount();
 				
 				var temp = $("#size option:selected").html(); 
-				console.log("selected option: "+temp);
 				
 				var eachResult = true;
 				$(".orderChk").each(function(){
-					console.log("each:"+temp);
-					console.log("charAt:"+($(this).html().charAt($(this).html().length -1)));
 					if(temp == ($(this).html().charAt($(this).html().length -1))){
 						eachResult = false;
 						return;
 					}
 				})
 				if(!eachResult) return;
-				$(".orderDetail").after(orderOption);
+				$(".orderInfo").append(orderOption);
 				$(".orderBtnContainer").prepend(orderPrice);
 				
 			}
@@ -67,9 +64,6 @@
 			var addCnt = parseInt(cntInput.val()) + 1;
 			cntInput.val(addCnt);
 			totalCount();
-			//totalPrice = (resultPrice * (addCnt));
-			console.log(totalPrice);
-			//$("#price").html("총 주문액<br>"+totalPrice+"원")
 		});
 		
 		//선택상품  수량 감소
@@ -84,9 +78,6 @@
 				cntInput.val(1);
 				totalCount();
 			}
-			//totalPrice = (resultPrice * (addCnt));
-			console.log(totalPrice);
-			//$("#price").html("총 주문액<br>"+totalPrice+"원")
 			
 		});
 		
@@ -98,25 +89,29 @@
 		//구매버튼 클릭 처리 이벤트
 		$("#order").click(function(){
 			for(var j = 0; j < i; j++){
-				$(".cnt").eq(j).attr("name", "o_cnt[" + j + "]");
-				$(".arrayP_no").eq(j).attr("name", "p_no[" + j + "]");
+				$(".cnt").eq(j).attr("name", "o_cnts[" + j + "]");
+				$(".arrayP_no").eq(j).attr("name", "p_nos[" + j + "]");
 			};
-			
 			$("#orderForm").attr({
 				"method" : "post",
 				"action" : "/order/order"
 			});
-			$("#order").submit();
+			$("#orderForm").submit();
 		});
 		
 		//장바구니 클릭 처리 이벤트
 		$("#cart").click(function(){
-			
+			for(var j = 0; j < i; j++){
+				$(".cnt").eq(j).attr("name", "o_cnts[" + j + "]");
+				$(".arrayP_no").eq(j).attr("name", "p_nos[" + j + "]");
+				console.log("cnt:"+$(".cnt").eq(j).val());
+				console.log("pno:"+$(".arrayP_no").eq(j).val());
+			};
 			$("#orderForm").attr({
 				"method" : "post",
 				"action" : "/order/wish"
 			});
-			$("#order").submit();
+			//$("#orderForm").submit();
 		});
 		
 	})
@@ -126,22 +121,11 @@
 		for(var i=0; i<$(".cnt").size(); i++){
 			temp += parseInt(($(".cnt:eq("+i+")").val()));
 		}
-		console.log(temp);
 		totalPrice = resultPrice * temp;
 		$("#price").html("총 주문액<br>"+totalPrice+"원")
-		//console.log(totalCnt);
 	}
 </script>
 
-<%-- <div class="menuTit">
-	<c:choose>
-		<c:when test="${not empty categorySelect}">
-			<c:forEach var="categorySelect" items="${categorySelect}">
-				<p>${categorySelect.ca_name}</p>
-			</c:forEach>		
-		</c:when>
-	</c:choose>
-</div> --%>
 <div class="content">
 	<div class="imgContainer width40">
 		<c:forEach var="uploadList" begin="0" end="0" items="${uploadList}">
@@ -149,10 +133,6 @@
 		</c:forEach>
 	</div>
 	<div class="itemOption width40">
-		<form name="orderForm" id="orderForm">
-			<input type="hidden" name="p_no">
-			<input type="hidden" name="o_cnt">
-		</form>	
 		<h3>${productDetail.p_name}</h3>
 		<table class="orderDetail">
 			<tbody>
@@ -196,13 +176,14 @@
 				</tr>
 			</tbody>
 		</table>
-		<table class="orderInfo">
-		</table>
+		<form name="orderForm" id="orderForm">
+			<table class="orderInfo">
+			</table>	
+		</form>	
 		<div class="orderBtnContainer">
 			<input type="button" id="order" value="구매하기">
 			<input type="button" id="cart" value="장바구니">
 		</div>
-		
 	</div>
 	<div class="productImg">
 		<c:forEach var="uploadList" begin="1" items="${uploadList}">
