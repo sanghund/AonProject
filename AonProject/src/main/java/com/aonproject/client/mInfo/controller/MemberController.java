@@ -69,7 +69,7 @@ public class MemberController {
 		if((mode == null || mode.trim().equals("")) && request.getMethod().equals("GET")){
 			return "client/cInfo/joinForm";
 		}
-		else if((mode.equals("success")) /*&& request.getMethod().equals("POST")*/){
+		else if((mode.equals("success")) && request.getMethod().equals("POST")){
 			model.addAttribute("view1", policyService.policyView1());
 			model.addAttribute("view2", policyService.policyView2());
 			return "client/cInfo/joinForm2";

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aonproject.admin.notice.dao.NoticeDAO">
-
     <sql id="noticeCommon">
 		select NO_NUM, NO_TITLE, NO_CONTENT, NO_DATE, A_NO
 		from NOTICE

@@ -1,22 +1,23 @@
-package com.aonproject.client.order.service;
+package com.aonproject.admin.stock.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.aonproject.client.order.dao.OrderDAO;
+import com.aonproject.admin.stock.dao.StockDAO;
 import com.aonproject.client.order.vo.CartVO;
-
 
 @Service
 @Transactional
-public class OrderServiceImpl implements OrderService{
-	@Autowired
-	private OrderDAO orderDAO;
+public class StockServiceImpl implements StockService{
 
+	@Autowired
+	private StockDAO stockDAO;
+	
 	@Override
-	public CartVO cartList(CartVO vo) {
+	public int stockChk(CartVO vo) {
 		// TODO Auto-generated method stub
-		return orderDAO.cartList(vo);
+		return stockDAO.stockChk(vo);
 	}
+
 }

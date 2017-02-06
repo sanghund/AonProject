@@ -1,5 +1,7 @@
 package com.aonproject.client.order.dao;
 
-public interface OrderDAO {
+import com.aonproject.client.order.vo.CartVO;
 
+public interface OrderDAO {
+	public CartVO cartList(CartVO vo);
 }

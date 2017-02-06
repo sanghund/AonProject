@@ -11,5 +11,7 @@
 		<typeAlias type="com.aonproject.admin.policy.vo.PolicyVO" alias="policy"/>
 		<typeAlias type="com.aonproject.common.util.vo.PolicyAgrVO" alias="policyAgr"/>
 		<typeAlias type="com.aonproject.client.mInfo.vo.MemberVO" alias="member"/>
+		<typeAlias type="com.aonproject.admin.stock.vo.StockVO" alias="stock"/>
+		<typeAlias type="com.aonproject.client.order.vo.CartVO" alias="cart"/>
 	</typeAliases>
 </configuration>
