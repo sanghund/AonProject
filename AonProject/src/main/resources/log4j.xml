@@ -26,10 +26,10 @@
 	<logger name="com.aonproject.admin.policy.dao">
 		<level value="TRACE"></level>
 	</logger>
-	<logger name="com.aonproject.member.order.dao">
+	<logger name="com.aonproject.client.order.dao">
 		<level value="TRACE"></level>
 	</logger>
-	<logger name="com.aonproject.member.order">
+	<logger name="com.aonproject.client.order">
 		<level value="info"></level>
 	</logger>
 	

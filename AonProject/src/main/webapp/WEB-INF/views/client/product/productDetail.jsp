@@ -35,12 +35,13 @@
 			if($("#size").val()!=""){
 				var orderOption = $("<tr>");
 				var td = $("<td>");
-				var orderCnt = $("<td><input class='cnt' type='number' value='1'><input type='hidden' class='arrayP_no'><input type='button' class='cntUp' value='+'><input type='button' class='cntDown' value='-'></td>");
-				
-				orderOption.html("<td class='orderChk'>${productDetail.color}"+$("#size option:selected").html()+"</td>");
+				var sizeNo = ($(this).find("option:selected").val()).toUpperCase();
+	            var orderCnt = $("<td><input class='cnt' type='number' value='1'><input type='hidden' class='arrayP_no' value='${productDetail.p_no}"+sizeNo+"'><input type='button' class='cntUp' value='+'><input type='button' class='cntDown' value='-'></td>");
+	            
+	            orderOption.html("<td class='orderChk'>${productDetail.color}"+$("#size option:selected").html()+"</td>");
 				td.append(orderCnt)
 				orderOption.append(td);
-				totalCount()
+				totalCount();
 				
 				var temp = $("#size option:selected").html(); 
 				console.log("selected option: "+temp);
@@ -55,7 +56,7 @@
 					}
 				})
 				if(!eachResult) return;
-				$(".orderDetail").after(orderOption);
+				$(".orderInfo").append(orderOption);
 				$(".orderBtnContainer").prepend(orderPrice);
 				
 			}
@@ -98,25 +99,29 @@
 		//구매버튼 클릭 처리 이벤트
 		$("#order").click(function(){
 			for(var j = 0; j < i; j++){
-				$(".cnt").eq(j).attr("name", "o_cnt[" + j + "]");
-				$(".arrayP_no").eq(j).attr("name", "p_no[" + j + "]");
+				$(".cnt").eq(j).attr("name", "o_cnts[" + j + "]");
+				$(".arrayP_no").eq(j).attr("name", "p_nos[" + j + "]");
 			};
 			
 			$("#orderForm").attr({
 				"method" : "post",
 				"action" : "/order/order"
 			});
-			$("#order").submit();
+			$("#orderForm").submit();
 		});
 		
 		//장바구니 클릭 처리 이벤트
 		$("#cart").click(function(){
+			for(var j = 0; j < i; j++){
+				$(".cnt").eq(j).attr("name", "o_cnts[" + j + "]");
+				$(".arrayP_no").eq(j).attr("name", "p_nos[" + j + "]");
+			};
 			
 			$("#orderForm").attr({
 				"method" : "post",
 				"action" : "/order/wish"
 			});
-			$("#order").submit();
+			$("#orderForm").submit();
 		});
 		
 	})
@@ -132,16 +137,6 @@
 		//console.log(totalCnt);
 	}
 </script>
-
-<%-- <div class="menuTit">
-	<c:choose>
-		<c:when test="${not empty categorySelect}">
-			<c:forEach var="categorySelect" items="${categorySelect}">
-				<p>${categorySelect.ca_name}</p>
-			</c:forEach>		
-		</c:when>
-	</c:choose>
-</div> --%>
 <div class="content">
 	<div class="imgContainer width40">
 		<c:forEach var="uploadList" begin="0" end="0" items="${uploadList}">
@@ -149,10 +144,6 @@
 		</c:forEach>
 	</div>
 	<div class="itemOption width40">
-		<form name="orderForm" id="orderForm">
-			<input type="hidden" name="p_no">
-			<input type="hidden" name="o_cnt">
-		</form>	
 		<h3>${productDetail.p_name}</h3>
 		<table class="orderDetail">
 			<tbody>
@@ -196,8 +187,9 @@
 				</tr>
 			</tbody>
 		</table>
-		<table class="orderInfo">
-		</table>
+		<form id = "orderForm" name = "orderForm">
+			<table class="orderInfo"></table>
+		</form>	
 		<div class="orderBtnContainer">
 			<input type="button" id="order" value="구매하기">
 			<input type="button" id="cart" value="장바구니">

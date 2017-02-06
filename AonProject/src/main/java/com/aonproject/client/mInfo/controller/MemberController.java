@@ -96,7 +96,7 @@ public class MemberController {
 		
 		emailSender.SendEmail(email);
 		Cookie cookie = new Cookie("certificationNumbers", numbers);
-		cookie.setMaxAge(60* 60 * 60);
+		cookie.setMaxAge(60* 30);
 		response.addCookie(cookie);
 			
 		result = "success";
