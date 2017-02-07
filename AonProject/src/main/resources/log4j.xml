@@ -51,6 +51,14 @@
 		<level value="info"></level>
 	</logger>
 	
+	<logger name="com.aonproject.client.order">
+		<level value="info"></level>
+	</logger>
+	
+	<logger name="com.aonproject.client.order.dao">
+		<level value="TRACE"></level>
+	</logger>
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />

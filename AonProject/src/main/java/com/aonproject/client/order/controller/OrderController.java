@@ -17,6 +17,8 @@ import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
 import com.aonproject.admin.commoncode.service.CommonCodeService;
 import com.aonproject.admin.commoncode.vo.CommonCodeVO;
+import com.aonproject.admin.product.service.ProductService;
+import com.aonproject.admin.product.vo.ProductVO;
 import com.aonproject.client.order.service.OrderService;
 import com.aonproject.client.order.vo.Product_orderVO;
 
@@ -34,9 +36,12 @@ public class OrderController{
 	@Autowired
 	private CommonCodeService commonCodeService;
 	
+	@Autowired
+	private ProductService productService;
+	
 	//주문
 	@RequestMapping(value= "/order")
-	public String order(@ModelAttribute Product_orderVO povo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO cmvo, HttpServletRequest request, Model model){
+	public String order(@ModelAttribute Product_orderVO povo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute ProductVO pvo, HttpServletRequest request, Model model){
 		logger.info("order 호출 성공");
 		
 		/*카테고리 리스트 출력*/
@@ -46,10 +51,13 @@ public class OrderController{
 		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(cmvo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
-		List<Product_orderVO> orderList = orderService.orderList(povo);
+		ProductVO productDetail = productService.productDetail(pvo);
+		model.addAttribute("productDetail", productDetail);
+		
+		//List<Product_orderVO> orderList = orderService.orderList(povo);
 		
 		
-		return "redirect:/client/order/order";
+		return "client/order/order";
 	}
 	
 	
