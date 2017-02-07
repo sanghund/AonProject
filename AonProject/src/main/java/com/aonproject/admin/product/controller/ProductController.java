@@ -81,6 +81,7 @@ public class ProductController {
 		List<UploadVO> uploadList = uploadService.uploadList(uvo);
 		model.addAttribute("uploadList", uploadList);
 		
+		
 		return "admin/product/detail";
 	}
 	

@@ -26,7 +26,7 @@
 	<select id="productForCategory" resultType="product" parameterType="product">
 		select product.p_no, product.p_name, product.p_type, product.p_price, product.p_discount, 
 		product.ca_no, p3.pi_file, product.p_caution, p_info
-		from (select * from product where ca_no = #{ca_no}) product 
+		from (select * from product where rowid in(select max(rowid) from product group by substr(p_no,1,7)) and ca_no = #{ca_no}) product 
 		inner join (select * from product_img inner join (select min(pi_no) pi_no 
 		from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no) p3 on product.p_no = p3.p_no
 	</select>
@@ -34,10 +34,7 @@
 	<!-- 상품  디테일 조회 -->
 	<select id="productDetail" resultType="product" parameterType="product">
 		/* product - productDetail */
-		<!-- select p_no,  p_type, p_name, p_price, p_discount, p_info, color_code, size_code, p_fabric, p_caution, p_date, ca_no 
-		from product where p_no like upper(#{p_no}) -->
-		
-		select p_no, category.ca_name, p_type_cd.cc_name "p_type_name", p_name, p_price, p_discount, 
+		<!-- select p_no, category.ca_name, p_type_cd.cc_name "p_type_name", p_name, p_price, p_discount, 
 			   p_info, color_cd.cc_name "color", color_code, upper(size_cd.cc_name) "size", size_code, p_fabric, p_caution, 
 			   to_char(p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date
 		from product 
@@ -45,7 +42,18 @@
 		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
 		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
 		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no)
-		where p_no = #{p_no}
+		where p_no = upper(#{p_no}) -->
+		
+		select product.p_no, category.ca_name, p_type_cd.cc_name "p_type_name", product.p_name, product.p_price, product.p_discount, p3.pi_file,
+			   p_info, color_cd.cc_name "color", color_code, upper(size_cd.cc_name) "size", size_code, p_fabric, p_caution, 
+			   to_char(product.p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date
+		from product 
+		left join category on product.ca_no = category.ca_no 
+		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
+		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
+		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no)
+    	inner join (select * from product_img inner join (select min(pi_no) pi_no from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no) p3 on product.p_no = p3.p_no
+		where product.p_no = upper(#{p_no})
 	</select>
 	
 	<!-- 상품번호 생성 -->

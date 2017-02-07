@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,10 +21,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
+import com.aonproject.admin.commoncode.service.CommonCodeService;
+import com.aonproject.admin.commoncode.vo.CommonCodeVO;
+import com.aonproject.admin.product.service.ProductService;
+import com.aonproject.admin.product.vo.ProductVO;
 import com.aonproject.admin.stock.service.StockService;
+import com.aonproject.client.mInfo.service.MemberService;
+import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.client.order.service.OrderService;
 import com.aonproject.client.order.vo.CartVO;
-
+import com.aonproject.client.order.vo.Product_orderVO;
 
 @Controller
 @RequestMapping(value="/order")
@@ -36,7 +44,50 @@ public class OrderController{
 	private CategoryService categoryService;
 	
 	@Autowired
+	private CommonCodeService commonCodeService;
+	
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
 	private StockService stockService;
+	
+	@Autowired
+	private MemberService memberService;
+	
+	//주문
+	@RequestMapping(value= "/order")
+	public String order(Authentication auth, @ModelAttribute Product_orderVO povo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute ProductVO pvo, HttpServletRequest request, Model model){
+		logger.info("order 호출 성공");
+		
+		/*회원정보 출력*/
+		MemberVO vo = (MemberVO) auth.getPrincipal();
+		MemberVO memberInfo = memberService.memberInfo(vo);
+		logger.info("getM_tel: "+memberInfo.getM_tel());
+		model.addAttribute("memberInfo", memberInfo);
+		
+		/*카테고리 리스트 출력*/
+		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
+		model.addAttribute("categoryList", categoryList);
+		
+		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(cmvo);
+		model.addAttribute("commonCodeList", commonCodeList);
+		
+		
+		List<ProductVO> orderList = new ArrayList<ProductVO>();
+		for(int i=0; i<povo.getP_nos().size(); i++){
+			pvo.setP_no(povo.getP_nos().get(i));
+			orderList.add(productService.productDetail(pvo));
+		}
+		
+		logger.info(orderList.get(0).getP_price());
+		
+		logger.info("orderList: "+orderList.size());
+		model.addAttribute("orderList", orderList);
+		
+		return "client/order/order";
+	}
+	
 	
 	// 장바구니
 	@RequestMapping(value= "/cart")
