@@ -65,11 +65,11 @@
 		<level value="TRACE"></level>
 	</logger>
 	
-	<logger name="com.aonproject.client.member">
-		<level value="info"></level>
-	</logger>
 	<logger name="com.aonproject.client.member.dao">
 		<level value="TRACE"></level>
+	</logger>
+	<logger name="com.aonproject.client.member">
+		<level value="info"></level>
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
