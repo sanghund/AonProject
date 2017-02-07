@@ -80,6 +80,7 @@ public class OrderController{
 			orderList.add(productService.productDetail(pvo));
 		}
 		
+		
 		logger.info(orderList.get(0).getP_price());
 		
 		logger.info("orderList: "+orderList.size());
