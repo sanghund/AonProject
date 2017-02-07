@@ -8,8 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import com.aonproject.client.order.vo.Product_orderVO;
 
+import com.aonproject.client.order.vo.CartVO;
+
 @Repository
 public class OrderDAOImpl implements OrderDAO{
+	
 	@Autowired
 	private SqlSession sqlSession;
 
@@ -17,4 +20,11 @@ public class OrderDAOImpl implements OrderDAO{
 	public List<Product_orderVO> orderList(Product_orderVO povo) {
 		return sqlSession.selectList("orderList", povo);
 	}
+	
+	@Override
+	public CartVO cartList(CartVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("cartList", vo);
+	}
+
 }

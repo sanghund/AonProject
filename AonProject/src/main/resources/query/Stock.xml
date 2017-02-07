@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aonproject.admin.stock.dao.StockDAO">
+	<select id="stockChk" parameterType="stock" resultType="java.lang.Integer">
+		select nvl(stock_cnt, 0) stock_cnt from stock where upper(p_no) = upper(#{p_no})
+	</select>
+</mapper>

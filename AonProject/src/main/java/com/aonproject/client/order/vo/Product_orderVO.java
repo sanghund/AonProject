@@ -3,17 +3,17 @@ package com.aonproject.client.order.vo;
 import java.util.List;
 
 public class Product_orderVO {
-	private int 	o_no;			//주문번호		
-	private int 	o_cnt;			//주문수량
-	private int 	o_price;		//주문가격
-	private String 	o_mode;			//결재방법
-	private String 	o_confirm;		//결재유무
-	private String 	o_date;			//등록일
-	private int 	m_no;			//회원번호
-	private String 	p_no;			//상품번호
+	private int 	o_no = 0;			//주문번호		
+	private int 	o_cnt = 0;			//주문수량
+	private int 	o_price = 0;		//주문가격
+	private String 	o_mode = "";		//결재방법
+	private String 	o_confirm = "";		//결재유무
+	private String 	o_date = "";		//등록일
+	private int 	m_no = 0;			//회원번호
+	private String 	p_no = "";			//상품번호
 	
-	private List<String> p_nos;		//상품번호 리스트
-	private List<Integer> o_cnts;	//상품 주문수량 리스트
+	private List<String> p_nos = null;	//상품번호 리스트
+	private List<Integer> o_cnts = null;//상품 주문수량 리스트
 	
 	
 	public List<String> getP_nos() {

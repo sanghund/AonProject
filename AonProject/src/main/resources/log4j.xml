@@ -26,10 +26,10 @@
 	<logger name="com.aonproject.admin.policy.dao">
 		<level value="TRACE"></level>
 	</logger>
-	<logger name="com.aonproject.member.order.dao">
+	<logger name="com.aonproject.client.order.dao">
 		<level value="TRACE"></level>
 	</logger>
-	<logger name="com.aonproject.member.order">
+	<logger name="com.aonproject.client.order">
 		<level value="info"></level>
 	</logger>
 	
@@ -37,6 +37,13 @@
 		<level value="TRACE"></level>
 	</logger>
 	<logger name="com.aonproject.admin.product">
+		<level value="info"></level>
+	</logger>
+	
+	<logger name="com.aonproject.admin.stock.dao">
+		<level value="TRACE"></level>
+	</logger>
+	<logger name="com.aonproject.admin.stock">
 		<level value="info"></level>
 	</logger>
 	
@@ -54,8 +61,14 @@
 	<logger name="com.aonproject.client.order">
 		<level value="info"></level>
 	</logger>
-	
 	<logger name="com.aonproject.client.order.dao">
+		<level value="TRACE"></level>
+	</logger>
+	
+	<logger name="com.aonproject.client.member">
+		<level value="info"></level>
+	</logger>
+	<logger name="com.aonproject.client.member.dao">
 		<level value="TRACE"></level>
 	</logger>
 	

@@ -104,14 +104,13 @@
 			for(var j = 0; j < i; j++){
 				$(".cnt").eq(j).attr("name", "o_cnts[" + j + "]");
 				$(".arrayP_no").eq(j).attr("name", "p_nos[" + j + "]");
-				console.log("cnt:"+$(".cnt").eq(j).val());
-				console.log("pno:"+$(".arrayP_no").eq(j).val());
 			};
+			
 			$("#orderForm").attr({
 				"method" : "post",
 				"action" : "/order/wish"
 			});
-			//$("#orderForm").submit();
+			$("#orderForm").submit();
 		});
 		
 	})
