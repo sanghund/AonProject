@@ -1,8 +1,8 @@
 package com.aonproject.admin.review.vo;
 
-import org.springframework.web.multipart.MultipartFile;
+import com.aonproject.common.util.vo.CommonPagingVO;
 
-public class ReviewVO { 
+public class ReviewVO extends CommonPagingVO{ 
 	private int re_no;           //등록번호
 	private String re_title;    //리뷰 제목
 	private String re_content;	//리뷰 내용
@@ -10,22 +10,6 @@ public class ReviewVO {
 	private String re_pwd;		//리뷰 비밀번호
 	private String re_chk;  	//댓글 등록여부(Y, N)
 	
-	//파일 업로드를 위한 속성
-	private MultipartFile file; //첨부파일
-	private String re_file = "";		//댓글 첨부파일
-	
-	public MultipartFile getFile() {
-		return file;
-	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
-	public String getRe_file() {
-		return re_file;
-	}
-	public void setRe_file(String re_file) {
-		this.re_file = re_file;
-	}
 	public int getRe_no() {
 		return re_no;
 	}

@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aonproject.admin.review.dao.ReviewDAO;
 import com.aonproject.admin.review.vo.ReviewVO;
 
-
-
 @Service
 @Transactional
 public class ReviewServiceImpl implements ReviewService{
@@ -36,7 +34,13 @@ public class ReviewServiceImpl implements ReviewService{
 		System.out.println(result);
 		return result;
 	}
-
+	@Override
+	public int selectReno(){
+		int result = 0;
+		result = reviewDAO.selectReno();
+		return result;
+	}
+	
 	@Override
 	public int pwdConfirm(ReviewVO rvo) {
 		int result = 0;
@@ -55,6 +59,27 @@ public class ReviewServiceImpl implements ReviewService{
 	public int reviewDelete(int re_no) {
 		int result = 0;
 		result = reviewDAO.reviewDelete(re_no);
+		return result;	
+	}
+
+	@Override
+	public int reviewSelectNo() {
+		int result = 0;
+		result = reviewDAO.reviewSelectNo();
+		return result;
+	}
+
+	@Override
+	public int rechkUpdate(int re_no) {
+		int result  = 0;
+		result  = reviewDAO.rechkUpdate(re_no);
+		return result;
+	}
+
+	@Override
+	public int cntList() {
+		int result = 0;
+		result = reviewDAO.cntList();
 		return result;
 	}
 

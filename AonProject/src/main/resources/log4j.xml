@@ -38,6 +38,22 @@
 		<level value="TRACE"></level>
 	</logger>
 	
+	<logger name="com.aonproject.admin.review.dao">
+		<level value="TRACE"></level>
+	</logger>
+	
+	<logger name="com.aonproject.admin.review">
+		<level value="info"></level>
+	</logger>
+	
+	<logger name="com.aonproject.admin.CommentQnA.dao">
+		<level value="TRACE"></level>
+	</logger>
+	
+	<logger name="com.aonproject.admin.CommentQnA">
+		<level value="info"></level>
+	</logger>
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />

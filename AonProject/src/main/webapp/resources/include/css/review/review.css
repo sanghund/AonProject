@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 	#m_review{
-		max-width:800px;
-		padding-left:400px;
+		max-width:1000px;
+		margin-left:200px;
 		}
 	.board-hd {
 	    margin: 80px 0 20px 0;
@@ -15,7 +15,15 @@
 	img{
 		vertical-align: top;
 		border: 0 none;
-		}	
+		margin-top: 8px;
+		}
+	.reviewTopBtn{
+		max-width:980px;
+		}
+	.top-allview{
+	    width: 32%;
+	    float: left!important;
+		}
 	.board_btns{
 		text-align: left;
 		letter-spacing: 1px;
@@ -38,28 +46,6 @@
 		color:white;
 		}
 		
-	.write_button{
-		border: 1px solid #000;
-	    color: #fff;
-	    background: #000;
-	    font-size: 10px;
-	    text-decoration: none;
-	    letter-spacing: 1px;
-	    padding: 9px 15px;
-	    line-height: 1;
-	    cursor: pointer;
-	    text-align: center;
-	    font-weight: normal;
-	    white-space: nowrap;
-	    display: inline-block;
-	    zoom: 1;
-	    transition: 1s;
-	    float: right;
-		}
-	.write_button:hover{
-		background:rgba(255,255,255,0.6); 
-		color:black;
-		}
 	a {
 	    color: #777;
 	    text-decoration: none;
@@ -82,8 +68,6 @@
 	    border-collapse: collapse;
 	    border-spacing: 0;
 	    table-layout: fixed;
-	    word-wrap: break-word;
-	    word-break: keep-all;
 	    font-size: 12px;
 		}
 	#write_form tbody{
@@ -108,7 +92,7 @@
 		padding: 5px 0 4px;
 		}
 	.frm-w input{
-		width: 150px;
+		width: 300px;
 	    height: 18px;
 	    line-height: 18px;
 	    border: 1px solid #D5D5D5;
@@ -118,6 +102,7 @@
 	    vertical-align: middle;
 	    padding: 2px 0 0 2px;
 	    font-size: 12px;
+	    width:450px;
 		}
 	#write_form a{
 		color: #777;
@@ -180,17 +165,34 @@
 		display: table-header-group;
 	    vertical-align: middle;
 	    border-color: inherit;
+	    text-align: center;
 		}
 	.table-slide th{
 		font-weight: normal;
 		padding: 10px 0;
 		font-size: 11px;
+		background-color: #fcfcfc;
+		border-top: 1px solid #333;
 		}	
-	
+	.tb_board{
+		text-align: center;
+		}
 	.table-slide tbody .review_tr td{
 	    vertical-align: middle;
 	    border-color: inherit;
 	    text-align: center;
+	    background-color: #fcfcfc;
+		}
+	.table-slide tbody .other td{
+		border-bottom: 1px solid #b4b4b5;
+		padding: 10px 0;
+		border-top: 1px dotted #b4b4b5;
+		}	
+	.table-slide tbody .other td{
+	    vertical-align: middle;
+	    border-color: inherit;
+	    text-align: center;
+	    background-color: #fcfcfc;
 		}
 	.table-slide tbody .review_tr td{
 		border-bottom: 1px solid #b4b4b5;
@@ -204,9 +206,12 @@
 	.goDetail{
 		cursor: pointer;
 		}	
+	.find_review td{
+		background-color: #fcfcfc;
+		}
 	.find_review td .content{
 		text-align: left;
-		padding:30px 0 60px 30px;
+		padding:30px 0 0 30px;
 		}
 	.update_content	{
 		text-align: left;
@@ -214,7 +219,7 @@
 		}
 	.content_modify{
 		text-align: left;
-		margin:30px 0 60px 30px;
+		margin:0 0 60px 30px;
 	    color: #000;
 	    border: 1px solid #000;
 	    text-decoration: none;
@@ -263,13 +268,37 @@
 	.update_mobtn:hover{
 		background:rgba(255,255,255,0.6); 
 		color:black;
-		}
-	.imgView{position:absolute;}	
+		}	
+	.delete_mobtn{
+		text-align: left;
+		margin:30px 0 0 0;
+	    color: #fff;
+	    background: #000;
+	    border: 1px solid #000;
+	    text-decoration: none;
+	    cursor: pointer;
+	    text-align: center;
+	    display: inline-block;
+	 	padding: 9px 15px;
+	 	transition: 1s;
+		}	
+	.delete_mobtn:hover{
+		background:rgba(255,255,255,0.6); 
+		color:black;
+		}	
 	.imgViewData{
 		position:relative;
 		top:-2px;
 		left:0px;
 		z-index:100
+		}
+	.reviewImg{
+		padding-top:30px;
+		width:600px;
+		}
+	.reviewImg img{
+    	margin-bottom: 20px;
+    	margin-left:10px;
 		}
 	.pwdChk{
 		padding:30px 0 60px 30px;
@@ -302,7 +331,7 @@
 	    text-align: left;
 	    line-height: 140%;
 		}
-	.comment-content .content-top .name{
+	/* .comment-content .content-top .name{
 		margin: 0 10px 0 0;
 		font-size: 12px;
 		}
@@ -311,30 +340,93 @@
 	    font-size: 12px;
 	    font-family: tahoma,sans-serif;
 	    color: #8f8f8f;
-		}
-	.modify{
+		} */
+	.comment_insert{
 		margin: 0 0px 0 0;
 	    font-size: 10px;
 	    padding: 2px 6px;
 	    border: 1px solid #e7e7e7;
 	    color: #ccc;
 		}
-	.delete{
+	.comment_insert:hover{
+		color:black;
+		}
+	.comment_modify{
 		margin: 0 0px 0 0;
 	    font-size: 10px;
 	    padding: 2px 6px;
 	    border: 1px solid #e7e7e7;
 	    color: #ccc;
 		}
-	.modify:hover{
+	.comment_delete{
+		margin: 0 0px 0 0;
+	    font-size: 10px;
+	    padding: 2px 6px;
+	    border: 1px solid #e7e7e7;
+	    color: #ccc;
+		}
+	.comment_modify:hover{
 		color:black;
 		}	
-	.delete:hover{
+	.comment_delete:hover{
 		color:black;
 		}
 		
 		
-	.fieldset{
+	.fieldset_insert{
+		margin: 10px;
+	    padding: 20px 20px 20px;
+	    border: 1px solid #e7e7e7;
+	    background: #f8f8f8;
+	    font-size: 11px;
+	    color: #202020;
+		}
+	.fieldset_insert fieldset{
+		border: none;
+    	vertical-align: top;
+		}	
+	legend{visibility: hidden;}
+	.fieldset_insert fieldset .comment_inner{
+		margin: 10px 0 0;
+		}
+	.fieldset_insert fieldset .comment_inner label{
+		margin: 10px 0 0;
+	}
+	.fieldset_insert fieldset .comment_inner input{
+		width: 200px;
+	    height: 20px;
+	    margin: 0 10px 0 9px;
+	    padding: 2px 2px 2px 4px;
+	    border: 1px solid #d9d9d9;
+	    color: #202020;
+		}
+	.fieldset_insert fieldset .comment_inner textarea{
+		width: 433px;
+    	height: 50px;
+    	margin: 8px 10px 0 9px;
+	    padding: 2px 2px 2px 4px;
+	    border: 1px solid #d9d9d9;
+	    color: #202020;	
+		}
+	.fieldset_insert fieldset .comment_inner a{
+		letter-spacing: 1px;
+	    font-size: 13px;
+	    color: #000;
+	    border: 1px solid #000;
+	    background: #fff;
+	    padding: 18px 15px;
+	    margin-top:8px;
+	    cursor: pointer;
+	    text-align: center;
+	    display: inline-block;
+	    transition: 1s;
+		}
+	.fieldset_insert fieldset .comment_inner a:hover{
+		background:rgba(0,0,0,1); 
+		color:white;
+		}
+	
+	.fieldset_modify{
 		margin: 10px 0;
 	    padding: 10px 20px 20px;
 	    border: 1px solid #e7e7e7;
@@ -342,56 +434,64 @@
 	    font-size: 11px;
 	    color: #202020;
 		}
-	.fieldset fieldset{
+	.fieldset_modify fieldset{
 		border: none;
     	vertical-align: top;
 		}	
-	legend{visibility: hidden;}
-	.fieldset fieldset p{
+	.fieldset_modify fieldset .comment_inner{
 		margin: 10px 0 0;
 		}
-	.fieldset fieldset p input{
-		width: 84px;
-	    height: 14px;
+	.fieldset_modify fieldset .comment_inner label{
+		margin: 10px 0 0;
+	}
+	.fieldset_modify fieldset .comment_inner input{
+		width: 200px;
+	    height: 20px;
 	    margin: 0 10px 0 9px;
 	    padding: 2px 2px 2px 4px;
 	    border: 1px solid #d9d9d9;
 	    color: #202020;
 		}
-	.fieldset fieldset p textarea{
-		width: 543px;
-    	height: 44px;
-    	padding: 2px 2px 2px 4px;
+	.fieldset_modify fieldset .comment_inner textarea{
+		width: 433px;
+    	height: 50px;
+    	margin: 8px 10px 0 9px;
+	    padding: 2px 2px 2px 4px;
 	    border: 1px solid #d9d9d9;
 	    color: #202020;	
-		}	
-	.commentp{
-		margin: 5px 0 0;
-    	word-break: break-all;
-    	padding: 10px 20px 10px 10px;
-		}		
-	.commentp .c-content{
-		color: #999;
-	    text-align: left;
-	    line-height: 140%;
-	    font-size: 12px;
 		}
-	.comment-write{
-		margin: 10px 0;
-	    padding: 10px 20px 20px;
-	    border: 1px solid #e7e7e7;
-	    background: #f9f9f9;
-	    font-size: 11px;
-	    color: #202020;
-    	font-family: 'arial','돋움',sans-serif;
+	.fieldset_modify fieldset .comment_inner a{
+		letter-spacing: 1px;
+	    font-size: 13px;
+	    color: #000;
+	    border: 1px solid #000;
+	    background: #fff;
+	    padding: 18px 15px;
+	    margin-top:8px;
+	    cursor: pointer;
+	    text-align: center;
+	    display: inline-block;
+	    transition: 1s;
 		}
-	.comment-p p{
-		margin: 10px 0 0;
-   		line-height: 23px;
+	.fieldset_modify fieldset .comment_inner a:hover{
+		background:rgba(0,0,0,1); 
+		color:white;
+		}
+	
+	.showComment{
+		margin: 10px;
+	    padding: 20px 20px 20px;
+	    background: #EDEDED;
+	    font-size: 13px;
+	    color: #BDBDBD;
 		}
 		
-		
-		
+	.page_tr{
+		text-align: center;
+		}
+	.page_tr td{
+		padding-top: 10px;
+		}
 		
 		
 		

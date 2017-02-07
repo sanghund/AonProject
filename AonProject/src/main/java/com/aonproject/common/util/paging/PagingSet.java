@@ -59,6 +59,7 @@ public class PagingSet {
 		vo.setEnd_data(pageNum * vo.getCountList());
 	}
 	
+	
 	public static void setPageing(AdminVO vo, int cnt){
 		int pageNum;
 		vo.setTotalCount(cnt);

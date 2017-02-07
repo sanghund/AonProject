@@ -1,19 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">   
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
-<link rel="shortcut icon" href="../image/icon.png" />
-<link rel="apple-touch-icon" href="../image/icon.png" />
-<!--IE8이하 적용/--> 
-<!--[if lt IE 9]>
-   <script src="./js/html5shiv.js"></script>
-<![endif]--> 
-<title>Insert title here</title>
+<%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+	<link rel = "stylesheet" href = "/resources/include/fontello/css/fontello.css">
 	<link rel="stylesheet" type="text/css" href="/resources/include/css/review/reset.css">
 	<link rel="stylesheet" type="text/css" href="/resources/include/css/review/review.css">
 	<script type="text/javascript" src="/resources/include/js/jquery-1.12.4.min.js"></script>
@@ -35,14 +26,13 @@
 				var hideData = $(".review_tr").not(this).next("tr").children("td");
 				
 				showData.slideToggle(300);
-				hideData.slideUp(300);	
+				hideData.slideUp(100);	
 				$(".review_write").hide();
+				reset();
 				return false;
 	           
 			}); 
 			
-			//비밀번호 영역 닫기
-			$(".fieldset").hide();
 			
 			//글 입력폼띄우기
 			$(".review_write").hide();
@@ -51,28 +41,35 @@
 				$(".find_review").find("td").hide();
 				
 			});
-			
-			//파일 추가
-			$(".addFile").click(function(){
-				fn_addFile();
+			//write_button을 클릭
+			$(".write_button").click(function(){
+				reset();
 			});
-			$(".modify_addFile").click(function(){
-				mofn_addFile();
-			});
-			
 			
 			//write버튼을 클릭했을 때 입력
 			$(".write_btn").click(function(){
+				var wirteForm = $("#write_form");
 				if(!chkSubmit($("#re_title"),"제목을"))return;
 				else if(!chkSubmit($("#re_pwd"),"비밀번호를"))return;
 				else if(!chkSubmit($("#re_content"),"내용을"))return;
-				else if(!chkFile($("#file"),"첨부파일 입력해서요.(이미지 파일만 등록가능합니다.)"))return;
+				//else if(!chkFile($("#files"),"첨부파일 입력해서요.(이미지 파일만 등록가능합니다.)"))return; 
 				else{
-					$("#write_form").attr({
-						"method":"post",
-						"action":"/review/reviewInsert.do"
+					$(wirteForm).ajaxForm({
+						url:"/review/reviewInsert",
+						enctype: "multipart/form-data",
+						dataType : "text",
+						type:"post",
+						error:function(){
+							alert("시스템 오류입니다. 관리자에게 문의하세요.");
+						},
+						success:function(result){
+							if(result == "success"){
+								alert("글이 등록되었습니다.")
+								location.reload();
+							}
+						}
 					});
-					$("#write_form").submit();
+					$(wirteForm).submit();
 				}
 			});
 			
@@ -87,20 +84,24 @@
 				$(this).next(".pwdChk").show();
 			});
 			
+			//delete_mobtn버튼을 클릭했을 때
+			$(".delete_mobtn").click(function(){
+				reset();
+			});
 			
 			
 			//첨부파일 이미지 보여주기 위한 속성 추가 #imgView
-			var img = $("<div>");
+			var img = $("<img>");
 			$(".imgView").hover(function(){
 				img.attr({
-					src:"/UploadStorage/${review.re_file}",
+					src:"/reviewUpload/",
 					width:"450px",
 					height:"200px"
 				});
 				img.addClass("imgViewData");
 				$(".imgArea").append(img);
 			}, function(){
-				img.remove();
+				$(".imgViewData").remove();
 			});
 			
 			//비밀번호 확인 버튼 클릭시 실질적인 처리 함수
@@ -116,7 +117,7 @@
 				if(!chkSubmit($(re_pwd),"비밀번호를"))return;
 				else{
 					$.ajax({
-						url:"/review/reviewConfirm.do",
+						url:"/review/reviewConfirm",
 						type:"POST",
 						data:"re_no="+re_no.val()+"&re_pwd="+re_pwd.val(),
 						dataType:"text",
@@ -152,18 +153,17 @@
 				if(!chkSubmit($(re_content),"내용을")) return;
 				else{
 					$(update_form).ajaxForm({
-						url:"/review/reviewUpdate.do",
+						url:"/review/reviewUpdate",
 						type:"post",
 						enctype:"multipart/form-data",
 						error:function(){
 							alert("시스템 오류입니다. 관리자에게 문의하세요.");
 						},
 						success:function(result){
-							console.log(result);
-							update_form.hide();
-							content.show();
-							Btn.show();
-							
+							if(result == "success"){
+								alert("글이 수정되었습니다.");
+								location.reload();
+							}
 						}
 					});
 					$(update_form).submit();
@@ -171,13 +171,13 @@
 			});
 			
 			//delete클릭 시 삭제 이벤트
-			$(".delete").click(function(){
+			$(".comment_delete").click(function(){
 				var retr = $(this).parents("tr").prev(".review_tr");
 				var Ptr = $(this).parents("tr")//이벤트 발생 tr
 				var curry = $(this).parents("tr").attr("data-no");
 				$.ajax({
 					type:"delete",
-					url:"/review/"+curry+".do",
+					url:"/admin/review/"+curry,
 					headers:{
 						"Content-Type":"application/json",
 						"X-HTTP-Method-Override":"DELETE"
@@ -194,46 +194,138 @@
 					}
 				})
 			});
+			
+			$("#files").on('change', function(){
+                readURL(this);
+            });
+			
+			//fieldset_insert
+			$(".fieldset_insert").hide();
+			$(".fieldset_modify").hide();
+			
+			//comment_insert
+			$(".comment_insert").click(function(){
+				$(".fieldset_insert").show();
+				$(".fieldset_modify").hide();
+			});
+			
+			//comment_insertBtn입력버튼
+			$(".comment_insertBtn").click(function(){
+				var commentInsertform = $(this).parents(".commentInsert_form");
+				var insertTitle = $(this).parents(".comment_inner").children(".com_title");
+				var insertContent = $(this).parents(".comment_inner").children(".com_content");
+				if(!chkSubmit($(insertTitle),"제목을"))return;
+				else if(!chkSubmit($(insertContent),"내용을"))return;
+				else{
+					$.ajax({
+						url:"/admin/recomment/recommentInsert",
+						type:"post",
+						data:$(commentInsertform).serialize(),
+						dataType:"text",
+						error:function(){
+							alert("시스템 오류입니다. 관리자에 문의하세요.");
+						},
+						success:function(result){
+							if(result=="success"){
+								alert("입력 성공했습니다.");
+								location.reload();
+							}
+						}
+					})
+				}
+			})
+			
+			//comment_modify
+			$(".comment_modify").click(function(){
+				$(".fieldset_insert").hide();
+				$(".fieldset_modify").show();
+			});
+			
+			$(".comment_modifyBtn").click(function(){
+				var commentModifyform = $(this).parents(".commentModify_form");
+				var modifyTitle = $(this).parents(".comment_inner").children(".com_title");
+				var modifyContent = $(this).parents(".comment_inner").children(".com_content");
+				if(!chkSubmit($(modifyTitle),"제목을"))return;
+				else if(!chkSubmit($(modifyContent),"내용을"))return;
+				else{
+					$.ajax({
+						url:"/admin/recomment/recommentUpdate",
+						type:"post",
+						data:$(commentModifyform).serialize(),
+						dataType:"text",
+						error:function(){
+							alert("시스템 오류입니다. 관리자에 문의하세요.");
+						},
+						success:function(result){
+							if(result=="success"){
+								alert("수정 성공했습니다.");
+								location.reload();
+							}
+						}
+					});
+				}
+			});
+			
+			//comment_incancel
+			$(".comment_incancel").click(function(){
+				reset();
+			});
+			
+			//comment_mocancel
+			$(".comment_mocancel").click(function(){
+				$(".fieldset_modify").hide();
+			});
+
 		});
+		//취소 
+		function reset(){
+			/* $(".update_content").hide();
+			$(".content").show();
+			$(".content_modify").show();
+			$(".ree_pwd").val("");
+			$("input[type='text']").val("");
+			$("#write_form textarea").val(""); */
+			$(".fieldset_insert").hide();
+			$(".fieldset_modify").hide();
+			$(".fieldset_insert .comment_inner .com_title").val("");
+			$(".fieldset_insert .comment_inner .com_content").val("");
+		}
 		
-		 function fn_addFile(){
-	            var str = "<div><br><input type='file' id='file_"+(gfv_count)+"' name='file_"+(gfv_count++)+"'>"+
-	            		  "<a href='#this' class='fileDeleteBtn' id='delete_"+(gfv_count)+"' name='delete_"+(gfv_count)+"'>삭제</a></div>";
-	            $(".file_div").append(str);
-	            $("#delete_"+(gfv_count++)).on("click", function(e){ //삭제 버튼
-	                e.preventDefault();
-	                fn_deleteFile($(this));
-	            });
-	        }
-		 function fn_deleteFile(obj){
-	            obj.parent().remove();
-	        }
+		function readURL(input){
+			if(input.files && input.files[0]){
+				var reader = new FileReader();
+				
+				reader.onload = function(e){
+					 $('#blah').attr('src', e.target.result);
+				}
+				
+				reader.readAsDataURL(input.files[0]);
+			} 
+		}
 		 
-		 function mofn_addFile(){
-			 var str = "<div><br><input type='file' id='file_"+(gfv_count)+"' name='file_"+(gfv_count++)+"'>"+
-			   		   "<a href='#this' class='fileDeleteBtn' id='delete_"+(gfv_count)+"' name='delete_"+(gfv_count)+"'>삭제</a></div>";
-			    $(".mo_file").append(str);
-			    $("#delete_"+(gfv_count++)).on("click", function(e){ //삭제 버튼
-			       e.preventDefault();
-			       fn_deleteFile($(this));
-   				});
-		    }
-		 
+		function goPage(page){
+			if($("#search").val()=="all"){
+				$("#keyword").val("");
+			}
+			$("#page").val(page);
+			$("#f_search").attr({
+				"method":"get",
+				"action":"/admin/review/reviewList"
+			});
+			$("#f_search").submit();
+		}
 	</script>
-</head>
-<body>
-	<div id="m_review">
+<div id="m_review">
 		<div id="pro_info_s3">
 			<div class="board-hd">
-				<img id="review" src="/resources/image/tit_review.gif">
+				<h1 style="font-size: 24px;margin: 9px 0;">후기관리</h1>
 			</div>
 		</div>
-		<div class="btn">
-			<a href="/review/reviewList.do" class="board_btns">
-				ALL VIEW
-			</a>
-			<div class="write_button">
-				WRITE
+		<div class="reviewTopBtn">
+			<div class="top-allview" style="padding: 0 5px 0;">
+				<a href="/admin/review/reviewList" class="board_btns">
+					ALL VIEW
+				</a>
 			</div>
 		</div>
 		<!-- write작성 폼 -->
@@ -263,7 +355,7 @@
 							<th><div class="tb-left">내용 : </div></th>
 							<td>
 								<div class="tb-left frm-w">
-									<textarea rows="8" cols="70" id="re_content" name="re_content"></textarea>
+									<textarea rows="8" cols="120" id="re_content" name="re_content"></textarea>
 								</div>
 								
 							</td>
@@ -272,13 +364,11 @@
 							<th class="tb-left frm-w">첨부파일 : </th>
 							<td>
 								<div class="file_div">
-									<input type="file" id="file" name="file" multiple>
+									<input type="file" id="files" name="files" multiple><br>
+									<img id="blah" src="#" alt="your image" style="float:left; padding-top:10px;"/>
 								</div>
 								<div class="write_btn" style="cursor: pointer;">
-									<img src="/resources/image/write_review.gif" >
-								</div>
-								<div class="addFile">
-									 <a href="#this" class="btn" id="addFile">파일 추가</a>
+									<img src="/resources/include/image/reviewimage/write_review.gif" >
 								</div>
 							</td>
 						</tr>
@@ -321,7 +411,16 @@
 								<tr data-num="${review.re_no }" class="review_tr">
 									<td>${review.re_no }</td>
 									<td class="goDetail">
-										${review.re_title }(${review.re_chk })
+										${review.re_title }
+										<c:forEach items="${review.re_chk }">
+											<c:if test="${review.re_chk == 1 }">
+												(<label style="color:red">답변완료</label>)
+											</c:if>
+											<c:if test="${review.re_chk ==0}">
+												(<label style="color:red">답변대기</label>)
+											</c:if>
+										</c:forEach>
+										
 									</td>
 									<td class="name"></td>
 									<td>${review.re_date }</td>
@@ -330,31 +429,51 @@
 									<td colspan="4">
 									
 										<div class="content">
-											${review.re_content }<br /><br /><br />
-											<%-- <img src="/UploadStorage/${review.re_file }"/> --%>
+											${review.re_content }
+											<div class="reviewImg">
+												<c:if test="${not empty reviewImgList }">
+														<c:forEach var="reviewImg" items="${reviewImgList}">
+															<c:if test="${review.re_no eq reviewImg.re_no }">
+																<img src="/reviewUpload/${reviewImg.ri_file }" style="width:105px; height:75px;">
+															</c:if>
+														</c:forEach>
+												</c:if>
+											</div>
 										</div>
 										<div class="update_content">
 											<form id="update_form">
 												<input type="hidden" name="re_no" id="re_no" value="${review.re_no }">
 												<textarea rows="8" cols="70" id="re_content" name="re_content">${review.re_content }</textarea>
 												<div class="mo_file"> 
-													<input type="file" id="file" name="file" style="padding-top:8px;">&nbsp;
-													<label class="imgView" style="padding-top:14px;">기존 이미지 파일 : ${review.re_file}<span class="imgArea"></span></label>
+													<input type="file" id="files" name="files" style="padding-top:8px;" multiple><br />
+													<div class="imgView" style="padding-top:14px;">
+														<span style="color:red;">기존 이미지 파일 : </span><br />
+														<div class="reviewImg">
+															<c:if test="${not empty reviewImgList }">
+																<c:forEach var="reviewImg" items="${reviewImgList}">
+																	<c:if test="${review.re_no eq reviewImg.re_no }">
+																		<img src="/reviewUpload/${reviewImg.ri_file }">
+																	</c:if>
+																</c:forEach>
+															</c:if>
+														</div>
+														<span class="imgArea"></span>
+													</div>
 												</div>
-												<div class="modify_addFile">
+												<!-- <div class="modify_addFile">
 													<a href="#this" class="btn" id="addFile">파일 추가</a>
-												</div><br>
+												</div><br> -->
 												<div class="update_mobtn">modify</div>
+												<div class="delete_mobtn">cancel</div>
 											</form>
 										</div>
-										<div class="content_modify">modify</div>
+										<!-- <div class="content_modify">modify</div> -->
 										
 										<%--==========비밀번호 확인 버튼 및 버튼 추가 시작======== --%>
 										<div class="pwdChk">
 											<input type="hidden" name="re_no" class="re_no" value="${review.re_no }">
 											<label for="r_pwd" class="l_pwd">비밀번호 : </label>
 											<input type="password" name="ree_pwd" class="ree_pwd">
-											
 											<input type="button" class="pwdBtn" value="확인">
 											<span class="msg"></span>
 										</div>
@@ -365,59 +484,133 @@
 											<div class="comment-cover">
 												<div class="comment-content">
 													<div class="content-top">
-														<strong class="name"> AON</strong>
-														<span class="date">2016.09.29 / PM : 06:46</span>
-														<a href="javascript:;" class="modify">MODIFY</a>
-														<a href="javascript:;" class="delete">DELETE</a>
+														<a href="javascript:;" class="comment_insert">INSERT</a>
+														<a href="javascript:;" class="comment_modify">MODIFY</a>
+														<a href="javascript:;" class="comment_delete">DELETE</a>
 													</div>
-													<div class="fieldset">
-														<fieldset>
-															<legend>댓글 수정</legend>	
-															<p>
-																비밀번호
-																<input  type="password" id="comment_password" name="comment_password">
-															</p>
-															<p>
-																<textarea id="comment_modify" name="comment_modify"></textarea>						
-																<a href="javascript:;" class="update_btn"><img src="/resources/image/button/btn_comment_modify.gif"></a>
-																<a href="javascript:;" class="cancle_btn"><img src="/resources/image/button/btn_comment_cancel.gif"></a>
-															</p>
-														</fieldset>
+													<div class="fieldset_insert">
+														<form class="commentInsert_form" data-num="${review.re_no }">
+															<fieldset>
+																<legend>comment 입력</legend>	
+																<input type="hidden" id="re_no" name="re_no" value="${review.re_no }">
+																<div class="comment_inner">
+																	<label>제목 : </label>
+																	<input type="text" class="com_title" name="com_title">
+																	<br />
+																	
+																	<label>내용 : </label>
+																	<textarea class="com_content" name="com_content"></textarea>						
+																	<a href="javascript:;" class="comment_insertBtn">
+																		등록
+																	</a>
+																	<a href="javascript:;" class="comment_incancel">
+																		취소
+																	</a>
+																</div>
+															</fieldset>
+														</form>
 													</div>
-													<p class="commentp">
-														<span class="c-content">
-															안녕하세요! 러브이즈트루입니다.<br>
-															<br>
-															<br>
-															먼저, 상품을 잘 확인하고 보냈어야 했는데 불편을 드려 정말 죄송합니다.<br>
-															<br>
-															고객님께서 원하시는 방법으로 처리도와드리겠으며 <br>
-															<br>
-															내일 일찍 연락드리겠습니다.<br>
-															<br>
-															다시 한 번 죄송합니다.<br>
-															<br>
-															<br>
-															더욱 노력하고 개선해나가는 러브이즈트루가 되도록 하겠습니다.<br>
-															<br>
-														</span>						
-													</p>
+													<div class="fieldset_modify">
+														<form class="commentModify_form" data-num="${review.re_no }">
+															<fieldset>
+																<legend>comment 수정</legend>	
+																<c:if test="${not empty recommentList }">
+																	<c:forEach items="${recommentList }" var="recomment">
+																		<c:if test="${review.re_no eq recomment.re_no }">
+																			<input type="hidden" id="re_no" name="re_no" value="${review.re_no }">
+																			<input type="hidden" id="com_no" name="com_no" value="${recomment.com_no }">
+																			<div class="comment_inner">
+																				<label>제목 : </label>
+																				<input type="text" class="com_title" name="com_title" value="${recomment.com_title }">
+																				<br />
+																				
+																				<label>내용 : </label>
+																				<textarea class="com_content" name="com_content">${recomment.com_content }</textarea>						
+																				<a href="javascript:;" class="comment_modifyBtn">
+																					수정
+																				</a>
+																				<a href="javascript:;" class="comment_mocancel">
+																					취소
+																				</a>
+																			</div>
+																		</c:if>
+																	</c:forEach>
+																</c:if>
+															</fieldset>
+														</form>
+													</div>
+													<div class="showComment">
+														<c:if test="${not empty recommentList }">
+															<c:forEach items="${recommentList }" var="recomment">
+															<c:if test="${review.re_no eq recomment.re_no }">
+																<div style="color:#BDBDBD">AON&nbsp;&nbsp;&nbsp; ${recomment.com_date }</div>
+																<div class="com_title" style="padding-top:10px;"> 
+																	<label>제목 : </label>${recomment.com_title }
+																</div>
+																<div class="com_content" style="padding-top:10px;">
+																	<label>내용 : </label>${recomment.com_content }	
+																</div>
+															</c:if>
+															</c:forEach>
+														</c:if>
+													</div>
 												</div>
-												
-												<!-- 회원 로그인 시 없어질 구간 -->
-												<div class="comment-write">
-													<div class="comment-p">
-														<p style="color:#999;font-size:11px">( 회원 로그인이 필요한 기능입니다 )</p>
-													</div>	
-												</div>
+					
 											</div>
 										</div>
 									</td>
 								</tr>
 							</c:forEach>
+							<tr class="page_tr">
+								<td colspan="4" id = "pageLow">
+									<c:if test = "${reviewVO.pageTotal[0] eq 1}" >
+										<span class = "icon-angle-double-left"></span>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[0] ne 1}" >
+										<a href = "/admin/review/reviewList?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[0] eq 1}" >
+										<span class = "icon-angle-left"></span>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[0] ne 1}" >
+										<a href = "/admin/review/reviewList?pageNum=${reviewVO.pageTotal[0] - fn:length(reviewVO.pageTotal) }" data-num = "${reviewVO.pageTotal[0] - fn:length(reviewVO.pageTotal) }" class = "icon-angle-left"></a>
+									</c:if>
+						
+									<c:if test = "${reviewVO.totalPage < reviewVO.pageNum }">
+										<c:set var = "pNum" value= "${reviewVO.totalPage }"/>
+									</c:if>
+									<c:if test = "${reviewVO.totalPage >= reviewVO.pageNum }">
+										<c:set var = "pNum" value= "${reviewVO.pageNum }"/>
+									</c:if>
+									
+									<c:forEach items="${reviewVO.pageTotal }" varStatus="status">
+										<c:if test = "${reviewVO.pageTotal[status.index] eq pNum}" >
+											<span>${reviewVO.pageTotal[status.index] }</span>
+										</c:if>
+										<c:if test = "${reviewVO.pageTotal[status.index] ne pNum}" >
+											<a href = "/admin/review/reviewList?pageNum=${reviewVO.pageTotal[status.index] }" data-num = "${reviewVO.pageTotal[status.index]}">
+						 						${reviewVO.pageTotal[status.index] } 
+											</a>
+										</c:if>
+									</c:forEach>
+		
+									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage}" >
+										<span class = "icon-angle-right"></span>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] ne reviewVO.totalPage}" >
+										<a href = "/admin/review/reviewList?pageNum=${reviewVO.pageTotal[0] + fn:length(reviewVO.pageTotal) }" data-num = "${reviewVO.pageTotal[0] + fn:length(reviewVO.pageTotal) }" class = "icon-angle-right"></a>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage}" >
+										<span class = "icon-angle-double-right"></span>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] ne reviewVO.totalPage}" >
+										<a href = "/admin/review/reviewList?pageNum=${reviewVO.totalPage }" data-num = "${reviewVO.totalPage }" class = "icon-angle-double-right"></a>
+									</c:if>
+								</td>
+							</tr>
 						</c:when>
 						<c:otherwise>
-							<tr>
+							<tr class="other">
 								<td colspan="4">
 									<div class="tb-center">등록된 리뷰가 없습니다.</div>
 								</td>
@@ -428,5 +621,3 @@
 			</table>
 		</div>
 	</div>
-</body>
-</html>

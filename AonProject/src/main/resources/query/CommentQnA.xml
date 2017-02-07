@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aonproject.admin.commentQnA.dao.CommentQnADAO">
+	<select id="commentQnAList" resultType="commentQnA">
+		select cq1.cq_no, cq_title, cq_content, to_char(cq_date, 'yyyy-MM-dd hh24:mm:ss') cq_date, q_no from commentqna 
+			cq1 inner join  (select max(cq_no) cq_no from commentqna group by(q_no)) cq2
+				on cq1.cq_no = cq2.cq_no
+	</select>
+	
+	<insert id="commentQnAInsert" parameterType="commentQnA">
+		insert into commentqna(cq_no, cq_title, cq_content, cq_pwd, q_no)
+			values(commentqna_seq.nextval, #{cq_title}, #{cq_content}, #{cq_pwd}, #{q_no})
+	</insert>
+	
+	<update id="commentQnAUpdate" parameterType="commentQnA">
+		update commentqna set 
+			cq_title = #{cq_title},
+			cq_content = #{cq_content}
+				where q_no = #{q_no} and cq_no = #{cq_no}
+	</update>
+	
+	<delete id="commentQnADelete" parameterType="commentQnA">
+		delete from commentqna where q_no = #{q_no}
+	</delete>
+</mapper>

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.aonproject.admin.review.vo.ReviewVO;
 
-
 @Repository
 public class ReviewDAOImpl implements ReviewDAO{
 	
@@ -26,6 +25,10 @@ public class ReviewDAOImpl implements ReviewDAO{
 	public int reviewInsert(ReviewVO rvo){
 		return session.insert("reviewInsert", rvo);
 	}
+	@Override
+	public int selectReno(){
+		return session.selectOne("selectReno");
+	}
 
 	@Override
 	public int pwdConfirm(ReviewVO rvo) {
@@ -41,5 +44,21 @@ public class ReviewDAOImpl implements ReviewDAO{
 	public int reviewDelete(int re_no) {
 		return session.update("reviewDelete");
 	}
+
+	@Override
+	public int reviewSelectNo() {
+		return session.selectOne("reviewSelectNo");
+	}
+
+	@Override
+	public int rechkUpdate(int re_no) {
+		return session.update("rechkUpdate");
+	}
+
+	@Override
+	public int cntList() {
+		return session.selectOne("cntList");
+	}
+	
 	
 }
