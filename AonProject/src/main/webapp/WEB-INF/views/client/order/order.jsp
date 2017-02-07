@@ -65,6 +65,8 @@
 			}else{
 				alert("2checked");	
 			} */
+			
+			
 		});
 		
 		
