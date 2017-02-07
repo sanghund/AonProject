@@ -145,7 +145,7 @@
 		<c:choose>
 			<c:when test="${not empty orderList}">
 				<c:forEach var="orderList" items="${orderList}">
-				<c:if test="${orderList.pno}"></c:if>
+				<c:if test="${orderList.p_no}"></c:if>
 				<div class="preview col-md-12">
 					<div class="orderContainer">
 						<div class="orderImg">
