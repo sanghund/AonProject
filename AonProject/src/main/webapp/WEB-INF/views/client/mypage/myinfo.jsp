@@ -55,7 +55,7 @@
 			
 		}
 		
-		#a_tel1,#a_tel2,#a_tel3{
+		#m_tel1,#m_tel2,#m_tel3{
 			width: 75px;
 		}
 		#a_addr1,#a_addr2{

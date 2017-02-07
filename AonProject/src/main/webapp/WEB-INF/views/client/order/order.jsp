@@ -40,7 +40,7 @@
 
 <script type="text/javascript">
 	$(function(){
-		alert("hi");
+		alert("hihi");
 		// 주소 검색
 		$("#go").click(function(){
 			daumAddr();
@@ -48,13 +48,24 @@
 		
 		//주문자 정보 입력
 		var telContainer = "${memberInfo.m_tel}";
+		var emailContainer = "${memberInfo.m_email}";
 		var tels = telContainer.split("-");
-		console.log(telContainer);
-		console.log(tels[0]);
-		console.log(tels[1]);
-		console.log(tels[2]);
+		var emails = emailContainer.split("@");
 		$("#m_name").val("${memberInfo.m_name}");
+		$("#m_tel1").val(tels[0]);
+		$("#m_tel2").val(tels[1]);
+		$("#m_tel3").val(tels[2]);
+		$("#m_email1").val(emails[0]);
+		$("#m_email2").val(emails[1]);
 		
+		$("#userChk[0]").click(function(){
+			alert("hi");
+			/* if("#userChk").val() == 'y'){
+				alert("1checked");
+			}else{
+				alert("2checked");	
+			} */
+		});
 		
 		
 		var totalPrice = 0;
@@ -155,7 +166,8 @@
 		</div>
 		<div>
 			<label for="m_name">메일주소</label>
-			<input type="text" name="m_email" id="m_email">
+			<input type="text" name="m_email1" id="m_email1">@
+			<input type="text" name="m_email2" id="m_email2">
 		</div>
 	</div>
 	<div class="userDetail">

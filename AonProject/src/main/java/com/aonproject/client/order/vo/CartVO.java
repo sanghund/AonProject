@@ -18,9 +18,14 @@ public class CartVO {
 	
 	private List<String> p_nos = null;
 	private List<Integer> o_cnts = null;
+	private List<String> cd = null;
 	
-	
-	
+	public List<String> getCd() {
+		return cd;
+	}
+	public void setCd(List<String> cd) {
+		this.cd = cd;
+	}
 	public String getColor_code() {
 		return color_code;
 	}

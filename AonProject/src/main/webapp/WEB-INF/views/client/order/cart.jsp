@@ -3,7 +3,14 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style type = "text/css">
+	.main{
+		box-sizing: border-box;
+	}
+	#shonwList{
+		font-size: 12px;
+	}
 	.step-panels{
 			display: block;
 			width : 100%;
@@ -37,26 +44,167 @@
 			vertical-align: middle;
 			display: table-cell;
 		}
+		
 		.step.action {
 			background-color: black;
 			color : white;
 		}
 		
 		#cart{
-			margin : 50px 0;
+			margin-top : 50px;
 			clear: both;
 		}
 		#cart dt{
 			float: left;
 		}
-		.showImg{
+		#cart dd{
+		}
+		.showLow{
+			border: 1px solid lightgray;
+			border-bottom: none;
+			padding: 15px;
+			min-height: 150px;
+	
+		}
+		
+		.showLow dt{
+			margin-right: 15px;
+			
+		}
+		
+		.aimg{
+			display: inline-block;
 			width: 150px;
 			height: 150px;
+		}
+		.showImg{	
+			width : 100%;
+			height : 100%;
+			display: inline-block;
+			
+		}
+		
+		.lowTop{
+			margin-bottom: 10px;
+		}
+		.lowCenter{
+			margin-bottom: 10px;
+			border: 1px solid gray;
+			display: inline-block;
+		}
+		.lowCenter > *{
+			border-bottom: 1px solid gray;
+		}
+		.lowCenter > *:LAST-CHILD{
+			border-bottom: none;
+		}
+		.lowBottom span{
+			color: red;
+		}
+		.btnGroup{
+			display : inline-block;
+			text-align : center;
+			width: 100%;
+		}
+		.abtns{
+			text-decoration: none;
+			color : white;
+			background-color: gray;
+			font-size : 20px;
+			padding : 15px 0;
+			width : 33.199999999999%;
+			display: inline-block;
+		}
+		.abtns:FIRST-CHILD{
+			border-right: 1px solid white;
+		}
+		.abtns:LAST-CHILD{
+			border-left: 1px solid white;
+		}
+		.calculation{
+			margin-top: 30px;	
+		}
+		.calculation table{
+			width: 100%;
+			border-collapse: collapse;
+		}
+		.calculation table tr{
+			text-align: center;
+			border: 1px solid lightgray;
+		}
+		.calculation table td{
+			padding : 15px;
+			border: 1px solid lightgray;
+		}
+		.pageBtn{
+			margin-top: 30px;
+			margin-bottom: 50px;
+			width: 100%;
+			text-align: center;
+		}
+		.pageBtn > input{
+			border : 1px solid gray;
+			background-color : black;
+			color : white;
+			font-size: 15px;
+			padding: 15px;
+			width: 150px;
+			text-align: center;
+			cursor : pointer;
+		}
+		
+		.pageBtn2{
+			text-align : center;
+			margin-top: 30px;
+			margin-bottom: 50px;
+			width: 100%;
+			text-align: center;
+		}
+		
+		.pageBtn2 > input{
+			border : 1px solid gray;
+			background-color : white;
+			color : black;
+			font-size: 15px;
+			padding: 15px;
+			width: 150px;
+			text-align: center;
+			cursor : pointer;
+		}
+		
+		.pageBtn > input:FIRST-CHILD {
+			background-color : white;
+			color : black;	
+			margin-left: 10px;
+		}
+		
+		.miniTitle{
+			font-size: 12px;
+		}
+		.totlaTitle{
+			font-size: 18px;
+			color : red;
+		}
+		.totlaTitle:FIRST-CHILD {
+			color: black;
+		}
+		.rowDiscount{
+			display: inline-block;
+			background: #337ab7;
+			color : white !important;
+		}
+		.nullView{
+			margin: 30px 0;
+			width: 100%;
+			text-align: center;
+			font-size: 24px;
+			border: 1px solid lightgray;
+			padding: 150px 0;
 		}
 </style>
 <script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 <div class = "main">
-	<div id = "showList">
+	<div id = "shonwList">
 		<h2 id = "aTitle">주문</h2>
 		<div class = "step-panels">
 			<div id = "align">
@@ -71,24 +219,42 @@
 				</div>
 			</div>
 		</div>
-		<form id = "cart">	
-			<c:if test="${not empty cartShow }">
+		<c:if test="${not empty cartShow }">
+				<form id = "cart">	
 				<c:forEach items="${cartShow }" varStatus="status">
 					<c:set var="p_no" scope="page" value="${cartShow[status.index].p_no }"/>
 					<c:set var="flag" value="true"/>
 					<c:forEach begin="0" step="1" end="${status.index }" var="chk">
-						<c:if test="${flag }">
+						<c:if test="${flag eq true}">
 							<c:if test="${chk ne status.index}">
 								<c:if test="${cartShow[status.index].p_no eq cartShow[chk].p_no }">
 									<c:set var="flag" value="false"/>
+									<c:set var = "price" value="${cartShow[status.index].p_price * cartShow[status.index].o_cnt - (cartShow[status.index].p_price * cartShow[status.index].p_discount / 100 * cartShow[status.index].o_cnt)}" />
+									<c:set var = "discount" value="${cartShow[status.index].p_price * cartShow[status.index].p_discount / 100 * cartShow[status.index].o_cnt }" />		
+									
+									<script type = "text/javascript">
+										$(document).ready(function(){
+											$("#${cartShow[status.index].p_no}").find(".lowCenter").append('<div class = "centerLow" data-price = "${cartShow[status.index].p_price }" data-discount = "${cartShow[status.index].p_discount }"><input type = "checkbox" id = "checkBox${status.index }" class = "checkBoxs" value="${cartShow[status.index].p_no}${cartShow[status.index].size_code}"><label for = "checkBox${status.index }"><span data-color = "${cartShow[status.index].color_code }" data-size = "${cartShow[status.index].size_code }">색상 : ${cartShow[status.index].p_color } / 사이즈 : ${cartShow[status.index].p_size } / ${cartShow[status.index].o_cnt }개</span></label></div>')});
+											var price = $("#${cartShow[status.index].p_no}").find(".lowBottom").find(".rowPrice").text();
+											var discount = $("#${cartShow[status.index].p_no}").find(".lowBottom").find(".rowDiscount").text();
+											var newPrice = <fmt:parseNumber integerOnly="true" value="${price}"/>;
+											var newDiscount = -<fmt:parseNumber integerOnly="true" value="${discount}"/>;
+							
+											var addPrice = (price * 1) + newPrice;
+											var addDiscount = (discount * 1) + newDiscount;
+											var sum = addPrice - addDiscount;
+											$("#${cartShow[status.index].p_no}").find(".lowBottom").find(".prices span").html(sum);
+											$("#${cartShow[status.index].p_no}").find(".lowBottom").find(".rowPrice").html(addPrice);
+											$("#${cartShow[status.index].p_no}").find(".lowBottom").find(".rowDiscount").html(addDiscount);
+									</script>
 								</c:if>
 							</c:if>
 						</c:if>
 					</c:forEach>
-					<c:if test="${flag }">
-						<dl class = "showLow">
+					<c:if test="${flag eq true}">
+						 <dl id = "${cartShow[status.index].p_no}" class = "showLow">
 							<dt class = "imgDT">
-								<a href="/detail?no=${cartShow[status.index].pi_file }">
+								<a class= "aimg" href="/detail?no=${cartShow[status.index].pi_file }">
 									<img class = "showImg" src="/productUpload/${cartShow[status.index].pi_file }" />
 								</a>
 							</dt>
@@ -103,10 +269,7 @@
 							</dd>
 							<dd class = "lowCenter">
 								<div class = "centerLow" data-price = "${cartShow[status.index].p_price }" data-discount = "${cartShow[status.index].p_discount }">
-									<input type = "checkbox" id = "checkBox${status.index }" class = "checkBoxs" value="${cartShow[status.index].p_no }">
-									<label for = "CheckBox${status.index }">
-										<span data-color = "${cartShow[status.index].color_code }" data-size = "${cartShow[status.index].size_code }">색상 : ${cartShow[status.index].p_color } / 사이즈 : ${cartShow[status.index].p_size } / ${cartShow[status.index].o_cnt }개</span>
-									</label>
+									<input type = "checkbox" id = "checkBox${status.index }" class = "checkBoxs" value="${cartShow[status.index].p_no}${cartShow[status.index].size_code}"><label for = "checkBox${status.index }"><span data-color = "${cartShow[status.index].color_code }" data-size = "${cartShow[status.index].size_code }">색상 : ${cartShow[status.index].p_color } / 사이즈 : ${cartShow[status.index].p_size } / ${cartShow[status.index].o_cnt }개</span></label>
 								</div>
 							</dd>
 							<dd class = "lowBottom">
@@ -114,18 +277,105 @@
 									상품 금액 : <span><c:out value="${cartShow[status.index].p_price * cartShow[status.index].o_cnt}"/></span>원
 								</div>
 								<div class = "discounts">
-									할인 금액 : <span><c:out value="${cartShow[status.index].p_price * cartShow[status.index].p_discount / 100 }"/></span>원
+									<c:set var = "price" value="${cartShow[status.index].p_price * cartShow[status.index].o_cnt - (cartShow[status.index].p_price * cartShow[status.index].p_discount / 100 * cartShow[status.index].o_cnt)}" />
+									<c:set var = "discount" value="${cartShow[status.index].p_price * cartShow[status.index].p_discount / 100 * cartShow[status.index].o_cnt }" />
+									할인 금액 : <span class = "rowPrice"><fmt:parseNumber integerOnly="true" value="${price}"/></span>원<span class= "rowDiscount">-<fmt:parseNumber value="${discount}" integerOnly="true"/></span>
 								</div>
 							</dd>
 						</dl>
 					</c:if>	
 				</c:forEach>	
-			</c:if>
-			<c:if test="${empty cartShow }">
-				<dl>
-					<dd class= "lowCenter">장바구니에 주문하실 상품을 담아주세요.</dd>
-				</dl>
-			</c:if>
-		</form>
+			</form>
+			<div class = "btnGroup">
+				<a href="#" class= "abtns" id = "allc">전체 선택</a><a id = "allnc" href="#" class= "abtns">전체 해체</a><a id = "checkedD" href="#" class= "abtns">선택 삭제</a>
+			</div>	
+		</c:if>
 	</div>
+	<c:if test="${not empty cartShow }">
+		<div class = "calculation">	
+			<table id = "showTotal">
+				<tr>
+					<td>
+						<div class = "miniTitle">주문 금액 합계</div>
+						<div class = "totlaTitle"></div>	
+					</td>
+					<td>
+						<div class = "miniTitle">할인 금액 합계</div>
+						<div class = "totlaTitle"></div>
+					</td>
+					<td>
+						<div class = "miniTitle">최종 결제 금액</div>
+						<div class = "totlaTitle"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class = "pageBtn">
+			<input type = "button" id = "goPage" value="쇼핑 계속하기">
+			<input type = "button" id = "goOrder" value="다음 단계">
+		</div>
+	</c:if>
+	<c:if test="${empty cartShow }">
+		<dl>
+			<dd class= "nullView">장바구니에 주문하실 상품을 담아주세요.</dd>
+		</dl>
+		<div class = "pageBtn2">
+			<input type = "button" id = "nullBtn" value="쇼핑 계속하기">
+		</div>
+	</c:if>
 </div>
+<script type = "text/javascript">
+	$(document).ready(function(){
+		$(".showLow").last().css("border", "1px solid lightgray");
+		
+		var url = "<c:out value='${goodNo}'/>";
+		
+		$("#nullBtn").click(function(){
+			if(url != ""){
+				location.href = "/detail?no="+url;
+			}
+			else{
+				location.href = "/";
+			}
+		});
+		
+		$("#goPage").click(function(){
+			if(url != ""){
+				location.href = "/detail?no="+url;
+			}
+			else{
+				location.href = "/";
+			}
+		});
+		
+		$("#goOrder").click(function(){
+			$("#cart").attr({
+				"method" : "post",
+				"action" : "/order/order"
+			});
+			$("#cart").submit();
+		});
+		
+		$(".abtns").click(function(event){
+			event.preventDefault();
+			var btnId = $(this).attr("id");
+			if(btnId == "allc"){
+				$(".checkBoxs").click();
+			}
+			else if(btnId == "allnc"){
+				$(".checkBoxs").removeAttr("checked");
+			}
+			else if(btnId == "checkedD"){
+				var cleng = $(".checkBoxs:checked").length;
+				for(var j = 0; j < cleng; j++){
+					$(".checkBoxs:checked").attr("name", "cd["+j+"]");
+				}
+				$("#cart").attr({
+					"action" : "/order/cartD",
+					"method" : "post"
+				});
+				$("#cart").submit();
+			};
+		});
+	});
+</script>

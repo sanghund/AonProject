@@ -8,18 +8,17 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
 import com.aonproject.admin.commoncode.service.CommonCodeService;
@@ -110,7 +109,7 @@ public class OrderController{
 				}
 			};
 		}
-		
+			
 		StringBuffer content = new StringBuffer("");
 		if(cookie != null){
 			StringTokenizer contents = new StringTokenizer(cookie.getValue(), "%");
@@ -126,7 +125,7 @@ public class OrderController{
 					content.append("%" + line);
 					int o_cnt = vo.getO_cnt();
 					vo = orderService.cartList(vo);
-					vo.setP_no(vo.getP_no().substring(0, vo.getP_no().indexOf("C")));
+					vo.setP_no(vo.getP_no().substring(0, vo.getP_no().indexOf("S")));
 					vo.setO_cnt(o_cnt);
 					pList.add(vo);
 				}
@@ -141,11 +140,91 @@ public class OrderController{
 		return mav;
 	}
 	
+	// 장바구니 제거
+	@RequestMapping(value="/cartD", method = RequestMethod.POST)
+	public String cartD(@ModelAttribute CartVO vo, HttpServletRequest request, HttpServletResponse response){
+		logger.info("cartD 호출 성공");
+
+		Cookie[] cookies = request.getCookies();
+		Cookie cookie = null;
+		int time = 0;
+		
+		if(cookies != null){
+			for(Cookie cookieLoop : cookies){
+				if(cookieLoop.getName().equals("cartList")){
+					cookie = cookieLoop;
+					time = cookie.getMaxAge();
+					break;
+				}
+			};
+		}
+		
+		StringBuffer content = new StringBuffer("");
+		StringTokenizer contents = new StringTokenizer(cookie.getValue(), "%");
+		
+		if(cookie != null){
+			boolean chk = false;
+			ArrayList<String> cList = new ArrayList<String>();
+			ArrayList<Integer> numbers = new ArrayList<Integer>(); 
+			while(contents.hasMoreTokens()){
+				String line = contents.nextToken();
+				cList.add(line);
+			}
+			if(cList.size() > 0){
+				for(int i = 0; i < vo.getCd().size(); i++){
+					String line = (String) vo.getCd().get(i).toString().toUpperCase();
+					for(String test : cList){
+						int cNum = test.indexOf(line);
+						if(cNum > -1){
+							chk = true;
+							numbers.add(i);
+						}
+					}
+				}
+			}
+			if(chk){
+				for(int i = 0; i < cList.size(); i++){
+					boolean omg = false;
+					for(int num : numbers){
+						if(num == i){
+							omg = true;
+							break;
+						}
+					}
+					if(!omg){
+						content.append("%"+cList.get(i));
+					}
+				}
+				cookie = new Cookie("cartList", content.toString());
+				if(content.toString().equals("")){
+					cookie.setMaxAge(0);
+				}else{
+					cookie.setMaxAge(time);
+				}
+				response.addCookie(cookie);
+			}
+		}
+		
+		return "redirect:/order/cart";
+	}
+	
 	// 장바구니 등록
-	@RequestMapping(value="/wish")
-	public ModelAndView wish(@ModelAttribute CartVO vo ,HttpServletRequest request, HttpServletResponse response){
+	@RequestMapping(value="/wish", method = RequestMethod.POST)
+	public ModelAndView wish(RedirectAttributes redirectAttributes, @ModelAttribute CartVO vo ,HttpServletRequest request, HttpServletResponse response){
 		logger.info("wish 호출 성공");
 		ModelAndView mav = new ModelAndView();
+		
+		String goodNo = "";
+		
+		int you = request.getHeader("referer").indexOf("detail?no=");
+		logger.info(request.getHeader("referer"));
+		if(you > -1){
+			goodNo = request.getHeader("referer").substring(you + 10);
+			you = goodNo.toUpperCase().indexOf("S");
+			goodNo = goodNo.toUpperCase().substring(0, you);
+			logger.info(goodNo);
+			redirectAttributes.addFlashAttribute("goodNo", goodNo);
+		} 
 		
 		if(vo.getP_nos().size() == vo.getO_cnts().size() && vo.getP_nos().size() != 0){		
 			Cookie cookies[] = request.getCookies();
