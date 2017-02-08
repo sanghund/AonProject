@@ -66,4 +66,5 @@
 	<definition name="admin/product/*" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/product/{1}.jsp"></put-attribute>
 	</definition>
+	
 </tiles-definitions>

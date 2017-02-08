@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <link rel="stylesheet" type="text/css" href="/resources/include/css/font-awesome.min.css">
 <style>
@@ -10,7 +11,6 @@
 	.step:LAST-CHILD{border-left:none; clear : right;}
 	.step span{vertical-align: middle; display: table-cell;}
 	.step.action {background-color: black; color : white;}
-
 	.orderContainer {clear:both;}
 	.content h4 {margin:20px 0 10px; padding-top:2em; border-top:1px solid #ccc;}
 	
@@ -47,102 +47,31 @@
 	.w100 > p {height:17px; text-align:center; border-top:1px solid #ccc; padding:10px; margin:0;}
 	
 	.deleteProduct{position:absolute; right:0px; margin-right:1em;}
+	
+	.sizeAdd {width:1em; display:inline-block; padding:0 0.3em; border-right:1px solid #9a9a9a;}
+	.sizeAdd:last-child {border-right:0;}
+	.cntAdd {width:1em; display:inline-block; padding:0 0.3em; border-right:1px solid #9a9a9a;}
+	.cntAdd:last-child {border-right:0;}
+	
+	.none {display:none;}
 </style>
 
 <script src = "/resources/include/js/daumAddr.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
-<script type="text/javascript">
-	var totalPrice = 0;
-	var discountPrice = 0;
-	var orderPrice = 0;
-	var itemCnt = 0;
-	var itemColorCnt = 0;
-	
-	$(function(){
-		alert("hiaaasd");
-		// 주소 검색
-		$("#go").click(function(){
-			daumAddr();
-		});
-		
-		//상품 삭제
-		$(".deleteProduct").css("cursor", "pointer");
-		$(".deleteProduct").click(function(){
-			$(this).parents(".preview").remove();
-			totalPrice = 0;
-			discountPrice = 0;
-			orderPrice = 0;
-			orderPriceCal()
-		});
-		
-		
-		$(document).on("click", ".colorAdd", function(){
-			var size = $(this).parent().find(".colorAdd").length;
-			console.log(size);
-			//$(this).remove();
-			//if()
-		})
-
-		
-		//주문자 정보 입력
-		var telContainer = "${memberInfo.m_tel}";
-		var emailContainer = "${memberInfo.m_email}";
-		var addrContainer = "${memberInfo.m_addr}";
-		var tels = telContainer.split("-");
-		var emails = emailContainer.split("@");
-		var addrs = addrContainer.split("#!@@!#");
-		$(".m_name").val("${memberInfo.m_name}");
-		$(".m_tel1").val(tels[0]);
-		$(".m_tel2").val(tels[1]);
-		$(".m_tel3").val(tels[2]);
-		$("#m_email1").val(emails[0]);
-		$("#m_email2").val(emails[1]);
-		
-		$("input[name='userChk']").change(function(){
-			if($(this).val() == 'y'){
-				$("#m_addr1").val(addrs[0]);
-				$("#m_addr2").val(addrs[1]);
-				$("#m_addr3").val(addrs[2]);
-			}else if($(this).val() == 'n'){
-				$("#m_addr1").val("");
-				$("#m_addr2").val("");
-				$("#m_addr3").val("");
-			}
-		});
-		orderPriceCal();
-		alert("@_@!!!!!!!!");
-	})
-	
-	$(document).ready(function(){
-		/* 색상 개수 호출 */
-		itemColorCnt = $(".colorAdd").length;
-		console.log("colorAdd!!: "+itemColorCnt);
-		
-	})
-	
-	
-	function orderPriceCal(){
-		//상품 등록 갯수 확인
-		itemCnt = $('.orderContainer').length;
-		console.log(itemCnt);
-		
-		for(var i=0; i<itemCnt; i++){
-			var itemPrice = $('.orderContainer').eq(i).find('.orderDesc ul > li').eq(3).find("span").text();
-			var itemDiscount = $('.orderContainer').eq(i).find('.orderDesc ul > li').eq(4).find("span").text();
-			totalPrice += parseInt(itemPrice);
-			discountPrice += (parseInt(itemPrice) * parseInt(itemDiscount) / 100);
-		} 
-		orderPrice = totalPrice - discountPrice;
-		$(".w100").eq(0).find("div").eq(1).text(totalPrice+"원");
-		$(".w100").eq(1).find("div").eq(1).text(discountPrice+"원");
-		$(".w100").eq(2).find("p").text(orderPrice+"원");
-		console.log(itemPrice+"-"+itemDiscount);
-		console.log(totalPrice+"-"+discountPrice+"="+orderPrice);
-	}
+<script>
+	var pnoCnt = 0;
 </script>
 
 <div class="content">
+	<c:choose>
+		<c:when test="${not empty orderInfo}">
+			<c:forEach varStatus="status" var="orderInfo" items="${orderInfo}">
+				<p>${orderInfo.p_no}</p>
+				<p>${orderInfo.o_cnt}</p>
+			</c:forEach>
+		</c:when>
+	</c:choose>
+
 	<div class="orderInfo">
 		<h2 id = "aTitle">주문</h2>
 		<!-- <div class = "step-panels"> -->
@@ -169,14 +98,28 @@
 							<c:if test="${orderList[status.index].p_no eq orderList[chk].p_no}">
 								<c:set var="flag" value="false"/>
 								<script type="text/javascript">
-									$(document).ready(function(){
-										var colorAdd = $("<span>");
-										colorAdd.addClass("colorAdd")
-										colorAdd.html("${orderList[status.index].size}");
-										$(".orderDesc > ul li").eq(1).find("span").after(colorAdd);
-										if($(".orderDesc > ul li").eq(1).find("span").size()>1){
-											$(".orderDesc > ul li").eq(1).find("span").eq(0).append(", ");
-										}
+									$(document).ready(function(){										
+										var sizeAdd = $("<span>");
+										sizeAdd.addClass("sizeAdd");
+										sizeAdd.html("${orderList[status.index].size}");
+										$(".orderDesc > ul li").eq(1).append(sizeAdd);
+										
+										var sizeCodeAdd = $("<span class='none'>");
+										sizeCodeAdd.addClass("sizeCodeAdd");
+										sizeCodeAdd.html("${fn:toUpperCase(orderList[status.index].size_code)}");
+										$(".orderDesc > ul li").eq(6).append(sizeCodeAdd);
+										
+										var cntAdd = $("<span>");
+										cntAdd.addClass("cntAdd");
+										cntAdd.html("${orderList[status.index].o_cnt}");
+
+										$(".orderDesc > ul li").eq(2).append(cntAdd);
+										
+										/* //create p_no
+										var nkP_no = $("<input type='hidden' name='p_nos["+pnoCnt+"]'>");
+										nkP_no.text("${orderList[status.index].p_no}${orderList[status.index].size_code}");
+										pnoCnt++;
+										$(".hidden").after(nkP_no); */
 									})
 								</script>
 							</c:if>
@@ -192,13 +135,15 @@
 								</div>
 								<div class="orderDesc">
 									<h5>${orderList[status.index].p_name}</h5>
+									<span class="none">${orderList[status.index].p_no}</span>
 									<ul>
 										<li>${orderList[status.index].p_info}</li>
-										<li><label>SIZE: </label><span class="colorAdd">${orderList[status.index].size}</span></li>
+										<li><label>SIZE: </label><span class="sizeAdd">${orderList[status.index].size}</span></li>
+										<li><label>COUNT: </label><span class="cntAdd">${orderList[status.index].o_cnt}</span></li>
 										<li><label>COLOR: </label><span>${orderList[status.index].color}</span></li>
 										<li><label>PRICE: </label><span>${orderList[status.index].p_price}</span></li>
 										<li><label>DISCOUNT: </label><span>${orderList[status.index].p_discount}%</span></li>
-										<li><label>SHIPPING: </label>0원</li>
+										<li class="none"><span class="none sizeCodeAdd">${fn:toUpperCase(orderList[status.index].size_code)}</span></li>
 									</ul>
 								</div>
 								<div class="deleteProduct">
@@ -213,7 +158,6 @@
 				<div>주문 목록이 없습니다.</div>
 			</c:otherwise>
 		</c:choose>
-		
 		<!-- orderList repeat area end-->
 	</div>
 	<div class="priceInfo">
@@ -222,9 +166,7 @@
 			<div class="priceTitle">주문 합계 금액</div>
 			<div class="w100">
 				<div>상품금액</div>
-				<div>   </div>
-				<!-- <div>배송료</div>
-				<div>0원</div> -->
+				<div></div>
 			</div>
 		</div>
 		<div class="priceDetail floatL">
@@ -232,8 +174,6 @@
 			<div class="w100">
 				<div>할인금액</div>
 				<div></div>
-				<!-- <div>추가할인</div>
-				<div>0원</div> -->
 			</div>
 		</div>
 		<div class="priceDetail floatL">
@@ -261,7 +201,10 @@
 			<input type="text" name="m_email2" id="m_email2">
 		</div>
 	</div>
+	<!-- form -->
 	<form name="orderForm" id="orderForm">
+		<div class="hidden none"></div>
+		<input type="hidden" name="m_addr" id="m_addr">
 		<div class="userDetail">
 			<h4 class="bold">배송 정보</h4>
 			<div>
@@ -301,8 +244,148 @@
 			</div>
 		</div>
 	</form>
+	<!-- form -->
 	<div class="btnContainer">
 		<input type="button" name="order" id="order" value="주문">
 		<input type="button" name="cancel" id="cancel" value="취소">
 	</div>
 </div>
+
+
+<script type="text/javascript">
+	var totalPrice = 0;
+	var discountPrice = 0;
+	var orderPrice = 0;
+	var itemCnt = 0;
+	var cntSum = 0;
+	var omg = "#!@@!#";
+	//var productCnt = 0;
+	
+	$(function(){
+		
+		alert("@@@123123!");
+		
+		// 주소 검색
+		$("#go").click(function(){
+			daumAddr();
+		});
+		
+		//상품 삭제
+		$(".deleteProduct").css("cursor", "pointer");
+		$(".deleteProduct").click(function(){
+			$(this).parents(".preview").remove();
+			totalPrice = 0;
+			discountPrice = 0;
+			orderPrice = 0;
+			orderPriceCal()
+		});
+		
+		$(".sizeAdd").css("cursor", "pointer");
+		$(document).on("click", ".sizeAdd", function(){
+			var size = $(this).parent().find(".sizeAdd").length;
+			console.log(size);
+			var test = $(this).next()
+			test.remove();
+			$(this).remove();
+			orderPriceCal()
+		})
+		
+		//주문자 정보 입력
+		var telContainer = "${memberInfo.m_tel}";
+		var emailContainer = "${memberInfo.m_email}";
+		var addrContainer = "${memberInfo.m_addr}";
+		var tels = telContainer.split("-");
+		var emails = emailContainer.split("@");
+		var addrs = addrContainer.split("#!@@!#");
+		$(".m_name").val("${memberInfo.m_name}");
+		$(".m_tel1").val(tels[0]);
+		$(".m_tel2").val(tels[1]);
+		$(".m_tel3").val(tels[2]);
+		$("#m_email1").val(emails[0]);
+		$("#m_email2").val(emails[1]);
+		$("#m_addr1").val(addrs[0]);
+		$("#m_addr2").val(addrs[1]);
+		$("#m_addr3").val(addrs[2]);
+		
+		$("input[name='userChk']").change(function(){
+			if($(this).val() == 'y'){
+				$("#m_addr1").val(addrs[0]);
+				$("#m_addr2").val(addrs[1]);
+				$("#m_addr3").val(addrs[2]);
+			}else if($(this).val() == 'n'){
+				$("#m_addr1").val("");
+				$("#m_addr2").val("");
+				$("#m_addr3").val("");
+			}
+		});
+		orderPriceCal();
+		
+	})
+
+	
+	//전송 버튼 이벤트
+	$(document).ready(function(){
+		$("#order").click(function(){
+			makeHidden();
+			var addr = $("#m_addr1").val()+omg+$("#m_addr2").val()+omg+$("#m_addr3").val();
+			$("#m_addr").val(addr);
+			$("#orderForm").attr({
+				"method" : "post",
+				"action" : "/order/orderResult"
+			})
+			//$("#orderForm").submit();
+		});
+	});
+	
+	
+	//상품번호 수량 생성
+	function makeHidden(){
+		var orderListLength = "${fn:length(orderList)}";
+		console.log("orderListLength="+orderListLength);
+
+		$('.orderContainer').each(function(){
+			var targetSpan = $(this).find("ul li").eq(2).find("span")
+			var targetSpanP = $(this).children(".orderDesc").children("span")
+			var targetSpanNo = $(this).find("ul li").eq(6).find(".sizeCodeAdd")
+			var len = targetSpan.length;
+			var arrPno = new Array();
+			var arrCnt = new Array();
+			
+			for(var i=0; i<len; i++){
+				var p = targetSpanP.text();
+				var no = targetSpanNo.eq(i).text();
+				
+				arrPno = p+no;
+				var inputPno = $("<span name='p_nos["+i+"]'>")
+				inputPno.text(arrPno);
+				
+				arrCnt = targetSpan.eq(i).text();
+				var inputCnt = $("<span name='o_cnts["+i+"]'>")
+				inputCnt.text(arrCnt);
+				$(".hidden").append(inputCnt).append(inputPno);
+			}
+		});
+	}
+	
+	//상품 가격 연산
+	function orderPriceCal(){
+		//상품 등록 갯수 확인
+		itemCnt = $('.orderContainer').length;
+		
+		for(var i=0; i<itemCnt; i++){
+			var itemPrice = $('.orderContainer').eq(i).find('.orderDesc ul > li').eq(4).find("span").text();
+			var itemDiscount = $('.orderContainer').eq(i).find('.orderDesc ul > li').eq(5).find("span").text();
+			var productCnt = $('.orderContainer').eq(i).find(".cntAdd").length;
+			
+			for(var j=0; j<productCnt; j++){
+				cntSum += ($('.orderContainer').eq(i).find(".cntAdd").eq(j).text())*1;
+			}
+			totalPrice += parseInt(itemPrice) * cntSum;
+			discountPrice += (parseInt(itemPrice) * parseInt(itemDiscount) / 100);
+		} 
+		orderPrice = totalPrice - discountPrice;
+		$(".w100").eq(0).find("div").eq(1).text(totalPrice+"원");
+		$(".w100").eq(1).find("div").eq(1).text(discountPrice+"원");
+		$(".w100").eq(2).find("p").text(orderPrice+"원");
+	}
+</script>

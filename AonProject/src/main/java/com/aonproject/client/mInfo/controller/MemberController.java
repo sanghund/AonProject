@@ -32,7 +32,7 @@ import com.aonproject.common.util.vo.PolicyAgrVO;
 @Controller
 @RequestMapping(value = "/member")
 public class MemberController {
-	Logger logger = Logger.getLogger(MemberController.class);
+	private Logger logger = Logger.getLogger(MemberController.class);
 	
 	@Resource(name = "shaEncoder")
 	private ShaEncoder encoder;
@@ -176,9 +176,7 @@ public class MemberController {
 	@RequestMapping(value="/mypage/review")
 	public ModelAndView review(Authentication auth){
 		logger.info("review 호출 성공");
-		MemberVO vo = (MemberVO) auth.getPrincipal();
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("memberVO", memberService.memberInfo(vo));
 		mav.setViewName("client/mypage/review");
 		return mav;
 	}
@@ -192,12 +190,14 @@ public class MemberController {
 		mav.setViewName("client/mypage/qna");
 		return mav;
 	}
+	
 	// 마이페이지 - 내 정보
-	@RequestMapping(value="/myPage/myinfo")
+	@RequestMapping(value="/mypage/myinfo")
 	public ModelAndView myinfo(Authentication auth){
 		logger.info("myinfo 호출 성공");
 		ModelAndView mav = new ModelAndView();
-
+		MemberVO vo = (MemberVO) auth.getPrincipal();
+		mav.addObject("vo", memberService.memberInfo(vo));
 		mav.setViewName("client/mypage/myinfo");
 		return mav;
 	}

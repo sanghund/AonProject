@@ -2,7 +2,9 @@ package com.aonproject.admin.product.vo;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class ProductVO {
+import com.aonproject.client.order.vo.Product_orderVO;
+
+public class ProductVO extends Product_orderVO {
 	private String p_no;		//상품 코드
 	private String p_name;		//상품명
 	private String p_info;		//상품정보

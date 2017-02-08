@@ -3,6 +3,7 @@ package com.aonproject.admin.commoncode.controller;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +19,7 @@ import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 public class CommonCodeController {
 	Logger logger = Logger.getLogger(CategoryController.class);
 	
+	@Autowired
 	private CommonCodeService commonCodeService; 
 	
 	/*공통코드 리스트 구현*/
@@ -28,6 +30,6 @@ public class CommonCodeController {
 		
 		model.addAttribute("commonCodeList", commonCodeList);
 		
-		return "admin/category/main";
+		return "admin/commoncode/main";
 	}
 }

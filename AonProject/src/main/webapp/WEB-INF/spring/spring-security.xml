@@ -18,6 +18,8 @@
    </http>
    
    <http authentication-manager-ref="memberManager" auto-config="true" create-session="never" use-expressions="true" disable-url-rewriting="true">
+      <intercept-url pattern="/member/mypage/**" access="hasAnyRole('user')"/>
+      <intercept-url pattern="/order/order" access="hasAnyRole('user')"/>
       <intercept-url pattern="/**" access="permitAll"/>
       <form-login login-processing-url="/member/loginChk" username-parameter="memberId" password-parameter="memberPwd" login-page="/member/login" default-target-url="/" always-use-default-target="false" authentication-success-handler-ref="loginSuccessHandler" authentication-failure-handler-ref="loginFailureHandler" authentication-failure-url="/member/login" />      
       <logout logout-url="/member/logout" invalidate-session="true" success-handler-ref="logoutSuccessHandler" />

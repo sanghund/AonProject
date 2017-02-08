@@ -72,20 +72,30 @@ public class OrderController{
 		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(cmvo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
-		
-		List<ProductVO> orderList = new ArrayList<ProductVO>();
+		ArrayList<ProductVO> orderList = new ArrayList<ProductVO>();
+		ArrayList<Product_orderVO> orderInfo = new ArrayList<Product_orderVO>();
+
 		for(int i=0; i<povo.getP_nos().size(); i++){
-			String p_noSplit = povo.getP_nos().get(i);
+			String p_noSplit = povo.getP_nos().get(i).toString();
 			
-			logger.info("subStr:"+p_noSplit.substring(0,7));
-			
-			pvo.setP_no(povo.getP_nos().get(i));
+			pvo.setP_no(povo.getP_nos().get(i).toString());
 			
 			orderList.add(productService.productDetail(pvo));
 			orderList.get(i).setP_no(p_noSplit.substring(0,7));
-			logger.info("normal:"+orderList.get(0).getP_no());
+			//-------------------------------------------------------s
+			orderList.get(i).setO_cnt(povo.getO_cnts().get(i));
+			//-------------------------------------------------------e
 		}
 		
+		if(orderList.size()>0){
+			for(int i=0; i<orderList.size(); i++){
+				Product_orderVO ovo = new Product_orderVO();
+				ovo.setP_no(orderList.get(i).getP_no().toString());
+			    ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
+			    orderInfo.add(ovo);
+			}
+			model.addAttribute("orderInfo", orderInfo);
+		}
 		model.addAttribute("orderList", orderList);
 		
 		return "client/order/order";

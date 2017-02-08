@@ -281,7 +281,7 @@
 								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne pNum}" >
 									<a href = "/admin/policyAgr?pageNum=${memberVO.totalPage }" data-num = "${memberVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
-								<c:if test = "${memberVO.pageTotal[fn:length(adminVO.pageTotal) - 1] ne member.totalPage}" >
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne member.totalPage}" >
 									<a href = "/admin/policyAgr?pageNum=${memberVO.totalPage }" data-num = "${memberVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
 							</td>

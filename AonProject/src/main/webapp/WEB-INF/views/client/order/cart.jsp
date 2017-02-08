@@ -7,7 +7,18 @@
 <style type = "text/css">
 	.main{
 		box-sizing: border-box;
+		padding: 10px;
 	}
+	
+	#aTitle {
+			font-size: 25px;
+			padding : 10px 0;
+			padding-left : 5px;
+			border : 1px solid graytext;
+			display: block;
+			border-bottom: 1px solid #73879C;
+			margin-bottom: 15px;
+		}
 	#shonwList{
 		font-size: 12px;
 	}
@@ -16,7 +27,6 @@
 			width : 100%;
 			clear : both;
 			height: 37px;
-			
 		}
 		#align{
 			width : 99%;
@@ -57,8 +67,6 @@
 		#cart dt{
 			float: left;
 		}
-		#cart dd{
-		}
 		.showLow{
 			border: 1px solid lightgray;
 			border-bottom: none;
@@ -83,7 +91,9 @@
 			display: inline-block;
 			
 		}
-		
+		#cart{
+			font-size: 15px;
+		}
 		.lowTop{
 			margin-bottom: 10px;
 		}
@@ -98,8 +108,13 @@
 		.lowCenter > *:LAST-CHILD{
 			border-bottom: none;
 		}
-		.lowBottom span{
-			color: red;
+		.lowBottom .prices span{
+			color: gray;
+			text-decoration: line-through;
+			margin-bottom: 5px;
+		}
+		.lowBottom .rowPrice{
+			font-weight: bold;
 		}
 		.btnGroup{
 			display : inline-block;
@@ -120,6 +135,7 @@
 		}
 		.abtns:LAST-CHILD{
 			border-left: 1px solid white;
+
 		}
 		.calculation{
 			margin-top: 30px;	
@@ -192,6 +208,8 @@
 			display: inline-block;
 			background: #337ab7;
 			color : white !important;
+			margin-left: 8px;
+	
 		}
 		.nullView{
 			margin: 30px 0;
@@ -201,11 +219,19 @@
 			border: 1px solid lightgray;
 			padding: 150px 0;
 		}
+		.names{
+			font-size : 20px;
+			font-weight: bold;
+		}
+		#totalName{
+			color : gray;
+		};
+		
 </style>
 <script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 <div class = "main">
-	<div id = "shonwList">
-		<h2 id = "aTitle">주문</h2>
+	<div id = "showList">
+		<h2 id = "aTitle">Order</h2>
 		<div class = "step-panels">
 			<div id = "align">
 				<div class = "step action">
@@ -254,7 +280,7 @@
 					<c:if test="${flag eq true}">
 						 <dl id = "${cartShow[status.index].p_no}" class = "showLow">
 							<dt class = "imgDT">
-								<a class= "aimg" href="/detail?no=${cartShow[status.index].pi_file }">
+								<a class= "aimg" href="/detail?no=${cartShow[status.index].p_no }">
 									<img class = "showImg" src="/productUpload/${cartShow[status.index].pi_file }" />
 								</a>
 							</dt>
@@ -294,9 +320,9 @@
 	<c:if test="${not empty cartShow }">
 		<div class = "calculation">	
 			<table id = "showTotal">
-				<tr>
+				<tr id = "totalName">
 					<td>
-						<div class = "miniTitle">주문 금액 합계</div>
+						<div class = "miniTitle">주문 합계 금액</div>
 						<div class = "totlaTitle"></div>	
 					</td>
 					<td>
@@ -307,6 +333,11 @@
 						<div class = "miniTitle">최종 결제 금액</div>
 						<div class = "totlaTitle"></div>
 					</td>
+				</tr>
+				<tr id = "totalPriceView">
+					<td></td>
+					<td></td>
+					<td></td>
 				</tr>
 			</table>
 		</div>
@@ -330,6 +361,21 @@
 		
 		var url = "<c:out value='${goodNo}'/>";
 		
+		var forShowTotal = $(".showLow").length;
+		
+		var t1 = 0, t2 = 0, t3 = 0;
+		for(var i = 0; i < forShowTotal; i++){
+			t1 += ($(".showLow").eq(i).find(".prices span").text()) * 1;
+			t2 += ($(".showLow").eq(i).find(".rowPrice").text()) * 1;
+			t3 += ($(".showLow").eq(i).find(".rowDiscount").text()) * 1;
+		}
+		
+		$("#totalPriceView td").eq(0).html(t1);
+		$("#totalPriceView td").eq(1).html(t2);
+		$("#totalPriceView td").eq(2).html(t3);
+		
+		$("#totalPriceView td").css("color", "red");
+		$("#totalPriceView td").css("font-weight", "bold");
 		$("#nullBtn").click(function(){
 			if(url != ""){
 				location.href = "/detail?no="+url;
@@ -349,10 +395,18 @@
 		});
 		
 		$("#goOrder").click(function(){
+			var hiddenLoop = '<c:out value = "${fn:length(cartShow)}" />'
+			
+			for(var i = 0; i < hiddenLoop; i++){
+				$("#cart").append("<input type = 'hidden' class = 'p_nos' name = 'p_nos["+i+"]' value = '${cartShow[fn:length(i)].p_no}${cartShow[fn:length(i)].size_code}'>");
+				$("#cart").append("<input type = 'hidden' class = 'p_nos' name = 'o_cnts["+i+"]' value = '${cartShow[fn:length(i)].o_cnt}'>")
+			}
+			
 			$("#cart").attr({
 				"method" : "post",
 				"action" : "/order/order"
 			});
+			
 			$("#cart").submit();
 		});
 		
