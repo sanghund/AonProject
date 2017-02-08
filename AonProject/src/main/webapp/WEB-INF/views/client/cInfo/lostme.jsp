@@ -65,7 +65,8 @@
 					<th colspan="2">
 						<h4>아이디 찾기</h4>
 						<div>이름과 이메일로 아이디 확인이 가능합니다.</div>
-					</th>				
+					</th>		
+							
 				</tr>
 				<tr>
 					<td><label for="in">이름</label><input type = "text" class = "pnn" id = "in" name = "m_name"></td>
