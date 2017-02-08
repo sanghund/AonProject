@@ -57,9 +57,10 @@
 	var discountPrice = 0;
 	var orderPrice = 0;
 	var itemCnt = 0;
+	var itemColorCnt = 0;
 	
 	$(function(){
-		alert("hihihihi");
+		alert("hiaaasd");
 		// 주소 검색
 		$("#go").click(function(){
 			daumAddr();
@@ -75,6 +76,14 @@
 			orderPriceCal()
 		});
 		
+		
+		$(document).on("click", ".colorAdd", function(){
+			var size = $(this).parent().find(".colorAdd").length;
+			console.log(size);
+			//$(this).remove();
+			//if()
+		})
+
 		
 		//주문자 정보 입력
 		var telContainer = "${memberInfo.m_tel}";
@@ -102,7 +111,16 @@
 			}
 		});
 		orderPriceCal();
+		alert("@_@!!!!!!!!");
 	})
+	
+	$(document).ready(function(){
+		/* 색상 개수 호출 */
+		itemColorCnt = $(".colorAdd").length;
+		console.log("colorAdd!!: "+itemColorCnt);
+		
+	})
+	
 	
 	function orderPriceCal(){
 		//상품 등록 갯수 확인
@@ -144,37 +162,58 @@
 		<!-- orderList repeat area start-->
 		<c:choose>
 			<c:when test="${not empty orderList}">
-				<c:forEach var="orderList" items="${orderList}">
-				<c:if test="${orderList.pno}"></c:if>
-				<div class="preview col-md-12">
-					<div class="orderContainer">
-						<div class="orderImg">
-							<a href="/detail?no=${orderList.p_no}">
-								<img src="/productUpload/${orderList.pi_file}" />
-							</a>
+				<c:forEach varStatus="status" items="${orderList}">
+					<c:set var="flag" value="true" />
+					<c:forEach var="chk" begin="1" end="${status.index}" step="1">
+						<c:if test="${flag eq true}">
+							<c:if test="${orderList[status.index].p_no eq orderList[chk].p_no}">
+								<c:set var="flag" value="false"/>
+								<script type="text/javascript">
+									$(document).ready(function(){
+										var colorAdd = $("<span>");
+										colorAdd.addClass("colorAdd")
+										colorAdd.html("${orderList[status.index].size}");
+										$(".orderDesc > ul li").eq(1).find("span").after(colorAdd);
+										if($(".orderDesc > ul li").eq(1).find("span").size()>1){
+											$(".orderDesc > ul li").eq(1).find("span").eq(0).append(", ");
+										}
+									})
+								</script>
+							</c:if>
+						</c:if>
+					</c:forEach>
+					<c:if test="${flag eq true}">
+						<div class="preview">
+							<div class="orderContainer">
+								<div class="orderImg">
+									<a href="/detail?no=${orderList[status.index].p_no}">
+										<img src="/productUpload/${orderList[status.index].pi_file}" />
+									</a>
+								</div>
+								<div class="orderDesc">
+									<h5>${orderList[status.index].p_name}</h5>
+									<ul>
+										<li>${orderList[status.index].p_info}</li>
+										<li><label>SIZE: </label><span class="colorAdd">${orderList[status.index].size}</span></li>
+										<li><label>COLOR: </label><span>${orderList[status.index].color}</span></li>
+										<li><label>PRICE: </label><span>${orderList[status.index].p_price}</span></li>
+										<li><label>DISCOUNT: </label><span>${orderList[status.index].p_discount}%</span></li>
+										<li><label>SHIPPING: </label>0원</li>
+									</ul>
+								</div>
+								<div class="deleteProduct">
+									<span class="fa fa-window-close" aria-hidden="true"></span>
+								</div>
+							</div>
 						</div>
-						<div class="orderDesc">
-							<h5>${orderList.p_name}</h5>
-							<ul>
-								<li>${orderList.p_info}</li>
-								<li><label>SIZE: </label><span>${orderList.size}</span></li>
-								<li><label>COLOR: </label><span>${orderList.color}</span></li>
-								<li><label>PRICE: </label><span>${orderList.p_price}</span></li>
-								<li><label>DISCOUNT: </label><span>${orderList.p_discount}%</span></li>
-								<li><label>SHIPPING: </label>0원</li>
-							</ul>
-						</div>
-						<div class="deleteProduct">
-							<span class="fa fa-window-close" aria-hidden="true"></span>
-						</div>
-					</div>
-				</div>
+					</c:if>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
 				<div>주문 목록이 없습니다.</div>
 			</c:otherwise>
 		</c:choose>
+		
 		<!-- orderList repeat area end-->
 	</div>
 	<div class="priceInfo">

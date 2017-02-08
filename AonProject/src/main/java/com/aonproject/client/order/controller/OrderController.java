@@ -63,7 +63,6 @@ public class OrderController{
 		/*회원정보 출력*/
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		MemberVO memberInfo = memberService.memberInfo(vo);
-		logger.info("getM_tel: "+memberInfo.getM_tel());
 		model.addAttribute("memberInfo", memberInfo);
 		
 		/*카테고리 리스트 출력*/
@@ -76,14 +75,17 @@ public class OrderController{
 		
 		List<ProductVO> orderList = new ArrayList<ProductVO>();
 		for(int i=0; i<povo.getP_nos().size(); i++){
+			String p_noSplit = povo.getP_nos().get(i);
+			
+			logger.info("subStr:"+p_noSplit.substring(0,7));
+			
 			pvo.setP_no(povo.getP_nos().get(i));
+			
 			orderList.add(productService.productDetail(pvo));
+			orderList.get(i).setP_no(p_noSplit.substring(0,7));
+			logger.info("normal:"+orderList.get(0).getP_no());
 		}
 		
-		
-		logger.info(orderList.get(0).getP_price());
-		
-		logger.info("orderList: "+orderList.size());
 		model.addAttribute("orderList", orderList);
 		
 		return "client/order/order";
