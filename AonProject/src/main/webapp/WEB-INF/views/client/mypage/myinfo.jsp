@@ -5,14 +5,60 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 	<style type = "text/css">
 		.main{
-			font-size : 12px;
-			height: 704px;
+		box-sizing: border-box;
+		padding: 10px;
+		font-size : 10px;
 		}
-		#mTitle {
-			font-size: 3rem;
-			display: inline-block;
+	
+	#aTitle {
+			font-size: 25px;
+			padding : 10px 0;
+			padding-left : 5px;
+			border : 1px solid graytext;
+			display: block;
 			border-bottom: 1px solid #73879C;
-			margin-bottom: 3rem;
+			margin-bottom: 15px;
+		}
+	#shonwList{
+		font-size: 12px;
+	}
+	.step-panels{
+			display: block;
+			width : 100%;
+			clear : both;
+			height: 37px;
+			margin-bottom: 30px;
+		}
+		#align{
+			width : 99%;
+			text-align: center;
+			margin: 0 auto;
+		}
+		.step {
+			display : table;
+			text-align : center;
+			letter-spacing: -1px;
+			height: 37px;
+			float: left;
+			width : 24.9206%;
+			cursor : pointer;
+			border: 1px solid gray;
+		}
+		.step:FIRST-CHILD{
+			border-right: none;
+		}
+		.step:LAST-CHILD{
+			border-left:none;
+			clear : right;
+			
+		}
+		.step span{
+			vertical-align: middle;
+			display: table-cell;
+		}
+		.step.action {
+			background-color: black;
+			color : white;
 		}
 		#update > div{
 			font-size : 1.8rem;
@@ -44,6 +90,7 @@
 			display : table-cell;
 			vertical-align: middle;
 		}
+		
 		#gogoUpdate{
 			margin-top : 5rem;
 			text-align: center;
@@ -74,14 +121,33 @@
 }
 	</style>
 	
+	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
+	
 	<div class="main">
-		<h2 id = "mTitle">내 정보</h2>
+		<h2 id = "aTitle">MyPage</h2>
+	<div class = "step-panels">
+		<div id = "align">
+			<div class = "step">
+				<span>주문내역</span>
+			</div>
+			<div class = "step">
+				<span>리뷰내역</span>
+			</div>
+			<div class = "step">
+				<span>문의내역</span>
+			</div>
+			<div class = "step action">
+				<span>내 정보</span>
+			</div>
+		</div>
+	</div>
 		<form id = "updateForm" name = "updateForm">
 			<div id = "update">
 				<div><span class = "array">아이디</span><span id = "m_id">${vo.m_id }</span></div>	
 				<div><span class = "array">비밀번호</span><input type = "password" maxlength="20"  id = "m_pwd" name = "m_pwd"><span id = "pwdChkMsg1"></span></div>	
 				<div><span class = "array">비밀번호 확인</span><input type = "password" maxlength="20"  id = "a_pwd2" name = "m_pwd2"><span id = "pwdChkMsg2"></span></div>		
 				<div><span class = "array">이름</span><input type = "text" value= "${vo.m_name }" maxlength="20"  id = "m_name" name = "m_name"><span id = "nameChkMsg"></span></div>		
+				<div><span class = "array">성별</span><span id = "ygender">${vo.m_gender }</span></div>		
 				<div>
 					<span class = "array">핸드폰</span><input type = "text" maxlength="4" id = "m_tel1" name = "m_tel1">
 					<input type = "text" maxlength="4" id = "m_tel2" name = "m_tel2">
@@ -116,7 +182,101 @@
 						<input type = "text" id = "a_addr3" name = "a_addr3">
 						<span id = "addrChkMsg2"></span>
 					</div>
-				</div>	
+				</div>
+				<c:if test="${not empty msa }">
+					<style type = "text/css">
+						.subAdrr{
+			width : 100%;
+			display: table;
+		}
+		.subLine > *{
+			display: block;
+		}
+		#forSubAddr{
+			display : table-cell;
+			vertical-align: middle;
+		}	
+		#sRadioLine{
+			margin-bottom: 16px;
+		}
+		#sRadioLine label{
+			font-size: 1rem;
+		}
+		#tttttt > *{
+			display: block;
+			margin-bottom: 16px;
+			
+		}
+		.subAdrr{
+			border-bottom: 1px solid gray;
+		}
+		#s_addr1{
+			width: 75px;
+		}
+		#s_addr2,#s_addr3{
+			width: 500px;
+		}
+		#saddrDelete{
+			width: 500px;
+			text-align: center;
+		}
+					</style>
+					<div class ="subAdrr">
+						<span class = "array" id = "forSubAddr">추가 주소</span>
+						<div class = "subLine">
+							<div id = "sRadioLine">
+								<c:forEach items="${msa }" varStatus="status">
+									<input type = "radio" id = "ff${msa[status.index].ma_no }" class = "subAddr" name = "addrs" data-num = "${msa[status.index].ma_no }" value="${msa[status.index].m_addr }"><label for="ff${msa[status.index].ma_no }">주소(${status.index + 1 })</label>
+								</c:forEach>						
+							</div>
+							<div id = "tttttt">
+								<input type = "text" width="145px" id = "s_addr1" name = "s_addr1" readonly="readonly">
+								<input type = "text" id = "s_addr2" name = "s_addr2" readonly="readonly">
+								<input type = "text" id = "s_addr3" name = "s_addr3"readonly="readonly">
+							</div>
+						</div>
+						<div id = "saddrDelete"><input type = "button" id = "byebye" value="삭제"></div>	
+					</div>
+					<script type = "text/javascript">
+						$(document).ready(function(){
+							var sp = "#!@@!#";
+							
+							$(".subAddr").click(function(){
+								var subAd = $(this).val();
+								var sAddrs = subAd.split("#!@@!#");
+								$("#s_addr1").val(sAddrs[0]);
+								$("#s_addr2").val(sAddrs[1]);
+								$("#s_addr3").val(sAddrs[2]);
+							});
+							
+							$(".subAddr").eq(0).click();
+							
+							$("#saddrDelete").click(function(){
+								if(confirm("정말로 삭제하시겠습니까?")){
+									var thisChecked = $(".subAddr:checked").attr("data-num");
+									$.ajax({
+										url : "/member/mypage/myinfoD",
+										dataType : "text",
+										type : "post",
+										data : "ma_no="+thisChecked,
+										error : function(){
+											alert("시스템 에러입니다.");
+										},
+										success : function(result){
+											if(result == "success"){
+												alert("삭제되었습니다.");
+												location.reload();
+											}
+											else{
+												alert("시스템 에러입니다.");
+											}
+										}
+									});
+								}
+							});
+						});
+					</script>
+				</c:if>
 			</div>
 			<input type = "hidden" id = "m_tel" name = "m_tel" value="${vo.m_tel }">
 			<input type = "hidden" id = "m_email" name = "m_email" value= "${vo.m_email }">
@@ -127,7 +287,23 @@
 		</div>
 	</div>
 	
-	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
+	<script type = "text/javascript">
+		$(document).ready(function(){
+			$(".step").eq(0).click(function(){
+				location.href = "/member/mypage/orderlist";
+			});
+			$(".step").eq(1).click(function(){
+				location.href = "/member/mypage/review";
+			});
+			$(".step").eq(2).click(function(){
+				location.href = "/member/mypage/qna";
+			});
+			$(".step").eq(3).click(function(){
+				location.href = "/member/mypage/myinfo";
+			});
+			$(".step").eq(1).css("border-right", "none");
+		});
+	</script>
 	<script src = "/resources/include/js/inputChk.js"></script>
 	<script src = "/resources/include/js/keyEvent.js"></script>
 	<script src = "/resources/include/js/daumAddr.js"></script>
@@ -135,6 +311,12 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			var omg = "#!@@!#";
+			
+			// 성별
+			var ggg = $("#ygender").text();
+			
+			if(ggg == "m") $("#ygender").html("남자");
+			else $("#ygender").html("여자");
 			
 			// tel, email, addr 기본값 넣기
 			var tels = $("#m_tel").val().split("-");

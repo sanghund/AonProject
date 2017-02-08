@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.stereotype.Repository;
 
+import com.aonproject.client.mInfo.vo.MemberSubAddressVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.common.util.vo.Numbers;
 
@@ -154,5 +155,28 @@ public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
 		return sqlSession.selectList("numbers");
 	}
 
+	@Override
+	public int myInfoUpdate(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("myInfoUpdate", vo);
+	}
+
+	@Override
+	public int myAddrUpdate(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("myAddrUpdate", vo);
+	}
+
+	@Override
+	public List<MemberSubAddressVO> mSubAddrs(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("mSumAddr", vo);
+	}
+
+	@Override
+	public int msaD(MemberSubAddressVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("msaD", vo);
+	}
 
 }
