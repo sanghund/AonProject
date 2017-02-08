@@ -142,7 +142,6 @@
 						<td><input type="text" name="p_name" id="p_name" value="${productDetail.p_name}"/></td>
 					</tr>
 					<tr>
-						<td>색상</td>
 						<td>
 							<select id="color_code" name="color_code" id="color_code">
 								<c:choose>

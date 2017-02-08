@@ -70,4 +70,9 @@
 	<definition name="admin/product/*" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/product/{1}.jsp"></put-attribute>
 	</definition>
+	
+	<!-- 메인 이미지 관리 페이지 -->
+	<definition name="admin/imageUpload/upload" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/imageUpload/upload.jsp" />
+	</definition>
 </tiles-definitions>

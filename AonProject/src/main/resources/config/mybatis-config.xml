@@ -11,5 +11,6 @@
 		<typeAlias type="com.aonproject.admin.policy.vo.PolicyVO" alias="policy"/>
 		<typeAlias type="com.aonproject.common.util.vo.PolicyAgrVO" alias="policyAgr"/>
 		<typeAlias type="com.aonproject.client.mInfo.vo.MemberVO" alias="member"/>
+		<typeAlias type="com.aonproject.admin.imageUpload.vo.ImageUploadVO" alias="imageUpload"/>
 	</typeAliases>
 </configuration>
