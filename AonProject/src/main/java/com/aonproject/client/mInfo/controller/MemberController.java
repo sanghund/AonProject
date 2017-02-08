@@ -80,7 +80,15 @@ public class MemberController {
 		}
 		return "client/cInfo/joinForm";
 	};
-		
+	
+	// 아이디 / 비밀번호 찾기
+	@RequestMapping(value="/lostme")
+	public String lostme(){
+		logger.info("lostme 호출 성공");
+		return "client/cInfo/lostme";
+	}
+	
+	
 	// Member(회원) 가입 이메일 인증번호 발송
 	@ResponseBody
 	@RequestMapping(value = "/join/emailCertification")
