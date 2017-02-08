@@ -13,4 +13,6 @@ public interface ProductDAO {
 	public int productInsert(ProductVO pvo);
 	public int productUpdate(ProductVO pvo);
 	public int productDelete(ProductVO pvo);
+	
+ 	public List<ProductVO> productForCategory(ProductVO pvo);
 }

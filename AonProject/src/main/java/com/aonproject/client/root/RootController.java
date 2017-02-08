@@ -35,10 +35,6 @@ public class RootController {
 		List<String> main = (List<String>) imageUploadService.main();
 		model.addAttribute("main", main);
 		
-		for(String test : main){
-			System.out.println(test);
-		}
-		
 		return "client/index";
 	}
 }

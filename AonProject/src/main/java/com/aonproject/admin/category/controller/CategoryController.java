@@ -32,6 +32,4 @@ public class CategoryController {
 		return "admin/category/main";
 	}
 	
-	
-	
 }

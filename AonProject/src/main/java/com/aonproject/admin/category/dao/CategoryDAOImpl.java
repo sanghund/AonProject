@@ -23,6 +23,11 @@ public class CategoryDAOImpl implements CategoryDAO {
 	public List<CategoryVO> categoryList(CategoryVO cvo) {
 		return session.selectList("categoryList", cvo);
 	}
+
+//	@Override
+//	public CategoryVO categorySelect(CategoryVO cvo) {
+//		return session.selectOne("categorySelect", cvo);
+//	}
 	
 
 }

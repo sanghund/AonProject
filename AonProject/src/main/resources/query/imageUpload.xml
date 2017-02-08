@@ -17,7 +17,7 @@
 	</insert>
 	
 	<select id="main" resultType="java.lang.String">
-		select mp_file from (select mp_file from mainimageupload order by mp_no desc) where rownum <![CDATA[>=]]> 5
+		select mp_file from (select mp_file from mainimageupload order by mp_no desc) where rownum <![CDATA[<=]]> 5
 	</select>
 	
 </mapper>

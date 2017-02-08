@@ -54,6 +54,11 @@ public class ProductDAOImpl implements ProductDAO {
 		return session.selectOne("createP_no");
 	}
 
+	@Override
+	public List<ProductVO> productForCategory(ProductVO pvo) {
+		return session.selectList("productForCategory", pvo);
+	}
+
 	
 
 }
