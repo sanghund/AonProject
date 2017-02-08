@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -258,6 +259,108 @@ public class MemberController {
 		} 
 		else{
 			result = "fail";
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/lostIdChk")
+	public String lostIdChk(@ModelAttribute MemberVO vo){
+		logger.info("lostIdChk 호출 성공");
+		String result = "";
+		int gogo = memberService.lostIdChk(vo);
+		if(gogo == 1) result = "success";
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/lostPwdChk")
+	public String lostPwdChk(@ModelAttribute MemberVO vo){
+		logger.info("lostPwdChk 호출 성공");
+		String result = "";
+		int gogo = memberService.lostIdChk(vo);
+		if(gogo == 1) result = "success";
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/sendId")
+	public String sendId(@ModelAttribute MemberVO vo) throws Exception{
+		logger.info("sendId 호출 성공");
+		String result = "";
+		String gogo = memberService.sendId(vo);
+		
+		Email email = new Email();
+		email.setReciver(vo.getM_email().trim());
+		email.setSubject("[AON] 아이디를 보내드립니다.");
+		email.setContent("회원님에 아이디는 [" + gogo + "]입니다.");
+		
+		emailSender.SendEmail(email);
+		result = "success";
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/sendPwd")
+	public String sendPwd(@ModelAttribute MemberVO vo) throws Exception{
+		logger.info("sendPwd 호출 성공");
+		String result = "";
+		String newPwd = Certification.randomPass();
+		
+		String security = encoder.encoding(newPwd);
+		vo.setM_pwd(security);
+		
+		int gogo = memberService.sendPwd(vo);
+		
+		if(gogo==1){
+			Email email = new Email();
+			email.setReciver(vo.getM_email().trim());
+			email.setSubject("[AON] 임시 비밀번호를 보내드립니다.");
+			email.setContent("회원님에 임시 비밀번호는 [" + newPwd + "]입니다. \n내 정보에서 비밀번호를 수정하세요.");
+			
+			emailSender.SendEmail(email);
+			result = "success";
+		}
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/emailChk", method={RequestMethod.GET, RequestMethod.POST})
+	public String emailChk(@ModelAttribute MemberVO vo, HttpServletRequest request){
+		logger.info("overlapChk 호출성공");
+		String result = "";
+		int gogo = 0;
+		if(request.getMethod().equals("GET")){
+			gogo = memberService.emailChk(vo);
+		}
+		else if(request.getMethod().equals("POST")){
+			gogo = memberService.emailChk2(vo);
+		}
+		
+		if (gogo == 1){
+			result = "fail";
+		} 
+		else{
+			result = "success";
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/idChk", method=RequestMethod.GET)
+	public String idChk(@ModelAttribute MemberVO vo){
+		logger.info("overlapChk 호출성공");
+		String result = "";
+		
+		int gogo = memberService.idChk(vo);
+		
+		if (gogo == 1){
+			result = "fail";
+		} 
+		else{
+			result = "success";
 		}
 		return result;
 	}

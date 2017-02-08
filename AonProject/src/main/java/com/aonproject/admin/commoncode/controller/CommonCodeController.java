@@ -1,8 +1,7 @@
 package com.aonproject.admin.commoncode.controller;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,16 +17,15 @@ import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 public class CommonCodeController {
 	Logger logger = Logger.getLogger(CategoryController.class);
 	
+	@Autowired
 	private CommonCodeService commonCodeService; 
 	
-	// 공통 코드 리스트 구현
+	// 怨듯넻 肄붾뱶 由ъ뒪�듃 援ы쁽
 	@RequestMapping(value = "/commonCodeList", method=RequestMethod.GET)
 	public String commonCodeList(@ModelAttribute CommonCodeVO cvo, Model model){
-		logger.info("commonCode 호출 성공!");
+		logger.info("commonCode �샇異� �꽦怨�!");
 		
-		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(cvo);
-		
-		model.addAttribute("commonCodeList", commonCodeList);
+		model.addAttribute("commonCodeList", commonCodeService.commonCodeList(cvo));
 		
 		return "admin/commonCode/detailForm";
 	}

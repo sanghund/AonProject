@@ -19,4 +19,11 @@ public interface MemberDAO {
 	public int myAddrUpdate(MemberVO vo);
 	public List<MemberSubAddressVO> mSubAddrs(MemberVO vo);
 	public int msaD(MemberSubAddressVO vo);
+	public int lostIdChk(MemberVO vo);
+	public int lostPwdChk(MemberVO vo);
+	public String sendId(MemberVO vo);
+	public int sendPwd(MemberVO vo);
+	public int emailChk(MemberVO vo);
+	public int emailChk2(MemberVO vo);
+	public int idChk(MemberVO vo);
 }

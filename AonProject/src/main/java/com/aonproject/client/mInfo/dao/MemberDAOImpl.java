@@ -179,4 +179,46 @@ public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
 		return sqlSession.delete("msaD", vo);
 	}
 
+	@Override
+	public int lostIdChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("lostIdChk", vo);
+	}
+
+	@Override
+	public int lostPwdChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("lostPwdChk", vo);
+	}
+
+	@Override
+	public String sendId(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("sendId", vo);
+	}
+
+	@Override
+	public int sendPwd(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("sendPwd", vo);
+	}
+
+	@Override
+	public int emailChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("emailChk", vo);
+	}
+
+	@Override
+	public int emailChk2(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("emailChk2", vo);
+	}
+
+	@Override
+	public int idChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("idChk", vo);
+	}
+
 }

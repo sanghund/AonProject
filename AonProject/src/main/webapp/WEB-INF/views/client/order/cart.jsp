@@ -371,8 +371,8 @@
 		}
 		
 		$("#totalPriceView td").eq(0).html(t1);
-		$("#totalPriceView td").eq(1).html(t2);
-		$("#totalPriceView td").eq(2).html(t3);
+		$("#totalPriceView td").eq(1).html(t3*(-1));
+		$("#totalPriceView td").eq(2).html(t2);
 		
 		$("#totalPriceView td").css("color", "red");
 		$("#totalPriceView td").css("font-weight", "bold");
