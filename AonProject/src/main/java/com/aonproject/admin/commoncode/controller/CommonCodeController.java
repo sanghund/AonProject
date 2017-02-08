@@ -24,10 +24,11 @@ public class CommonCodeController {
 	@RequestMapping(value = "/commonCodeList", method=RequestMethod.GET)
 	public String commonCodeList(@ModelAttribute CommonCodeVO cvo, Model model){
 		logger.info("commonCode 호출 성공!");
+		
 		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(cvo);
 		
 		model.addAttribute("commonCodeList", commonCodeList);
 		
-		return "admin/category/main";
+		return "admin/commonCode/detailForm";
 	}
 }

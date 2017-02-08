@@ -1,6 +1,6 @@
 package com.aonproject.client.mInfo.controller;
 
-import java.util.List;
+	import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -22,6 +22,7 @@ import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
 import com.aonproject.admin.policy.service.PolicyService;
 import com.aonproject.client.mInfo.service.MemberService;
+import com.aonproject.client.mInfo.vo.MemberSubAddressVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.common.util.email.Certification;
 import com.aonproject.common.util.email.Email;
@@ -79,7 +80,15 @@ public class MemberController {
 		}
 		return "client/cInfo/joinForm";
 	};
-		
+	
+	// 아이디 / 비밀번호 찾기
+	@RequestMapping(value="/lostme")
+	public String lostme(){
+		logger.info("lostme 호출 성공");
+		return "client/cInfo/lostme";
+	}
+	
+	
 	// Member(회원) 가입 이메일 인증번호 발송
 	@ResponseBody
 	@RequestMapping(value = "/join/emailCertification")
@@ -197,8 +206,59 @@ public class MemberController {
 		logger.info("myinfo 호출 성공");
 		ModelAndView mav = new ModelAndView();
 		MemberVO vo = (MemberVO) auth.getPrincipal();
-		mav.addObject("vo", memberService.memberInfo(vo));
+		
+		MemberVO mvo = memberService.memberInfo(vo);	
+		List<MemberSubAddressVO> list = (List<MemberSubAddressVO>) memberService.mSubAddrs(vo);
+		if(list.size() > 0) mav.addObject("msa", list);
+		
+		mav.addObject("vo",mvo);
 		mav.setViewName("client/mypage/myinfo");
 		return mav;
+	}
+	
+	// 마이페이지 - 내 정보 수정
+	@ResponseBody
+	@RequestMapping(value="/mypage/myinfoU")
+	public String myinfoU(@ModelAttribute MemberVO vo, Authentication auth){
+		logger.info("myinfoU 호출 성공");
+		String result = "";
+		
+		MemberVO mvo = (MemberVO) auth.getPrincipal();
+		vo.setM_no(mvo.getM_no());
+		
+		if(vo.getM_pwd() != ""){
+			vo.setM_pwd(encoder.encoding(vo.getM_pwd()));
+		}
+		
+		int gogo = memberService.myInfoUpdate(vo);
+		int gogo2 = memberService.myAddrUpdate(vo);
+		if (gogo == 1 && gogo2 == 1){
+			result = "success";
+		} 
+		else{
+			result = "fail";
+		}
+		
+		return result;
+	}
+	
+	// 마이페이지 - 서브 주소 삭제
+	@ResponseBody
+	@RequestMapping(value="/mypage/myinfoD")
+	public String myinfoD(Authentication auth, @ModelAttribute MemberSubAddressVO vo){
+		logger.info("myinfoD 호출 성공");
+		String result = "";
+
+		MemberVO mvo = (MemberVO) auth.getPrincipal();
+		vo.setM_no(mvo.getM_no());
+		
+		int gogo = memberService.msaD(vo);
+		if (gogo == 1){
+			result = "success";
+		} 
+		else{
+			result = "fail";
+		}
+		return result;
 	}
 }

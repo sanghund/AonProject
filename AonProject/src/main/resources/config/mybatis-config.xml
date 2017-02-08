@@ -14,5 +14,6 @@
 		<typeAlias type="com.aonproject.admin.imageUpload.vo.ImageUploadVO" alias="imageUpload"/>
 		<typeAlias type="com.aonproject.admin.stock.vo.StockVO" alias="stock"/>
 		<typeAlias type="com.aonproject.client.order.vo.CartVO" alias="cart"/>
+		<typeAlias type="com.aonproject.client.mInfo.vo.MemberSubAddressVO" alias="msa"/>
 	</typeAliases>
 </configuration>

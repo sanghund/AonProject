@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aonproject.client.mInfo.dao.MemberDAO;
+import com.aonproject.client.mInfo.vo.MemberSubAddressVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.common.util.vo.Numbers;
 
@@ -62,6 +63,30 @@ public class MemberServiceImpl implements MemberService{
 	public List<Numbers> numbers() {
 		// TODO Auto-generated method stub
 		return memberDAO.numbers();
+	}
+
+	@Override
+	public int myInfoUpdate(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.myInfoUpdate(vo);
+	}
+
+	@Override
+	public int myAddrUpdate(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.myAddrUpdate(vo);
+	}
+
+	@Override
+	public List<MemberSubAddressVO> mSubAddrs(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.mSubAddrs(vo);
+	}
+
+	@Override
+	public int msaD(MemberSubAddressVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.msaD(vo);
 	}
 
 }
