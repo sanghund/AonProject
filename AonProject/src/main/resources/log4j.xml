@@ -72,6 +72,13 @@
 		<level value="info"></level>
 	</logger>
 	
+	<logger name="com.aonproject.admin.imageUpload.dao">
+		<level value="TRACE"></level>
+	</logger>
+	<logger name="com.aonproject.admin.imageUpload">
+		<level value="info"></level>
+	</logger>
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />

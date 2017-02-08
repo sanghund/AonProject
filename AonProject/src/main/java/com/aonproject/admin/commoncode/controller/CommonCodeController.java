@@ -20,14 +20,15 @@ public class CommonCodeController {
 	
 	private CommonCodeService commonCodeService; 
 	
-	/*°øÅëÄÚµå ¸®½ºÆ® ±¸Çö*/
-	@RequestMapping(value = "/commonCode", method=RequestMethod.GET)
+	// ê³µí†µ ì½”ë“œ ë¦¬ìŠ¤íŠ¸ êµ¬í˜„
+	@RequestMapping(value = "/commonCodeList", method=RequestMethod.GET)
 	public String commonCodeList(@ModelAttribute CommonCodeVO cvo, Model model){
-		logger.info("commonCode È£Ãâ ¼º°ø!");
+		logger.info("commonCode í˜¸ì¶œ ì„±ê³µ!");
+		
 		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(cvo);
 		
 		model.addAttribute("commonCodeList", commonCodeList);
 		
-		return "admin/category/main";
+		return "admin/commonCode/detailForm";
 	}
 }

@@ -7,18 +7,3 @@
            overflow: hidden;
            z-index:0;
        }
-   .section.one{
-       background-image: url(/resources/wv_img/wv_img1.jpg);
-   		}
-   .section.two{
-       background-image: url(/resources/wv_img/wv_img2.jpg);
-   		}
-   .section.three{
-       background-image: url(/resources/wv_img/wv_img3.jpg);
-  		}
-  	.section.four{
-       background-image: url(/resources/wv_img/wv_img4.jpg);
-  		} 
-  	.section.five{
-       background-image: url(/resources/wv_img/wv_img5.jpg);
-  		}  

@@ -156,6 +156,7 @@
 						<td><input type="text" name="p_name" id="p_name" value="${productDetail.p_name}"/></td>
 					</tr>
 					<tr>
+
 						<td>상품설명</td>
 						<td><textarea id="p_info" name="p_info">${productDetail.p_info}</textarea></td>
 					</tr>
