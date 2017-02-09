@@ -7,7 +7,6 @@
 		.main{
 		box-sizing: border-box;
 		padding: 10px;
-		font-size : 10px;
 		}
 	
 	#aTitle {
@@ -117,6 +116,10 @@
 		#choiceEmailType{
 			height: 32px;
 					
+		}
+		#updateForm{
+			
+		font-size : 10px;
 		}
 }
 	</style>
