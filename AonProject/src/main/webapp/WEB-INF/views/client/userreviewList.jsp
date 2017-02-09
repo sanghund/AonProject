@@ -424,7 +424,7 @@
 										
 										<!-- 관리자 코멘트가 시작되는 구간 -->
 										<div class="comment-list">
-											<h3>COMMENT LIST</h3>
+											<h3>COMMENT</h3>
 											<div class="comment-cover">
 												<div class="comment-content">
 													<div class="content-top">
@@ -451,7 +451,7 @@
 												</div>
 												
 												<!-- 회원 로그인 시 없어질 구간 -->
-												<sec:authorize access="hasRole('user')!=null">
+												<sec:authorize ifNotGranted="user">	
 													<div class="comment-write">
 														<div class="comment-p">
 															<p style="color:#999;font-size:11px">( 회원 로그인이 필요한 기능입니다 )</p>

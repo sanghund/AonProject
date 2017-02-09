@@ -39,6 +39,11 @@
 				});
 			}
 		});
+		
+		//삭제
+		$(".caDeleteBtn").click(function(){
+			
+		});
 	});
 </script>
 	<div class="category-Insert">
@@ -87,7 +92,11 @@
 						<c:forEach var="category" items="${categoryList}">
 							<tr>
 								<td>${category.ca_no}</td>
-								<td>${category.ca_name}</td>
+								<td>
+									<input type="hidden" class="ca_no" value="${category.ca_no }">
+									${category.ca_name}
+									<input type="button" class="caDeleteBtn" value="삭제" style="float:right">	
+								</td>
 							</tr>	
 						</c:forEach>
 					</c:when>
@@ -104,7 +113,10 @@
 						<c:forEach var="commonCodeList" items="${commonCodeList}">
 							<tr data-no="${commonCodeList.cc_no}" class="commonCodeList">
 								<td>${commonCodeList.cc_no}</td>
-								<td>${commonCodeList.cc_name}</td>
+								<td>
+									${commonCodeList.cc_name}
+									
+								</td>
 							</tr>
 						</c:forEach>
 					</c:when>
