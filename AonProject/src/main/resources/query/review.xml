@@ -100,4 +100,10 @@
 	<update id="InsertID" parameterType="review">
 		update review set re_name = (select m_id from member where m_no = #{m_no}) 
 	</update>
+	
+	<!-- 마이페이지 리뷰 -->
+	<select id="" resultType="review" parameterType="member">
+		select p_no, re_title, re_content, re_date, pi_route, pi_file from (select ppno, pno, pi_route, pi_file from (select min(pno) ppno, p_no pno from (select pno, substr(p_no, 1, instr(p_no, 'S') - 1) p_no from (select DISTINCT min(pi_no) pno, p_no from product_img group by(p_no))) group by (p_no)) inner join product_img on pi_no = ppno) end1
+		inner join (select re_no, re_title, re_content, to_char(re_date, 'yyyy-MM-dd hh24:mm:ss') re_date, o_no, substr(p_no, 1, 7) p_no from review where m_no = #{m_no} order by re_no desc) end2 on pno = p_no order by re_no desc
+	</select>
 </mapper>

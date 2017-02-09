@@ -24,6 +24,7 @@ import com.aonproject.admin.category.vo.CategoryVO;
 import com.aonproject.admin.policy.service.PolicyService;
 import com.aonproject.admin.qna.service.QnaService;
 import com.aonproject.admin.review.service.ReviewService;
+import com.aonproject.admin.review.vo.ReviewVO;
 import com.aonproject.client.mInfo.service.MemberService;
 import com.aonproject.client.mInfo.vo.MemberSubAddressVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
@@ -58,8 +59,6 @@ public class MemberController {
 	
 	@Autowired
 	private QnaService qnaService;
-	
-	
 	
 	// 로그인 페이지
 	@RequestMapping(value = "/login")
@@ -190,7 +189,11 @@ public class MemberController {
 		logger.info("orderlist 호출 성공");
 		ModelAndView mav = new ModelAndView();
 		MemberVO vo = (MemberVO) auth.getPrincipal();
+		List<ReviewVO> list = reviewService.myReview(vo);
 		
+		if(list != null){
+			mav.addObject("reviewList", list);
+		}
 		mav.setViewName("client/mypage/orderlist");
 		return mav;
 	}
@@ -200,6 +203,11 @@ public class MemberController {
 		logger.info("review 호출 성공");
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		ModelAndView mav = new ModelAndView();
+		List<ReviewVO> list = reviewService.myReview(vo);
+		
+		if(list != null){
+			mav.addObject("reviewList", list);
+		}
 		
 		mav.setViewName("client/mypage/review");
 		return mav;
@@ -211,6 +219,11 @@ public class MemberController {
 		logger.info("qna 호출 성공");
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		ModelAndView mav = new ModelAndView();
+		List<ReviewVO> list = reviewService.myQnA(vo);
+		
+		if(list != null){
+			mav.addObject("qnaList", list);
+		}
 		
 		mav.setViewName("client/mypage/qna");
 		return mav;

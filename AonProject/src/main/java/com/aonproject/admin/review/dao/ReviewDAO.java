@@ -3,6 +3,7 @@ package com.aonproject.admin.review.dao;
 import java.util.List;
 
 import com.aonproject.admin.review.vo.ReviewVO;
+import com.aonproject.client.mInfo.vo.MemberVO;
 
 public interface ReviewDAO {
 	public List<ReviewVO> reviewList(ReviewVO rvo);
@@ -21,4 +22,5 @@ public interface ReviewDAO {
 	public int reviewUserUpdate(ReviewVO rvo);
 	public int InsertID(ReviewVO rvo);
 	public int confirmMno(ReviewVO rvo);
+	public List<ReviewVO> myReview(MemberVO vo);
 }
