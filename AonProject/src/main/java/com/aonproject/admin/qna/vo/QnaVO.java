@@ -12,6 +12,23 @@ public class QnaVO extends CommonPagingVO{
 	private String q_confirm;
 	private String p_no;
 	private int m_no;
+	
+	private String pi_file = "";
+	private String pi_route = "";
+	
+	
+	public String getPi_file() {
+		return pi_file;
+	}
+	public void setPi_file(String pi_file) {
+		this.pi_file = pi_file;
+	}
+	public String getPi_route() {
+		return pi_route;
+	}
+	public void setPi_route(String pi_route) {
+		this.pi_route = pi_route;
+	}
 	public int getQ_no() {
 		return q_no;
 	}

@@ -16,9 +16,21 @@ public class Product_orderVO {
 	private List<String> p_nos = null;	//상품번호 리스트
 	private List<Integer> o_cnts = null;//상품 주문수량 리스트
 	
+	private String pi_file = "";
+	private String pi_route = "";
 	
-	
-	
+	public String getPi_file() {
+		return pi_file;
+	}
+	public void setPi_file(String pi_file) {
+		this.pi_file = pi_file;
+	}
+	public String getPi_route() {
+		return pi_route;
+	}
+	public void setPi_route(String pi_route) {
+		this.pi_route = pi_route;
+	}
 	@Override
 	public String toString() {
 		return "Product_orderVO [o_no=" + o_no + ", o_cnt=" + o_cnt + ", o_price=" + o_price + ", o_mode=" + o_mode

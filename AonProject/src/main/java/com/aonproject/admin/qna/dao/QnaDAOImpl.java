@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.aonproject.admin.qna.vo.QnaVO;
+import com.aonproject.client.mInfo.vo.MemberVO;
 
 @Repository
 public class QnaDAOImpl implements QnaDAO{
@@ -51,6 +52,11 @@ public class QnaDAOImpl implements QnaDAO{
 	@Override
 	public int qnaPwdConfirm(QnaVO qvo) {
 		return session.selectOne("qnaPwdConfirm");
+	}
+	@Override
+	public List<QnaVO> myQnA(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return session.selectList("myQnA", vo);
 	}
 
 }

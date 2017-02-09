@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.client.order.dao.OrderDAO;
 import com.aonproject.client.order.vo.Product_orderVO;
 import com.aonproject.client.order.vo.CartVO;
@@ -39,5 +40,11 @@ public class OrderServiceImpl implements OrderService{
 	public String checkOnum() {
 		String checkOnum = orderDAO.checkOnum();
 		return checkOnum;
+	}
+
+	@Override
+	public List<Product_orderVO> myOrder(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return orderDAO.myOrder(vo);
 	}
 }
