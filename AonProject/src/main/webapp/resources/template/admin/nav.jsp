@@ -13,6 +13,13 @@
 			  location.href = "/admin/noticeList";
 		  });
 		  
+		  $(".reviewList").click(function(){
+			location.href = "/admin/review/reviewList";
+		  });
+		  
+		  $(".commentQnAList").click(function(){
+			  location.href = "/admin/commentQnA/commentQnAList"
+
 		  $(".mImage").click(function() {
 			  location.href = "/admin/imageUploadList";
 		  });
@@ -92,8 +99,8 @@
                   <li><a><i class="fa fa-bug"></i> 게시판관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a class="notice" id="notice">공지사항관리</a></li>
-                      <li><a href="projects.html">후기관리</a></li>
-                      <li><a href="project_detail.html">문의관리</a></li>
+                      <li><a class="reviewList">후기관리</a></li>
+                      <li><a class="commentQnAList">문의관리</a></li>
                       <li><a href="contacts.html">null</a></li>
                       <li><a href="profile.html">null</a></li>
                     </ul>

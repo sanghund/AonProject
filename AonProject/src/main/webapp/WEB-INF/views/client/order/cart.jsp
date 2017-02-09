@@ -260,7 +260,7 @@
 									
 									<script type = "text/javascript">
 										$(document).ready(function(){
-											$("#${cartShow[status.index].p_no}").find(".lowCenter").append('<div class = "centerLow" data-price = "${cartShow[status.index].p_price }" data-discount = "${cartShow[status.index].p_discount }"><input type = "checkbox" id = "checkBox${status.index }" class = "checkBoxs" value="${cartShow[status.index].p_no}${cartShow[status.index].size_code}"><label for = "checkBox${status.index }"><span data-color = "${cartShow[status.index].color_code }" data-size = "${cartShow[status.index].size_code }">색상 : ${cartShow[status.index].p_color } / 사이즈 : ${cartShow[status.index].p_size } / ${cartShow[status.index].o_cnt }개</span></label></div>')});
+											$("#${cartShow[status.index].p_no}").find(".lowCenter").append('<div class = "centerLow" data-price = "${cartShow[status.index].p_price }" data-discount = "${cartShow[status.index].p_discount }"><input type = "checkbox" id = "checkBox${status.index }" class = "checkBoxs" data-cnt = "${cartShow[status.index].o_cnt}" data-val = "${cartShow[status.index].p_no}${cartShow[status.index].size_code}" value="${cartShow[status.index].p_no}${cartShow[status.index].size_code}"><label for = "checkBox${status.index }"><span data-color = "${cartShow[status.index].color_code }" data-size = "${cartShow[status.index].size_code }">색상 : ${cartShow[status.index].p_color } / 사이즈 : ${cartShow[status.index].p_size } / ${cartShow[status.index].o_cnt }개</span></label></div>')});
 											var price = $("#${cartShow[status.index].p_no}").find(".lowBottom").find(".rowPrice").text();
 											var discount = $("#${cartShow[status.index].p_no}").find(".lowBottom").find(".rowDiscount").text();
 											var newPrice = <fmt:parseNumber integerOnly="true" value="${price}"/>;
@@ -295,7 +295,7 @@
 							</dd>
 							<dd class = "lowCenter">
 								<div class = "centerLow" data-price = "${cartShow[status.index].p_price }" data-discount = "${cartShow[status.index].p_discount }">
-									<input type = "checkbox" id = "checkBox${status.index }" class = "checkBoxs" value="${cartShow[status.index].p_no}${cartShow[status.index].size_code}"><label for = "checkBox${status.index }"><span data-color = "${cartShow[status.index].color_code }" data-size = "${cartShow[status.index].size_code }">색상 : ${cartShow[status.index].p_color } / 사이즈 : ${cartShow[status.index].p_size } / ${cartShow[status.index].o_cnt }개</span></label>
+									<input type = "checkbox" id = "checkBox${status.index }" class = "checkBoxs" data-cnt = "${cartShow[status.index].o_cnt}" data-val = "${cartShow[status.index].p_no}${cartShow[status.index].size_code}" value="${cartShow[status.index].p_no}${cartShow[status.index].size_code}"><label for = "checkBox${status.index }"><span data-color = "${cartShow[status.index].color_code }" data-size = "${cartShow[status.index].size_code }">색상 : ${cartShow[status.index].p_color } / 사이즈 : ${cartShow[status.index].p_size } / ${cartShow[status.index].o_cnt }개</span></label>
 								</div>
 							</dd>
 							<dd class = "lowBottom">
@@ -395,21 +395,23 @@
 		});
 		
 		$("#goOrder").click(function(){
-			var hiddenLoop = '<c:out value = "${fn:length(cartShow)}" />'
-			
+			var hiddenLoop = '<c:out value = "${fn:length(cartShow)}" />'			
+	
 			for(var i = 0; i < hiddenLoop; i++){
-				$("#cart").append("<input type = 'hidden' class = 'p_nos' name = 'p_nos["+i+"]' value = '${cartShow["+i+"].p_no}${cartShow["+i+"].size_code}'>");
-				$("#cart").append("<input type = 'hidden' class = 'p_nos' name = 'o_cnts["+i+"]' value = '${cartShow["+i+"].o_cnt}'>")
-				console.log($(".p_nos").eq(i).val());
-				console.log($(".p_nos").eq(i+1).val());
-			}
+				var thisPno = $(".checkBoxs").eq(i).attr("data-val"); 
+				var thisCnt = $(".checkBoxs").eq(i).attr("data-cnt");
+				$("#cart").append("<input type = 'hidden' class = 'p_nos' name = 'p_nos["+i+"]' value = '"+thisPno+"'>");
+				$("#cart").append("<input type = 'hidden' class = 'o_cnts' name = 'o_cnts["+i+"]' value = '"+thisCnt+"'>");
+			} 
+
 			
 			$("#cart").attr({
 				"method" : "post",
 				"action" : "/order/order"
 			});
-			/* 
-			$("#cart").submit(); */
+
+			$("#cart").submit();
+
 		});
 		
 		$(".abtns").click(function(event){

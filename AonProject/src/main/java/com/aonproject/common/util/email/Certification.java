@@ -35,7 +35,7 @@ public class Certification {
 				numbers.append((char) num + "");
 			}
 		};
-		
+		result = numbers.toString();
 		return result;
 	}
 }

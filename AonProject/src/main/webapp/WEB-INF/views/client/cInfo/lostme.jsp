@@ -129,7 +129,7 @@
 							error : function(){
 								alert("시스템 에러입니다.");
 							},
-							success : function(reslut2){
+							success : function(result2){
 								if(result2 == "success"){
 									alert("이메일로 아이디가 전송되었습니다.");
 									location.reload();
@@ -166,7 +166,7 @@
 							error : function(){
 								alert("시스템 에러입니다.");
 							},
-							success : function(reslut2){
+							success : function(result2){
 								if(result2 == "success"){
 									alert("이메일로 임시 비밀번호가 전송되었습니다.");
 									location.reload();

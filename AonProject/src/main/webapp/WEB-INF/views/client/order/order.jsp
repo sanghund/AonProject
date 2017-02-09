@@ -83,33 +83,29 @@
 					<c:set var="flag" value="true" />
 					<c:forEach var="chk" begin="1" end="${status.index}" step="1">
 						<c:if test="${flag eq true}">
-							<c:if test="${orderList[status.index].p_no eq orderList[chk].p_no}">
+							<c:if test="${chk ne status.index}">
+								<c:if test="${orderList[status.index].p_no eq orderList[chk].p_no}">
 								<c:set var="flag" value="false"/>
-								<script type="text/javascript">
-									$(document).ready(function(){										
-										var sizeAdd = $("<span>");
-										sizeAdd.addClass("sizeAdd");
-										sizeAdd.html("${orderList[status.index].size}");
-										$(".orderDesc > ul li").eq(1).append(sizeAdd);
-										
-										var sizeCodeAdd = $("<span class='none'>");
-										sizeCodeAdd.addClass("sizeCodeAdd");
-										sizeCodeAdd.html("${fn:toUpperCase(orderList[status.index].size_code)}");
-										$(".orderDesc > ul li").eq(6).append(sizeCodeAdd);
-										
-										var cntAdd = $("<span>");
-										cntAdd.addClass("cntAdd");
-										cntAdd.html("${orderList[status.index].o_cnt}");
-
-										$(".orderDesc > ul li").eq(2).append(cntAdd);
-										
-										/* //create p_no
-										var nkP_no = $("<input type='hidden' name='p_nos["+pnoCnt+"]'>");
-										nkP_no.text("${orderList[status.index].p_no}${orderList[status.index].size_code}");
-										pnoCnt++;
-										$(".hidden").after(nkP_no); */
-									})
-								</script>
+									<script type="text/javascript">
+										$(document).ready(function(){										
+											var sizeAdd = $("<span>");
+											sizeAdd.addClass("sizeAdd");
+											sizeAdd.html("${orderList[status.index].size}");
+											$(".orderDesc > ul li").eq(1).append(sizeAdd);
+											
+											var sizeCodeAdd = $("<span class='none'>");
+											sizeCodeAdd.addClass("sizeCodeAdd");
+											sizeCodeAdd.html("${fn:toUpperCase(orderList[status.index].size_code)}");
+											$(".orderDesc > ul li").eq(6).append(sizeCodeAdd);
+											
+											var cntAdd = $("<span>");
+											cntAdd.addClass("cntAdd");
+											cntAdd.html("${orderList[status.index].o_cnt}");
+	
+											$(".orderDesc > ul li").eq(2).append(cntAdd);
+										})
+									</script>
+								</c:if>
 							</c:if>
 						</c:if>
 					</c:forEach>
@@ -140,6 +136,7 @@
 							</div>
 						</div>
 					</c:if>
+					
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -251,6 +248,7 @@
 	var itemCnt = 0;
 	var cntSum = 0;
 	var omg = "#!@@!#";
+	var cnt = 0;
 	
 	$(function(){
 		// 주소 검색
@@ -338,6 +336,7 @@
 				$("#orderForm").submit();
 			}
 		});
+		
 	});
 	
 	
@@ -345,35 +344,41 @@
 	function makeHidden(){
 		var orderListLength = "${fn:length(orderList)}";
 		console.log("orderListLength="+orderListLength);
-
-		$('.orderContainer').each(function(){
-			var targetSpan = $(this).find("ul li").eq(2).find("span")
-			var targetSpanP = $(this).children(".orderDesc").children("span")
-			var targetSpanNo = $(this).find("ul li").eq(6).find(".sizeCodeAdd")
+		
+		for(var i=0; i<orderListLength; i++){
+			var targetSpan = $(".orderContainer").eq(i).find("ul li").eq(2).find("span")
+			var targetSpanP = $(".orderContainer").eq(i).children(".orderDesc").children("span")
+			var targetSpanNo = $(".orderContainer").eq(i).find("ul li").eq(6).find(".sizeCodeAdd")
 			var len = targetSpan.length;
 			var arrPno = new Array();
 			var arrCnt = new Array();
 			
-			for(var i=0; i<len; i++){
+			console.log("len"+len);
+			
+			for(var j=0; j<len; j++){
 				var p = targetSpanP.text();
-				var no = targetSpanNo.eq(i).text();
+				var no = targetSpanNo.eq(j).text();
 				
 				arrPno = p+no;
-				var inputPno = $("<input type='hidden' name='p_nos["+i+"]'>")
+				var inputPno = $("<input type='hidden' name='p_nos["+cnt+"]'>")
 				inputPno.val(arrPno);
 				
-				arrCnt = targetSpan.eq(i).text();
-				var inputCnt = $("<input type='hidden' name='o_cnts["+i+"]'>")
+				arrCnt = targetSpan.eq(j).text();
+				var inputCnt = $("<input type='hidden' name='o_cnts["+cnt+"]'>")
 				inputCnt.val(arrCnt);
+				console.log("cnt!!"+cnt);
+				cnt++;
+				console.log("cnt!!"+cnt);
 				$(".hidden").append(inputCnt).append(inputPno);
 			}
-		});
+		}
 	}
 	
 	//상품 가격 연산
 	function orderPriceCal(){
 		//상품 등록 갯수 확인
 		itemCnt = $('.orderContainer').length;
+		console.log("itemCnt:"+itemCnt);
 		
 		for(var i=0; i<itemCnt; i++){
 			var itemPrice = $('.orderContainer').eq(i).find('.orderDesc ul > li').eq(4).find("span").text();
@@ -384,7 +389,7 @@
 				cntSum += ($('.orderContainer').eq(i).find(".cntAdd").eq(j).text())*1;
 			}
 			totalPrice += parseInt(itemPrice) * cntSum;
-			discountPrice += (parseInt(itemPrice) * parseInt(itemDiscount) / 100);
+			discountPrice += ((parseInt(itemPrice) * parseInt(itemDiscount) / 100) * cntSum);
 		} 
 		orderPrice = totalPrice - discountPrice;
 		$(".w100").eq(0).find("div").eq(1).text(totalPrice+"원");

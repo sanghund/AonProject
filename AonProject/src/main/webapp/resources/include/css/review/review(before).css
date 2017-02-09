@@ -1,0 +1,433 @@
+@CHARSET "UTF-8";
+	#m_review{
+		max-width:1000px;
+		margin-left:200px;
+		}
+	.board-hd {
+	    margin: 80px 0 20px 0;
+	    margin-left: 0px;
+	    text-align: center;
+	    font-size: 18px;
+	    color: #414141;
+	    padding: 3px 15px;
+	    border-bottom: 1px solid #414141;
+		}
+	img{
+		vertical-align: top;
+		border: 0 none;
+		}
+	.reviewTopBtn{
+		max-width:980px;
+		}
+	.board_btns{
+		text-align: left;
+		letter-spacing: 1px;
+	    font-size: 10px;
+	    color: #000;
+	    border: 1px solid #000;
+	    background: #fff;
+	    padding: 9px 15px;
+	    line-height: 1;
+	    cursor: pointer;
+	    text-align: center;
+	    font-weight: normal;
+	    white-space: nowrap;
+	    display: inline-block;
+	    transition: 1s;
+	    zoom: 1;
+		}
+	.board_btns:hover{
+		background:rgba(0,0,0,1); 
+		color:white;
+		}
+		
+	.write_button{
+		border: 1px solid #000;
+	    color: #fff;
+	    background: #000;
+	    font-size: 10px;
+	    text-decoration: none;
+	    letter-spacing: 1px;
+	    padding: 9px 15px;
+	    line-height: 1;
+	    cursor: pointer;
+	    text-align: center;
+	    font-weight: normal;
+	    white-space: nowrap;
+	    display: inline-block;
+	    zoom: 1;
+	    transition: 1s;
+	    float: right;
+		}
+	.write_button:hover{
+		background:rgba(255,255,255,0.6); 
+		color:black;
+		}
+	a {
+	    color: #777;
+	    text-decoration: none;
+		}		
+	.board-btns img {
+	    padding: 0 5px;
+		}
+/************************/
+	.review_write{
+		margin-top: 15px;
+	    padding: 10px;
+	    border-top: 1px solid #ccc;
+	    margin-left: 0px;
+		}
+	#write_form{
+		position: relative;
+		}
+	#write_form table{
+		width: 100%;
+	    border-collapse: collapse;
+	    border-spacing: 0;
+	    table-layout: fixed;
+	    font-size: 12px;
+		}
+	#write_form tbody{
+		display: table-row-group;
+	    vertical-align: middle;
+	    border-color: inherit;
+		}
+	#write_form tr{
+		display: table-row;
+	    vertical-align: inherit;
+	    border-color: inherit;
+		}
+	.review_write th{
+		font-weight: normal;
+		padding: 5px 0 4px;
+		}
+	.tb-left{
+		text-align: left;
+		}
+	.review_write td{
+		font-weight: normal;
+		padding: 5px 0 4px;
+		}
+	.frm-w input{
+		width: 150px;
+	    height: 18px;
+	    line-height: 18px;
+	    border: 1px solid #D5D5D5;
+		}	
+	#write_form textarea {
+	    border: 1px solid #D5D5D5;
+	    vertical-align: middle;
+	    padding: 2px 0 0 2px;
+	    font-size: 12px;
+		}
+	#write_form a{
+		color: #777;
+	    text-decoration: none;
+		}
+	#write_form table img {
+		float:right;
+		vertical-align: middle;
+		}
+	.addFile{
+	    font-size: 13px;
+	    color: #000;
+	    border: 1px solid #000;
+	    background: #fff;
+	    padding: 9px 15px;
+	    line-height: 1;
+	    cursor: pointer;
+	    text-align: center;
+	    font-weight: normal;
+	    white-space: nowrap;
+	    display: inline-block;
+	    transition: 1s;
+	    margin-top:10px;
+		}
+	.addFile:hover{
+		background:rgba(0,0,0,1); 
+		color:white;
+		}
+	.fileDeleteBtn{
+	    font-size: 13px;
+	    color: #000;
+	    border: 1px solid #000;
+	    background: #fff;
+	    padding: 6px 10px;
+	    cursor: pointer;
+	    text-align: center;
+	    display: inline-block;
+	    transition: 1s;
+		}
+	.fileDeleteBtn:hover{
+		background:rgba(0,0,0,1); 
+		color:white;
+		}
+/***************  리뷰 뜨는 곳   ******************/		
+	.review-list {
+	    margin-top: 15px;
+	    margin-left: 0px;
+	    border-top: 1px solid #ccc;
+		}
+	.table-slide table{
+		width: 100%;
+	    border-collapse: collapse;
+	    border-spacing: 0;
+	    table-layout: fixed;
+	    word-wrap: break-word;
+	    word-break: keep-all;
+	    font-size: 12px;
+		}
+	.table-slide thead{
+		display: table-header-group;
+	    vertical-align: middle;
+	    border-color: inherit;
+		}
+	.table-slide th{
+		font-weight: normal;
+		padding: 10px 0;
+		font-size: 11px;
+		}	
+	
+	.table-slide tbody .review_tr td{
+	    vertical-align: middle;
+	    border-color: inherit;
+	    text-align: center;
+		}
+	.table-slide tbody .review_tr td{
+		border-bottom: 1px solid #b4b4b5;
+		padding: 10px 0;
+		border-top: 1px dotted #b4b4b5;
+		}	
+	
+	.tb-center {
+	    text-align: center;
+		}	
+	.goDetail{
+		cursor: pointer;
+		}	
+	.find_review td .content{
+		text-align: left;
+		padding:30px 0 0 30px;
+		}
+	.update_content	{
+		text-align: left;
+		padding:30px 0 10px 30px;
+		}
+	.content_modify{
+		text-align: left;
+		margin:0 0 60px 30px;
+	    color: #000;
+	    border: 1px solid #000;
+	    text-decoration: none;
+	    cursor: pointer;
+	    text-align: center;
+	    display: inline-block;
+	 	padding: 9px 15px;
+	 	transition: 1s;
+		}
+	.content_modify:hover{
+		background:rgba(0,0,0,1); 
+		color:white;
+		}
+	.modify_addFile{
+		font-size: 13px;
+	    color: #000;
+	    border: 1px solid #000;
+	    background: #fff;
+	    padding: 9px 15px;
+	    line-height: 1;
+	    cursor: pointer;
+	    text-align: center;
+	    font-weight: normal;
+	    white-space: nowrap;
+	    display: inline-block;
+	    transition: 1s;
+	    margin-top:10px;
+		}
+	.modify_addFile:hover{
+		background:rgba(0,0,0,1); 
+		color:white;
+		}
+	.update_mobtn{
+		text-align: left;
+		margin:30px 0 0 0;
+	    color: #fff;
+	    background: #000;
+	    border: 1px solid #000;
+	    text-decoration: none;
+	    cursor: pointer;
+	    text-align: center;
+	    display: inline-block;
+	 	padding: 9px 15px;
+	 	transition: 1s;
+		}
+	.update_mobtn:hover{
+		background:rgba(255,255,255,0.6); 
+		color:black;
+		}	
+	.delete_mobtn{
+		text-align: left;
+		margin:30px 0 0 0;
+	    color: #fff;
+	    background: #000;
+	    border: 1px solid #000;
+	    text-decoration: none;
+	    cursor: pointer;
+	    text-align: center;
+	    display: inline-block;
+	 	padding: 9px 15px;
+	 	transition: 1s;
+		}	
+	.delete_mobtn:hover{
+		background:rgba(255,255,255,0.6); 
+		color:black;
+		}	
+	.imgViewData{
+		position:relative;
+		top:-2px;
+		left:0px;
+		z-index:100
+		}
+	.reviewImg{
+		padding-top:30px;
+		width:600px;
+		}
+	.reviewImg img{
+    	margin-bottom: 20px;
+    	margin-left:10px;
+		}
+	.pwdChk{
+		padding:30px 0 60px 30px;
+		}
+	
+	/***************************************/	
+	.comment-list{
+		padding:30px 0 40px 30px;
+		}
+	.comment-list h3{
+		font-size: 13px;
+	    height: 30px;
+	    color: #666;
+	    font-family: '맑은 고딕','arial','돋움',sans-serif;
+		}	
+	.comment-cover{
+		border: 1px solid #e7e7e7;
+    	padding: 5px 15px;
+		}
+	.comment-content{
+		border-top: 0px solid #e9e9e9;
+	    border-bottom: 0px solid #e9e9e9;
+	    font-family: 'arial','돋움',sans-serif;
+		}
+	.comment-content .content-top{
+		position: relative;
+	    overflow: hidden;
+	    padding: 10px 20px 10px 10px;
+	    color: #999;
+	    text-align: left;
+	    line-height: 140%;
+		}
+	.comment-content .content-top .name{
+		margin: 0 10px 0 0;
+		font-size: 12px;
+		}
+	.comment-content .content-top .date{
+		margin: 0 10px 0 0;
+	    font-size: 12px;
+	    font-family: tahoma,sans-serif;
+	    color: #8f8f8f;
+		}
+	.modify{
+		margin: 0 0px 0 0;
+	    font-size: 10px;
+	    padding: 2px 6px;
+	    border: 1px solid #e7e7e7;
+	    color: #ccc;
+		}
+	.delete{
+		margin: 0 0px 0 0;
+	    font-size: 10px;
+	    padding: 2px 6px;
+	    border: 1px solid #e7e7e7;
+	    color: #ccc;
+		}
+	.modify:hover{
+		color:black;
+		}	
+	.delete:hover{
+		color:black;
+		}
+		
+		
+	.fieldset{
+		margin: 10px 0;
+	    padding: 10px 20px 20px;
+	    border: 1px solid #e7e7e7;
+	    background: #f8f8f8;
+	    font-size: 11px;
+	    color: #202020;
+		}
+	.fieldset fieldset{
+		border: none;
+    	vertical-align: top;
+		}	
+	legend{visibility: hidden;}
+	.fieldset fieldset p{
+		margin: 10px 0 0;
+		}
+	.fieldset fieldset p input{
+		width: 84px;
+	    height: 14px;
+	    margin: 0 10px 0 9px;
+	    padding: 2px 2px 2px 4px;
+	    border: 1px solid #d9d9d9;
+	    color: #202020;
+		}
+	.fieldset fieldset p textarea{
+		width: 543px;
+    	height: 44px;
+    	padding: 2px 2px 2px 4px;
+	    border: 1px solid #d9d9d9;
+	    color: #202020;	
+		}	
+	.commentp{
+		margin: 5px 0 0;
+    	word-break: break-all;
+    	padding: 10px 20px 10px 10px;
+		}		
+	.commentp .c-content{
+		color: #999;
+	    text-align: left;
+	    line-height: 140%;
+	    font-size: 12px;
+		}
+	.comment-write{
+		margin: 10px 0;
+	    padding: 10px 20px 20px;
+	    border: 1px solid #e7e7e7;
+	    background: #f9f9f9;
+	    font-size: 11px;
+	    color: #202020;
+    	font-family: 'arial','돋움',sans-serif;
+		}
+	.comment-p p{
+		margin: 10px 0 0;
+   		line-height: 23px;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aonproject.admin.recomment.dao.RecommentDAO">
+	<select id="recommentList" parameterType="recomment" resultType="recomment">
+		select r1.com_no, com_title, com_content, to_char(com_date, 'yyyy-MM-dd hh24:mm:ss') com_date, re_no from recomment 
+			r1 inner join  (select max(com_no) com_no from recomment group by(re_no)) r2
+				on r1.com_no = r2.com_no
+	</select>
+	
+	<insert id="recommentInsert" parameterType="recomment">
+		insert into recomment(com_no, com_title, com_content, RE_NO)
+			values(comment_seq.nextval, #{com_title}, #{com_content}, #{re_no})
+	</insert>
+	
+	<update id="recommentUpdate" parameterType="recomment">
+		update recomment set 
+			com_title = #{com_title},
+			com_content = #{com_content}
+				where re_no = #{re_no} and com_no = #{com_no}
+	</update>
+	<delete id="recommentDelete" parameterType="recomment">
+		delete from recomment where re_no = #{re_no}
+	</delete>
+</mapper>

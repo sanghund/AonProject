@@ -79,7 +79,8 @@ public class OrderController{
 		}else{
 			checkOnum = (Integer.parseInt(checkOnum)+1)+"";
 		}
-		
+		//logger.info("aaaaa"+povo.getP_nos());
+		logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+povo.getP_nos().size());
 		for(int i=0; i<povo.getP_nos().size(); i++){
 			Product_orderVO ovo = new Product_orderVO();
 			
@@ -89,11 +90,13 @@ public class OrderController{
 			
 			//주문VO 항목 등록
 			ovo.setP_no(povo.getP_nos().get(i).toString());
+			//logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+ovo.getP_no());
 			ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
+			//logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+ovo.getO_cnt());
 			ovo.setO_mode(povo.getO_mode().toString());
 			ovo.setO_confirm(povo.getO_confirm().toString());
 			ovo.setM_no(vo.getM_no());
-			ovo.setO_price((cal.getP_price()-(cal.getP_price() * (cal.getP_discount() / 100))) * ovo.getO_cnt());
+			ovo.setO_price(cal.getP_price()-(cal.getP_price() * (cal.getP_discount() / 100)) * ovo.getO_cnt());
 			ovo.setO_num(checkOnum);
 			orderInfo.add(ovo);
 			int result = orderService.orderInsert(ovo);
@@ -158,6 +161,7 @@ public class OrderController{
 				ovo.setP_no(orderList.get(i).getP_no().toString());
 			    ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
 			    orderInfo.add(ovo);
+			    System.out.println("---------------------\n"+ovo.toString() + "\n-------------------");
 			}
 			model.addAttribute("orderInfo", orderInfo);
 		}

@@ -43,10 +43,10 @@ public class ProductController {
 	
 	String mode = "";
 	
-	/*ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½*/
+	/*Product List*/
 	@RequestMapping(value = "/product", method=RequestMethod.GET)
 	public String itemList(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, Model model){
-		logger.info("itemList È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
+		logger.info("itemList load");
 		logger.info(pvo.getCa_no());
 		
 		List<ProductVO> productList = productService.productList(pvo);
@@ -55,22 +55,25 @@ public class ProductController {
 		return "admin/product/main";
 	}
 	
-	/*ï¿½ï¿½Ç°ï¿½ï¿½ È£ï¿½ï¿½*/
+	/*Product Detail*/
 	@RequestMapping(value = "/productDetail")
 	public String itemDetail(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, @ModelAttribute UploadVO uvo, Model model){
 
-		logger.info("itemDetail È£Ãâ ¼º°ø!");
+		logger.info("itemDetail load");
 		logger.info("p_no: "+pvo.getP_no());
 		logger.info("cc_no: "+cvo.getCa_no());
 		logger.info("cc_name: "+cvo.getCa_name());
 		
+		ProductVO productDetail = null;
+		
 		if(pvo.getP_no() == ""){
 			model.addAttribute("mode", "insert");
 		}else{
-			ProductVO productDetail = productService.productDetail(pvo);		
+			productDetail = productService.productDetail(pvo);		
 			model.addAttribute("productDetail" , productDetail);
 			model.addAttribute("mode", "update");
 		}
+		logger.info("pno"+productDetail.getP_no());
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
@@ -78,8 +81,11 @@ public class ProductController {
 		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(ovo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
-		List<UploadVO> uploadList = uploadService.uploadList(uvo);
-		model.addAttribute("uploadList", uploadList);
+		
+		
+		
+		//List<UploadVO> uploadList = uploadService.uploadList(uvo);
+		//model.addAttribute("uploadList", uploadList);
 		
 		
 		return "admin/product/detail";
@@ -88,7 +94,7 @@ public class ProductController {
 	/*ï¿½ï¿½Ç°ï¿½ï¿½ï¿ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½*/
 	@RequestMapping(value = "/writeForm")
 	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
-		logger.info("writeFrom È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
+		logger.info("writeFrom È£Ãâ ¼º°ø!");
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
@@ -103,10 +109,10 @@ public class ProductController {
 		return "admin/product/write";
 	}
 	
-	/*ï¿½ï¿½Ç° ï¿½ï¿½ï¿*/
+	/*Product Insert*/
 	@RequestMapping(value = "/productInsert")
 	public String itemInsert (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
-		logger.info("itemInsert È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
+		logger.info("itemInsert È£Ãâ ¼º°ø!");
 		mode = "insert";
 		int result = 0;
 		

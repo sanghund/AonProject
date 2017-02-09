@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aonproject.admin.reviewImg.dao.ReviewImgDAO">
+
+	<select id="reviewImgList" resultType="reviewImg" parameterType="reviewImg">
+		select re_no, ri_no, ri_file from reviewImg
+	</select>
+	
+	<insert id="reviewImgInsert" parameterType="reviewImg">
+		insert into reviewImg(re_no, ri_no, ri_file) 
+			values(#{re_no}, reviewimg_seq.nextval, #{ri_file})
+	</insert>
+	
+	<update id="reviewImgUpdate" parameterType="reviewImg">
+		update reviewImg set ri_file = #{ri_file} where re_no = #{re_no}
+	</update>
+	
+	<delete id="reviewImgDelete" parameterType="reviewImg">
+		delete from reviewImg where re_no = #{re_no}
+	</delete>
+	
+	<select id="reviewImgFilename" resultType="reviewImg" parameterType="reviewImg">
+		select ri_file from reviewImg where re_no = #{re_no}
+	</select>
+</mapper>

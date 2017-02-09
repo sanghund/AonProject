@@ -54,6 +54,9 @@
 	.cntAdd:last-child {border-right:0;}
 	
 	.none {display:none;}
+	
+	.btnContainer {width:100%; text-align:center;}
+	.btnContainer > p {padding:1em 0;}
 </style>
 
 <script src = "/resources/include/js/daumAddr.js"></script>
@@ -84,33 +87,29 @@
 					<c:set var="flag" value="true" />
 					<c:forEach var="chk" begin="1" end="${status.index}" step="1">
 						<c:if test="${flag eq true}">
-							<c:if test="${productList[status.index].p_no eq productList[chk].p_no}">
+							<c:if test="${chk ne status.index}">
+								<c:if test="${productList[status.index].p_no eq productList[chk].p_no}">
 								<c:set var="flag" value="false"/>
-								<script type="text/javascript">
-									$(document).ready(function(){										
-										var sizeAdd = $("<span>");
-										sizeAdd.addClass("sizeAdd");
-										sizeAdd.html("${productList[status.index].size}");
-										$(".orderDesc > ul li").eq(1).append(sizeAdd);
-										
-										var sizeCodeAdd = $("<span class='none'>");
-										sizeCodeAdd.addClass("sizeCodeAdd");
-										sizeCodeAdd.html("${fn:toUpperCase(productList[status.index].size_code)}");
-										$(".orderDesc > ul li").eq(6).append(sizeCodeAdd);
-										
-										var cntAdd = $("<span>");
-										cntAdd.addClass("cntAdd");
-										cntAdd.html("${productList[status.index].o_cnt}");
-
-										$(".orderDesc > ul li").eq(2).append(cntAdd);
-										
-										/* //create p_no
-										var nkP_no = $("<input type='hidden' name='p_nos["+pnoCnt+"]'>");
-										nkP_no.text("${orderList[status.index].p_no}${orderList[status.index].size_code}");
-										pnoCnt++;
-										$(".hidden").after(nkP_no); */
-									})
-								</script>
+									<script type="text/javascript">
+										$(document).ready(function(){										
+											var sizeAdd = $("<span>");
+											sizeAdd.addClass("sizeAdd");
+											sizeAdd.html("${productList[status.index].size}");
+											$(".orderDesc > ul li").eq(1).append(sizeAdd);
+											
+											var sizeCodeAdd = $("<span class='none'>");
+											sizeCodeAdd.addClass("sizeCodeAdd");
+											sizeCodeAdd.html("${fn:toUpperCase(productList[status.index].size_code)}");
+											$(".orderDesc > ul li").eq(6).append(sizeCodeAdd);
+											
+											var cntAdd = $("<span>");
+											cntAdd.addClass("cntAdd");
+											cntAdd.html("${productList[status.index].o_cnt}");
+	
+											$(".orderDesc > ul li").eq(2).append(cntAdd);
+										})
+									</script>
+								</c:if>
 							</c:if>
 						</c:if>
 					</c:forEach>
@@ -138,6 +137,7 @@
 							</div>
 						</div>
 					</c:if>
+					
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -191,14 +191,12 @@
 	<div class="creditInfo">
 		<h4 class="bold">결제방법</h4>
 		<div>
-			<input type="radio" name="o_modes" class="o_modes" value="credit"><label>신용카드</label>
-			<input type="radio" name="o_modes" class="o_modes" value="banking"><label>계좌이체</label>
-			<input type="radio" name="o_modes" class="o_modes" value="noaccount"><label>무통장입금</label>
+			<p class="o_mode"></p>
 		</div>
 	</div>
 	<div class="btnContainer">
 		<p>주문이 완료 되었습니다.</p>
-		<input type="button" value="확인">
+		<input type="button" id="goMain" value="확인">
 	</div>
 </div>
 
@@ -230,6 +228,18 @@
 		$(".m_addr3").text(addrs[2]);
 		
 		orderPriceCal();
+		
+		if("${productList[0].o_mode}" == 'credit'){
+			$(".o_mode").text("신용카드");
+		}else if("${productList[0].o_mode}" == 'banking'){
+			$(".o_mode").text("계좌이체");
+		}else if("${productList[0].o_mode}" == 'noaccount'){
+			$(".o_mode").text("무통장입금");
+		}
+		
+		$("#goMain").click(function(){
+			location.href="/";
+		});
 	})
 
 	
@@ -266,6 +276,7 @@
 	function orderPriceCal(){
 		//상품 등록 갯수 확인
 		itemCnt = $('.orderContainer').length;
+		console.log("itemCnt:"+itemCnt);
 		
 		for(var i=0; i<itemCnt; i++){
 			var itemPrice = $('.orderContainer').eq(i).find('.orderDesc ul > li').eq(4).find("span").text();
@@ -276,7 +287,7 @@
 				cntSum += ($('.orderContainer').eq(i).find(".cntAdd").eq(j).text())*1;
 			}
 			totalPrice += parseInt(itemPrice) * cntSum;
-			discountPrice += (parseInt(itemPrice) * parseInt(itemDiscount) / 100);
+			discountPrice += ((parseInt(itemPrice) * parseInt(itemDiscount) / 100) * cntSum);
 		} 
 		orderPrice = totalPrice - discountPrice;
 		$(".w100").eq(0).find("div").eq(1).text(totalPrice+"원");

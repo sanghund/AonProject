@@ -1,6 +1,6 @@
 package com.aonproject.client.mInfo.controller;
 
-	import java.util.List;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
 import com.aonproject.admin.policy.service.PolicyService;
+import com.aonproject.admin.qna.service.QnaService;
+import com.aonproject.admin.review.service.ReviewService;
 import com.aonproject.client.mInfo.service.MemberService;
 import com.aonproject.client.mInfo.vo.MemberSubAddressVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
@@ -50,6 +52,15 @@ public class MemberController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private ReviewService reviewService;
+	
+	@Autowired
+	private QnaService qnaService;
+	
+	
+	
 	// 로그인 페이지
 	@RequestMapping(value = "/login")
 	public String loginForm(@ModelAttribute CategoryVO cvo, Model model){
@@ -178,7 +189,8 @@ public class MemberController {
 	public ModelAndView orderlist(Authentication auth){
 		logger.info("orderlist 호출 성공");
 		ModelAndView mav = new ModelAndView();
-
+		MemberVO vo = (MemberVO) auth.getPrincipal();
+		
 		mav.setViewName("client/mypage/orderlist");
 		return mav;
 	}
@@ -186,7 +198,9 @@ public class MemberController {
 	@RequestMapping(value="/mypage/review")
 	public ModelAndView review(Authentication auth){
 		logger.info("review 호출 성공");
+		MemberVO vo = (MemberVO) auth.getPrincipal();
 		ModelAndView mav = new ModelAndView();
+		
 		mav.setViewName("client/mypage/review");
 		return mav;
 	}
@@ -195,8 +209,9 @@ public class MemberController {
 	@RequestMapping(value="/mypage/qna")
 	public ModelAndView qna(Authentication auth){
 		logger.info("qna 호출 성공");
+		MemberVO vo = (MemberVO) auth.getPrincipal();
 		ModelAndView mav = new ModelAndView();
-
+		
 		mav.setViewName("client/mypage/qna");
 		return mav;
 	}
@@ -278,8 +293,9 @@ public class MemberController {
 	public String lostPwdChk(@ModelAttribute MemberVO vo){
 		logger.info("lostPwdChk 호출 성공");
 		String result = "";
-		int gogo = memberService.lostIdChk(vo);
-		if(gogo != 1) result = "success";
+
+		int gogo = memberService.lostPwdChk(vo);
+		if(gogo == 1) result = "success";
 		return result;
 	}
 	

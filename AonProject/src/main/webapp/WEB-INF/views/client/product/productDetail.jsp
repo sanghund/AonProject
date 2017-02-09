@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set value="0" var="iSize" scope="page" />
 <c:forEach var="commonCodeList" items="${commonCodeList}">
 	<c:if test="${commonCodeList.cc_group eq 'size' && commonCodeList.cc_name ne 'F'}">
 			<c:set value="${iSize + 1 }" var="iSize" scope="page" />				
 		</c:if>
-
 </c:forEach>
 <style>
 	.width40 {width:40%;}
@@ -127,9 +127,9 @@
 
 <div class="content">
 	<div class="imgContainer width40">
-		<c:forEach var="uploadList" begin="0" end="0" items="${uploadList}">
+		<%-- <c:forEach var="uploadList" begin="0" end="0" items="${uploadList}">
 			<img src="/productUpload/${uploadList.pi_file}" />
-		</c:forEach>
+		</c:forEach> --%>
 	</div>
 	<div class="itemOption width40">
 		<h3>${productDetail.p_name}</h3>
@@ -185,9 +185,14 @@
 		</div>
 	</div>
 	<div class="productImg">
-		<c:forEach var="uploadList" begin="1" items="${uploadList}">
+		<%-- <c:forEach var="uploadList" begin="1" items="${uploadList}">
 			<img src="/productUpload/${uploadList.pi_file}" />
-		</c:forEach>
+		</c:forEach> --%>
 	</div>
 		
+</div>
+
+<div class = "pageImport">
+	<%-- <c:import url="/review/reviewuserList?p_no=${param.no}" />
+	<c:import url="/qna/qnauserList?p_no=${param.no}" /> --%>
 </div>
