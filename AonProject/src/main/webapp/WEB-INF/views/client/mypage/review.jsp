@@ -78,6 +78,9 @@
 			</div>
 		</div>
 	</div>
+	<div class= "reviewList">
+	
+	</div>
 </div>
 <script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 	<script type = "text/javascript">
