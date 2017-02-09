@@ -50,10 +50,10 @@
 		<div class="ca_top"><h1>카테고리 입력</h1></div>
 		<form id="ca_insertForm">
 			<table>
-				<thead>
+				<colgroup>
 					<col width="30%">
 					<col width="70%">
-				</thead>
+				</colgroup>
 				<tbody>
 					<tr>
 					<td>카테고리 이름 : </td>

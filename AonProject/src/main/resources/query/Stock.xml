@@ -8,4 +8,8 @@
 	<update id="stockOrder" parameterType="stock">
 		update stock set stock_cnt = stock_cnt - #{stock_cnt} where p_no = #{p_no}
 	</update>
+	
+	<select id="stockList" resultType="stock">
+		select * from stock order by p_no asc
+	</select>
 </mapper>

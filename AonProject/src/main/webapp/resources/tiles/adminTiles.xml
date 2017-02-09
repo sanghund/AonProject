@@ -84,5 +84,10 @@
 	<definition name="admin/imageUpload/upload" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/imageUpload/upload.jsp" />
 	</definition>
+	
+	<!-- 재고 관리 페이지 -->
+	<definition name="admin/stock/*" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/stock/{1}.jsp" />
+	</definition>
 
 </tiles-definitions>
