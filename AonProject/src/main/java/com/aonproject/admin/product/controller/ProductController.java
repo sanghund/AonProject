@@ -43,10 +43,10 @@ public class ProductController {
 	
 	String mode = "";
 	
-	/*»óÇ°¸®½ºÆ® ±¸Çö*/
+	/*ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½*/
 	@RequestMapping(value = "/product", method=RequestMethod.GET)
 	public String itemList(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, Model model){
-		logger.info("itemList È£Ãâ ¼º°ø!");
+		logger.info("itemList È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 		logger.info(pvo.getCa_no());
 		
 		List<ProductVO> productList = productService.productList(pvo);
@@ -55,10 +55,14 @@ public class ProductController {
 		return "admin/product/main";
 	}
 	
-	/*»óÇ°»ó¼¼ È£Ãâ*/
+	/*ï¿½ï¿½Ç°ï¿½ï¿½ È£ï¿½ï¿½*/
 	@RequestMapping(value = "/productDetail")
 	public String itemDetail(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, @ModelAttribute UploadVO uvo, Model model){
+
 		logger.info("itemDetail È£Ãâ ¼º°ø!");
+		logger.info("p_no: "+pvo.getP_no());
+		logger.info("cc_no: "+cvo.getCa_no());
+		logger.info("cc_name: "+cvo.getCa_name());
 		
 		if(pvo.getP_no() == ""){
 			model.addAttribute("mode", "insert");
@@ -81,10 +85,10 @@ public class ProductController {
 		return "admin/product/detail";
 	}
 	
-	/*»óÇ°µî·Ï ÆäÀÌÁö ÀÌµ¿*/
+	/*ï¿½ï¿½Ç°ï¿½ï¿½ï¿ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½*/
 	@RequestMapping(value = "/writeForm")
 	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
-		logger.info("writeFrom È£Ãâ ¼º°ø!");
+		logger.info("writeFrom È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
@@ -99,14 +103,16 @@ public class ProductController {
 		return "admin/product/write";
 	}
 	
-	/*»óÇ° µî·Ï*/
+	/*ï¿½ï¿½Ç° ï¿½ï¿½ï¿*/
 	@RequestMapping(value = "/productInsert")
 	public String itemInsert (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
-		logger.info("itemInsert È£Ãâ ¼º°ø!");
+		logger.info("itemInsert È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 		mode = "insert";
 		int result = 0;
 		
 		//»óÇ°¹øÈ£(p_no) »ý¼º
+		logger.info("p_no1="+pvo.getP_no().length());
+		
 		if(pvo.getP_no().length()==0){
 			String createP_no = productService.createP_no();
 			
@@ -135,7 +141,7 @@ public class ProductController {
 		return "redirect:"+url;
 	}
 	
-	/*»óÇ° ¾÷µ¥ÀÌÆ®*/
+	/*ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®*/
 	@RequestMapping(value = "/productUpdate")
 	public String itemUpdate (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
 		mode = "update";
@@ -167,7 +173,7 @@ public class ProductController {
 		return "redirect:"+url;
 	}
 	
-	/*»óÇ°ÀÌ¹ÌÁö µî·Ï, ¼öÁ¤*/
+	/*ï¿½ï¿½Ç°ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿, ï¿½ï¿½ï¿½ï¿½*/
 	public int imgInsert(UploadVO uvo, HttpServletRequest request) throws IOException {
 		int fileResult = 0;
 		
@@ -188,11 +194,10 @@ public class ProductController {
 		return fileResult;
 	}
 	
-	/*»óÇ° »èÁ¦*/
+	/*ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½*/
 	@RequestMapping(value = "/productDelete")
 	public String itemDelete (@ModelAttribute ProductVO pvo) {
 		mode = "update";
-		
 		/*int result = 0;*/
 		/*result = */productService.productDelete(pvo);
 		

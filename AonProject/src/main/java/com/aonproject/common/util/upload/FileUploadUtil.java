@@ -11,21 +11,21 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileUploadUtil {
 	static Logger logger = Logger.getLogger(FileUploadUtil.class);
 	
-	/*ÆÄÀÏ ¾÷·Îµå ¸Þ¼­µå*/
+	/*ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½*/
 	public static String fileUpload(String fileOption, MultipartFile file, HttpServletRequest request) throws IOException{
-		logger.info("fileUpload È£Ãâ¼º°ø");
+		logger.info("fileUpload È£ï¿½â¼ºï¿½ï¿½");
 		
 		String real_name = null;
 		String org_name = file.getOriginalFilename();
 		logger.info("org_name= "+org_name);
 		
 		
-		//ÆÄÀÏ¸í º¯°æ
+		//ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if(org_name != null && (!org_name.equals(""))){
 			//real_name = fileOption+"_"+System.currentTimeMillis()+"_"+org_name;
 			/**********************************************************************
-			 * ÆÄÀÏ¸í ¸í¸í ±ÔÄ¢ - ÆÄÀÏÅ¸ÀÔ.ÇöÀç¹Ð¸®ÃÊ.¿øŽmÆÄÀÏ¸íÀÇÈ®ÀåÀÚ(¿¹:»óÇ°ÄÚµå_ÇöÀç¹Ð¸®ÃÊ.È®ÀåÀÚ->TEST.14804650.jpg)
-			 * ÆÄÀÏ ¸®½ºÆ®¿¡ Ãâ·Â½Ã '.'·Î ºÐÇÒÇÏ¿© µÎ¹ø¤Š Ç×¸ñÀ¸·Î ¿À¸§Â÷¼ø
+			 * ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¢ - ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½.ï¿½ï¿½ï¿½ï¿½Ð¸ï¿½ï¿½ï¿½.ï¿½ï¿½ï¿½mï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½È®ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½:ï¿½ï¿½Ç°ï¿½Úµï¿½_ï¿½ï¿½ï¿½ï¿½Ð¸ï¿½ï¿½ï¿½.È®ï¿½ï¿½ï¿½ï¿½->TEST.14804650.jpg)
+			 * ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Â½ï¿½ '.'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Î¹ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			 **********************************************************************/
 			org_name = org_name.substring(org_name.lastIndexOf("."));
 			real_name = fileOption+"."+System.currentTimeMillis()+org_name;
@@ -35,6 +35,7 @@ public class FileUploadUtil {
 				fileDir.mkdirs();
 			}
 			File fileAdd = new File(docRoot+"/"+real_name);
+			System.out.println(docRoot);
 			logger.info("upload file= "+fileAdd);
 			
 			file.transferTo(fileAdd);
@@ -42,9 +43,9 @@ public class FileUploadUtil {
 		return real_name;
 	}
 	
-	/*ÆÄÀÏ »èÁ¦ ¸Þ¼­µå*/
+	/*ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½*/
 	public static void fileDelete(String fileName, HttpServletRequest request) throws IOException {
-		logger.info("fileDelete È£Ãâ ¼º°ø");
+		logger.info("fileDelete È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		boolean result = false;
 		String docRoot = request.getSession().getServletContext().getRealPath("/productUpload");
 		
@@ -54,6 +55,6 @@ public class FileUploadUtil {
 		if(fileDelete.exists() && fileDelete.isFile()){
 			result = fileDelete.delete();
 		}
-		logger.info("»èÁ¦¿©ºÎ(true/false): "+result);
+		logger.info("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(true/false): "+result);
 	}
 }

@@ -371,8 +371,8 @@
 		}
 		
 		$("#totalPriceView td").eq(0).html(t1);
-		$("#totalPriceView td").eq(1).html(t2);
-		$("#totalPriceView td").eq(2).html(t3);
+		$("#totalPriceView td").eq(1).html(t3*(-1));
+		$("#totalPriceView td").eq(2).html(t2);
 		
 		$("#totalPriceView td").css("color", "red");
 		$("#totalPriceView td").css("font-weight", "bold");
@@ -398,16 +398,18 @@
 			var hiddenLoop = '<c:out value = "${fn:length(cartShow)}" />'
 			
 			for(var i = 0; i < hiddenLoop; i++){
-				$("#cart").append("<input type = 'hidden' class = 'p_nos' name = 'p_nos["+i+"]' value = '${cartShow[fn:length(i)].p_no}${cartShow[fn:length(i)].size_code}'>");
-				$("#cart").append("<input type = 'hidden' class = 'p_nos' name = 'o_cnts["+i+"]' value = '${cartShow[fn:length(i)].o_cnt}'>")
+				$("#cart").append("<input type = 'hidden' class = 'p_nos' name = 'p_nos["+i+"]' value = '${cartShow["+i+"].p_no}${cartShow["+i+"].size_code}'>");
+				$("#cart").append("<input type = 'hidden' class = 'p_nos' name = 'o_cnts["+i+"]' value = '${cartShow["+i+"].o_cnt}'>")
+				console.log($(".p_nos").eq(i).val());
+				console.log($(".p_nos").eq(i+1).val());
 			}
 			
 			$("#cart").attr({
 				"method" : "post",
 				"action" : "/order/order"
 			});
-			
-			$("#cart").submit();
+			/* 
+			$("#cart").submit(); */
 		});
 		
 		$(".abtns").click(function(event){

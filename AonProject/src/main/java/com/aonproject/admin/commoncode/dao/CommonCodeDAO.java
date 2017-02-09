@@ -5,6 +5,6 @@ import java.util.List;
 import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 
 public interface CommonCodeDAO {
-	//°øÅëÄÚµå °ü¸®
+	// ê³µí†µ ì½”ë“œ ë¦¬ìŠ¤íŠ¸ êµ¬í˜„
 	public List<CommonCodeVO> commonCodeList(CommonCodeVO cvo);
 }

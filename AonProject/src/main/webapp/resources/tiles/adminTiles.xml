@@ -22,18 +22,22 @@
 		<put-attribute name="main" value="/WEB-INF/views/admin/aInfo/myPage.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="admin/cboard/cboard" extends="adminMain">
+	<!-- 회원 관리 페이지 -->
+	<!-- <definition name="admin/cboard/cboard" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/cboard/cboard.jsp" />
-	</definition>
+	</definition> -->
 	
+	<!-- 공지사항 리스트 페이지 -->
 	<definition name="admin/notice/noticeList" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/notice/noticeList.jsp" />
 	</definition>
 	
+	<!-- 공지사항 상세 페이지 -->
 	<definition name="admin/notice/writeForm" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/notice/writeForm.jsp" />
 	</definition>
 	
+	<!-- 공지사항 입력, 수정, 삭제 페이지 -->
 	<definition name="admin/notice/detailForm" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/notice/detailForm.jsp" />
 	</definition>
@@ -67,4 +71,9 @@
 		<put-attribute name="main" value="/WEB-INF/views/admin/product/{1}.jsp"></put-attribute>
 	</definition>
 	
+	<!-- 메인 이미지 관리 페이지 -->
+	<definition name="admin/imageUpload/upload" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/imageUpload/upload.jsp" />
+	</definition>
+
 </tiles-definitions>

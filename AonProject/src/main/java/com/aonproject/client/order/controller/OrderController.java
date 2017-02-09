@@ -26,6 +26,7 @@ import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 import com.aonproject.admin.product.service.ProductService;
 import com.aonproject.admin.product.vo.ProductVO;
 import com.aonproject.admin.stock.service.StockService;
+import com.aonproject.admin.stock.vo.StockVO;
 import com.aonproject.client.mInfo.service.MemberService;
 import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.client.order.service.OrderService;
@@ -54,6 +55,70 @@ public class OrderController{
 	
 	@Autowired
 	private MemberService memberService;
+	
+	//주문완료
+	@RequestMapping(value="/orderResult")
+	public String orderResult(Authentication auth, @ModelAttribute ProductVO povo, @ModelAttribute CategoryVO cvo, Model model){
+		logger.info("orderResult 호출 성공");
+		
+		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
+		model.addAttribute("categoryList", categoryList);
+		
+		/*회원정보 출력*/
+		MemberVO vo = (MemberVO) auth.getPrincipal();
+		MemberVO memberInfo = memberService.memberInfo(vo);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		List<Product_orderVO> orderInfo = new ArrayList<Product_orderVO>();
+		List<ProductVO> productList = new ArrayList<ProductVO>();
+		
+		//o_num 생성 : max(o_no)+1
+		String checkOnum = orderService.checkOnum();
+		if(checkOnum == "" || checkOnum == null){
+			checkOnum = 1+"";
+		}else{
+			checkOnum = (Integer.parseInt(checkOnum)+1)+"";
+		}
+		
+		for(int i=0; i<povo.getP_nos().size(); i++){
+			Product_orderVO ovo = new Product_orderVO();
+			
+			ProductVO cal = new ProductVO();
+			cal.setP_no(povo.getP_nos().get(i).toString());
+			cal = productService.productDetail(cal);
+			
+			//주문VO 항목 등록
+			ovo.setP_no(povo.getP_nos().get(i).toString());
+			ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
+			ovo.setO_mode(povo.getO_mode().toString());
+			ovo.setO_confirm(povo.getO_confirm().toString());
+			ovo.setM_no(vo.getM_no());
+			ovo.setO_price((cal.getP_price()-(cal.getP_price() * (cal.getP_discount() / 100))) * ovo.getO_cnt());
+			ovo.setO_num(checkOnum);
+			orderInfo.add(ovo);
+			int result = orderService.orderInsert(ovo);
+			logger.info("orderInser="+result);
+			
+			//상품VO 항목 등록
+			cal.setO_cnt(ovo.getO_cnt());
+			cal.setO_mode(ovo.getO_mode());
+			cal.setO_confirm(ovo.getO_confirm());
+			cal.setO_num(ovo.getO_num());
+			cal.setM_no(ovo.getM_no());
+			productList.add(cal);
+			
+			StockVO svo = new StockVO();
+			svo.setP_no(ovo.getP_no());
+			svo.setStock_cnt(ovo.getO_cnt());
+			int stockResult = stockService.stockOrder(svo);
+			logger.info("stockResult="+stockResult);
+		}
+		
+		model.addAttribute("orderInfo", orderInfo);
+		model.addAttribute("productList", productList);
+		
+		return "client/order/orderResult";
+	}
 	
 	//주문
 	@RequestMapping(value= "/order")

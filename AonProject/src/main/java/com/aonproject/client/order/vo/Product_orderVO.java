@@ -11,11 +11,20 @@ public class Product_orderVO {
 	private String 	o_date = "";		//등록일
 	private int 	m_no = 0;			//회원번호
 	private String 	p_no = "";			//상품번호
+	private String  o_num = "";
 	
 	private List<String> p_nos = null;	//상품번호 리스트
 	private List<Integer> o_cnts = null;//상품 주문수량 리스트
 	
 	
+	
+	
+	public String getO_num() {
+		return o_num;
+	}
+	public void setO_num(String o_num) {
+		this.o_num = o_num;
+	}
 	public List<String> getP_nos() {
 		return p_nos;
 	}

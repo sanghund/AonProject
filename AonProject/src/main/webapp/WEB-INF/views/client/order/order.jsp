@@ -43,7 +43,6 @@
 	.w100 {width:100%;}
 	.w100 > div {width:50%; float:left; padding:10px 0; text-align:center; height:38px; border-top:1px solid #ccc; box-sizing:border-box;}
 	.w100 > div:nth-child(odd) {border-right:1px solid #ccc;}
-	/* .w100 > p {height:35px; text-align:center; border-top:1px solid #ccc; padding:20px; margin:0;} */
 	.w100 > p {height:17px; text-align:center; border-top:1px solid #ccc; padding:10px; margin:0;}
 	
 	.deleteProduct{position:absolute; right:0px; margin-right:1em;}
@@ -63,30 +62,19 @@
 </script>
 
 <div class="content">
-	<c:choose>
-		<c:when test="${not empty orderInfo}">
-			<c:forEach varStatus="status" var="orderInfo" items="${orderInfo}">
-				<p>${orderInfo.p_no}</p>
-				<p>${orderInfo.o_cnt}</p>
-			</c:forEach>
-		</c:when>
-	</c:choose>
-
 	<div class="orderInfo">
 		<h2 id = "aTitle">주문</h2>
-		<!-- <div class = "step-panels"> -->
-			<div class="stepContainer">
-				<div class="step">
-					<span>장바구니</span>
-				</div>
-				<div class="step action">
-					<span>주문 작성/결제</span>
-				</div>
-				<div class="step">
-					<span>주문완료</span>
-				</div>
+		<div class="stepContainer">
+			<div class="step">
+				<span>장바구니</span>
 			</div>
-		<!-- </div> -->
+			<div class="step action">
+				<span>주문 작성/결제</span>
+			</div>
+			<div class="step">
+				<span>주문완료</span>
+			</div>
+		</div>
 		<h4 class="bold">주문 상품 확인</h4>
 		<!-- orderList repeat area start-->
 		<c:choose>
@@ -203,8 +191,13 @@
 	</div>
 	<!-- form -->
 	<form name="orderForm" id="orderForm">
-		<div class="hidden none"></div>
-		<input type="hidden" name="m_addr" id="m_addr">
+		<div class="hidden none">
+			<input type="hidden" name="m_addr" id="m_addr">
+			<input type="hidden" name="o_mode" id="o_mode">
+			<input type="hidden" name="o_confirm" id="o_confirm">
+			<input type="hidden" name="o_price" id="o_price">
+		</div>
+		</form>
 		<div class="userDetail">
 			<h4 class="bold">배송 정보</h4>
 			<div>
@@ -238,12 +231,11 @@
 		<div class="creditInfo">
 			<h4 class="bold">결제방법 선택</h4>
 			<div>
-				<input type="radio" name="o_mode"><label>신용카드</label>
-				<input type="radio" name="o_mode"><label>계좌이체</label>
-				<input type="radio" name="o_mode"><label>무통장입금</label>
+				<input type="radio" name="o_modes" class="o_modes" value="credit"><label>신용카드</label>
+				<input type="radio" name="o_modes" class="o_modes" value="banking"><label>계좌이체</label>
+				<input type="radio" name="o_modes" class="o_modes" value="noaccount"><label>무통장입금</label>
 			</div>
 		</div>
-	</form>
 	<!-- form -->
 	<div class="btnContainer">
 		<input type="button" name="order" id="order" value="주문">
@@ -259,12 +251,8 @@
 	var itemCnt = 0;
 	var cntSum = 0;
 	var omg = "#!@@!#";
-	//var productCnt = 0;
 	
 	$(function(){
-		
-		alert("@@@123123!");
-		
 		// 주소 검색
 		$("#go").click(function(){
 			daumAddr();
@@ -319,21 +307,36 @@
 			}
 		});
 		orderPriceCal();
-		
 	})
 
 	
 	//전송 버튼 이벤트
 	$(document).ready(function(){
 		$("#order").click(function(){
-			makeHidden();
-			var addr = $("#m_addr1").val()+omg+$("#m_addr2").val()+omg+$("#m_addr3").val();
-			$("#m_addr").val(addr);
-			$("#orderForm").attr({
-				"method" : "post",
-				"action" : "/order/orderResult"
-			})
-			//$("#orderForm").submit();
+			var info = false;
+			if(info == false){
+				makeHidden();
+				var o_mode = $("input[name='o_modes']:checked").val();
+				$("#o_mode").val(o_mode);
+				if(o_mode != 'noaccount'){
+					$("#o_confirm").val("Y");
+				}else if(o_mode == 'noaccount'){
+					$("#o_confirm").val("N");
+				}
+				$("#o_price").val(orderPrice);
+				var addr = $("#m_addr1").val()+omg+$("#m_addr2").val()+omg+$("#m_addr3").val();
+				$("#m_addr").val(addr);
+				info = true;
+				console.log(info);
+			}
+			
+			if(info == true){
+				$("#orderForm").attr({
+					"method" : "post",
+					"action" : "/order/orderResult"
+				})
+				$("#orderForm").submit();
+			}
 		});
 	});
 	
@@ -356,12 +359,12 @@
 				var no = targetSpanNo.eq(i).text();
 				
 				arrPno = p+no;
-				var inputPno = $("<span name='p_nos["+i+"]'>")
-				inputPno.text(arrPno);
+				var inputPno = $("<input type='hidden' name='p_nos["+i+"]'>")
+				inputPno.val(arrPno);
 				
 				arrCnt = targetSpan.eq(i).text();
-				var inputCnt = $("<span name='o_cnts["+i+"]'>")
-				inputCnt.text(arrCnt);
+				var inputCnt = $("<input type='hidden' name='o_cnts["+i+"]'>")
+				inputCnt.val(arrCnt);
 				$(".hidden").append(inputCnt).append(inputPno);
 			}
 		});
