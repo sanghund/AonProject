@@ -36,6 +36,7 @@ public class MemberVO extends CommonPagingVO implements UserDetails{
 	
 	private String memberSearch = "";
 	
+	
 	public MemberVO() {}
 	
 	public MemberVO(int m_no, String m_id, String m_pwd, Collection<? extends GrantedAuthority> authorities) {
@@ -73,7 +74,6 @@ public class MemberVO extends CommonPagingVO implements UserDetails{
 		}
 		
 	}
-
 
 	public String getMemberSearch() {
 		return memberSearch;

@@ -103,8 +103,18 @@
 					</c:forEach>
 						<tr>
 							<td colspan="8" id = "pageLow">
-								<c:if test = "${adminVO.pageTotal[0] eq 1}" >
+								<c:if test = "${adminVO.totalPage < adminVO.pageNum }">
+									<c:set var = "pNum" value= "${adminVO.totalPage }"/>
+								</c:if>
+								<c:if test = "${adminVO.totalPage >= adminVO.pageNum }">
+									<c:set var = "pNum" value= "${adminVO.pageNum }"/>
+								</c:if>
+							
+								<c:if test = "${adminVO.pageTotal[0] eq 1 and pNum eq 1}" >
 									<span class = "icon-angle-double-left"></span>
+								</c:if>
+								<c:if test = "${adminVO.pageTotal[0] eq 1 and pNum ne 1}" >
+									<a href = "/admin/policyAgr?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
 								</c:if>
 								<c:if test = "${adminVO.pageTotal[0] ne 1}" >
 									<a href = "/admin/policyAgr?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
@@ -116,13 +126,6 @@
 									<a href = "/admin/policyAgr?pageNum=${adminVO.pageTotal[0] - fn:length(adminVO.pageTotal) }" data-num = "${adminVO.pageTotal[0] - fn:length(adminVO.pageTotal) }" class = "icon-angle-left"></a>
 								</c:if>
 					
-								<c:if test = "${adminVO.totalPage < adminVO.pageNum }">
-									<c:set var = "pNum" value= "${adminVO.totalPage }"/>
-								</c:if>
-								<c:if test = "${adminVO.totalPage >= adminVO.pageNum }">
-									<c:set var = "pNum" value= "${adminVO.pageNum }"/>
-								</c:if>
-								
 								<c:forEach items="${adminVO.pageTotal }" varStatus="status">
 									<c:if test = "${adminVO.pageTotal[status.index] eq pNum}" >
 										<span>${adminVO.pageTotal[status.index] }</span>
@@ -140,10 +143,13 @@
 								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] ne adminVO.totalPage}" >
 									<a href = "/admin/policyAgr?pageNum=${adminVO.pageTotal[0] + fn:length(adminVO.pageTotal) }" data-num = "${adminVO.pageTotal[0] + fn:length(adminVO.pageTotal) }" class = "icon-angle-right"></a>
 								</c:if>
-								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] eq adminVO.totalPage}" >
+								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] eq adminVO.totalPage and adminVO.totalPage eq pNum}" >
 									<span class = "icon-angle-double-right"></span>
 								</c:if>
-								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] ne adminVO.totalPage}" >
+								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] eq adminVO.totalPage and adminVO.totalPage ne pNum}" >
+									<a href = "/admin/policyAgr?pageNum=${adminVO.totalPage }" data-num = "${adminVO.totalPage }" class = "icon-angle-double-right"></a>
+								</c:if>
+								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] ne admin VO.totalPage}" >
 									<a href = "/admin/policyAgr?pageNum=${adminVO.totalPage }" data-num = "${adminVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
 							</td>
@@ -229,8 +235,18 @@
 					</c:forEach>
 						<tr>
 							<td colspan="9" id = "pageLow2">
-								<c:if test = "${memberVO.pageTotal[0] eq 1}" >
+								<c:if test = "${memberVO.totalPage < memberVO.pageNum }">
+									<c:set var = "pNum2" value= "${memberVO.totalPage }"/>
+								</c:if>
+								<c:if test = "${memberVO.totalPage >= memberVO.pageNum }">
+									<c:set var = "pNum2" value= "${memberVO.pageNum }"/>
+								</c:if>
+								
+								<c:if test = "${memberVO.pageTotal[0] eq 1 and pNum2 eq 1}" >
 									<span class = "icon-angle-double-left"></span>
+								</c:if>
+								<c:if test = "${memberVO.pageTotal[0] eq 1 and pNum2 ne 1}" >
+									<a href = "/admin/policyAgr?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
 								</c:if>
 								<c:if test = "${memberVO.pageTotal[0] ne 1}" >
 									<a href = "/admin/policyAgr?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
@@ -240,13 +256,6 @@
 								</c:if>
 								<c:if test = "${memberVO.pageTotal[0] ne 1}" >
 									<a href = "/admin/policyAgr?pageNum=${memberVO.pageTotal[0] - fn:length(memberVO.pageTotal) }" data-num = "${memberVO.pageTotal[0] - fn:length(memberVO.pageTotal) }" class = "icon-angle-left"></a>
-								</c:if>
-					
-								<c:if test = "${memberVO.totalPage < memberVO.pageNum }">
-									<c:set var = "pNum2" value= "${memberVO.totalPage }"/>
-								</c:if>
-								<c:if test = "${memberVO.totalPage >= memberVO.pageNum }">
-									<c:set var = "pNum2" value= "${memberVO.pageNum }"/>
 								</c:if>
 								
 								<c:forEach items="${memberVO.pageTotal }" varStatus="status">
@@ -266,10 +275,13 @@
 								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne memberVO.totalPage}" >
 									<a href = "/admin/policyAgr?pageNum=${adminVO.pageTotal[0] + fn:length(adminVO.pageTotal) }" data-num = "${adminVO.pageTotal[0] + fn:length(adminVO.pageTotal) }" class = "icon-angle-right"></a>
 								</c:if>
-								<c:if test = "${adminVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage}" >
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq pNum}" >
 									<span class = "icon-angle-double-right"></span>
 								</c:if>
-								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] ne member.totalPage}" >
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne pNum}" >
+									<a href = "/admin/policyAgr?pageNum=${memberVO.totalPage }" data-num = "${memberVO.totalPage }" class = "icon-angle-double-right"></a>
+								</c:if>
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne member.totalPage}" >
 									<a href = "/admin/policyAgr?pageNum=${memberVO.totalPage }" data-num = "${memberVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
 							</td>

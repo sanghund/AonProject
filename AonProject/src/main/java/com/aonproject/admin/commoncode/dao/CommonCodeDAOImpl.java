@@ -18,7 +18,7 @@ public class CommonCodeDAOImpl implements CommonCodeDAO {
 	@Autowired
 	private SqlSession session;
 	
-	//°øÅëÄÚµå°ü¸® ¸®½ºÆ® ±¸Çö
+	// ê³µí†µ ì½”ë“œ ë¦¬ìŠ¤íŠ¸ êµ¬í˜„
 	@Override
 	public List<CommonCodeVO> commonCodeList(CommonCodeVO cvo) {
 		return session.selectList("commonCodeList", cvo);

@@ -18,7 +18,7 @@
 					</div>
 				</form>
 				<div class = "searchIdPwd">
-					<a href = "#">아이디/비밀번호 찾기</a>
+					<a id = "lost" href = "/member/lostme">아이디/비밀번호 찾기</a>
 				</div>
 				<div id ="memberLoginBtn" class = "loginBtn">
 					<input type = "button" id = "gogoM" value="로그인">
@@ -36,6 +36,10 @@
 	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 	<script type = "text/javascript">
 		$(document).ready(function(){
+			$("#lost").click(function(event){
+				event.preventDefault();
+				location.href = "/member/lostme";
+			});
 			$("#gogoM").click(function(){
 				$.ajax({
 					url : "/member/loginChk",

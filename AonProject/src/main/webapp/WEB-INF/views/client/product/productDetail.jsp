@@ -11,7 +11,7 @@
 	.width40 {width:40%;}
 	.content {width:100%;}
 	.imgContainer {float:left; margin-right:2%; margin-bottom:2em; border-right:1px solid #dedede;}
-	.imgContainer img {margin:0 auto; display:block;}
+	.imgContainer img {margin:0 auto; display:block; width:350px;}
 	.itemOption {float:left;}
 		.itemOption form > h3 {font-size:1.4rem; padding:0 0 10px 0; border-bottom:1px solid #e1e1e1;}
 	.productImg {width:82%; clear:both;}
@@ -36,20 +36,16 @@
 				var orderOption = $("<tr>");
 				var td = $("<td>");
 				var sizeNo = ($(this).find("option:selected").val()).toUpperCase();
-	            var orderCnt = $("<td><input class='cnt' type='number' value='1'><input type='hidden' class='arrayP_no' value='${productDetail.p_no}"+sizeNo+"'><input type='button' class='cntUp' value='+'><input type='button' class='cntDown' value='-'></td>");
-	            
-	            orderOption.html("<td class='orderChk'>${productDetail.color}"+$("#size option:selected").html()+"</td>");
+				var orderCnt = $("<td><input class='cnt' type='text' readonly value='1'><input type='hidden' class='arrayP_no' value='${productDetail.p_no}"+sizeNo+"'><input type='button' class='cntUp' value='+'><input type='button' class='cntDown' value='-'></td>");
+				orderOption.html("<td class='orderChk'>${productDetail.color}"+$("#size option:selected").html()+"</td>");
 				td.append(orderCnt)
 				orderOption.append(td);
 				totalCount();
 				
 				var temp = $("#size option:selected").html(); 
-				console.log("selected option: "+temp);
 				
 				var eachResult = true;
 				$(".orderChk").each(function(){
-					console.log("each:"+temp);
-					console.log("charAt:"+($(this).html().charAt($(this).html().length -1)));
 					if(temp == ($(this).html().charAt($(this).html().length -1))){
 						eachResult = false;
 						return;
@@ -68,9 +64,6 @@
 			var addCnt = parseInt(cntInput.val()) + 1;
 			cntInput.val(addCnt);
 			totalCount();
-			//totalPrice = (resultPrice * (addCnt));
-			console.log(totalPrice);
-			//$("#price").html("총 주문액<br>"+totalPrice+"원")
 		});
 		
 		//선택상품  수량 감소
@@ -85,9 +78,6 @@
 				cntInput.val(1);
 				totalCount();
 			}
-			//totalPrice = (resultPrice * (addCnt));
-			console.log(totalPrice);
-			//$("#price").html("총 주문액<br>"+totalPrice+"원")
 			
 		});
 		
@@ -102,7 +92,6 @@
 				$(".cnt").eq(j).attr("name", "o_cnts[" + j + "]");
 				$(".arrayP_no").eq(j).attr("name", "p_nos[" + j + "]");
 			};
-			
 			$("#orderForm").attr({
 				"method" : "post",
 				"action" : "/order/order"
@@ -131,12 +120,11 @@
 		for(var i=0; i<$(".cnt").size(); i++){
 			temp += parseInt(($(".cnt:eq("+i+")").val()));
 		}
-		console.log(temp);
 		totalPrice = resultPrice * temp;
 		$("#price").html("총 주문액<br>"+totalPrice+"원")
-		//console.log(totalCnt);
 	}
 </script>
+
 <div class="content">
 	<div class="imgContainer width40">
 		<c:forEach var="uploadList" begin="0" end="0" items="${uploadList}">
@@ -187,14 +175,14 @@
 				</tr>
 			</tbody>
 		</table>
-		<form id = "orderForm" name = "orderForm">
-			<table class="orderInfo"></table>
+		<form name="orderForm" id="orderForm">
+			<table class="orderInfo">
+			</table>	
 		</form>	
 		<div class="orderBtnContainer">
 			<input type="button" id="order" value="구매하기">
 			<input type="button" id="cart" value="장바구니">
 		</div>
-		
 	</div>
 	<div class="productImg">
 		<c:forEach var="uploadList" begin="1" items="${uploadList}">

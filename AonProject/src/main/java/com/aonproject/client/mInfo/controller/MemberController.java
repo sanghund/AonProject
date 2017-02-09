@@ -1,6 +1,6 @@
 package com.aonproject.client.mInfo.controller;
 
-import java.util.List;
+	import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +23,7 @@ import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
 import com.aonproject.admin.policy.service.PolicyService;
 import com.aonproject.client.mInfo.service.MemberService;
+import com.aonproject.client.mInfo.vo.MemberSubAddressVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.common.util.email.Certification;
 import com.aonproject.common.util.email.Email;
@@ -32,7 +34,7 @@ import com.aonproject.common.util.vo.PolicyAgrVO;
 @Controller
 @RequestMapping(value = "/member")
 public class MemberController {
-	Logger logger = Logger.getLogger(MemberController.class);
+	private Logger logger = Logger.getLogger(MemberController.class);
 	
 	@Resource(name = "shaEncoder")
 	private ShaEncoder encoder;
@@ -79,7 +81,15 @@ public class MemberController {
 		}
 		return "client/cInfo/joinForm";
 	};
-		
+	
+	// 아이디 / 비밀번호 찾기
+	@RequestMapping(value="/lostme")
+	public String lostme(){
+		logger.info("lostme 호출 성공");
+		return "client/cInfo/lostme";
+	}
+	
+	
 	// Member(회원) 가입 이메일 인증번호 발송
 	@ResponseBody
 	@RequestMapping(value = "/join/emailCertification")
@@ -176,9 +186,7 @@ public class MemberController {
 	@RequestMapping(value="/mypage/review")
 	public ModelAndView review(Authentication auth){
 		logger.info("review 호출 성공");
-		MemberVO vo = (MemberVO) auth.getPrincipal();
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("memberVO", memberService.memberInfo(vo));
 		mav.setViewName("client/mypage/review");
 		return mav;
 	}
@@ -192,13 +200,168 @@ public class MemberController {
 		mav.setViewName("client/mypage/qna");
 		return mav;
 	}
+	
 	// 마이페이지 - 내 정보
-	@RequestMapping(value="/myPage/myinfo")
+	@RequestMapping(value="/mypage/myinfo")
 	public ModelAndView myinfo(Authentication auth){
 		logger.info("myinfo 호출 성공");
 		ModelAndView mav = new ModelAndView();
-
+		MemberVO vo = (MemberVO) auth.getPrincipal();
+		
+		MemberVO mvo = memberService.memberInfo(vo);	
+		List<MemberSubAddressVO> list = (List<MemberSubAddressVO>) memberService.mSubAddrs(vo);
+		if(list.size() > 0) mav.addObject("msa", list);
+		
+		mav.addObject("vo",mvo);
 		mav.setViewName("client/mypage/myinfo");
 		return mav;
+	}
+	
+	// 마이페이지 - 내 정보 수정
+	@ResponseBody
+	@RequestMapping(value="/mypage/myinfoU")
+	public String myinfoU(@ModelAttribute MemberVO vo, Authentication auth){
+		logger.info("myinfoU 호출 성공");
+		String result = "";
+		
+		MemberVO mvo = (MemberVO) auth.getPrincipal();
+		vo.setM_no(mvo.getM_no());
+		
+		if(vo.getM_pwd() != ""){
+			vo.setM_pwd(encoder.encoding(vo.getM_pwd()));
+		}
+		
+		int gogo = memberService.myInfoUpdate(vo);
+		int gogo2 = memberService.myAddrUpdate(vo);
+		if (gogo == 1 && gogo2 == 1){
+			result = "success";
+		} 
+		else{
+			result = "fail";
+		}
+		
+		return result;
+	}
+	
+	// 마이페이지 - 서브 주소 삭제
+	@ResponseBody
+	@RequestMapping(value="/mypage/myinfoD")
+	public String myinfoD(Authentication auth, @ModelAttribute MemberSubAddressVO vo){
+		logger.info("myinfoD 호출 성공");
+		String result = "";
+
+		MemberVO mvo = (MemberVO) auth.getPrincipal();
+		vo.setM_no(mvo.getM_no());
+		
+		int gogo = memberService.msaD(vo);
+		if (gogo == 1){
+			result = "success";
+		} 
+		else{
+			result = "fail";
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/lostIdChk")
+	public String lostIdChk(@ModelAttribute MemberVO vo){
+		logger.info("lostIdChk 호출 성공");
+		String result = "";
+		int gogo = memberService.lostIdChk(vo);
+		if(gogo == 1) result = "success";
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/lostPwdChk")
+	public String lostPwdChk(@ModelAttribute MemberVO vo){
+		logger.info("lostPwdChk 호출 성공");
+		String result = "";
+		int gogo = memberService.lostPwdChk(vo);
+		if(gogo == 1) result = "success";
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/sendId")
+	public String sendId(@ModelAttribute MemberVO vo) throws Exception{
+		logger.info("sendId 호출 성공");
+		String result = "";
+		String gogo = memberService.sendId(vo);
+		
+		Email email = new Email();
+		email.setReciver(vo.getM_email().trim());
+		email.setSubject("[AON] 아이디를 보내드립니다.");
+		email.setContent("회원님에 아이디는 [" + gogo + "]입니다.");
+		
+		emailSender.SendEmail(email);
+		result = "success";
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/sendPwd")
+	public String sendPwd(@ModelAttribute MemberVO vo) throws Exception{
+		logger.info("sendPwd 호출 성공");
+		String result = "";
+		String newPwd = Certification.randomPass();
+		
+		String security = encoder.encoding(newPwd);
+		vo.setM_pwd(security);
+		
+		int gogo = memberService.sendPwd(vo);
+		
+		if(gogo==1){
+			Email email = new Email();
+			email.setReciver(vo.getM_email().trim());
+			email.setSubject("[AON] 임시 비밀번호를 보내드립니다.");
+			email.setContent("회원님에 임시 비밀번호는 [" + newPwd + "]입니다. \n내 정보에서 비밀번호를 수정하세요.");
+			
+			emailSender.SendEmail(email);
+			result = "success";
+		}
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/emailChk", method={RequestMethod.GET, RequestMethod.POST})
+	public String emailChk(@ModelAttribute MemberVO vo, HttpServletRequest request){
+		logger.info("overlapChk 호출성공");
+		String result = "";
+		int gogo = 0;
+		if(request.getMethod().equals("GET")){
+			gogo = memberService.emailChk(vo);
+		}
+		else if(request.getMethod().equals("POST")){
+			gogo = memberService.emailChk2(vo);
+		}
+		
+		if (gogo == 1){
+			result = "fail";
+		} 
+		else{
+			result = "success";
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/idChk", method=RequestMethod.GET)
+	public String idChk(@ModelAttribute MemberVO vo){
+		logger.info("overlapChk 호출성공");
+		String result = "";
+		
+		int gogo = memberService.idChk(vo);
+		
+		if (gogo == 1){
+			result = "fail";
+		} 
+		else{
+			result = "success";
+		}
+		return result;
 	}
 }

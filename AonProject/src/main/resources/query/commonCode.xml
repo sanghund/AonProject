@@ -4,8 +4,14 @@
 <mapper namespace="com.aonproject.admin.commoncode.dao.CommonCodeDAO">
 	<!-- 공통코드 리스트 조회 -->
 	<select id="commonCodeList" resultType="commonCode" parameterType="commonCode">
-		/* commonCode - commonCodeList */
 		select cc_no, upper(cc_name) as cc_name, cc_group, cc_desc, cc_date 
 		from common_code
 	</select>
+	
+	<!-- 공통코드 등록 -->
+	<!-- <insert id="commonCodeList" parameterType="commonCode">
+	/* commonCode - commonCodeList */
+	insert into common_code(cc_no, cc_name, cc_group, cc_desc)
+	            values('s'+, #{mp_file})
+	</insert> -->
 </mapper>

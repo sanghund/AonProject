@@ -19,6 +19,13 @@
 		  
 		  $(".commentQnAList").click(function(){
 			  location.href = "/admin/commentQnA/commentQnAList"
+
+		  $(".mImage").click(function() {
+			  location.href = "/admin/imageUploadList";
+		  });
+		  
+		  $(".size").click(function() {
+			  location.href = "/admin/commonCodeList";
 		  });
 	  });
 	</script>
@@ -100,17 +107,17 @@
                   </li>
                   <li><a><i class="fa fa-windows"></i> 공통코드관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="/admin/commonCode">사이즈관리</a></li>
+                      <li><a class="size" id="size">사이즈관리</a></li>
                       <li><a href="page_404.html">색상관리</a></li>
-                      <li><a href="page_500.html">null</a></li>
+                      <li><a href="page_500.html">상품타입관리</a></li>
                       <li><a href="plain_page.html">null</a></li>
                       <li><a href="login.html">null</a></li>
                       <li><a href="pricing_tables.html">null</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-windows"></i> 거래처관리 <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-windows"></i> 화면 관리<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="page_403.html">null</a></li>
+                      <li><a class="mImage" id="mImage">메인 이미지 관리</a></li>
                       <li><a href="page_404.html">null</a></li>
                       <li><a href="page_500.html">null</a></li>
                       <li><a href="plain_page.html">null</a></li>

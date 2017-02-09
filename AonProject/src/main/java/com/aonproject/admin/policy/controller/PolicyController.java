@@ -105,7 +105,7 @@ public class PolicyController {
 		ModelAndView mav = new ModelAndView();
 		UserDetails vo = (AdminVO) auth.getPrincipal();
 		mav.addObject("vo", vo);
-		
+        
 		String adminPageNum = request.getParameter("adminPageNum");
 		if(adminPageNum != null){
 			avo.setPageNum(adminPageNum);
