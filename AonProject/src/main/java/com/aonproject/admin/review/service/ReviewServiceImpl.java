@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aonproject.admin.review.dao.ReviewDAO;
 import com.aonproject.admin.review.vo.ReviewVO;
+import com.aonproject.client.mInfo.vo.MemberVO;
 
 @Service
 @Transactional
@@ -128,6 +129,11 @@ public class ReviewServiceImpl implements ReviewService{
 		int result = 0;
 		result = reviewDAO.confirmMno(rvo);
 		return result;
+	}
+	@Override
+	public List<ReviewVO> myReview(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return reviewDAO.myReview(vo);
 	}
 
 }

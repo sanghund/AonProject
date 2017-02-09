@@ -13,6 +13,23 @@ public class ReviewVO extends CommonPagingVO{
 	private int m_no;           //멤버 번호
 	private int o_no;           //주문번호
 	private String p_no;        //상품 번호
+	
+	private String pi_route = "";
+	private String pi_file = "";
+	
+	
+	public String getPi_route() {
+		return pi_route;
+	}
+	public void setPi_route(String pi_route) {
+		this.pi_route = pi_route;
+	}
+	public String getPi_file() {
+		return pi_file;
+	}
+	public void setPi_file(String pi_file) {
+		this.pi_file = pi_file;
+	}
 	public int getRe_no() {
 		return re_no;
 	}

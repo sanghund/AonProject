@@ -19,5 +19,19 @@
 	<insert id="orderInsert">
 		insert into product_order(o_no, p_no, o_cnt, o_price, o_mode, o_confirm, m_no, o_num) 
 		values(order_seq.nextval, #{p_no}, #{o_cnt}, #{o_price}, #{o_mode}, #{o_confirm}, #{m_no}, #{o_num})
+		<selectKey keyProperty="o_no" resultType="java.lang.Integer" order="AFTER">
+			select order_seq.currval from dual
+		</selectKey>
+	
 	</insert>
+	
+	<!-- 마이페이지 주문내역 -->
+	<select id="myOrder" parameterType="member" resultType="order">
+	select m_no, o_no, o_cnt, o_price, o_mode, o_confirm, o_date, p_no, pi_file, pi_route from (select ppno, pno, pi_route, pi_file from (select min(pno) ppno, p_no pno from (select pno, p_no from (select DISTINCT min(pi_no) pno, p_no from product_img group by(p_no))) group by (p_no)) inner join product_img on pi_no = ppno) end1
+inner join
+(select m_no, o_no, o_cnt, o_price, o_mode, o_confirm, to_char(o_date, 'yyyy-MM-dd hh24:mm:ss') o_date, p_no from product_order where m_no = #{m_no})
+on pno = p_no order by o_no desc
+	</select>
+	
+
 </mapper>

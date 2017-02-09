@@ -3,6 +3,7 @@ package com.aonproject.admin.review.service;
 import java.util.List;
 
 import com.aonproject.admin.review.vo.ReviewVO;
+import com.aonproject.client.mInfo.vo.MemberVO;
 
 public interface ReviewService {
 	public List<ReviewVO> reviewList(ReviewVO rvo);
@@ -21,4 +22,5 @@ public interface ReviewService {
 	public int reviewUserUpdate(ReviewVO rvo);
 	public int InsertID(ReviewVO rvo);
 	public int confirmMno(ReviewVO rvo);
+	public List<ReviewVO> myReview(MemberVO vo);
 }
