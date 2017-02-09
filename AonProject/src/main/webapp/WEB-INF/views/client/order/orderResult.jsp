@@ -189,7 +189,7 @@
 		</table>
 	</div>
 	<div class="creditInfo">
-		<h4 class="bold">결제방법 선택</h4>
+		<h4 class="bold">결제방법</h4>
 		<div>
 			<input type="radio" name="o_modes" class="o_modes" value="credit"><label>신용카드</label>
 			<input type="radio" name="o_modes" class="o_modes" value="banking"><label>계좌이체</label>
@@ -197,8 +197,8 @@
 		</div>
 	</div>
 	<div class="btnContainer">
-		<input type="button" name="order" id="order" value="주문">
-		<input type="button" name="cancel" id="cancel" value="취소">
+		<p>주문이 완료 되었습니다.</p>
+		<input type="button" value="확인">
 	</div>
 </div>
 
