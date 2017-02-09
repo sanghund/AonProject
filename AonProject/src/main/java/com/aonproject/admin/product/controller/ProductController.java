@@ -82,10 +82,8 @@ public class ProductController {
 		model.addAttribute("commonCodeList", commonCodeList);
 		
 		
-		
-		
-		//List<UploadVO> uploadList = uploadService.uploadList(uvo);
-		//model.addAttribute("uploadList", uploadList);
+		List<UploadVO> uploadList = uploadService.uploadList(uvo);
+		model.addAttribute("uploadList", uploadList);
 		
 		
 		return "admin/product/detail";

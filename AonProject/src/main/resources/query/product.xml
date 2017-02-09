@@ -19,7 +19,7 @@
 			</if>
 			p_del = 'n'
 		</where> 
-		order by p_date desc
+		order by p_date desc, p_no desc
 	</select>
 	
 	<!-- 상품 리스트 조회 -->
@@ -28,7 +28,7 @@
 		product.ca_no, p3.pi_file, product.p_caution, p_info
 		from (select * from product where rowid in(select max(rowid) from product group by substr(p_no,1,7)) and ca_no = #{ca_no}) product 
 		inner join (select * from product_img inner join (select min(pi_no) pi_no 
-		from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no) p3 on product.p_no = p3.p_no
+		from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no) p3 on product.p_no = p3.p_no order by p_no desc
 	</select>
 	
 	<!-- 상품  디테일 조회 -->
