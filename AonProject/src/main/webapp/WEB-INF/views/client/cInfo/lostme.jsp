@@ -73,7 +73,7 @@
 							
 				</tr>
 				<tr>
-					<td class= "lll"><label for="in">아이디</label><input type = "text" class = "pnn" id = "in" name = "m_name"></td>
+					<td class= "lll"><label for="in">이름</label><input type = "text" class = "pnn" id = "in" name = "m_name"></td>
 					<td rowspan="2"><input type = "button" value="확인" id = "maybeErrorBtn1" class = "maybe"></td>
 				</tr>
 				<tr>
@@ -96,7 +96,7 @@
 					</th>				
 				</tr>
 				<tr>
-					<td class= "lll"><label for="pn">이름</label><input type = "text" class = "pnn" id = "pn" name = "m_id"></td>
+					<td class= "lll"><label for="pn">아이디</label><input type = "text" class = "pnn" id = "pn" name = "m_id"></td>
 					<td rowspan="2"><input type = "button" value="확인" id = "maybeErrorBtn2" class = "maybe"></td>
 				</tr>
 				<tr>
@@ -110,7 +110,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		$("maybeErrorBtn1").click(function(){
+		$("#maybeErrorBtn1").click(function(){
 			$.ajax({
 				url : "/member/lostIdChk",
 				type : "post",
@@ -129,7 +129,7 @@
 							error : function(){
 								alert("시스템 에러입니다.");
 							},
-							success : function(reslut2){
+							success : function(result2){
 								if(result2 == "success"){
 									alert("이메일로 아이디가 전송되었습니다.");
 									location.reload();
@@ -147,7 +147,7 @@
 			});
 		});
 		
-		$("maybeErrorBtn2").click(function(){
+		$("#maybeErrorBtn2").click(function(){
 			$.ajax({
 				url : "/member/lostPwdChk",
 				type : "post",
@@ -166,7 +166,7 @@
 							error : function(){
 								alert("시스템 에러입니다.");
 							},
-							success : function(reslut2){
+							success : function(result2){
 								if(result2 == "success"){
 									alert("이메일로 임시 비밀번호가 전송되었습니다.");
 									location.reload();

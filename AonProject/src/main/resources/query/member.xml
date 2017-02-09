@@ -121,7 +121,7 @@
 	
 	<!-- 비밀번호 찾기 -->
 	<update id="sendPwd" parameterType="member">
-		update set m_pwd = #{m_pwd} where m_id = #{m_id}
+		update member set m_pwd = #{m_pwd} where m_id = #{m_id}
 	</update>
 	
 	<!-- 회원가입 중복 아이디  검사 -->
