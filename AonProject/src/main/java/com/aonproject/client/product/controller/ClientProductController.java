@@ -57,7 +57,7 @@ public class ClientProductController {
 		/*상품 리스트 출력*/
 		List<ProductVO> productForCategory = productService.productForCategory(pvo);
 		model.addAttribute("productForCategory", productForCategory);
-		logger.info(123);
+		
 		return "client/product/productMain";
 	}
 	

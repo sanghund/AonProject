@@ -32,6 +32,15 @@
 		<put-attribute name="main" value="/WEB-INF/views/admin/notice/noticeList.jsp" />
 	</definition>
 	
+
+	<definition name="admin/review/reviewList" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/review/reviewList.jsp" />
+	</definition>
+	
+	<definition name="admin/commentQnA/commentQnAList" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/commentQnA/commentQnAList.jsp" />
+	</definition>
+
 	<!-- 공지사항 상세 페이지 -->
 	<definition name="admin/notice/writeForm" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/notice/writeForm.jsp" />

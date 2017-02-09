@@ -5,34 +5,32 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-public class PagingTag extends TagSupport {
-
-	/**
-	 * 
-	 */
+public class PagingTag extends TagSupport{
 	private static final long serialVersionUID = 1L;
 	/*
-	@param page        í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸
-	@param total       ì „ì²´ ì¡°íšŒëœ row ìˆ˜
-	@param list_size   í˜ì´ì§€ì— ë³´ì—¬ì£¼ëŠ” ë ˆì½”ë“œ ìˆ˜
-	@param page_size   í˜ì´ì§€ ë„¤ë¹„ê²Œì´í„°ì— í‘œì‹œë˜ëŠ” í˜ì´ì§€ ë²„íŠ¼ì˜ ê°¯ìˆ˜
-	*/
+	 * 
+	 * @Param page ÇöÀç ÆäÀÌÁö ¹øÈ£
+	 * @Param total ÀüÃ¼ Á¶È¸µÈ Row ¼ö
+	 * @Param list size ÆäÀÌÁö¿¡ º¸¿©ÁÖ´Â ·¹ÄÚµå¼ö
+	 * @Param page_size ÆäÀÌÁö ³×ºñ°ÔÀÌÅÍ¿¡ Ç¥½ÃµÇ´Â ÆäÀÌÁö ¹öÆ°ÀÇ °¹¼ö
+	 * 
+	 * */
 	
 	private int page = 1;
 	private int total = 1;
-	private int list_size = 10;
-	private int page_size = 10;
-	
+	private int list_size = 1;
+	private int page_size = 3;
+
 	@Override
-	public int doStartTag() throws JspException {
-		try {
+	public int doStartTag() throws JspException{
+		try{
 			pageContext.getOut().println(getPaging());
-		} catch(IOException e) {
+			
+		}catch(IOException e){
 			e.printStackTrace();
 		}
 		return super.doStartTag();
 	}
-
 	public void setPage(int page) {
 		this.page = page;
 	}
@@ -49,83 +47,83 @@ public class PagingTag extends TagSupport {
 		this.page_size = page_size;
 	}
 	
-	public String getPaging() {
+	public String getPaging(){
 		String ret = "";
 		
-		if(page < 1)
+		if(page<1)
 			page = 1;
 		if(total < 1)
 			return "";
 		
-		/* pageê°€ 1í˜ì´ì§€ê³  page_sizeê°€ 2ë©´ */
-		/* currentFirstëŠ” 1 */
+		/*ÆäÀÌÁö°¡ 1ÆäÀÌÁöÀÌ°í page_size°¡ 2ÀÌ¸é
+		 * currentFirst´Â 1*/
 		int currentFirst = ((page-1)/page_size) * page_size + 1;
 		
-		/* currentlastëŠ” 2 */
+		/*currentlast´Â 2*/
 		int currentlast = ((page-1)/page_size) * page_size + page_size;
 		
-		/* nextFirseëŠ” 3 */
+		/*nextFirst´Â 3*/
 		int nextFirst = (((page-1)/page_size)+1) * page_size + 1;
 		
-		/* prevLastëŠ” 4 */
-		int prevLast = (((page-1)/page_size)-1) * page_size + 1;
+		/*prevLast´Â 0*/
+		int prevLast= (((page-1)/page_size)-1) * page_size+1;
 		
 		int lastPage = 1;
 		lastPage = total / list_size;
-		/* lastPage(ì´ í˜ì´ì§€ìˆ˜)ëŠ” totalì´ 11ì´ê³  list_sizeê°€ 10ì´ë©´ 1ì„ ê°€ì§„ë‹¤.
-		 * ê·¸ë˜ì„œ ì´ í˜ì´ì§€ ìˆ˜ê°€ ë‚˜ëˆ„ì–´ ë–¨ì–´ì§€ì§€ ì•Šìœ¼ë©´ ë‚˜ë¨¸ì§€ ë ˆì½”ë“œë¥¼ ì¶œë ¥í•  í˜ì´ì§€ê°€ í•„ìš”í•˜ë‹¤ëŠ” ì˜ë¯¸.
-		 */
-		if (total%list_size != 0) lastPage = lastPage + 1;
-		/* currentlastê°€ lastPage(ì´ í˜ì´ì§€ ìˆ˜)ë³´ë‹¤ í¬ë©´ ë§ˆì§€ë§‰ í˜ì´ì§€ë¡œ ìˆ˜ì • */
-		currentlast = (currentlast > lastPage)?lastPage:currentlast;
+		/*lastPage(ÃÑ ÆäÀÌÁö¼ö)´Â totalÀÌ 11ÀÌ°í list_size°¡ 10ÀÌ¸é 1À» °¡Áø´Ù.
+		 * ±×·¡¼­ ÃÑ ÆäÀÌÁö ¼ö°¡ ³ª´©¾î ¶³¾îÁöÁö ¾ÊÀ¸¸é ³ª¸ÓÁö ·¹ÄÚµå¸¦ Ãâ·ÂÇÒ ÆäÀÌÁö°¡ ÇÊ¿äÇÏ´Ù´Â ÀÇ¹Ì.*/
+		if(total%list_size != 0) lastPage = lastPage+1;
+		/*currentlast°¡ lastPage(ÃÑ ÆäÀÌÁö¼ö)º¸´Ù Å©¸é ¸¶Áö¸· ÆäÀÌÁö·Î ¼öÁ¤*/
+		currentlast = (currentlast>lastPage)?lastPage:currentlast;
 		
-		ret += " <div class = 'paginate'> ";
+		ret += "<div class='paginate'>";
 		
-		if(page > 1) {
-			ret += " <a href=\"javascript:goPage('1')\">"
-					+ "<span><img src='/resources/images/"
-					+ "common/btn_paginate_first.gif' alt='ì²˜ìŒ' /></span></a> ";
+		//Ã¹ÆäÀÌÁö °¡±â
+		if(page>1){
+			ret += "<a href=\"javascript:goPage('1')\">" + "<span><img src='/resources/image/common/btn_paginate_first.gif' alt='Ã³À½' /></span></a>";
 		}
-		else {
-			ret += " <span><img src='/resources/images/common/btn_paginate_first.gif' alt='ì²˜ìŒ' /></span> ";
+		else{
+			ret += "<span><img src='/resources/image/common/btn_paginate_first.gif' alt='Ã³À½' /></span>";
 		}
 		
-		if(prevLast > 0) {
-			ret += " <a href=\"javascript:goPage('"+prevLast+"');\">"
-					+ "<span><img src='/resources/images/"
-					+ "common/btn_paginate_prev.gif' alt='ì´ì „' /></span></a> "; 
+		//ÇÑÆäÀÌÁö¾¿ ´ÙÀ½ÆäÀÌÁö·Î °¡±â
+		if(prevLast > 0){
+			ret += "<a href=\"javascript:goPage('"+prevLast+"')\">" +"<span><img src='/resources/image/common/btn_paginate_prev.gif' alt='ÀÌÀü' /></span></a>";
 		}
-		
-		for (int j=currentFirst; j<currentFirst+page_size && j<=lastPage; j++) {
-			if(j <= currentlast) {
-				if(j == page) {
-					ret += " <a href='#' class='on textAn'>"+j+"</a> ";
-				} else {
-					ret += " <a href=\"javascript:goPage('"+j+"');\" "
-							+ "class='textAn'>"+j+"</a> ";
+		else{
+			ret += "<span><img src='/resources/image/common/btn_paginate_prev.gif' alt='ÀÌÀü' /></span>";
+		}
+		//¼ıÀÚ ³ª¿À°Ô ÇÏ°í ´©¸£¸é ÀÌ ÆäÀÌÁöÀÎÁö ¼ıÀÚ¿¡ »ö ÀÔÈ÷±â
+		for(int j=currentFirst; j<currentFirst+page_size && j<=lastPage; j++){
+			if(j<= currentlast){
+				if(j == page){
+					ret += "<a href='#' class='on textAn'>"+j+"</a>";
+				}else{
+					ret += "<a href=\"javascript:goPage('"+j+"');\" " + "class='textAn'>"+j+"</a>";
 				}
 			}
 		}
 		
-		if(nextFirst <= lastPage) {
-			ret += " <a href=\"javascript:goPage('"+nextFirst+"')\">"
-					+ "<span><img src='/resources/images/"
-					+ "common/btn_paginate_next.gif' alt='ë‹¤ìŒ' /></span></a> ";
-		} else {
-			ret += " <span><img src='/resources/images/"
-					+ "common/btn_paginate_next.gif' alt='ë‹¤ìŒ' /></span> ";
-			
+		//ÇÑÆäÀÌÁö¾¿ ÀÌÀüÆäÀÌÁö·Î °¡±â
+		if(nextFirst <= lastPage){
+			ret += "<a href=\"javascript:goPage('"+nextFirst+"')\">" + "<span><img src='/resources/image/common/btn_paginate_next.gif' alt='´ÙÀ½' /></span></a>"; 
+		}
+		else{
+			ret += "<span><img src='/resources/image/common/btn_paginate_next.gif' alt='´ÙÀ½' /></span>";
 		}
 		
-		if(page < lastPage) {
-			ret += " <a href=\"javascript:goPage('"+lastPage+"')\">"
-					+ "<span><img src='/resources/images/"
-					+ "common/btn_paginate_last.gif' alt='ë§ˆì§€ë§‰' /></span></a> ";
+		//¸¶Áö¸· ÆäÀÌÁö °¡±â
+		if(page<lastPage){
+			ret += "<a href=\"javascript:goPage('"+lastPage+"')\">" + "<span><img src='/resources/image/common/btn_paginate_last.gif' alt='¸¶Áö¸·' /></span></a>";
+		}
+		else{
+			ret += "<span><img src='/resources/image/common/btn_paginate_last.gif' alt='¸¶Áö¸·' /></span>";
 		}
 		
-		ret += " </div> ";
+		
+		
+		ret += "</div>";
 		
 		return ret;
 	}
-
 }
