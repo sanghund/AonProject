@@ -9,7 +9,10 @@ public class ReviewVO extends CommonPagingVO{
 	private String re_date;  	//리뷰 등록일
 	private String re_pwd;		//리뷰 비밀번호
 	private String re_chk;  	//댓글 등록여부(Y, N)
-	
+	private String re_name;     //작성자
+	private int m_no;           //멤버 번호
+	private int o_no;           //주문번호
+	private String p_no;        //상품 번호
 	public int getRe_no() {
 		return re_no;
 	}
@@ -46,5 +49,30 @@ public class ReviewVO extends CommonPagingVO{
 	public void setRe_chk(String re_chk) {
 		this.re_chk = re_chk;
 	}
+	public String getRe_name() {
+		return re_name;
+	}
+	public void setRe_name(String re_name) {
+		this.re_name = re_name;
+	}
+	public int getM_no() {
+		return m_no;
+	}
+	public void setM_no(int m_no) {
+		this.m_no = m_no;
+	}
+	public int getO_no() {
+		return o_no;
+	}
+	public void setO_no(int o_no) {
+		this.o_no = o_no;
+	}
+	public String getP_no() {
+		return p_no;
+	}
+	public void setP_no(String p_no) {
+		this.p_no = p_no;
+	}
+	
 	
 }

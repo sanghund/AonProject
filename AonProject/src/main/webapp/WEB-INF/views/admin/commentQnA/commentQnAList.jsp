@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+	<link rel = "stylesheet" href = "/resources/include/fontello/css/fontello.css">
 	<link rel="stylesheet" type="text/css" href="/resources/include/css/qna/reset.css">
 	<link rel="stylesheet" type="text/css" href="/resources/include/css/qna/qna.css">
 	<script type="text/javascript" src="/resources/include/js/jquery-1.12.4.min.js"></script>
@@ -180,7 +183,7 @@
                    	</tr>
                </thead>
                <tbody>
-               		<tr>
+               		<tr class="qna_tr">
                        <td>
                        		<div class="tb-center">
                        			<img src="/resources/include/image/qnaimage/icon_box_arrow.gif" >
@@ -201,8 +204,8 @@
                        <td><div class="tb-center">등록일</div></td>
                    </tr>
                    <c:choose>
-                   		<c:when test="${not empty qnaList }">
-							<c:forEach items="${qnaList }" var="qna">
+                   		<c:when test="${not empty qnacommentList }">
+							<c:forEach items="${qnacommentList }" var="qna">
 								<tr data-num="${qna.q_no }" class="qna_tr1">
 									<td>
 										<div class="tb-center">${qna.q_no }
@@ -220,17 +223,13 @@
 											</c:forEach>										
 										</div>
 									</td>
-									<td><div class="tb-center">물어보는사람</div></td>
+									<td><div class="tb-center">${qna.q_name }</div></td>
 									<td><div class="tb-center">${qna.q_date }</div></td>
 								</tr>
 								<tr class="qna_tr2">
 									<td colspan="4">
 										<div class="user_qnacontent">
-											<div>${qna.q_no }</div>
-											<div>${qna.q_title }</div>
-											<div>${qna.q_content }</div>
-											<div>${qna.q_pwd }</div>
-											<div>${qna.q_date }</div>
+											<div>-QnA : ${qna.q_content }</div>
 											<div class="comment-insert">
 												<h3>COMMENT INSERT</h3>
 												<div style="padding-top: 10px;">
@@ -342,6 +341,60 @@
 									</td>
 								</tr>
 							</c:forEach>
+							<tr class="page_tr">
+									<td colspan="4" id = "pageLow">
+										<c:if test = "${qnaVO.totalPage < qnaVO.pageNum }">
+											<c:set var = "pNum" value= "${qnaVO.totalPage }"/>
+										</c:if>
+										<c:if test = "${qnaVO.totalPage >= qnaVO.pageNum }">
+											<c:set var = "pNum" value= "${qnaVO.pageNum }"/>
+										</c:if>
+										
+										<c:if test = "${qnaVO.pageTotal[0] eq 1 and pNum eq 1}" >
+											<span class = "icon-angle-double-left"></span>
+										</c:if>
+										<c:if test = "${qnaVO.pageTotal[0] eq 1 and pNum ne 1}" >
+											<a href = "/admin/commentQnA/commentQnAList?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
+										</c:if>
+										<c:if test = "${qnaVO.pageTotal[0] ne 1}" >
+											<a href = "/admin/commentQnA/commentQnAList?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
+										</c:if>
+										<c:if test = "${qnaVO.pageTotal[0] eq 1}" >
+											<span class = "icon-angle-left"></span>
+										</c:if>
+										<c:if test = "${qnaVO.pageTotal[0] ne 1}" >
+											<a href = "/admin/commentQnA/commentQnAList?pageNum=${qnaVO.pageTotal[0] - fn:length(qnaVO.pageTotal) }" data-num = "${qnaVO.pageTotal[0] - fn:length(qnaVO.pageTotal) }" class = "icon-angle-left"></a>
+										</c:if>
+							
+									
+										<c:forEach items="${qnaVO.pageTotal }" varStatus="status">
+											<c:if test = "${qnaVO.pageTotal[status.index] eq pNum}" >
+												<span>${qnaVO.pageTotal[status.index] }</span>
+											</c:if>
+											<c:if test = "${qnaVO.pageTotal[status.index] ne pNum}" >
+												<a href = "/admin/commentQnA/commentQnAList?pageNum=${qnaVO.pageTotal[status.index] }" data-num = "${qnaVO.pageTotal[status.index]}">
+							 						${qnaVO.pageTotal[status.index] } 
+												</a>
+											</c:if>
+										</c:forEach>
+			
+										<c:if test = "${qnaVO.pageTotal[fn:length(qnaVO.pageTotal) - 1] eq qnaVO.totalPage}" >
+											<span class = "icon-angle-right"></span>
+										</c:if>
+										<c:if test = "${qnaVO.pageTotal[fn:length(qnaVO.pageTotal) - 1] ne qnaVO.totalPage}" >
+											<a href = "/admin/commentQnA/commentQnAList?pageNum=${qnaVO.pageTotal[0] + fn:length(qnaVO.pageTotal) }" data-num = "${qnaVO.pageTotal[0] + fn:length(qnaVO.pageTotal) }" class = "icon-angle-right"></a>
+										</c:if>
+										<c:if test = "${qnaVO.pageTotal[fn:length(qnaVO.pageTotal) - 1] eq qnaVO.totalPage and qnaVO.totalPage eq pNum}" >
+											<span class = "icon-angle-double-right"></span>
+										</c:if>
+										<c:if test = "${qnaVO.pageTotal[fn:length(qnaVO.pageTotal) - 1] eq qnaVO.totalPage and qnaVO.totalPage ne pNum}" >
+											<a href = "/admin/commentQnA/commentQnAList?pageNum=${qnaVO.totalPage }" data-num = "${qnaVO.totalPage }" class = "icon-angle-double-right"></a>
+										</c:if>
+										<c:if test = "${qnaVO.pageTotal[fn:length(qnaVO.pageTotal) - 1] ne qnaVO.totalPage}" >
+											<a href = "/admin/commentQnA/commentQnAList?pageNum=${qnaVO.totalPage }" data-num = "${qnaVO.totalPage }" class = "icon-angle-double-right"></a>
+										</c:if>
+									</td>
+								</tr>
 						</c:when>
 						<c:otherwise>
 							<tr>

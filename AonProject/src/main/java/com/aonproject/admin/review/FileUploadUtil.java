@@ -27,7 +27,7 @@ public class FileUploadUtil {
 			//System.currentTimeMillis()은 밀리초까지 지정되어서 중복될 수 없다
 			org_name = org_name.substring(org_name.lastIndexOf("."));
 			real_name = fileOption+"."+System.currentTimeMillis()+org_name;
-			String docRoot = request.getSession().getServletContext().getRealPath("/reviewUpload");
+			String docRoot = request.getSession().getServletContext().getRealPath("/reviewFileUpload");
 			//(/UploadStorage)라는 파일이 없다
 			
 			File fileDir = new File(docRoot);
@@ -48,7 +48,7 @@ public class FileUploadUtil {
 	public static void fileDelete(String fileName, HttpServletRequest request)throws IOException{
 		logger.info("fileDelete 호출 성공");
 		boolean result = false;
-		String docRoot = request.getSession().getServletContext().getRealPath("/reviewUpload");
+		String docRoot = request.getSession().getServletContext().getRealPath("/reviewFileUpload");
 		
 		File fileDelete = new File(docRoot + "/" + fileName );
 		logger.info("삭제할 파일 경로(fileDelete) : " + fileDelete);

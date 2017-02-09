@@ -94,7 +94,7 @@
 			var img = $("<img>");
 			$(".imgView").hover(function(){
 				img.attr({
-					src:"/reviewUpload/",
+					src:"/reviewFileUpload/",
 					width:"450px",
 					height:"200px"
 				});
@@ -152,6 +152,11 @@
 				var content = $(this).parents("td").children(".content"); //원래 내용
 				if(!chkSubmit($(re_content),"내용을")) return;
 				else{
+					if(confirm("수정 하시겠습니까?")) {
+			            $(this).parent().click();
+			        } else {
+			            return false;
+			        }
 					$(update_form).ajaxForm({
 						url:"/review/reviewUpdate",
 						type:"post",
@@ -175,6 +180,11 @@
 				var retr = $(this).parents("tr").prev(".review_tr");
 				var Ptr = $(this).parents("tr")//이벤트 발생 tr
 				var curry = $(this).parents("tr").attr("data-no");
+				if(confirm("삭제 하시겠습니까?")) {
+		            $(this).parent().click();
+		        } else {
+		            return false;
+		        }
 				$.ajax({
 					type:"delete",
 					url:"/admin/review/"+curry,
@@ -217,6 +227,11 @@
 				if(!chkSubmit($(insertTitle),"제목을"))return;
 				else if(!chkSubmit($(insertContent),"내용을"))return;
 				else{
+					if(confirm("글을 입력 하시겠습니까?")) {
+			            $(this).parent().click();
+			        } else {
+			            return false;
+			        }
 					$.ajax({
 						url:"/admin/recomment/recommentInsert",
 						type:"post",
@@ -248,6 +263,11 @@
 				if(!chkSubmit($(modifyTitle),"제목을"))return;
 				else if(!chkSubmit($(modifyContent),"내용을"))return;
 				else{
+					if(confirm("수정 하시겠습니까?")) {
+			            $(this).parent().click();
+			        } else {
+			            return false;
+			        }
 					$.ajax({
 						url:"/admin/recomment/recommentUpdate",
 						type:"post",
@@ -422,19 +442,19 @@
 										</c:forEach>
 										
 									</td>
-									<td class="name"></td>
+									<td class="name">${review.re_name }님</td>
 									<td>${review.re_date }</td>
 								</tr>
 								<tr class="find_review" data-no="${review.re_no }">
 									<td colspan="4">
 									
 										<div class="content">
-											${review.re_content }
+											-review : ${review.re_content }
 											<div class="reviewImg">
 												<c:if test="${not empty reviewImgList }">
 														<c:forEach var="reviewImg" items="${reviewImgList}">
 															<c:if test="${review.re_no eq reviewImg.re_no }">
-																<img src="/reviewUpload/${reviewImg.ri_file }" style="width:105px; height:75px;">
+																<img src="/reviewFileUpload/${reviewImg.ri_file }" style="width:105px; height:75px;">
 															</c:if>
 														</c:forEach>
 												</c:if>
@@ -452,7 +472,7 @@
 															<c:if test="${not empty reviewImgList }">
 																<c:forEach var="reviewImg" items="${reviewImgList}">
 																	<c:if test="${review.re_no eq reviewImg.re_no }">
-																		<img src="/reviewUpload/${reviewImg.ri_file }">
+																		<img src="/reviewFileUpload/${reviewImg.ri_file }">
 																	</c:if>
 																</c:forEach>
 															</c:if>
@@ -563,8 +583,18 @@
 							</c:forEach>
 							<tr class="page_tr">
 								<td colspan="4" id = "pageLow">
-									<c:if test = "${reviewVO.pageTotal[0] eq 1}" >
+									<c:if test = "${reviewVO.totalPage < reviewVO.pageNum }">
+										<c:set var = "pNum" value= "${reviewVO.totalPage }"/>
+									</c:if>
+									<c:if test = "${reviewVO.totalPage >= reviewVO.pageNum }">
+										<c:set var = "pNum" value= "${reviewVO.pageNum }"/>
+									</c:if>
+									
+									<c:if test = "${reviewVO.pageTotal[0] eq 1 and pNum eq 1}" >
 										<span class = "icon-angle-double-left"></span>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[0] eq 1 and pNum ne 1}" >
+										<a href = "/admin/review/reviewList?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
 									</c:if>
 									<c:if test = "${reviewVO.pageTotal[0] ne 1}" >
 										<a href = "/admin/review/reviewList?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
@@ -576,13 +606,7 @@
 										<a href = "/admin/review/reviewList?pageNum=${reviewVO.pageTotal[0] - fn:length(reviewVO.pageTotal) }" data-num = "${reviewVO.pageTotal[0] - fn:length(reviewVO.pageTotal) }" class = "icon-angle-left"></a>
 									</c:if>
 						
-									<c:if test = "${reviewVO.totalPage < reviewVO.pageNum }">
-										<c:set var = "pNum" value= "${reviewVO.totalPage }"/>
-									</c:if>
-									<c:if test = "${reviewVO.totalPage >= reviewVO.pageNum }">
-										<c:set var = "pNum" value= "${reviewVO.pageNum }"/>
-									</c:if>
-									
+								
 									<c:forEach items="${reviewVO.pageTotal }" varStatus="status">
 										<c:if test = "${reviewVO.pageTotal[status.index] eq pNum}" >
 											<span>${reviewVO.pageTotal[status.index] }</span>
@@ -600,8 +624,11 @@
 									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] ne reviewVO.totalPage}" >
 										<a href = "/admin/review/reviewList?pageNum=${reviewVO.pageTotal[0] + fn:length(reviewVO.pageTotal) }" data-num = "${reviewVO.pageTotal[0] + fn:length(reviewVO.pageTotal) }" class = "icon-angle-right"></a>
 									</c:if>
-									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage}" >
+									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage and reviewVO.totalPage eq pNum}" >
 										<span class = "icon-angle-double-right"></span>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage and reviewVO.totalPage ne pNum}" >
+										<a href = "/admin/review/reviewList?pageNum=${reviewVO.totalPage }" data-num = "${reviewVO.totalPage }" class = "icon-angle-double-right"></a>
 									</c:if>
 									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] ne reviewVO.totalPage}" >
 										<a href = "/admin/review/reviewList?pageNum=${reviewVO.totalPage }" data-num = "${reviewVO.totalPage }" class = "icon-angle-double-right"></a>

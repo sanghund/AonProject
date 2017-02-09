@@ -43,5 +43,12 @@ public class CommentQnAServiceImpl implements CommentQnAService{
 		result = commentQnADAO.commentQnADelete(q_no);
 		return result;
 	}
+	
+	@Override
+	public int cntList() {
+		int result = 0;
+		result = commentQnADAO.cntList();
+		return result;
+	}
 
 }

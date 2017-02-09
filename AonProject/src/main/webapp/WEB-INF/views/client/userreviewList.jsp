@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+	<link rel = "stylesheet" href = "/resources/include/fontello/css/fontello.css">
 	<link rel="stylesheet" type="text/css" href="/resources/include/css/review/reset.css">
-	<link rel="stylesheet" type="text/css" href="/resources/include/css/review/review.css">
+	<link rel="stylesheet" type="text/css" href="/resources/include/css/review/reviewuser.css">
 	<script type="text/javascript" src="/resources/include/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript" src="/resources/include/js/board.js"></script>
 	<script type="text/javascript" src="/resources/include/js/chkFile.js"></script>
@@ -25,7 +28,7 @@
 				showData.slideToggle(300);
 				hideData.slideUp(300);	
 				$(".review_write").hide();
-				reset();
+				rollBack();
 				return false;
 	           
 			}); 
@@ -40,38 +43,62 @@
 			$(".write_button").click(function(){
 				$(".review_write").show();
 				$(".find_review").find("td").hide();
-				
+				$(".qna_write").hide();
+				rollBack();
 			});
-			//write_button을 클릭
-			$(".write_button").click(function(){
-				reset();
-			});
-			
 			
 			//write버튼을 클릭했을 때 입력
 			$(".write_btn").click(function(){
 				var wirteForm = $("#write_form");
+				var files = $("#write_form").children().find("#files");
 				if(!chkSubmit($("#re_title"),"제목을"))return;
 				else if(!chkSubmit($("#re_pwd"),"비밀번호를"))return;
 				else if(!chkSubmit($("#re_content"),"내용을"))return;
 				/* else if(!chkFile($("#files"),"첨부파일 입력해서요.(이미지 파일만 등록가능합니다.)"))return; */
 				else{
-					$(wirteForm).ajaxForm({
-						url:"/review/reviewInsert",
-						enctype: "multipart/form-data",
-						dataType : "text",
-						type:"post",
-						error:function(){
-							alert("시스템 오류입니다. 관리자에게 문의하세요.");
-						},
-						success:function(result){
-							if(result == "success"){
-								alert("글이 등록되었습니다.")
-								location.reload();
+					if($(files).val()==""){
+						$.ajax({
+							url:"/review/reviewUserInsert",
+							dataType:"text",
+							data :$(wirteForm).serialize(),
+							type:"post",
+							error:function(){
+								alert("시스템 오류입니다. 관리자에게 문의하세요.");
+							},
+							success:function(result){
+								if(result == "success"){
+									alert("글이 등록되었습니다.")
+									location.reload();
+								}else if(result == "fail"){
+									alert("이미 review를 작성하셨습니다. 다른 의견은 문의게시판의나 전화문의 부탁드립니다.");
+									rollBack();
+									$(".review_write").hide();
+								}
 							}
-						}
-					});
-					$(wirteForm).submit();
+						});
+					}
+					else if($("wirteForm  #files").val()!=""){
+						$(wirteForm).ajaxForm({
+							url:"/review/reviewuserInsert",
+							enctype: "multipart/form-data",
+							dataType : "text",
+							type:"post",
+							error:function(){
+								alert("시스템 오류입니다. 관리자에게 문의하세요.");
+							},
+							success:function(result){
+								if(result == "success"){
+									alert("글이 등록되었습니다.")
+									location.reload();
+								}else if(result == "fail"){
+									alert("이미 review를 작성하셨습니다. 다른 의견은 문의게시판의나 전화문의 부탁드립니다.");
+									rollBack();
+									$(".review_write").hide();
+								}
+							}
+						});
+						$(wirteForm).submit();
+					}
 				}
 			});
 			
@@ -88,7 +115,7 @@
 			
 			//delete_mobtn버튼을 클릭했을 때
 			$(".delete_mobtn").click(function(){
-				reset();
+				rollBack();
 			});
 			
 			
@@ -150,51 +177,45 @@
 				var update_form = $(this).parents("#update_form");
 				var re_content = $(this).parents("#update_form").children("#re_content");
 				var re_no = $(this).parents("tr").attr("data-no");
-				var re_file=$(this).parents("#update_form").children(".mo_file").children("#file");
+				var re_file=$(this).parents("#update_form").children().find("#files");
 				var content = $(this).parents("td").children(".content"); //원래 내용
 				if(!chkSubmit($(re_content),"내용을")) return;
 				else{
-					$(update_form).ajaxForm({
-						url:"/review/reviewUpdate",
-						type:"post",
-						enctype:"multipart/form-data",
-						error:function(){
-							alert("시스템 오류입니다. 관리자에게 문의하세요.");
-						},
-						success:function(result){
-							if(result == "success"){
-								alert("글이 수정되었습니다.");
-								location.reload();
+					if($(re_file).val()==""){
+						$.ajax({
+							url:"/review/reviewUserUpdate",
+							dataType:"text",
+							data :$(update_form).serialize(),
+							type:"post",
+							error:function(){
+								alert("시스템 오류입니다. 관리자에게 문의하세요.");
+							},
+							success:function(result){
+								if(result == "success"){
+									alert("글이 수정되었습니다.")
+									location.reload();
+								}
 							}
-						}
-					});
-					$(update_form).submit();
-				}
-			});
-			
-			//delete클릭 시 삭제 이벤트
-			$(".delete").click(function(){
-				var retr = $(this).parents("tr").prev(".review_tr");
-				var Ptr = $(this).parents("tr")//이벤트 발생 tr
-				var curry = $(this).parents("tr").attr("data-no");
-				$.ajax({
-					type:"delete",
-					url:"/review/"+curry,
-					headers:{
-						"Content-Type":"application/json",
-						"X-HTTP-Method-Override":"DELETE"
-					},
-					dataType:"text",
-					success:function(result){
-						console.log("result="+result);
-						if(result=="SUCCESS"){
-							console.log(retr);	
-							alert("삭제 완료되었습니다.");
-							retr.remove();
-							Ptr.remove();
-						}
+						});
 					}
-				})
+					else if($(re_file).val()!=""){
+						$(update_form).ajaxForm({
+							url:"/review/reviewuserUpdate",
+							type:"post",
+							enctype:"multipart/form-data",
+							error:function(){
+								alert("시스템 오류입니다. 관리자에게 문의하세요.");
+							},
+							success:function(result){
+								if(result == "success"){
+									alert("글이 수정되었습니다.");
+									location.reload();
+								}
+							}
+						});
+						$(update_form).submit();	
+					}
+				}
 			});
 			
 			$("#files").on('change', function(){
@@ -203,12 +224,13 @@
 		});
 		    
 		//취소 
-		function reset(){
+		function rollBack(){
 			$(".update_content").hide();
 			$(".content").show();
 			$(".content_modify").show();
 			$(".ree_pwd").val("");
-			$("input[type='text']").val("");
+			$("#write_form input[type='text']").val("");
+			$("input[type='password']").val("");
 			$("#write_form textarea").val("");
 		}
 		
@@ -232,16 +254,20 @@
 			</div>
 		</div>
 		<div class="reviewTopBtn">
-			<a href="admin/review/reviewList" class="board_btns">
+			<div class="board_btns">
 				ALL VIEW
-			</a>
-			<div class="write_button">
-				WRITE
 			</div>
+			<sec:authorize access="hasRole('user')">
+				<div class="write_button">
+					WRITE
+				</div>
+			</sec:authorize>
 		</div>
+		<sec:authorize access="hasRole('user')">
 		<!-- write작성 폼 -->
 		<div class="review_write">
-			<form id="write_form" enctype="multipart/form-data">
+			<form id="write_form">
+			<input type="hidden" name="p_no" value="${param.no }">
 				<table>	
 					<colgroup>
 						<col width="15%">
@@ -276,11 +302,12 @@
 							<td>
 								<div class="file_div">
 									<input type="file" id="files" name="files" multiple><br>
-									<img id="blah" src="#" alt="your image" style="float:left; padding-top:10px;"/>
+									<!-- <img id="blah" style="float:left; padding-top:10px;"/> -->
 								</div>
 								<div class="write_btn" style="cursor: pointer;">
 									<img src="/resources/include/image/reviewimage/write_review.gif" >
 								</div>
+									
 								<!-- <div class="addFile">
 									 <a href="#this" class="btn" id="addFile">파일 추가</a>
 								</div> -->
@@ -290,6 +317,7 @@
 				</table>
 			</form>
 		</div>
+		</sec:authorize>
 		<!-- 리뷰 뜨는 곳 -->
 		<form id="review_detail" name="review_detail">
 			<input type="hidden" id="re_no" name="re_no">
@@ -320,26 +348,34 @@
 				</thead>
 				<tbody id="retbody">
 					<c:choose>
-						<c:when test="${not empty reviewList }">
-							<c:forEach var="review" items="${reviewList }">
+						<c:when test="${not empty reviewuserList }">
+							<c:forEach var="review" items="${reviewuserList }">
 								<tr data-num="${review.re_no }" class="review_tr">
 									<td>${review.re_no }</td>
 									<td class="goDetail">
-										${review.re_title }(${review.re_chk })
+										${review.re_title }
+										<c:forEach items="${review.re_chk }">
+											<c:if test="${review.re_chk == 1 }">
+												(<label style="color:red">답변완료</label>)
+											</c:if>
+											<c:if test="${review.re_chk ==0}">
+												(<label style="color:red">답변대기</label>)
+											</c:if>
+										</c:forEach>
 									</td>
-									<td class="name"></td>
+									<td class="name">${review.re_name }님</td>
 									<td>${review.re_date }</td>
 								</tr>
 								<tr class="find_review" data-no="${review.re_no }">
 									<td colspan="4">
 									
 										<div class="content">
-											${review.re_content }
+											-review : ${review.re_content }
 											<div class="reviewImg">
 												<c:if test="${not empty reviewImgList }">
 														<c:forEach var="reviewImg" items="${reviewImgList}">
 															<c:if test="${review.re_no eq reviewImg.re_no }">
-																<img src="/reviewUpload/${reviewImg.ri_file }" style="width:105px; height:75px;">
+																<img src="/reviewFileUpload/${reviewImg.ri_file }" style="width:105px; height:75px;">
 															</c:if>
 														</c:forEach>
 												</c:if>
@@ -357,7 +393,7 @@
 															<c:if test="${not empty reviewImgList }">
 																<c:forEach var="reviewImg" items="${reviewImgList}">
 																	<c:if test="${review.re_no eq reviewImg.re_no }">
-																		<img src="/reviewUpload/${reviewImg.ri_file }">
+																		<img src="/reviewFileUpload/${reviewImg.ri_file }">
 																	</c:if>
 																</c:forEach>
 															</c:if>
@@ -372,7 +408,9 @@
 												<div class="delete_mobtn">cancel</div>
 											</form>
 										</div>
-										<div class="content_modify">modify</div>
+										<sec:authorize access="hasRole('user')">
+											<div class="content_modify">modify</div>
+										</sec:authorize>
 										
 										<%--==========비밀번호 확인 버튼 및 버튼 추가 시작======== --%>
 										<div class="pwdChk">
@@ -391,48 +429,94 @@
 												<div class="comment-content">
 													<div class="content-top">
 														<c:if test="${not empty recommentList }">
-															<c:if test="${review.re_no eq recomment.re_no }">
-																<div class="name"> ${recomment.com_title }</div>
-																<div class="date">${recomment.com_date }</div>
+															<c:forEach items="${recommentList }" var="recomment">
+																<c:if test="${review.re_no eq recomment.re_no }">
+																	<div class="name">AON <span class="date">${recomment.com_date }</span></div>
+																	
+																</c:if>
+															</c:forEach>
+														</c:if>
+														<div class="commentp">
+															<span class="c-content">
+															<c:if test="${not empty recommentList }">
+																<c:forEach items="${recommentList }" var="recomment">
+																	<c:if test="${review.re_no eq recomment.re_no }">
+																		${recomment.com_content }
+																	</c:if>
+																</c:forEach>
 															</c:if>
-														</c:if>
-														<a href="javascript:;" class="modify">MODIFY</a>
-														<a href="javascript:;" class="delete">DELETE</a>
-													</div>
-													<div class="fieldset">
-														<fieldset>
-															<legend>댓글 수정</legend>	
-															<p>
-																비밀번호
-																<input  type="password" id="comment_password" name="comment_password">
-															</p>
-															<p>
-																<textarea id="comment_modify" name="comment_modify"></textarea>						
-																<a href="javascript:;" class="update_btn"><img src="/resources/include/image/reviewimage/button/btn_comment_modify.gif"></a>
-																<a href="javascript:;" class="cancle_btn"><img src="/resources/include/image/reviewimage/button/btn_comment_cancel.gif"></a>
-															</p>
-														</fieldset>
-													</div>
-													<div class="commentp">
-														<span class="c-content">
-														<c:if test="${review.re_no eq recomment.re_no }">
-															${recomment.com_content }
-														</c:if>
-														</span>						
+															</span>	
+														</div>					
 													</div>
 												</div>
 												
 												<!-- 회원 로그인 시 없어질 구간 -->
-												<div class="comment-write">
-													<div class="comment-p">
-														<p style="color:#999;font-size:11px">( 회원 로그인이 필요한 기능입니다 )</p>
-													</div>	
-												</div>
+												<sec:authorize access="hasRole('user')!=null">
+													<div class="comment-write">
+														<div class="comment-p">
+															<p style="color:#999;font-size:11px">( 회원 로그인이 필요한 기능입니다 )</p>
+														</div>	
+													</div>
+												</sec:authorize>
 											</div>
 										</div>
 									</td>
 								</tr>
 							</c:forEach>
+							<%-- <tr class="page_tr">
+								<td colspan="4" id = "pageLow">
+									<c:if test = "${reviewVO.totalPage < reviewVO.pageNum }">
+										<c:set var = "pNum" value= "${reviewVO.totalPage }"/>
+									</c:if>
+									<c:if test = "${reviewVO.totalPage >= reviewVO.pageNum }">
+										<c:set var = "pNum" value= "${reviewVO.pageNum }"/>
+									</c:if>
+									
+									<c:if test = "${reviewVO.pageTotal[0] eq 1 and pNum eq 1}" >
+										<span class = "icon-angle-double-left"></span>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[0] eq 1 and pNum ne 1}" >
+										<a href = "/review/userreviewList?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[0] ne 1}" >
+										<a href = "/client/userreviewList?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[0] eq 1}" >
+										<span class = "icon-angle-left"></span>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[0] ne 1}" >
+										<a href = "/client/userreviewList?pageNum=${reviewVO.pageTotal[0] - fn:length(reviewVO.pageTotal) }" data-num = "${reviewVO.pageTotal[0] - fn:length(reviewVO.pageTotal) }" class = "icon-angle-left"></a>
+									</c:if>
+						
+								
+									<c:forEach items="${reviewVO.pageTotal }" varStatus="status">
+										<c:if test = "${reviewVO.pageTotal[status.index] eq pNum}" >
+											<span>${reviewVO.pageTotal[status.index] }</span>
+										</c:if>
+										<c:if test = "${reviewVO.pageTotal[status.index] ne pNum}" >
+											<a href = "/client/userreviewList?pageNum=${reviewVO.pageTotal[status.index] }" data-num = "${reviewVO.pageTotal[status.index]}">
+						 						${reviewVO.pageTotal[status.index] } 
+											</a>
+										</c:if>
+									</c:forEach>
+		
+									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage}" >
+										<span class = "icon-angle-right"></span>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] ne reviewVO.totalPage}" >
+										<a href = "/client/userreviewList?pageNum=${reviewVO.pageTotal[0] + fn:length(reviewVO.pageTotal) }" data-num = "${reviewVO.pageTotal[0] + fn:length(reviewVO.pageTotal) }" class = "icon-angle-right"></a>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage and reviewVO.totalPage eq pNum}" >
+										<span class = "icon-angle-double-right"></span>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage and reviewVO.totalPage ne pNum}" >
+										<a href = "/client/userreviewList?pageNum=${reviewVO.totalPage }" data-num = "${reviewVO.totalPage }" class = "icon-angle-double-right"></a>
+									</c:if>
+									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] ne reviewVO.totalPage}" >
+										<a href = "/client/userreviewList?pageNum=${reviewVO.totalPage }" data-num = "${reviewVO.totalPage }" class = "icon-angle-double-right"></a>
+									</c:if>
+								</td>
+							</tr> --%>
 						</c:when>
 						<c:otherwise>
 							<tr>

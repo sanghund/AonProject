@@ -5,6 +5,7 @@ import java.util.List;
 import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.admin.policy.vo.PolicyVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
+import com.aonproject.common.util.vo.Numbers;
 import com.aonproject.common.util.vo.PolicyAgrVO;
 
 public interface PolicyDAO {
@@ -18,4 +19,7 @@ public interface PolicyDAO {
 	public int memberListCnt(MemberVO mvo);
 	public List<PolicyAgrVO> memberList(MemberVO mvo);
 	public int policyAgrDenial(PolicyAgrVO vo);
+	public List<Numbers> numbers();
+	public List<PolicyAgrVO> excelList(PolicyVO vo);
+	public int forLoop();
 }

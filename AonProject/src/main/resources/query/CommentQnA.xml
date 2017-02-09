@@ -22,4 +22,8 @@
 	<delete id="commentQnADelete" parameterType="commentQnA">
 		delete from commentqna where q_no = #{q_no}
 	</delete>
+	
+	<select id="cntList" resultType="int">
+		select count(*) from qna
+	</select>
 </mapper>

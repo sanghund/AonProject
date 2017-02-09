@@ -30,7 +30,7 @@ nav {position:fixed; width:200px; height:100vh; padding:10px; display:inline-blo
 /* .contentContainer {height:600px; border:1px solid #f00} */
 
 /*푸터*/
-footer {height:200px; background:#f00; margin:0 10px 0 230px; background:#efefef; padding:1em 0; font-size:0.8rem; color:#777;}
+footer {height:200px; margin:0 10px 0 230px; background:#efefef; padding:1em 0; font-size:0.8rem; color:#777; clear:both;}
 footer .borderR{border-right:1px solid #d8d5d5;}
 footer .borderL{border-left:1px solid #d8d5d5;}
   .footerContentLogo {width:20%; min-width:70px; height:100%; margin-right:10px;}

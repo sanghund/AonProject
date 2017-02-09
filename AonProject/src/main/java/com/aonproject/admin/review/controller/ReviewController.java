@@ -49,7 +49,7 @@ public class ReviewController {
 		
 		int cnt = 0;
 		cnt = reviewService.cntList();
-		rvo.setCountList(2);
+		rvo.setCountList(5);
 		PagingSet.setPageing(rvo, cnt);
 		
 		List<ReviewVO> reviewList = reviewService.reviewList(rvo);

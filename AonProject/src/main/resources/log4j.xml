@@ -54,6 +54,27 @@
 		<level value="info"></level>
 	</logger>
 	
+	<logger name="com.aonproject.client.category">
+		<level value="info"></level>
+	</logger>
+	
+	<logger name="com.aonproject.client.category.dao">
+		<level value="trace"></level>
+	</logger>
+	
+	<logger name="com.aonproject.client.product">
+		<level value="info"></level>
+	</logger>
+	
+	<logger name="com.aonproject.client.product.dao">
+		<level value="trace"></level>
+	</logger>
+	
+	<logger name="com.aonproject.client">
+		<level value="info"></level>
+	</logger>
+	
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />
@@ -76,4 +97,5 @@
 		<priority value="warn" />
 		<appender-ref ref="console" />
 	</root>
+
 </log4j:configuration>

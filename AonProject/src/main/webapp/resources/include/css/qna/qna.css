@@ -68,12 +68,41 @@
 	.tb-center{
 		text-align: center
 		}
-	.qna-table-list tbody tr{
+	.qna_tr, .qna_tr1, .qna_tr2, .qna_tr3, .qna_tr4{
 		display: table-row;
 	    vertical-align: inherit;
 	    border-color: inherit;
+	    cursor: pointer;	
 		}
-	.qna-table-list tbody tr td{
+	.qna-table-list tbody .qna_tr td{
+		padding: 10px 0;
+	    background-color: #fcfcfc;
+	    border-top: 1px solid #333;
+	    border-bottom: 1px solid #ccc;
+	    color: #777;
+		} 
+	.qna-table-list tbody .qna_tr1 td{
+		padding: 10px 0;
+	    background-color: #fcfcfc;
+	    border-top: 1px solid #333;
+	    border-bottom: 1px solid #ccc;
+	    color: #777;
+		}  
+	.qna-table-list tbody .qna_tr2 td{
+		padding: 10px 0;
+	    background-color: #fcfcfc;
+	    border-top: 1px solid #333;
+	    border-bottom: 1px solid #ccc;
+	    color: #777;
+		}  
+	.qna-table-list tbody .qna_tr3 td{
+		padding: 10px 0;
+	    background-color: #fcfcfc;
+	    border-top: 1px solid #333;
+	    border-bottom: 1px solid #ccc;
+	    color: #777;
+		}  
+	.qna-table-list tbody .qna_tr4 td{
 		padding: 10px 0;
 	    background-color: #fcfcfc;
 	    border-top: 1px solid #333;
@@ -81,7 +110,7 @@
 	    color: #777;
 		}  
 	.user_qnacontent{
-		margin:15px;
+		margin:20px 30px 20px 30px;
 		
 		}
 	.comment-insert{
@@ -262,7 +291,12 @@
 	    color: #BDBDBD;
 		}	
 		
-		
+		.page_tr{
+		text-align: center;
+		}
+	.page_tr td{
+		padding-top: 10px;
+		}
 		
 		
 		

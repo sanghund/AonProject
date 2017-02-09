@@ -25,6 +25,12 @@ public class ReviewServiceImpl implements ReviewService{
 		myList = reviewDAO.reviewList(rvo);
 		return myList;
 	}
+	@Override
+	public List<ReviewVO> reviewuserList(ReviewVO rvo){
+		List<ReviewVO> myList = null;
+		myList = reviewDAO.reviewuserList(rvo);
+		return myList;
+	}
 	
 	//±ÛÀÔ·Â
 	@Override
@@ -80,6 +86,47 @@ public class ReviewServiceImpl implements ReviewService{
 	public int cntList() {
 		int result = 0;
 		result = reviewDAO.cntList();
+		return result;
+	}
+
+	@Override
+	public int mnoList() {
+		int result=0;
+		result = reviewDAO.mnoList();
+		return result;
+	}
+
+	@Override
+	public int onoList() {
+		int result=0;
+		result = reviewDAO.onoList();
+		return result;
+	}
+
+	@Override
+	public int reviewUserInsert(ReviewVO rvo) {
+		int result = 0;
+		result = reviewDAO.reviewUserInsert(rvo);
+		return result;
+	}
+
+	@Override
+	public int reviewUserUpdate(ReviewVO rvo) {
+		int result = 0;
+		result = reviewDAO.reviewUserUpdate(rvo);
+		return result;
+	}
+
+	@Override
+	public int InsertID(ReviewVO rvo) {
+		int result = 0;
+		result = reviewDAO.InsertID(rvo);
+		return result;
+	}
+	@Override
+	public int confirmMno(ReviewVO rvo) {
+		int result = 0;
+		result = reviewDAO.confirmMno(rvo);
 		return result;
 	}
 

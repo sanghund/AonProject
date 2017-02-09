@@ -47,6 +47,7 @@ public class ProductController {
 	@RequestMapping(value = "/product", method=RequestMethod.GET)
 	public String itemList(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, Model model){
 		logger.info("itemList 호출 성공!");
+		logger.info(pvo.getCa_no());
 		
 		List<ProductVO> productList = productService.productList(pvo);
 		model.addAttribute("productList", productList);
@@ -58,6 +59,10 @@ public class ProductController {
 	@RequestMapping(value = "/productDetail")
 	public String itemDetail(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, @ModelAttribute UploadVO uvo, Model model){
 		logger.info("itemDetail 호출 성공!");
+		logger.info("p_no: "+pvo.getP_no());
+		logger.info("cc_no: "+cvo.getCa_no());
+		logger.info("cc_name: "+cvo.getCa_name());
+		
 		if(pvo.getP_no() == ""){
 			logger.info("p_no: "+pvo.getP_no());
 			model.addAttribute("mode", "insert");
@@ -90,6 +95,10 @@ public class ProductController {
 		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(ovo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
+		ProductVO pvo = new ProductVO();
+		List<ProductVO> productList = productService.productList(pvo);
+		model.addAttribute("productList", productList);
+		
 		return "admin/product/write";
 	}
 	
@@ -100,13 +109,19 @@ public class ProductController {
 		mode = "insert";
 		int result = 0;
 		
-		//상품번호(p_no) 생성
-		String createP_no = productService.createP_no();
-		//상품번호 p_no : 생성된p_no(10000부터 시퀀스 생성) + 색상코드 + 사이즈코드	
-		//ex)10001C1S1 
-		pvo.setP_no(createP_no+pvo.getColor_code()+pvo.getSize_code());
+		logger.info("p_no1="+pvo.getP_no().length());
 		
-		//pvo.setP_no(pvo.getP_no()+pvo.getColor_code()+pvo.getSize_code());
+		//상품번호(p_no) 생성
+		if(pvo.getP_no().length()==0){
+			String createP_no = productService.createP_no();
+			
+			pvo.setP_no(createP_no+pvo.getColor_code()+pvo.getSize_code());
+			logger.info("p_no2="+pvo.getP_no());
+		}else{
+			//String fixedP_no = pvo.getP_no().substring(0, as)
+			pvo.setP_no(pvo.getP_no()+pvo.getColor_code()+pvo.getSize_code());
+		}
+				
 		logger.info((pvo.getP_no()+pvo.getColor_code()));
 		result = productService.productInsert(pvo);
 		

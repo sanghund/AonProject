@@ -21,6 +21,7 @@ import com.aonproject.admin.commentQnA.service.CommentQnAService;
 import com.aonproject.admin.commentQnA.vo.CommentQnAVO;
 import com.aonproject.admin.qna.service.QnaService;
 import com.aonproject.admin.qna.vo.QnaVO;
+import com.aonproject.common.util.paging.PagingSet;
 
 @Controller
 @RequestMapping(value="/admin/commentQnA")
@@ -38,11 +39,18 @@ public class CommentQnAController {
 	public String CommentQnAList(@ModelAttribute CommentQnAVO cqvo, @ModelAttribute QnaVO qvo, Model model){
 		logger.info("CommentQnAList호출 성공");
 		
+		int cnt = 0;
+		cnt = commentQnAService.cntList();
+		qvo.setCountList(5);
+		PagingSet.setPageing(qvo, cnt);
+		
 		List<CommentQnAVO> commentQnAList = commentQnAService.commentQnAList(cqvo);
 		model.addAttribute("commentQnAList", commentQnAList);
 		
-		List<QnaVO> qnaList = qnaService.qnaList(qvo);
-		model.addAttribute("qnaList", qnaList);
+		
+		List<QnaVO> qnacommentList = qnaService.qnacommentList(qvo);
+		model.addAttribute("qnacommentList", qnacommentList);
+		model.addAttribute("qnaVO",qvo);
 		
 		return "admin/commentQnA/commentQnAList";
 	}

@@ -23,6 +23,20 @@ public class CategoryServiceImpl implements CategoryService {
 		categoryList = categoryDAO.categoryList(cvo);
 		return categoryList;
 	}
+
+	@Override
+	public int categoryInsert(CategoryVO cvo) {
+		int result = 0;
+		result = categoryDAO.categoryInsert(cvo);
+		return result;
+	}
+
+//	@Override
+//	public CategoryVO categorySelect(CategoryVO cvo) {
+//		CategoryVO categorySelect = null;
+//		categorySelect = categoryDAO.categorySelect(cvo);
+//		return categorySelect;
+//	}
 	
 	
 }

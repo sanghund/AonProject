@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aonproject.admin.policy.dao.PolicyDAO">
+	<resultMap type="com.aonproject.common.util.vo.Numbers" id="numbersQ">
+		<result column="po_no" property="no" />
+	</resultMap>
+	
+	<!-- 최근 등록된 약관 번호 가져오기 -->
+	<select id="forLoop" resultType="java.lang.Integer">
+		select po_no from (select * from policy order by po_no desc) where rownum = 1
+	</select>
+	
+	<!-- policy po_no 전체 가져오기 -->
+	<select id="numbers" resultMap="numbersQ">
+		select po_no from policy order by po_no desc
+	</select>
+	
+	<!-- po_no에 해당하는 policy_agr 데이터 전부 가져오기(excel) -->
+	<select id="excelList" resultType="policyAgr" parameterType="policy">
+	select po_no, po_name, to_char(po_date, 'yyyy-MM-dd hh24:mm:ss') po_date, sum2.a_no, a_id, m_no, m_id, pa_confirm, to_char(pa_date, 'yyyy-MM-dd hh24:mm:ss') pa_date from
+	(select po_no, a_no, sum1.m_no, m_id, po_name, po_date, pa_confirm, pa_date from 
+	(select po_no, a_no, m_no
+	, po_name, po_date, pa_confirm, pa_date from 
+	(select * from policy_agr where po_no = #{po_no}) policy_agr inner join 
+	policy using(PO_NO)) sum1 left outer join member on member.m_no = sum1.m_no) sum2 left outer join
+	admin on admin.a_no = sum2.a_no order by a_no, m_no, po_date desc, pa_date desc
+	</select>
+	
 	<!-- 약관 조회 -->
 	<select id="policyView1" resultType="policy">
 		select * from (select po_no, po_name, po_content from policy where po_type = '1' order by po_no desc) where rownum = 1

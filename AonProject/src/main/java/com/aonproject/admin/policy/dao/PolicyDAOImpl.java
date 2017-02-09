@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.admin.policy.vo.PolicyVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
+import com.aonproject.common.util.vo.Numbers;
 import com.aonproject.common.util.vo.PolicyAgrVO;
 
 @Repository
@@ -75,5 +76,23 @@ public class PolicyDAOImpl implements PolicyDAO {
 	public int policyAgrDenial(PolicyAgrVO vo) {
 		// TODO Auto-generated method stub
 		return sqlSession.delete("policyAgrDenial", vo);
+	}
+
+	@Override
+	public List<Numbers> numbers() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("numbers");
+	}
+
+	@Override
+	public List<PolicyAgrVO> excelList(PolicyVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("excelList", vo);
+	}
+
+	@Override
+	public int forLoop() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("forLoop");
 	}
 }

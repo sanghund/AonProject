@@ -66,6 +66,13 @@ public class ProductServiceImpl implements ProductService {
 		return createP_no;
 	}
 
+	@Override
+	public List<ProductVO> productForCategory(ProductVO pvo) {
+		List<ProductVO> productForCategory =null;
+		productForCategory = productDAO.productForCategory(pvo);
+		return productForCategory;
+	}
+
 	
 
 }

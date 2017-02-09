@@ -10,5 +10,5 @@ public interface CommentQnADAO {
 	public int commentQnAInsert(CommentQnAVO cqvo);
 	public int commentQnAUpdate(CommentQnAVO cqvo);
 	public int commentQnADelete(int q_no);
-
+	public int cntList();
 }

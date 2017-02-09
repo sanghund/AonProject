@@ -33,5 +33,9 @@ public class CommentQnADAOImpl implements CommentQnADAO{
 	public int commentQnADelete(int q_no) {
 		return session.delete("commentQnADelete");
 	}
+	@Override
+	public int cntList() {
+		return session.selectOne("cntList");
+	}
 
 }

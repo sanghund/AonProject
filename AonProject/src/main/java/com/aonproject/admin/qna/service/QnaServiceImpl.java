@@ -22,6 +22,13 @@ public class QnaServiceImpl implements QnaService{
 		result = qnaDAO.qnaList(qvo);
 		return result;
 	}
+	
+	@Override
+	public List<QnaVO> qnacommentList(QnaVO qvo) {
+		List<QnaVO> result = null;
+		result = qnaDAO.qnacommentList(qvo);
+		return result;
+	}
 
 	@Override
 	public int qnaDelete(int q_no) {
@@ -34,6 +41,34 @@ public class QnaServiceImpl implements QnaService{
 	public int qnaQconfirm(int q_no) {
 		int result = 0;
 		result = qnaDAO.qnaQconfirm(q_no);
+		return result;
+	}
+
+	@Override
+	public int qnaUserInsert(QnaVO qvo) {
+		int result = 0;
+		result = qnaDAO.qnaUserInsert(qvo);
+		return result;
+	}
+	
+	@Override
+	public int qnaConfirm(QnaVO qvo){
+		int result = 0;
+		result= qnaDAO.qnaConfirm(qvo);
+		return result;
+	}
+
+	@Override
+	public int qnaQname(QnaVO qvo) {
+		int result = 0;
+		result = qnaDAO.qnaQname(qvo);
+		return result;
+	}
+
+	@Override
+	public int qnaPwdConfirm(QnaVO qvo) {
+		int result = 0;
+		result = qnaDAO.qnaPwdConfirm(qvo);
 		return result;
 	}
 

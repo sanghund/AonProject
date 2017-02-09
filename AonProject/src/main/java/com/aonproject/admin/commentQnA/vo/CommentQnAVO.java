@@ -1,6 +1,8 @@
 package com.aonproject.admin.commentQnA.vo;
 
-public class CommentQnAVO {
+import com.aonproject.common.util.vo.CommonPagingVO;
+
+public class CommentQnAVO extends CommonPagingVO{
 	private int cq_no;     
 	private String cq_title;     
 	private String cq_content;

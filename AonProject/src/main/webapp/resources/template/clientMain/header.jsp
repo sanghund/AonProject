@@ -29,7 +29,6 @@
 			</script>
 		</sec:authorize>
 		<sec:authorize ifNotGranted="user">
-			<li><a href="/member/login">로그인/회원가입</a></li>
 			<li id = "login"><a href="/member/login">로그인/회원가입</a></li>
 			<script type = "text/javascript">
 				$(document).ready(function(){

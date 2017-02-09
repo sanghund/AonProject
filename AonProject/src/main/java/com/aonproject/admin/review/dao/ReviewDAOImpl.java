@@ -19,7 +19,10 @@ public class ReviewDAOImpl implements ReviewDAO{
 	public List<ReviewVO> reviewList(ReviewVO rvo){
 		return session.selectList("reviewList", rvo);
 	}
-	
+	@Override
+	public List<ReviewVO> reviewuserList(ReviewVO rvo){
+		return session.selectList("reviewuserList", rvo);
+	}
 	//±Û ÀÔ·Â
 	@Override
 	public int reviewInsert(ReviewVO rvo){
@@ -59,6 +62,34 @@ public class ReviewDAOImpl implements ReviewDAO{
 	public int cntList() {
 		return session.selectOne("cntList");
 	}
+
+	@Override
+	public int mnoList() {
+		return session.selectOne("mnoList");
+	}
+
+	@Override
+	public int onoList() {
+		return session.selectOne("onoList");
+	}
+
+	@Override
+	public int reviewUserInsert(ReviewVO rvo) {
+		return session.insert("reviewUserInsert", rvo);
+	}
+
+	@Override
+	public int reviewUserUpdate(ReviewVO rvo) {
+		return session.update("reviewUserUpdate");
+	}
+
+	@Override
+	public int InsertID(ReviewVO rvo) {
+		return session.update("InsertID", rvo);
+	}
 	
-	
+	@Override
+	public int confirmMno(ReviewVO rvo){
+		return session.selectOne("confirmMno");
+	}
 }
