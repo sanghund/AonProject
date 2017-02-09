@@ -23,8 +23,18 @@ public class OrderDAOImpl implements OrderDAO{
 	
 	@Override
 	public CartVO cartList(CartVO vo) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("cartList", vo);
 	}
 
+	@Override
+	public int orderInsert(Product_orderVO ovo) {
+		return sqlSession.insert("orderInsert", ovo);
+	}
+
+	@Override
+	public String checkOnum() {
+		return sqlSession.selectOne("checkOnum");
+	}
+	
+	
 }

@@ -10,4 +10,8 @@ import com.aonproject.client.order.vo.Product_orderVO;
 public interface OrderDAO {
 	public List<Product_orderVO> orderList(Product_orderVO povo);
 	public CartVO cartList(CartVO vo);	
+	
+	public int orderInsert(Product_orderVO ovo);
+	
+	public String checkOnum();
 }

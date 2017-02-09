@@ -11,11 +11,26 @@ public class Product_orderVO {
 	private String 	o_date = "";		//등록일
 	private int 	m_no = 0;			//회원번호
 	private String 	p_no = "";			//상품번호
+	private String  o_num = "";
 	
 	private List<String> p_nos = null;	//상품번호 리스트
 	private List<Integer> o_cnts = null;//상품 주문수량 리스트
 	
 	
+	
+	
+	@Override
+	public String toString() {
+		return "Product_orderVO [o_no=" + o_no + ", o_cnt=" + o_cnt + ", o_price=" + o_price + ", o_mode=" + o_mode
+				+ ", o_confirm=" + o_confirm + ", o_date=" + o_date + ", m_no=" + m_no + ", p_no=" + p_no + ", o_num="
+				+ o_num + ", p_nos=" + p_nos + ", o_cnts=" + o_cnts + "]";
+	}
+	public String getO_num() {
+		return o_num;
+	}
+	public void setO_num(String o_num) {
+		this.o_num = o_num;
+	}
 	public List<String> getP_nos() {
 		return p_nos;
 	}

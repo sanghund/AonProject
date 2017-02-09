@@ -297,7 +297,7 @@ public class MemberController {
 		logger.info("lostIdChk 호출 성공");
 		String result = "";
 		int gogo = memberService.lostIdChk(vo);
-		if(gogo == 1) result = "success";
+		if(gogo != 1) result = "success";
 		return result;
 	}
 
@@ -306,6 +306,7 @@ public class MemberController {
 	public String lostPwdChk(@ModelAttribute MemberVO vo){
 		logger.info("lostPwdChk 호출 성공");
 		String result = "";
+
 		int gogo = memberService.lostPwdChk(vo);
 		if(gogo == 1) result = "success";
 		return result;

@@ -43,10 +43,10 @@ public class ProductController {
 	
 	String mode = "";
 	
-	/*ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½*/
+	/*Product List*/
 	@RequestMapping(value = "/product", method=RequestMethod.GET)
 	public String itemList(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, Model model){
-		logger.info("itemList È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
+		logger.info("itemList load");
 		logger.info(pvo.getCa_no());
 		
 		List<ProductVO> productList = productService.productList(pvo);
@@ -55,28 +55,32 @@ public class ProductController {
 		return "admin/product/main";
 	}
 	
-	/*ï¿½ï¿½Ç°ï¿½ï¿½ È£ï¿½ï¿½*/
+	/*Product Detail*/
 	@RequestMapping(value = "/productDetail")
 	public String itemDetail(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, @ModelAttribute UploadVO uvo, Model model){
-		logger.info("itemDetail È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
+
+		logger.info("itemDetail load");
 		logger.info("p_no: "+pvo.getP_no());
 		logger.info("cc_no: "+cvo.getCa_no());
 		logger.info("cc_name: "+cvo.getCa_name());
 		
+		ProductVO productDetail = null;
+		
 		if(pvo.getP_no() == ""){
-			logger.info("p_no: "+pvo.getP_no());
 			model.addAttribute("mode", "insert");
 		}else{
-			ProductVO productDetail = productService.productDetail(pvo);		
+			productDetail = productService.productDetail(pvo);		
 			model.addAttribute("productDetail" , productDetail);
 			model.addAttribute("mode", "update");
 		}
+		logger.info("pno"+productDetail.getP_no());
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
 		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(ovo);
 		model.addAttribute("commonCodeList", commonCodeList);
+		
 		
 		List<UploadVO> uploadList = uploadService.uploadList(uvo);
 		model.addAttribute("uploadList", uploadList);
@@ -85,10 +89,10 @@ public class ProductController {
 		return "admin/product/detail";
 	}
 	
-	/*ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½*/
+	/*ï¿½ï¿½Ç°ï¿½ï¿½ï¿ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½*/
 	@RequestMapping(value = "/writeForm")
 	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
-		logger.info("writeFrom È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
+		logger.info("writeFrom È£Ãâ ¼º°ø!");
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
@@ -103,43 +107,38 @@ public class ProductController {
 		return "admin/product/write";
 	}
 	
-	/*ï¿½ï¿½Ç° ï¿½ï¿½ï¿½*/
+	/*Product Insert*/
 	@RequestMapping(value = "/productInsert")
 	public String itemInsert (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
-		logger.info("itemInsert È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
+		logger.info("itemInsert È£Ãâ ¼º°ø!");
 		mode = "insert";
 		int result = 0;
 		
+		//»óÇ°¹øÈ£(p_no) »ý¼º
 		logger.info("p_no1="+pvo.getP_no().length());
 		
-		//ï¿½ï¿½Ç°ï¿½ï¿½È£(p_no) ï¿½ï¿½ï¿½ï¿½
 		if(pvo.getP_no().length()==0){
 			String createP_no = productService.createP_no();
 			
-			pvo.setP_no(createP_no+pvo.getColor_code()+pvo.getSize_code());
-			logger.info("p_no2="+pvo.getP_no());
+			pvo.setP_no(createP_no+pvo.getColor_code().toUpperCase()+pvo.getSize_code().toUpperCase());
 		}else{
 			//String fixedP_no = pvo.getP_no().substring(0, as)
 			pvo.setP_no(pvo.getP_no()+pvo.getColor_code()+pvo.getSize_code());
 		}
 				
-		logger.info((pvo.getP_no()+pvo.getColor_code()));
 		result = productService.productInsert(pvo);
 		
 		uvo.setP_no(pvo.getP_no());
-		logger.info(uvo.getP_no());
 		if(result == 1){
 			List<MultipartFile> files = uvo.getFiles();
 			
 			if(files != null && files.size()>0){
 				for(MultipartFile file : files ){
 					uvo.setFile(file);
-					int fileResult = imgInsert(uvo, request);
-					logger.info(fileResult);
+					/*int fileResult = */imgInsert(uvo, request);
 				}
 			}
 		}else {
-			logger.info(result);
 		}
 		
 		String url = "product";
@@ -150,8 +149,7 @@ public class ProductController {
 	@RequestMapping(value = "/productUpdate")
 	public String itemUpdate (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
 		mode = "update";
-		logger.info("itemUpdate È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
-		logger.info("pvo="+pvo.getP_no());
+		logger.info("itemUpdate È£Ãâ ¼º°ø!");
 		
 		int result = 0;
 		result = productService.productUpdate(pvo);
@@ -159,10 +157,7 @@ public class ProductController {
 		if(result == 1){
 			List<MultipartFile> files = uvo.getFiles();
 			
-			logger.info("filesSize="+files.size());
-			/*ï¿½ï¿½ï¿½Ï¸ï¿½ È®ï¿½ï¿½*/
-			logger.info("files="+files.get(0).getOriginalFilename().toString());
-			
+			/*ÆÄÀÏ¸í È®ÀÎ*/
 			String fileChk = files.get(0).getOriginalFilename().toString();
 			
 			if(fileChk != ""){
@@ -170,12 +165,11 @@ public class ProductController {
 				uploadService.uploadDelete(uvo);
 				for(MultipartFile file : files ){
 					uvo.setFile(file);
-					int fileResult = imgInsert(uvo, request);
-					logger.info(fileResult);
+					/*int fileResult = */imgInsert(uvo, request);
+					/*logger.info(fileResult);*/
 				}
 			}
 		}else {
-			logger.info(result);
 		}
 		
 		String url = "productDetail?p_no="+pvo.getP_no();
@@ -183,27 +177,23 @@ public class ProductController {
 		return "redirect:"+url;
 	}
 	
-	/*ï¿½ï¿½Ç°ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½*/
+	/*ï¿½ï¿½Ç°ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿, ï¿½ï¿½ï¿½ï¿½*/
 	public int imgInsert(UploadVO uvo, HttpServletRequest request) throws IOException {
 		int fileResult = 0;
 		
-		logger.info(uvo.getFile());
 		String pi_file = FileUploadUtil.fileUpload(uvo.getP_no(), uvo.getFile(), request);
 		uvo.setPi_file(pi_file);
 		if(pi_file != null){
 			if(mode == "insert"){
-				logger.info("mode="+mode);
 				fileResult = uploadService.uploadInsert(uvo);
 			}else if(mode == "update"){
-				logger.info("mode="+mode);
-				//fileResult = uploadService.uploadUpdate(uvo);
 				fileResult = uploadService.uploadInsert(uvo);
 			}
-			if(fileResult == 1){
+			/*if(fileResult == 1){
 				logger.info("fileResult="+fileResult);
 			}else{
 				logger.info("fileResult="+fileResult);
-			}
+			}*/
 		}
 		return fileResult;
 	}
@@ -212,19 +202,14 @@ public class ProductController {
 	@RequestMapping(value = "/productDelete")
 	public String itemDelete (@ModelAttribute ProductVO pvo) {
 		mode = "update";
-		logger.info("itemDelete È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
-		logger.info("p_no="+pvo.getP_no());
-		logger.info("p_name="+pvo.getP_name());
-		logger.info("p_del="+pvo.getP_del());
+		/*int result = 0;*/
+		/*result = */productService.productDelete(pvo);
 		
-		int result = 0;
-		result = productService.productDelete(pvo);
-		
-		if(result == 1){
+		/*if(result == 1){
 			logger.info("success = "+result);
 		}else {
 			logger.info("fail = "+result);
-		}
+		}*/
 		
 		String url = "product";
 		return "redirect:"+url;

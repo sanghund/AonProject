@@ -28,4 +28,16 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return orderDAO.cartList(vo);
 	}
+
+	@Override
+	public int orderInsert(Product_orderVO ovo) {
+		int orderInsert = orderDAO.orderInsert(ovo);
+		return orderInsert;
+	}
+
+	@Override
+	public String checkOnum() {
+		String checkOnum = orderDAO.checkOnum();
+		return checkOnum;
+	}
 }

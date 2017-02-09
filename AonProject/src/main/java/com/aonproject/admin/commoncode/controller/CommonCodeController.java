@@ -26,7 +26,6 @@ public class CommonCodeController {
 		logger.info("commonCode �샇異� �꽦怨�!");
 		
 		model.addAttribute("commonCodeList", commonCodeService.commonCodeList(cvo));
-		
 		return "admin/commonCode/detailForm";
 	}
 }
