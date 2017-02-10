@@ -44,6 +44,11 @@
 			margin : 50px 0;
 			clear: both;
 		}
+		#ttt{
+			text-align: center;
+			font-size: 30px;
+			font-weight: bold;
+		}
 	</style>
 	<div class = "main">
 		<h2 id = "aTitle">회원가입</h2>
@@ -62,35 +67,9 @@
 		</div>
 		<div id = "celebration">
 			<div>
-				<div>회원가입을 축하드립니다!</div>
+				<div id = "ttt">회원가입을 축하드립니다!</div>
 			</div>		
 		</div>
 	</div>
-	
-	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$("#gogoJoin").click(function(){
-				$.ajax({
-					url : "/member/joinGo",
-					data : $("#joinForm").serialize(),
-					type : "post",
-					dataType : "text",
-					error : function(){
-						alert("시스템 에러입니다.");
-					},
-					success : function(result){
-						if(result == "good"){
-							alert("회원가입에 성공하였습니다!");
-							location.href = "/";
-						}
-						else{
-							alert("시스템 에러입니다.");
-						}
-					}
-				});
-			});
-		});
-	</script>
 </body>
 </html>

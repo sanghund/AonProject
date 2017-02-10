@@ -98,7 +98,6 @@
 					<span class = "array">이메일</span><input type = "text" maxlength="30" id = "a_email1" name = "a_email1">
 					<span id = "arroba">@</span>
 					<input type = "text" maxlength="30" id = "a_email2" name = "a_email2">
-					<span id = "addrChkMsg"></span>
 					<select id = "choiceEmailType" name = "choiceEmailType">
 						<option value="none" selected="selected">직접입력</option>
 						<option value="naver.com">네이버</option>
@@ -224,6 +223,7 @@
     				overlapChk($("#a_id"), $("#idChkMsg"), "admin");
     			}
     		});
+ 
     		
     		// 비밀번호 동일체크
     		$("#a_pwd2").blur(function(){
