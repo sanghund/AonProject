@@ -12,10 +12,15 @@
 				ca_no = #{ca_no}
 			</if>
 		</where>
+		order by ca_no asc
 	</select>
 	
 	<insert id="categoryInsert" parameterType="category">
 		insert into category(ca_no, ca_name) values(category_seq.nextval, #{ca_name})
 	</insert>
+	
+	<update id="caUpdate" parameterType="category">
+		update category set ca_name = #{ca_name} where ca_no = #{ca_no}
+	</update>
 	
 </mapper>

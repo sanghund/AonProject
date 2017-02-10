@@ -29,6 +29,11 @@ public class CategoryDAOImpl implements CategoryDAO {
 		return session.insert("categoryInsert",cvo);
 	}
 
+	@Override
+	public int caUpdate(CategoryVO cavo) {
+		return session.update("caUpdate");
+	}
+
 //	@Override
 //	public CategoryVO categorySelect(CategoryVO cvo) {
 //		return session.selectOne("categorySelect", cvo);

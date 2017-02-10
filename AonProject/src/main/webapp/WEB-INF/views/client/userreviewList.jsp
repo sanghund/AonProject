@@ -41,10 +41,28 @@
 			//글 입력폼띄우기
 			$(".review_write").hide();
 			$(".write_button").click(function(){
-				$(".review_write").show();
-				$(".find_review").find("td").hide();
-				$(".qna_write").hide();
-				rollBack();
+				var p_no = $(this).children(".p_no").val();	
+				alert("h2");
+				$.ajax({
+					url:"/review/reviewOrderConfirm",
+					type:"post",
+					dataType:"text",
+					data: "p_no="+p_no,
+					error:function(){
+						alert("시스템 오류입니다. 관리자에게 문의하세요.");
+					},
+					success:function(result){
+						if(result == "success"){
+							$(".review_write").show();
+							$(".find_review").find("td").hide();
+							rollBack();
+							alert("글을 쓰실 수 있습니다.");
+						}else if(result == "fail"){
+							alert("상품주문 후에 작성하실 수 있습니다.");
+						}
+					}
+				});
+				
 			});
 			
 			//write버튼을 클릭했을 때 입력
@@ -199,6 +217,7 @@
 						});
 					}
 					else if($(re_file).val()!=""){
+						
 						$(update_form).ajaxForm({
 							url:"/review/reviewuserUpdate",
 							type:"post",
@@ -258,9 +277,12 @@
 				ALL VIEW
 			</div>
 			<sec:authorize access="hasRole('user')">
+			
 				<div class="write_button">
 					WRITE
+					<input type="hidden" class="p_no" name="p_no" value="${param.no }">
 				</div>
+		
 			</sec:authorize>
 		</div>
 		<sec:authorize access="hasRole('user')">
@@ -285,7 +307,10 @@
 						<tr>
 							<th><div class="tb-left">비밀번호 : </div></th>
 							<td>
-								<div class="tb-left frm-w"><input type="password" name="re_pwd" id="re_pwd" size="20" maxlength="30"></div>
+								<div class="tb-left frm-w">
+									<input type="password" name="re_pwd" id="re_pwd" size="20" maxlength="30">
+									<span style="color:red;">비밀번호는 자동 저장됩니다.</span>
+								</div>
 							</td>
 						</tr>
 						<tr>

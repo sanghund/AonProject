@@ -55,16 +55,15 @@ public class OrderController{
 	
 	@Autowired
 	private MemberService memberService;
-	
-	//ÁÖ¹®¿Ï·á
+
 	@RequestMapping(value="/orderResult")
 	public String orderResult(Authentication auth, @ModelAttribute ProductVO povo, @ModelAttribute CategoryVO cvo, Model model){
-		logger.info("orderResult È£Ãâ ¼º°ø");
+		logger.info("orderResult È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		/*È¸¿øÁ¤º¸ Ãâ·Â*/
+		/*È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½*/
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		MemberVO memberInfo = memberService.memberInfo(vo);
 		model.addAttribute("memberInfo", memberInfo);
@@ -72,7 +71,7 @@ public class OrderController{
 		List<Product_orderVO> orderInfo = new ArrayList<Product_orderVO>();
 		List<ProductVO> productList = new ArrayList<ProductVO>();
 		
-		//o_num »ý¼º : max(o_no)+1
+		//o_num ï¿½ï¿½ï¿½ï¿½ : max(o_no)+1
 		String checkOnum = orderService.checkOnum();
 		if(checkOnum == "" || checkOnum == null){
 			checkOnum = 1+"";
@@ -88,7 +87,7 @@ public class OrderController{
 			cal.setP_no(povo.getP_nos().get(i).toString());
 			cal = productService.productDetail(cal);
 			
-			//ÁÖ¹®VO Ç×¸ñ µî·Ï
+			//ï¿½Ö¹ï¿½VO ï¿½×¸ï¿½ ï¿½ï¿½ï¿½
 			ovo.setP_no(povo.getP_nos().get(i).toString());
 			//logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+ovo.getP_no());
 			ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
@@ -102,7 +101,7 @@ public class OrderController{
 			int result = orderService.orderInsert(ovo);
 			logger.info("orderInser="+result);
 			
-			//»óÇ°VO Ç×¸ñ µî·Ï
+			//ï¿½ï¿½Ç°VO ï¿½×¸ï¿½ ï¿½ï¿½ï¿½
 			cal.setO_cnt(ovo.getO_cnt());
 			cal.setO_mode(ovo.getO_mode());
 			cal.setO_confirm(ovo.getO_confirm());
@@ -123,21 +122,20 @@ public class OrderController{
 		return "client/order/orderResult";
 	}
 	
-	//ÁÖ¹®
 	@RequestMapping(value= "/order")
 	public String order(Authentication auth, @ModelAttribute Product_orderVO povo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute ProductVO pvo, HttpServletRequest request, Model model){
-		logger.info("order È£Ãâ ¼º°ø");
+		logger.info("order È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		
-		/*È¸¿øÁ¤º¸ Ãâ·Â*/
+		/*È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½*/
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		MemberVO memberInfo = memberService.memberInfo(vo);
 		model.addAttribute("memberInfo", memberInfo);
 		
-		/*Ä«Å×°í¸® ¸®½ºÆ® Ãâ·Â*/
+		/*Ä«ï¿½×°ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½*/
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(cmvo);
+		List<CommonCodeVO> commonCodeList = commonCodeService.CommonCodeList(cmvo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
 		ArrayList<ProductVO> orderList = new ArrayList<ProductVO>();
@@ -171,10 +169,10 @@ public class OrderController{
 	}
 	
 	
-	// Àå¹Ù±¸´Ï
+	// ï¿½ï¿½Ù±ï¿½ï¿½ï¿½
 	@RequestMapping(value= "/cart")
 	public ModelAndView cart(@ModelAttribute CategoryVO cvo, HttpServletRequest request, HttpServletResponse response){
-		logger.info("cart È£Ãâ ¼º°ø");
+		logger.info("cart È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		ModelAndView mav = new ModelAndView();
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		mav.addObject("categoryList", categoryList);
@@ -222,10 +220,10 @@ public class OrderController{
 		return mav;
 	}
 	
-	// Àå¹Ù±¸´Ï Á¦°Å
+	// ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/cartD", method = RequestMethod.POST)
 	public String cartD(@ModelAttribute CartVO vo, HttpServletRequest request, HttpServletResponse response){
-		logger.info("cartD È£Ãâ ¼º°ø");
+		logger.info("cartD È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
 		Cookie[] cookies = request.getCookies();
 		Cookie cookie = null;
@@ -290,10 +288,10 @@ public class OrderController{
 		return "redirect:/order/cart";
 	}
 	
-	// Àå¹Ù±¸´Ï µî·Ï
+	// ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	@RequestMapping(value="/wish", method = RequestMethod.POST)
 	public ModelAndView wish(RedirectAttributes redirectAttributes, @ModelAttribute CartVO vo ,HttpServletRequest request, HttpServletResponse response){
-		logger.info("wish È£Ãâ ¼º°ø");
+		logger.info("wish È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		ModelAndView mav = new ModelAndView();
 		
 		String goodNo = "";
@@ -302,8 +300,6 @@ public class OrderController{
 		logger.info(request.getHeader("referer"));
 		if(you > -1){
 			goodNo = request.getHeader("referer").substring(you + 10);
-			you = goodNo.toUpperCase().indexOf("S");
-			goodNo = goodNo.toUpperCase().substring(0, you);
 			logger.info(goodNo);
 			redirectAttributes.addFlashAttribute("goodNo", goodNo);
 		} 

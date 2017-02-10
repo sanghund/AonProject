@@ -122,6 +122,7 @@
 <style>
 	table {border-collapse:collapes; width:800px;}
 	td {border:1px solid #222; padding:1em;}
+	.btnContainer {margin-bottom:20em;}
 </style>
 	<h2>상품 디테일</h2>
 	<!-- 상품 등록, 수정, 삭제 입력 폼 -->
@@ -285,7 +286,7 @@
 										</c:forEach>
 									</c:when>
 								</c:choose>
-								<input type="file" class="file" name="files[0]"><input type="button" class="addFileBtn" value="+">
+								<input type="file" class="file" name="files[0]" multiple="multiple"><input type="button" class="addFileBtn" value="+">
 							</div>
 						</td>
 					</tr>

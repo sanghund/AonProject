@@ -3,7 +3,7 @@
 <mapper namespace="com.aonproject.admin.qna.dao.QnaDAO">
 	<select id="qnaList" resultType="qna" parameterType="qna">
 		select q_no, q_title, q_content, q_pwd, to_char(q_date, 'yyyy-MM-dd hh24:mm:ss')as q_date,
-		q_confirm, p_no, m_no, q_name from qna where p_no = #{p_no}
+		q_confirm, p_no, m_no, q_name from qna where p_no like #{p_no}||'%'
 		order by q_confirm asc, q_no desc
 	</select>
 	
@@ -29,7 +29,7 @@
 	
 	<insert id="qnaUserInsert" parameterType="qna">
 		insert into qna(q_no, q_title, q_content, q_pwd, p_no, m_no) 
-			values(QNA_seq.nextval, #{q_title}, #{q_content}, #{q_pwd}, #{p_no}, #{m_no})
+			values(QNA_seq.nextval, #{q_title}, #{q_content}, #{q_pwd}, (select p_no from product_order where o_no = (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%')), #{m_no})
 	</insert>
 	
 	<update id="qnaConfirm" parameterType="qna">
