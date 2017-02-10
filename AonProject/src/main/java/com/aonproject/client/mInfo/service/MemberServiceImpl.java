@@ -89,4 +89,46 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.msaD(vo);
 	}
 
+	@Override
+	public int lostIdChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.lostIdChk(vo);
+	}
+
+	@Override
+	public int lostPwdChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.lostPwdChk(vo);
+	}
+
+	@Override
+	public String sendId(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.sendId(vo);
+	}
+
+	@Override
+	public int sendPwd(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.sendPwd(vo);
+	}
+
+	@Override
+	public int emailChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.emailChk(vo);
+	}
+
+	@Override
+	public int emailChk2(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.emailChk2(vo);
+	}
+
+	@Override
+	public int idChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.idChk(vo);
+	}
+
 }

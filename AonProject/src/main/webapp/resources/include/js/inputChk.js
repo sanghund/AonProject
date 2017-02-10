@@ -81,12 +81,13 @@ else{
 
 
 /*
-	아이디 중복 체크
+	아이디 or 이메일 중복 체크
 	main : 검사 대상
 	item : 메시지를 출력할 대상
 	type : 관리자 or 유저 식별
 */
 var idOverlopChk = false;
+var emailOverlopChk = false;
 function overlapChk(main, item, type){
 	var target = "";
 	var id = main.attr("id");
@@ -94,9 +95,13 @@ function overlapChk(main, item, type){
 	if(type == "admin"){
 		target = "/admin/overlapChk";
 	}
-	else{
-		target = "/member/overlapChk";
+	else if(type == "m_email"){
+		target = "/member/emailChk";
 	}
+	else{
+		target = "/member/idChk";
+	}
+	var dd = type;
 	$.ajax({
 		url : target,
 		data : id+"="+val,
@@ -107,15 +112,56 @@ function overlapChk(main, item, type){
 		},
 		success : function(result){
 			if(result == "success"){
-				item.html("사용 가능한 아이디입니다.");
-				idOverlopChk = true;
+				if(dd == "m_email"){
+					item.html("사용 가능한 이메일입니다.");
+					emailOverlopChk = true
+				}
+				else{
+					item.html("사용 가능한 아이디입니다.");
+					idOverlopChk = true;
+				}
 			}
 			else{
-				item.html("이미 사용중인 아이디입니다.");
-				idOverlopChk = false;
+				if(dd == "m_email"){
+					item.html("이미 사용중인 이메일입니다.");
+					emailOverlopChk = false;
+				}
+				else{
+					item.html("이미 사용중인 아이디입니다.");
+					idOverlopChk = false;
+				}
 			}
 		}
 	});
+}
+
+/*
+자기 정보를 제외한 이메일 중복 체크
+main : 검사 대상
+*/
+var emailOverlopChk2 = false;
+function overlapChk2(main){
+var id = main.attr("id");
+var val = main.val();
+
+$.ajax({
+	url : "/member/emailChk",
+	data : id+"="+val,
+	dataType : "text",
+	type : "post",
+	error : function(){
+		alert("시스템 에러입니다.");
+	},
+	success : function(result){
+		if(result == "success"){
+				emailOverlopChk2 = true;
+		}
+		else{
+				alert("이미 사용중인 이메일입니다.");
+				emailOverlopChk2 = false;
+		}
+	}
+});
 }
 
 /*

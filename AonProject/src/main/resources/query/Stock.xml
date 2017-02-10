@@ -4,4 +4,30 @@
 	<select id="stockChk" parameterType="stock" resultType="java.lang.Integer">
 		select nvl(stock_cnt, 0) stock_cnt from stock where upper(p_no) = upper(#{p_no})
 	</select>
+	
+	<update id="stockOrder" parameterType="stock">
+		update stock set stock_cnt = stock_cnt - #{stock_cnt} where p_no = #{p_no}
+	</update>
+	
+	<select id="stockList" resultType="stock">
+		select product.p_no, 
+		       stock_cnt,
+		       category.ca_name, p_type_cd.cc_name "p_type_name", 
+		       p_name, p_price, p_discount, color_cd.cc_name "color", size_cd.cc_name "size", 
+		       to_char(stock_date, 'yyyy-mm-dd HH24:MI:SS') stock_date
+		from product 
+		left join category on product.ca_no = category.ca_no 
+		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
+		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
+		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no)
+		left join stock on product.p_no = stock.p_no order by stock_cnt asc
+	</select>
+	
+	<update id="stockUpdate" parameterType="stock">
+		update stock set stock_cnt = stock_cnt + #{stock_cnt}, stock_date = sysdate where p_no = #{p_no}
+	</update>
+	
+	<insert id="stockInsert">
+		insert into stock(p_no) values(#{p_no})
+	</insert>
 </mapper>

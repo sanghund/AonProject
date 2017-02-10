@@ -32,6 +32,15 @@
 		<put-attribute name="main" value="/WEB-INF/views/admin/notice/noticeList.jsp" />
 	</definition>
 	
+
+	<definition name="admin/review/reviewList" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/review/reviewList.jsp" />
+	</definition>
+	
+	<definition name="admin/commentQnA/commentQnAList" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/commentQnA/commentQnAList.jsp" />
+	</definition>
+
 	<!-- 공지사항 상세 페이지 -->
 	<definition name="admin/notice/writeForm" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/notice/writeForm.jsp" />
@@ -90,4 +99,15 @@
 	<definition name="admin/commonCode/tDetailForm" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/commonCode/tDetailForm.jsp" />
 	</definition>
+	
+	<!-- 재고 관리 페이지 -->
+	<definition name="admin/stock/*" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/stock/{1}.jsp" />
+	</definition>
+	
+	<!-- 공통코드 관리 페이지 -->
+	<definition name="admin/commonCode/*" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/commonCode/{1}.jsp" />
+	</definition>
+	
 </tiles-definitions>

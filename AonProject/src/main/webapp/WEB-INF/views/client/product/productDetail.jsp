@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set value="0" var="iSize" scope="page" />
 <c:forEach var="commonCodeList" items="${commonCodeList}">
 	<c:if test="${commonCodeList.cc_group eq 'size' && commonCodeList.cc_name ne 'F'}">
 			<c:set value="${iSize + 1 }" var="iSize" scope="page" />				
 		</c:if>
-
 </c:forEach>
 <style>
 	.width40 {width:40%;}
@@ -164,10 +164,11 @@
 					<td>
 						<select name="size" id="size">
 							<option value="">사이즈선택</option>
-							<c:forEach var="commonCodeList" items="${commonCodeList}">
-								<c:if test="${commonCodeList.cc_group eq 'size' && commonCodeList.cc_name ne 'F'}">
-									<c:set value="${iSize + 1 }" var="iSize" scope="page" />
-									<option value="${commonCodeList.cc_no}" class="temp">${commonCodeList.cc_name}</option>
+							<c:forEach var="productList" items="${productList}">
+								<c:if test="${productList.p_no eq fn:substring(productDetail.p_no,0,5)}">
+									<c:if test="${productList.color_code eq productDetail.color_code}">
+										<option value="${productList.size_code}">${productList.size}</option>
+									</c:if>
 								</c:if>
 							</c:forEach>
 						</select>
@@ -190,4 +191,9 @@
 		</c:forEach>
 	</div>
 		
+</div>
+
+<div class = "pageImport">
+	<c:import url="/review/reviewuserList?p_no=${param.no}" />
+	<c:import url="/qna/qnauserList?p_no=${param.no}" />
 </div>

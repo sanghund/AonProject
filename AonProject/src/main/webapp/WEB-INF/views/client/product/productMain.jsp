@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style>
 	.item {width:300px; float:left; margin:2em;}
+	.item > a {width: 260px; height: 270px; overflow: hidden; display: block; margin: 0 auto;}
 	.item > a > img {width:260px; margin:10px auto; display:block;}
 	.content ul {text-align:center; margin:1em 0;}
 	.content ul li {line-height:1.2rem;}
@@ -24,7 +25,7 @@
 		<c:when test="${not empty productForCategory}">
 			<c:forEach items="${productForCategory}" varStatus="status">
 				<div class="item" data-num="${productForCategory[status.index].p_no}">
-					<a href="/detail?no=${productForCategory[status.index].p_no}">
+					<a href="/detail?no=${fn:substring(productForCategory[status.index].p_no,0,7)}">
 						<img src="/productUpload/${productForCategory[status.index].pi_file}" />
 					</a>
 					<ul>

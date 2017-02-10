@@ -13,7 +13,7 @@
 	
 	<!-- 공통코드 color 리스트 조회 -->
 	<select id="cCommonCodeList" resultType="commonCode" parameterType="commonCode">
-		/* commonCode - commonCodeList */
+	/* commonCode - sCommonCodeList */
 		select cc_no, upper(cc_name) as cc_name, cc_group, cc_desc, cc_date 
 		from common_code
 		where cc_group = 'color'
@@ -83,5 +83,4 @@
 	        #{cc_desc}
 	    )
 	</insert>
-	
 </mapper>

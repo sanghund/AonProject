@@ -26,6 +26,7 @@ import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 import com.aonproject.admin.product.service.ProductService;
 import com.aonproject.admin.product.vo.ProductVO;
 import com.aonproject.admin.stock.service.StockService;
+import com.aonproject.admin.stock.vo.StockVO;
 import com.aonproject.client.mInfo.service.MemberService;
 import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.client.order.service.OrderService;
@@ -54,8 +55,73 @@ public class OrderController{
 	
 	@Autowired
 	private MemberService memberService;
+
+	@RequestMapping(value="/orderResult")
+	public String orderResult(Authentication auth, @ModelAttribute ProductVO povo, @ModelAttribute CategoryVO cvo, Model model){
+		logger.info("orderResult ȣ�� ����");
+		
+		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
+		model.addAttribute("categoryList", categoryList);
+		
+		/*ȸ������ ���*/
+		MemberVO vo = (MemberVO) auth.getPrincipal();
+		MemberVO memberInfo = memberService.memberInfo(vo);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		List<Product_orderVO> orderInfo = new ArrayList<Product_orderVO>();
+		List<ProductVO> productList = new ArrayList<ProductVO>();
+		
+		//o_num ���� : max(o_no)+1
+		String checkOnum = orderService.checkOnum();
+		if(checkOnum == "" || checkOnum == null){
+			checkOnum = 1+"";
+		}else{
+			checkOnum = (Integer.parseInt(checkOnum)+1)+"";
+		}
+		//logger.info("aaaaa"+povo.getP_nos());
+		logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+povo.getP_nos().size());
+		for(int i=0; i<povo.getP_nos().size(); i++){
+			Product_orderVO ovo = new Product_orderVO();
+			
+			ProductVO cal = new ProductVO();
+			cal.setP_no(povo.getP_nos().get(i).toString());
+			cal = productService.productDetail(cal);
+			
+			//�ֹ�VO �׸� ���
+			ovo.setP_no(povo.getP_nos().get(i).toString());
+			//logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+ovo.getP_no());
+			ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
+			//logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+ovo.getO_cnt());
+			ovo.setO_mode(povo.getO_mode().toString());
+			ovo.setO_confirm(povo.getO_confirm().toString());
+			ovo.setM_no(vo.getM_no());
+			ovo.setO_price(cal.getP_price()-(cal.getP_price() * (cal.getP_discount() / 100)) * ovo.getO_cnt());
+			ovo.setO_num(checkOnum);
+			orderInfo.add(ovo);
+			int result = orderService.orderInsert(ovo);
+			logger.info("orderInser="+result);
+			
+			//��ǰVO �׸� ���
+			cal.setO_cnt(ovo.getO_cnt());
+			cal.setO_mode(ovo.getO_mode());
+			cal.setO_confirm(ovo.getO_confirm());
+			cal.setO_num(ovo.getO_num());
+			cal.setM_no(ovo.getM_no());
+			productList.add(cal);
+			
+			StockVO svo = new StockVO();
+			svo.setP_no(ovo.getP_no());
+			svo.setStock_cnt(ovo.getO_cnt());
+			int stockResult = stockService.stockOrder(svo);
+			logger.info("stockResult="+stockResult);
+		}
+		
+		model.addAttribute("orderInfo", orderInfo);
+		model.addAttribute("productList", productList);
+		
+		return "client/order/orderResult";
+	}
 	
-	//�ֹ�
 	@RequestMapping(value= "/order")
 	public String order(Authentication auth, @ModelAttribute Product_orderVO povo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute ProductVO pvo, HttpServletRequest request, Model model){
 		logger.info("order ȣ�� ����");
@@ -63,7 +129,6 @@ public class OrderController{
 		/*ȸ������ ���*/
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		MemberVO memberInfo = memberService.memberInfo(vo);
-		logger.info("getM_tel: "+memberInfo.getM_tel());
 		model.addAttribute("memberInfo", memberInfo);
 		
 		/*ī�װ� ����Ʈ ���*/
@@ -73,17 +138,31 @@ public class OrderController{
 		List<CommonCodeVO> commonCodeList = commonCodeService.CommonCodeList(cmvo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
-		
-		List<ProductVO> orderList = new ArrayList<ProductVO>();
+		ArrayList<ProductVO> orderList = new ArrayList<ProductVO>();
+		ArrayList<Product_orderVO> orderInfo = new ArrayList<Product_orderVO>();
+
 		for(int i=0; i<povo.getP_nos().size(); i++){
-			pvo.setP_no(povo.getP_nos().get(i));
+			String p_noSplit = povo.getP_nos().get(i).toString();
+			
+			pvo.setP_no(povo.getP_nos().get(i).toString());
+			
 			orderList.add(productService.productDetail(pvo));
+			orderList.get(i).setP_no(p_noSplit.substring(0,7));
+			//-------------------------------------------------------s
+			orderList.get(i).setO_cnt(povo.getO_cnts().get(i));
+			//-------------------------------------------------------e
 		}
 		
-		
-		logger.info(orderList.get(0).getP_price());
-		
-		logger.info("orderList: "+orderList.size());
+		if(orderList.size()>0){
+			for(int i=0; i<orderList.size(); i++){
+				Product_orderVO ovo = new Product_orderVO();
+				ovo.setP_no(orderList.get(i).getP_no().toString());
+			    ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
+			    orderInfo.add(ovo);
+			    System.out.println("---------------------\n"+ovo.toString() + "\n-------------------");
+			}
+			model.addAttribute("orderInfo", orderInfo);
+		}
 		model.addAttribute("orderList", orderList);
 		
 		return "client/order/order";
@@ -221,8 +300,6 @@ public class OrderController{
 		logger.info(request.getHeader("referer"));
 		if(you > -1){
 			goodNo = request.getHeader("referer").substring(you + 10);
-			you = goodNo.toUpperCase().indexOf("S");
-			goodNo = goodNo.toUpperCase().substring(0, you);
 			logger.info(goodNo);
 			redirectAttributes.addFlashAttribute("goodNo", goodNo);
 		} 

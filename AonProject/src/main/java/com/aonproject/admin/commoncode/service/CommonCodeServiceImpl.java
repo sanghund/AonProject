@@ -17,13 +17,13 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 	private CommonCodeDAO commonCodeDAO;
 	
 	// common code list
-	@Override
+    @Override
 	public List<CommonCodeVO> CommonCodeList(CommonCodeVO cvo) {
 		List<CommonCodeVO> commonCodeList = null;
 		commonCodeList = commonCodeDAO.CommonCodeList(cvo);
 		return commonCodeList;
-	}
-	
+    }
+    
 	// size, color, type code list
 	@Override
 	public List<CommonCodeVO> sCommonCodeList(CommonCodeVO cvo) {

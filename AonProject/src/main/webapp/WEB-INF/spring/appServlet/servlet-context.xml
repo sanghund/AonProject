@@ -16,6 +16,7 @@
    <resources mapping="/resources/**" location="/resources/" />
    <resources location="/mainUpload/" mapping="/mainUpload/**"></resources>
    <resources location="/productUpload/" mapping="/productUpload/**"></resources>
+   <resources location="/reviewFileUpload/" mapping="/reviewFileUpload/**"></resources>
    
    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
    <!-- tiles + default -->
@@ -61,7 +62,7 @@
    <beans:bean id = "multipartResolver" class = "org.springframework.web.multipart.commons.CommonsMultipartResolver">
       <beans:property name="defaultEncoding" value = "utf-8" />
       <!-- byte 단위 -->
-      <beans:property name="maxUploadSize" value = "5242880" />
+      <beans:property name="maxUploadSize" value = "20971520" />
    </beans:bean>
 
 </beans:beans>
