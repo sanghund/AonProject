@@ -2,17 +2,85 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.aonproject.admin.commoncode.dao.CommonCodeDAO">
-	<!-- 공통코드 리스트 조회 -->
-	<select id="commonCodeList" resultType="commonCode" parameterType="commonCode">
-		/* commonCode - commonCodeList */
-		select upper(cc_no) as cc_no, upper(cc_name) as cc_name, cc_group, cc_desc, cc_date 
+	
+	<!-- 공통코드 size 리스트 조회 -->
+	<select id="sCommonCodeList" resultType="commonCode" parameterType="commonCode">
+		/* commonCode - sCommonCodeList */
+		select cc_no, upper(cc_name) as cc_name, cc_group, cc_desc, cc_date 
 		from common_code
+		where cc_group = 'size'
 	</select>
 	
-	<!-- 공통코드 등록 -->
-	<!-- <insert id="commonCodeList" parameterType="commonCode">
-	/* commonCode - commonCodeList */
-	insert into common_code(cc_no, cc_name, cc_group, cc_desc)
-	            values('s'+, #{mp_file})
-	</insert> -->
+	<!-- 공통코드 color 리스트 조회 -->
+	<select id="cCommonCodeList" resultType="commonCode" parameterType="commonCode">
+	/* commonCode - sCommonCodeList */
+		select cc_no, upper(cc_name) as cc_name, cc_group, cc_desc, cc_date 
+		from common_code
+		where cc_group = 'color'
+	</select>
+	
+	<!-- 공통코드 type 리스트 조회 -->
+	<select id="tCommonCodeList" resultType="commonCode" parameterType="commonCode">
+		/* commonCode - commonCodeList */
+		select cc_no, upper(cc_name) as cc_name, cc_group, cc_desc, cc_date 
+		from common_code
+		where cc_group = 'p_type'
+	</select>
+	
+	<!-- 공통코드 size 입력  -->
+	<insert id="sCommonCodeInsert" parameterType="commonCode">
+	    <selectKey keyProperty="cc_no" resultType="String" order="BEFORE">
+	     	select nvl(concat(substr(cc_no,1,1),to_char(max(substr(cc_no,2,1))+1)), 'S0') from common_code where substr(cc_no,1,1) ='S' group by substr(cc_no,1,1) 
+	    </selectKey>
+	    insert into common_code(
+	        cc_no,
+	        cc_name,
+	        cc_group,
+	        cc_desc
+	    )
+	    values(
+	        #{cc_no},
+	        #{cc_name},
+	        #{cc_group},
+	        #{cc_desc}
+	    )
+	</insert>
+	
+	<!-- 공통코드 color 입력  -->
+	<insert id="cCommonCodeInsert" parameterType="commonCode">
+	    <selectKey keyProperty="cc_no" resultType="String" order="BEFORE">
+	     	select nvl(concat(substr(cc_no,1,1),to_char(max(substr(cc_no,2,1))+1)), 'C0') from common_code where substr(cc_no,1,1) ='C' group by substr(cc_no,1,1) 
+	    </selectKey>
+	    insert into common_code(
+	        cc_no,
+	        cc_name,
+	        cc_group,
+	        cc_desc
+	    )
+	    values(
+	        #{cc_no},
+	        #{cc_name},
+	        #{cc_group},
+	        #{cc_desc}
+	    )
+	</insert>
+	
+	<!-- 공통코드 color 입력  -->
+	<insert id="tCommonCodeInsert" parameterType="commonCode">
+	    <selectKey keyProperty="cc_no" resultType="String" order="BEFORE">
+	     	select nvl(concat(substr(cc_no,1,1),to_char(max(substr(cc_no,2,1))+1)), 'T0') from common_code where substr(cc_no,1,1) ='T' group by substr(cc_no,1,1) 
+	    </selectKey>
+	    insert into common_code(
+	        cc_no,
+	        cc_name,
+	        cc_group,
+	        cc_desc
+	    )
+	    values(
+	        #{cc_no},
+	        #{cc_name},
+	        #{cc_group},
+	        #{cc_desc}
+	    )
+	</insert>
 </mapper>

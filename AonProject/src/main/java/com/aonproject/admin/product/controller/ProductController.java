@@ -83,9 +83,8 @@ public class ProductController {
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(ovo);
-		model.addAttribute("commonCodeList", commonCodeList);
-		
+	    List<CommonCodeVO> CommonCodeList = commonCodeService.CommonCodeList(ovo);
+		model.addAttribute("commonCodeList", CommonCodeList);
 		
 		List<UploadVO> uploadList = uploadService.uploadList(uvo);
 		model.addAttribute("uploadList", uploadList);
@@ -97,12 +96,12 @@ public class ProductController {
 	/*move writeForm*/
 	@RequestMapping(value = "/writeForm")
 	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
-		logger.info("writeFrom È£Ãâ ¼º°ø!");
+		logger.info("writeFrom È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(ovo);
+		List<CommonCodeVO> commonCodeList = commonCodeService.CommonCodeList(ovo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
 		ProductVO pvo = new ProductVO();
@@ -115,12 +114,12 @@ public class ProductController {
 	/*Product Insert*/
 	@RequestMapping(value = "/productInsert")
 	public String itemInsert (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
-		logger.info("itemInsert È£Ãâ ¼º°ø!");
+		logger.info("itemInsert È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 		mode = "insert";
 		int result = 0;
 		String createP_no = "";
 		
-		//»óÇ°¹øÈ£(p_no) »ý¼º
+		//ï¿½ï¿½Ç°ï¿½ï¿½È£(p_no) ï¿½ï¿½ï¿½ï¿½
 		logger.info("p_no1="+pvo.getP_no().length());
 		
 		StockVO svo = new StockVO();
@@ -163,7 +162,7 @@ public class ProductController {
 	@RequestMapping(value = "/productUpdate")
 	public String itemUpdate (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
 		mode = "update";
-		logger.info("itemUpdate È£Ãâ ¼º°ø!");
+		logger.info("itemUpdate È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!");
 		
 		int result = 0;
 		result = productService.productUpdate(pvo);
@@ -171,7 +170,7 @@ public class ProductController {
 		if(result == 1){
 			List<MultipartFile> files = uvo.getFiles();
 			
-			/*ÆÄÀÏ¸í È®ÀÎ*/
+			/*ï¿½ï¿½ï¿½Ï¸ï¿½ È®ï¿½ï¿½*/
 			String fileChk = files.get(0).getOriginalFilename().toString();
 			
 			if(fileChk != ""){
@@ -191,7 +190,7 @@ public class ProductController {
 		return "redirect:"+url;
 	}
 	
-	/*ï¿½ï¿½Ç°ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿, ï¿½ï¿½ï¿½ï¿½*/
+	/*ï¿½ï¿½Ç°ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½*/
 	public int imgInsert(UploadVO uvo, HttpServletRequest request) throws IOException {
 		int fileResult = 0;
 		

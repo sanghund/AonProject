@@ -36,39 +36,39 @@ public class ClientProductController {
 	@Autowired
 	private UploadService uploadService;
 	
-	//»óÇ° ¸®½ºÆ® Ãâ·Â
+	//ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½
 	@RequestMapping(value = "category")
 	public String productList (@ModelAttribute CategoryVO cvo, ProductVO pvo, Model model, @RequestParam("no") int no){
-		/*Ä«Å×°í¸® ¸®½ºÆ® Ãâ·Â*/
+		/*Ä«ï¿½×°ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½*/
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
 		logger.info(no);
 		
-		/*Ä«Å×°í¸® ¼±ÅÃ ÀÌ¸§ Ãâ·Â*/
+		/*Ä«ï¿½×°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½*/
 		cvo.setCa_no(no);
 		List<CategoryVO> categorySelect = categoryService.categoryList(cvo);
 		logger.info(cvo.getCa_name());
 		model.addAttribute("categorySelect", categorySelect);
 		
-		/*»óÇ°¸®½ºÆ® ¼±ÅÃ Ä«Å×°í¸® ¹øÈ£ »ðÀÔ*/
+		/*ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½×°ï¿½ ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½*/
 		pvo.setCa_no(no);
 		
-		/*»óÇ° ¸®½ºÆ® Ãâ·Â*/
+		/*ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½*/
 		List<ProductVO> productForCategory = productService.productForCategory(pvo);
 		model.addAttribute("productForCategory", productForCategory);
 		
 		return "client/product/productMain";
 	}
 	
-	//»óÇ° µðÅ×ÀÏ Ãâ·Â
+	//ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	@RequestMapping(value = "detail")
 	public String productDetail (@ModelAttribute CategoryVO cvo, @ModelAttribute ProductVO pvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute UploadVO uvo, Model model, @RequestParam("no") String no){
-		/*Ä«Å×°í¸® ¸®½ºÆ® Ãâ·Â*/
+		/*Ä«ï¿½×°ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½*/
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(cmvo);
+		List<CommonCodeVO> commonCodeList = commonCodeService.CommonCodeList(cmvo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
 		logger.info(no);
