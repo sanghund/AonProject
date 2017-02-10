@@ -1,5 +1,7 @@
 package com.aonproject.admin.stock.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +24,21 @@ public class StockDAOImpl implements StockDAO{
 	@Override
 	public int stockOrder(StockVO ovo) {
 		return sqlSession.update("stockOrder", ovo);
+	}
+
+	@Override
+	public List<StockVO> stockList() {
+		return sqlSession.selectList("stockList");
+	}
+
+	@Override
+	public int stockUpdate(StockVO svo) {
+		return sqlSession.update("stockUpdate", svo);
+	}
+
+	@Override
+	public int stockInsert(StockVO svo) {
+		return sqlSession.update("stockInsert", svo);
 	}
 
 }

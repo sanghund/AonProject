@@ -20,6 +20,8 @@ import com.aonproject.admin.commoncode.service.CommonCodeService;
 import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 import com.aonproject.admin.product.service.ProductService;
 import com.aonproject.admin.product.vo.ProductVO;
+import com.aonproject.admin.stock.service.StockService;
+import com.aonproject.admin.stock.vo.StockVO;
 import com.aonproject.common.util.upload.FileUploadUtil;
 import com.aonproject.common.util.upload.service.UploadService;
 import com.aonproject.common.util.upload.vo.UploadVO;
@@ -40,6 +42,9 @@ public class ProductController {
 	
 	@Autowired
 	private UploadService uploadService;
+	
+	@Autowired
+	private StockService stockService;
 	
 	String mode = "";
 	
@@ -73,7 +78,7 @@ public class ProductController {
 			model.addAttribute("productDetail" , productDetail);
 			model.addAttribute("mode", "update");
 		}
-		logger.info("pno"+productDetail.getP_no());
+		//logger.info("pno"+productDetail.getP_no());
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
@@ -89,7 +94,7 @@ public class ProductController {
 		return "admin/product/detail";
 	}
 	
-	/*ï¿½ï¿½Ç°ï¿½ï¿½ï¿ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½*/
+	/*move writeForm*/
 	@RequestMapping(value = "/writeForm")
 	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
 		logger.info("writeFrom È£Ãâ ¼º°ø!");
@@ -113,23 +118,29 @@ public class ProductController {
 		logger.info("itemInsert È£Ãâ ¼º°ø!");
 		mode = "insert";
 		int result = 0;
+		String createP_no = "";
 		
 		//»óÇ°¹øÈ£(p_no) »ý¼º
 		logger.info("p_no1="+pvo.getP_no().length());
 		
+		StockVO svo = new StockVO();
+		
 		if(pvo.getP_no().length()==0){
-			String createP_no = productService.createP_no();
-			
+			createP_no = productService.createP_no();
 			pvo.setP_no(createP_no+pvo.getColor_code().toUpperCase()+pvo.getSize_code().toUpperCase());
+			//svo.setP_no(createP_no+pvo.getColor_code().toUpperCase()+pvo.getSize_code().toUpperCase());
 		}else{
-			//String fixedP_no = pvo.getP_no().substring(0, as)
 			pvo.setP_no(pvo.getP_no()+pvo.getColor_code()+pvo.getSize_code());
+			//svo.setP_no(pvo.getP_no()+pvo.getColor_code().toUpperCase()+pvo.getSize_code().toUpperCase());
+			logger.info(svo.getP_no());
 		}
 				
 		result = productService.productInsert(pvo);
 		
 		uvo.setP_no(pvo.getP_no());
 		if(result == 1){
+			//stockService.stockInsert(svo);
+			
 			List<MultipartFile> files = uvo.getFiles();
 			
 			if(files != null && files.size()>0){
@@ -140,6 +151,9 @@ public class ProductController {
 			}
 		}else {
 		}
+		
+		
+		
 		
 		String url = "product";
 		return "redirect:"+url;

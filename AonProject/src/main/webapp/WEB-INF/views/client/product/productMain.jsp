@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style>
 	.item {width:300px; float:left; margin:2em;}
+	.item > a {width: 260px; height: 270px; overflow: hidden; display: block; margin: 0 auto;}
 	.item > a > img {width:260px; margin:10px auto; display:block;}
 	.content ul {text-align:center; margin:1em 0;}
 	.content ul li {line-height:1.2rem;}
