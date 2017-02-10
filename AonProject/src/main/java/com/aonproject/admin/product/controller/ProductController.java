@@ -75,8 +75,8 @@ public class ProductController {
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(ovo);
-		model.addAttribute("commonCodeList", commonCodeList);
+		List<CommonCodeVO> CommonCodeList = commonCodeService.CommonCodeList(ovo);
+		model.addAttribute("commonCodeList", CommonCodeList);
 		
 		List<UploadVO> uploadList = uploadService.uploadList(uvo);
 		model.addAttribute("uploadList", uploadList);
@@ -93,7 +93,7 @@ public class ProductController {
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(ovo);
+		List<CommonCodeVO> commonCodeList = commonCodeService.CommonCodeList(ovo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
 		ProductVO pvo = new ProductVO();

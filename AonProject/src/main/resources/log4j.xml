@@ -50,6 +50,7 @@
 	<logger name="com.aonproject.admin.category.dao">
 		<level value="info"></level>
 	</logger>
+	
 	<logger name="com.aonproject.client.mInfo.dao">
 		<level value="TRACE"></level>
 	</logger>

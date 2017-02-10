@@ -55,22 +55,22 @@ public class OrderController{
 	@Autowired
 	private MemberService memberService;
 	
-	//ÁÖ¹®
+	//ï¿½Ö¹ï¿½
 	@RequestMapping(value= "/order")
 	public String order(Authentication auth, @ModelAttribute Product_orderVO povo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute ProductVO pvo, HttpServletRequest request, Model model){
-		logger.info("order È£Ãâ ¼º°ø");
+		logger.info("order È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		
-		/*È¸¿øÁ¤º¸ Ãâ·Â*/
+		/*È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½*/
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		MemberVO memberInfo = memberService.memberInfo(vo);
 		logger.info("getM_tel: "+memberInfo.getM_tel());
 		model.addAttribute("memberInfo", memberInfo);
 		
-		/*Ä«Å×°í¸® ¸®½ºÆ® Ãâ·Â*/
+		/*Ä«ï¿½×°ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½*/
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		List<CommonCodeVO> commonCodeList = commonCodeService.commonCodeList(cmvo);
+		List<CommonCodeVO> commonCodeList = commonCodeService.CommonCodeList(cmvo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
 		
@@ -90,10 +90,10 @@ public class OrderController{
 	}
 	
 	
-	// Àå¹Ù±¸´Ï
+	// ï¿½ï¿½Ù±ï¿½ï¿½ï¿½
 	@RequestMapping(value= "/cart")
 	public ModelAndView cart(@ModelAttribute CategoryVO cvo, HttpServletRequest request, HttpServletResponse response){
-		logger.info("cart È£Ãâ ¼º°ø");
+		logger.info("cart È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		ModelAndView mav = new ModelAndView();
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		mav.addObject("categoryList", categoryList);
@@ -141,10 +141,10 @@ public class OrderController{
 		return mav;
 	}
 	
-	// Àå¹Ù±¸´Ï Á¦°Å
+	// ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/cartD", method = RequestMethod.POST)
 	public String cartD(@ModelAttribute CartVO vo, HttpServletRequest request, HttpServletResponse response){
-		logger.info("cartD È£Ãâ ¼º°ø");
+		logger.info("cartD È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
 		Cookie[] cookies = request.getCookies();
 		Cookie cookie = null;
@@ -209,10 +209,10 @@ public class OrderController{
 		return "redirect:/order/cart";
 	}
 	
-	// Àå¹Ù±¸´Ï µî·Ï
+	// ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	@RequestMapping(value="/wish", method = RequestMethod.POST)
 	public ModelAndView wish(RedirectAttributes redirectAttributes, @ModelAttribute CartVO vo ,HttpServletRequest request, HttpServletResponse response){
-		logger.info("wish È£Ãâ ¼º°ø");
+		logger.info("wish È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		ModelAndView mav = new ModelAndView();
 		
 		String goodNo = "";

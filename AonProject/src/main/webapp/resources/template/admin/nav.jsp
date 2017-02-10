@@ -5,8 +5,8 @@
 <script type="text/javascript">
 	  $(function() {
 		  // 회원조회 클릭 시
-		  $(".cboard").click(function() {
-			  location.href = "/admin/cboard";
+		  $(".mInfo").click(function() {
+			  location.href = "/admin/mInfoList";
 		  });
 		  
 		  $(".notice").click(function() {
@@ -18,7 +18,15 @@
 		  });
 		  
 		  $(".size").click(function() {
-			  location.href = "/admin/commonCodeList";
+			  location.href = "/admin/sCommonCodeList";
+		  });
+		  
+		  $(".color").click(function() {
+			  location.href = "/admin/cCommonCodeList";
+		  });
+		  
+		  $(".type").click(function() {
+			  location.href = "/admin/tCommonCodeList";
 		  });
 	  });
 	</script>
@@ -51,7 +59,7 @@
                   </li>
                   <li><a><i class="fa fa-address-book-o" aria-hidden="true"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a class="cboard" id="cboard">회원조회</a></li>
+                      <li><a class="mInfo" id="mInfo">회원조회</a></li>
                       <li><a href="media_gallery.html">null</a></li>
                       <li><a href="typography.html">null</a></li>
                       <li><a href="icons.html">null</a></li>
@@ -101,8 +109,8 @@
                   <li><a><i class="fa fa-windows"></i> 공통코드관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a class="size" id="size">사이즈관리</a></li>
-                      <li><a href="page_404.html">색상관리</a></li>
-                      <li><a href="page_500.html">상품타입관리</a></li>
+                      <li><a class="color" id="color">색상관리</a></li>
+                      <li><a class="type" id="type">상품타입관리</a></li>
                       <li><a href="plain_page.html">null</a></li>
                       <li><a href="login.html">null</a></li>
                       <li><a href="pricing_tables.html">null</a></li>

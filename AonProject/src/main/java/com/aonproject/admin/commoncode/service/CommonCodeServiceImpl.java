@@ -16,12 +16,58 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 	@Autowired
 	private CommonCodeDAO commonCodeDAO;
 	
-	// 공통 코드 리스트 구현
+	// common code list
 	@Override
-	public List<CommonCodeVO> commonCodeList(CommonCodeVO cvo) {
+	public List<CommonCodeVO> CommonCodeList(CommonCodeVO cvo) {
 		List<CommonCodeVO> commonCodeList = null;
-		commonCodeList = commonCodeDAO.commonCodeList(cvo);
+		commonCodeList = commonCodeDAO.CommonCodeList(cvo);
 		return commonCodeList;
 	}
-
+	
+	// size, color, type code list
+	@Override
+	public List<CommonCodeVO> sCommonCodeList(CommonCodeVO cvo) {
+		List<CommonCodeVO> sCommonCodeList = null;
+		sCommonCodeList = commonCodeDAO.sCommonCodeList(cvo);
+		return sCommonCodeList;
+	}
+	@Override
+	public List<CommonCodeVO> cCommonCodeList(CommonCodeVO cvo) {
+		List<CommonCodeVO> cCommonCodeList = null;
+		cCommonCodeList = commonCodeDAO.cCommonCodeList(cvo);
+		return cCommonCodeList;
+	}
+	@Override
+	public List<CommonCodeVO> tCommonCodeList(CommonCodeVO cvo) {
+		List<CommonCodeVO> tCommonCodeList = null;
+		tCommonCodeList = commonCodeDAO.tCommonCodeList(cvo);
+		return tCommonCodeList;
+	}
+	
+	// size code insert
+	@Override
+	public int sCommonCodeInsert(CommonCodeVO cvo) {
+		int result = 0;
+		result = commonCodeDAO.sCommonCodeInsert(cvo);
+		System.out.println(result);
+		return result;
+	}
+	
+	// color code insert
+	@Override
+	public int cCommonCodeInsert(CommonCodeVO cvo) {
+		int result = 0;
+		result = commonCodeDAO.cCommonCodeInsert(cvo);
+		System.out.println(result);
+		return result;
+	}
+	
+	// size code insert
+	@Override
+	public int tCommonCodeInsert(CommonCodeVO cvo) {
+		int result = 0;
+		result = commonCodeDAO.tCommonCodeInsert(cvo);
+		System.out.println(result);
+		return result;
+	}
 }
