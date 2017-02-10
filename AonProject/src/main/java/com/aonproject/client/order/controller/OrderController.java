@@ -301,10 +301,7 @@ public class OrderController{
 		int you = request.getHeader("referer").indexOf("detail?no=");
 		logger.info(request.getHeader("referer"));
 		if(you > -1){
-			//goodNo = request.getHeader("referer").substring(you + 10);
-			goodNo = request.getHeader("referer").substring(you);
-			//you = goodNo.toUpperCase().indexOf("S");
-			//goodNo = goodNo.toUpperCase().substring(0, you);
+			goodNo = request.getHeader("referer").substring(you + 10);
 			logger.info(goodNo);
 			redirectAttributes.addFlashAttribute("goodNo", goodNo);
 		} 

@@ -114,7 +114,7 @@ public class ProductController {
 	
 	/*Product Insert*/
 	@RequestMapping(value = "/productInsert")
-	public String itemInsert (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, @ModelAttribute StockVO svo, HttpServletRequest request) throws IllegalStateException, IOException {
+	public String itemInsert (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
 		logger.info("itemInsert 호출 성공!");
 		mode = "insert";
 		int result = 0;
@@ -123,20 +123,23 @@ public class ProductController {
 		//상품번호(p_no) 생성
 		logger.info("p_no1="+pvo.getP_no().length());
 		
+		StockVO svo = new StockVO();
+		
 		if(pvo.getP_no().length()==0){
 			createP_no = productService.createP_no();
 			pvo.setP_no(createP_no+pvo.getColor_code().toUpperCase()+pvo.getSize_code().toUpperCase());
-			svo.setP_no(createP_no+pvo.getColor_code().toUpperCase()+pvo.getSize_code().toUpperCase());
-			logger.info(svo.getP_no());
+			//svo.setP_no(createP_no+pvo.getColor_code().toUpperCase()+pvo.getSize_code().toUpperCase());
 		}else{
 			pvo.setP_no(pvo.getP_no()+pvo.getColor_code()+pvo.getSize_code());
+			//svo.setP_no(pvo.getP_no()+pvo.getColor_code().toUpperCase()+pvo.getSize_code().toUpperCase());
+			logger.info(svo.getP_no());
 		}
 				
 		result = productService.productInsert(pvo);
 		
 		uvo.setP_no(pvo.getP_no());
 		if(result == 1){
-			stockService.stockInsert(svo);
+			//stockService.stockInsert(svo);
 			
 			List<MultipartFile> files = uvo.getFiles();
 			
