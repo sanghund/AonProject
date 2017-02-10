@@ -19,6 +19,6 @@
 		</c:choose> 
 	</ul>
   <ul class="nav tc mb">
-    <li><a href="">NOTICE</a></li>
+    <li><a href="/client/noticeList">NOTICE</a></li>
   </ul>
 </nav>

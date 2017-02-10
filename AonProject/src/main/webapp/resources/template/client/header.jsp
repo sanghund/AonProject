@@ -45,7 +45,7 @@
 							</sec:authorize>
 							<li><a href="/order/cart">장바구니</a></li>
 							<li><a href="/member/mypage/orderlist">마이페이지</a></li>
-							<li><a href="#">공지사항</a></li>
+							<li><a href="/client/noticeList">공지사항</a></li>
 						</ul>
 					</div>
 				</div>

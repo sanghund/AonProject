@@ -31,4 +31,14 @@ public class StockDAOImpl implements StockDAO{
 		return sqlSession.selectList("stockList");
 	}
 
+	@Override
+	public int stockUpdate(StockVO svo) {
+		return sqlSession.update("stockUpdate", svo);
+	}
+
+	@Override
+	public int stockInsert(StockVO svo) {
+		return sqlSession.update("stockInsert", svo);
+	}
+
 }

@@ -10,4 +10,8 @@ public interface StockDAO {
 	public int stockOrder(StockVO ovo);
 	
 	public List<StockVO> stockList();
+	
+	public int stockUpdate(StockVO svo);
+	
+	public int stockInsert(StockVO svo);
 }

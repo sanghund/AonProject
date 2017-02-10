@@ -6,14 +6,22 @@ public class StockVO {
 	private String stock_date = "";		//등록일
 	
 	//상품 추가 정보
-	private String ca_name;				//상품카테고리명
-	private String p_type_name;			//상품타입
-	private String p_name;				//상품명
-	private int p_price;				//상품가격
-	private String p_color;				//상품색상
-	private String size;				//상품사이즈
+	private String ca_name = "";		//상품카테고리명
+	private String p_type_name = "";	//상품타입
+	private String p_name = "";			//상품명
+	private int p_price = 0;			//상품가격
+	private String color = "";			//상품색상
+	private String size = "";			//상품사이즈
 	
 	
+	
+	
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
 	public String getCa_name() {
 		return ca_name;
 	}
@@ -38,12 +46,7 @@ public class StockVO {
 	public void setP_price(int p_price) {
 		this.p_price = p_price;
 	}
-	public String getP_color() {
-		return p_color;
-	}
-	public void setP_color(String p_color) {
-		this.p_color = p_color;
-	}
+
 	public String getSize() {
 		return size;
 	}

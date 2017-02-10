@@ -22,66 +22,109 @@
 </script>
 <style>
 	/* .itemList {width:800px; height:500px; overflow-x:hidden; overflow-y:auto;} */
-	.listTable {border-collapse:collapes; width:500px;}
+	.listTable {border-collapse:collapes; width:1000px;}
 	.listTable td {border:1px solid #222; padding:1em;}
-	.stockList {width:600px; background:#f00;}
+	.stockList {width:1000px;}
+	
 </style>
 
-	<h3>상품 리스트</h3>
-	<div class="btnContainer">
-		<input type="button" id="insertBtn" value="신규등록">
-	</div>
-	<!-- 상품 검색 제어 -->
-	<div class="btnContainer">
-		<!-- <div>
-			<select name="search" id="search">
-				<option value="all">전체</option>
-				<option value="all">상품번호</option>
-				<option value="all">카테고리</option>
-				<option value="all">상품분류</option>
-				<option value="all">상품명</option>
-				<option value="all">사이즈</option>
-				<option value="all">색상</option>
-				<option value="all">할인율</option>
-				<option value="all">소재</option>
-				<option value="all">등록일</option>
-			</select>
-		</div>
-		<div>
-			<input type="text" id="keyword" name="keyword">
-		</div> -->
-	</div>
+	<h3>재고관리</h3>
 	<!-- stock list-->
 	<div class="stockList">
 		<!-- 상품 디테일 확인 폼 -->
 		<form id="detailForm">
-			<input type="hidden" id="p_no" name="p_no">
-		</form>
-		<table class="listTable">
-			<thead>
-				<tr>
-					<td>상품번호</td>
-					<td>상품재고</td>
-					<td>등록일</td>
-				</tr>
-			</thead>
-			<tbody>
-				<c:choose>
-					<c:when test="${not empty stockList}">
-						<c:forEach var="stockList" items="${stockList}">
-							<tr data-no="${stockList.p_no}" class="productPack">
-								<td>${stockList.p_no}</td>
-								<td>${stockList.stock_cnt}</td>
-								<td>${stockList.stock_date}</td>
+			<input type="hidden" name="p_no" id="p_no">
+			<table class="listTable">
+				<thead>
+					<tr>
+						<td>카테고리</td>
+						<td>상품유형</td>
+						<td>상품번호</td>
+						<td>상품명</td>
+						<td>색상</td>
+						<td>사이즈</td>
+						<td>가격</td>
+						<td>재고량</td>
+						<td>등록일</td>
+						<td>수량등록</td>
+					</tr>
+				</thead>
+				<tbody>
+					<c:choose>
+						<c:when test="${not empty stockList}">
+							<c:forEach var="stockList" items="${stockList}">
+								<tr data-no="${stockList.p_no}" class="productPack">
+									<td>${stockList.ca_name}</td>
+									<td>${stockList.p_type_name}</td>
+									<td>${stockList.p_no}</td>
+									<td>${stockList.p_name}</td>
+									<td>${stockList.color}</td>
+									<td>${stockList.size}</td>
+									<td>${stockList.p_price}</td>
+									<td>${stockList.stock_cnt}</td>
+									<td>${stockList.stock_date}</td>
+									<td><span></span><input type="button" class="addStock" value="등록"><input type="button" class="submit" value="완료"></td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td colspan="11">등록된 상품이 없습니다</td>
 							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td colspan="11">등록된 상품이 없습니다</td>
-						</tr>
-					</c:otherwise>
-				</c:choose>
-			</tbody>
-		</table>
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
+		</form>
 	</div>
+	<script>
+		var on = false;
+		
+		$(function(){
+			var p_no = "";
+			$(".submit").hide();
+			
+			$(".addStock").click(function(){
+				var inputObj = $("<input>")
+				inputObj.attr({"type":"number", "name":"stock_cnt"})
+				inputObj.addClass("count");
+				var inputArea = $(this).parent().find("span");
+				inputArea.append(inputObj);
+				p_no = $(this).parents("tr").attr("data-no");
+				$(this).parent().find(".submit").show();
+				$(this).hide();
+			});
+			
+			$(".submit").click(function(){
+				console.log($(".count").val());
+				if(!chkSubmit($(".count"), "상품수량을"))return;
+				$.ajax({
+					url	: "/admin/stockUpdate",
+					type: "post",
+					headers	: {
+						'Accept': 'application/json',
+	                    'Content-Type': 'application/json'
+					},
+					dataType: "text",
+					data	: JSON.stringify({
+						stock_cnt  : $(".count").val(),
+						p_no	   : p_no
+					}),
+					error	: function(){	
+						alert("시스템 오류입니다. 관리자에게 문의하세요.");
+					},
+					success	: function(stockUpdate){
+						alert(stockUpdate);
+						if(stockUpdate == "SUCCESS"){
+							alert(" 등록이 완료 되었습니다.");
+							location.href="/admin/stockList"
+						}
+					}
+				});
+				$(".count").remove();
+				$(".submit").hide();
+				$(".addStock").show();
+			})
+		})
+	</script>
+	

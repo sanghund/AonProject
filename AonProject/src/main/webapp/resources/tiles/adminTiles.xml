@@ -89,5 +89,10 @@
 	<definition name="admin/stock/*" extends="adminMain">
 		<put-attribute name="main" value="/WEB-INF/views/admin/stock/{1}.jsp" />
 	</definition>
+	
+	<!-- 공통코드 관리 페이지 -->
+	<definition name="admin/commonCode/*" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/commonCode/{1}.jsp" />
+	</definition>
 
 </tiles-definitions>

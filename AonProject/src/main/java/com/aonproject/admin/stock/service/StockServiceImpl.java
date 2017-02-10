@@ -33,4 +33,14 @@ public class StockServiceImpl implements StockService{
 		return stockDAO.stockList();
 	}
 
+	@Override
+	public int stockUpdate(StockVO svo) {
+		return stockDAO.stockUpdate(svo);
+	}
+
+	@Override
+	public int stockInsert(StockVO svo) {
+		return stockDAO.stockInsert(svo);
+	}
+
 }
