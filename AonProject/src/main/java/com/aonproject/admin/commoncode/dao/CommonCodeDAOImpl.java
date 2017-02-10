@@ -20,8 +20,40 @@ public class CommonCodeDAOImpl implements CommonCodeDAO {
 	
 	// 공통 코드 리스트 구현
 	@Override
-	public List<CommonCodeVO> commonCodeList(CommonCodeVO cvo) {
+	public List<CommonCodeVO> CommonCodeList(CommonCodeVO cvo) {
 		return session.selectList("commonCodeList", cvo);
+	}
+	
+	// size, color, type 코드 리스트 구현
+	@Override
+	public List<CommonCodeVO> sCommonCodeList(CommonCodeVO cvo) {
+		return session.selectList("sCommonCodeList", cvo);
+	}
+	@Override
+	public List<CommonCodeVO> cCommonCodeList(CommonCodeVO cvo) {
+		return session.selectList("cCommonCodeList", cvo);
+	}
+	@Override
+	public List<CommonCodeVO> tCommonCodeList(CommonCodeVO cvo) {
+		return session.selectList("tCommonCodeList", cvo);
+	}
+	
+	// size 코드 등록 구현
+	@Override
+	public int sCommonCodeInsert(CommonCodeVO cvo) {
+		return session.insert("sCommonCodeInsert", cvo);
+	}
+	
+	// color 코드 등록 구현
+	@Override
+	public int cCommonCodeInsert(CommonCodeVO cvo) {
+		return session.insert("cCommonCodeInsert", cvo);
+	}
+	
+	// type 코드 등록 구현
+	@Override
+	public int tCommonCodeInsert(CommonCodeVO cvo) {
+		return session.insert("tCommonCodeInsert", cvo);
 	}
 
 }

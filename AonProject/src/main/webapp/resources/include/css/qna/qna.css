@@ -68,7 +68,7 @@
 	.tb-center{
 		text-align: center
 		}
-	.qna_tr, .qna_tr1, .qna_tr2, .qna_tr3, .qna_tr4{
+	.qna_tr, .qna_tr1, .qna_tr2, .qna_tr3, .qna_tr4, .qna_tr5{
 		display: table-row;
 	    vertical-align: inherit;
 	    border-color: inherit;
@@ -103,6 +103,13 @@
 	    color: #777;
 		}  
 	.qna-table-list tbody .qna_tr4 td{
+		padding: 10px 0;
+	    background-color: #fcfcfc;
+	    border-top: 1px solid #333;
+	    border-bottom: 1px solid #ccc;
+	    color: #777;
+		} 
+	.qna-table-list tbody .qna_tr5 td{
 		padding: 10px 0;
 	    background-color: #fcfcfc;
 	    border-top: 1px solid #333;

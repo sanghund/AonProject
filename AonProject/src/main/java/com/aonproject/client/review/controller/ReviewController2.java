@@ -57,7 +57,12 @@ public class ReviewController2 {
 		if(chkP_no > -1) p_no = p_no.substring(0, chkP_no);
 		
 		System.out.println(p_no);*/
-		
+		System.out.println("p_no="+rvo.getP_no());
+		int result = rvo.getP_no().indexOf("C");
+		if(result > -1){
+			rvo.setP_no(rvo.getP_no().substring(0, result));
+		}
+	
 		//페이징 처리
 		int cnt = 0;
 		cnt = reviewService.cntList();
@@ -91,6 +96,10 @@ public class ReviewController2 {
 		logger.info("reviewuserInsert호출 성공");
 		MemberVO mvo = (MemberVO) auth.getPrincipal();
 		rvo.setM_no(mvo.getM_no());
+		/*int resultpno = rvo.getP_no().indexOf("C");
+		if(resultpno > -1){
+			rvo.setP_no(rvo.getP_no().substring(0, resultpno));
+		}*/
 		String resultS = "";
 		mode = "insert";
 		int result = 0;
@@ -108,7 +117,7 @@ public class ReviewController2 {
 			int selectreno = rvo.getRe_no();
 			logger.info("selectreno="+selectreno);
 			
-			result = reviewService.reviewInsert(rvo); //글이 서버에 등록되면 1이 된다.
+			result = reviewService.reviewUserInsert(rvo); //글이 서버에 등록되면 1이 된다.
 			logger.info("result="+result);
 			int temp = rvo.getRe_no(); //temp에 re_no값이 담겨있다.
 			logger.info("temp="+temp);
@@ -133,11 +142,6 @@ public class ReviewController2 {
 			
 			resultS = "success";
 		}
-
-		
-		
-		
-		
 		return resultS;
 	}
 	//리뷰쓰기(이미지 파일 없을 때)
@@ -147,6 +151,10 @@ public class ReviewController2 {
 		logger.info("reviewUserInsert호출 성공");
 		MemberVO mvo = (MemberVO) auth.getPrincipal();
 		rvo.setM_no(mvo.getM_no());
+		/*int resultpno = rvo.getP_no().indexOf("C");
+		if(resultpno > -1){
+			rvo.setP_no(rvo.getP_no().substring(0, resultpno));
+		}*/
 		String resultS = "";
 		int selectAll = 0;
 		selectAll = reviewService.confirmMno(rvo);
@@ -167,6 +175,7 @@ public class ReviewController2 {
 			logger.info("result="+result);
 
 			if(result == 1){//글이 입력이 되었을 때
+				reviewService.InsertID(rvo);
 				logger.info(result);
 			}else{
 				logger.info(result);
@@ -280,4 +289,38 @@ public class ReviewController2 {
 		return resultData;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/reviewOrderConfirm", method=RequestMethod.POST)
+	public String reviewOrderConfirm(Authentication auth,@ModelAttribute ReviewVO rvo, HttpServletRequest request){
+		logger.info("reviewOrderConfirm호출 성공");
+		MemberVO mvo = (MemberVO) auth.getPrincipal();
+		rvo.setM_no(mvo.getM_no());
+		String resultS = "";
+		System.out.println(rvo.getM_no());
+		System.out.println(rvo.getP_no());
+		System.out.println(rvo.getP_no().indexOf("1"));
+		System.out.println("-------------------------------");
+		
+		/*int result = rvo.getP_no().indexOf("C");
+		System.out.println(rvo.getP_no().substring(0, result));
+		
+		
+		System.out.println("result = "+result);
+		if(result > -1){
+			rvo.setP_no(rvo.getP_no().substring(0, result));
+		}*/
+		
+		String confirm = "";
+		confirm = reviewService.reviewOrderConfirm(rvo);
+		logger.info("confirm = " + confirm);
+		
+		System.out.println("confirm = " + confirm);
+		
+		if(Integer.parseInt(confirm) ==0){
+			resultS = "fail";
+		}else if(Integer.parseInt(confirm) > 0){
+			resultS = "success";
+		}
+		return resultS;
+	}
 }

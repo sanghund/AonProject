@@ -28,7 +28,7 @@
 	</select>
 	<select id="reviewuserList" resultType="review" parameterType="review">
 		select re_no, re_title, re_content, to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') as re_date, 
-				re_chk, m_no, p_no, re_name from review where p_no = #{p_no}
+				re_chk, m_no, p_no, re_name, o_no from review where p_no like #{p_no}||'%'
 	</select>
 	
 	<select id="selectReno" resultType="int">
@@ -40,12 +40,13 @@
 	</select>
 	
 	<select id="confirmMno" resultType="int">
-		select count(re_no) from review where m_no = #{m_no} and p_no = #{p_no}
+		select count(re_no) from review where m_no = #{m_no} and p_no = #{p_no}||'%'
 	</select>
 	
 	<insert id="reviewInsert" parameterType="review">
 		insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no) 
-			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, #{p_no})
+			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, 
+			(select p_no from product_order where o_no = (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%')))
 	</insert>
 	
 	<!-- <select id="reviewDetail" parameterType="review" resultType="review">
@@ -87,7 +88,8 @@
 	
 	<insert id="reviewUserInsert" parameterType="review">
 		insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no) 
-			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, #{p_no})
+			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, 
+			(select p_no from product_order where o_no = (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%')))
 	</insert>
 	
 	<update id="reviewUserUpdate" parameterType="review">
@@ -101,6 +103,14 @@
 		update review set re_name = (select m_id from member where m_no = #{m_no}) 
 	</update>
 	
+	<select id="reviewOrderConfirm" parameterType="review" resultType="String">
+		<!-- select o_no from 
+			(select p1.o_no from product_order p1, 
+				(select nvl(count(*),0) as count from 
+					(select count(o_no) from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' and o_confirm = 'Y')) test 
+						where m_no = #{m_no} and p_no like #{p_no}||'%' and o_confirm = 'Y' and  count != 0 order by o_no desc) where rownum = 1 -->
+		select count(o_no) from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' and o_confirm = 'Y'
+	</select>
 	<!-- 마이페이지 리뷰 -->
 	<select id="myReview" resultType="review" parameterType="member">
 		select * from(
@@ -113,7 +123,11 @@
 
 	<!-- 마이페이지 리뷰 cnt -->
 	<select id="myReviewCnt" resultType="java.lang.Integer" parameterType="member">	
-select nvl(count(*), 0) from (select p_no, re_title, re_content, re_date, pi_route, pi_file from (select ppno, pno, pi_route, pi_file from (select min(pno) ppno, p_no pno from (select pno, substr(p_no, 1, instr(p_no, 'S') - 1) p_no from (select DISTINCT min(pi_no) pno, p_no from product_img group by(p_no))) group by (p_no)) inner join product_img on pi_no = ppno) end1
-		inner join (select re_no, re_title, re_content, to_char(re_date, 'yyyy-MM-dd hh24:mm:ss') re_date, o_no, substr(p_no, 1, 7) p_no from review where m_no = #{m_no} order by re_no desc) end2 on pno = p_no order by re_no desc)
+		select nvl(count(*), 0) from (select p_no, re_title, re_content, re_date, pi_route, pi_file from 
+			(select ppno, pno, pi_route, pi_file from (select min(pno) ppno, p_no pno from 
+				(select pno, substr(p_no, 1, instr(p_no, 'S') - 1) p_no from (select DISTINCT min(pi_no) pno, p_no from product_img group by(p_no))) group by (p_no)) inner join product_img on pi_no = ppno) end1
+				inner join (select re_no, re_title, re_content, to_char(re_date, 'yyyy-MM-dd hh24:mm:ss') re_date, o_no, substr(p_no, 1, 7) p_no from review where m_no = #{m_no} order by re_no desc) end2 on pno = p_no order by re_no desc)
+		 refs/remotes/origin/master
 	</select>
+	
 </mapper>

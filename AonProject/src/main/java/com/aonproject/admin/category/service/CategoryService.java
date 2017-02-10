@@ -9,5 +9,5 @@ public interface CategoryService {
 	
 //	public CategoryVO categorySelect(CategoryVO cvo);
 	public int categoryInsert(CategoryVO cvo);
-	
+	public int caUpdate(CategoryVO cavo);
 }

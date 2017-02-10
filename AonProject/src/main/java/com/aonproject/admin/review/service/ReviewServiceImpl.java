@@ -131,6 +131,12 @@ public class ReviewServiceImpl implements ReviewService{
 		return result;
 	}
 	@Override
+	public String reviewOrderConfirm(ReviewVO rvo) {
+		String result = "";
+		result = reviewDAO.reviewOrderConfirm(rvo);
+		return result;
+	}
+	@Override
 	public List<ReviewVO> myReview(MemberVO vo) {
 		// TODO Auto-generated method stub
 		return reviewDAO.myReview(vo);
@@ -139,6 +145,7 @@ public class ReviewServiceImpl implements ReviewService{
 	public int myReviewCnt(MemberVO vo) {
 		// TODO Auto-generated method stub
 		return reviewDAO.myReviewCnt(vo);
+
 	}
 
 }
