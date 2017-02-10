@@ -3,6 +3,7 @@ package com.aonproject.admin.qna.dao;
 import java.util.List;
 
 import com.aonproject.admin.qna.vo.QnaVO;
+import com.aonproject.client.mInfo.vo.MemberVO;
 
 public interface QnaDAO {
 	List<QnaVO> qnaList(QnaVO qvo);
@@ -13,4 +14,6 @@ public interface QnaDAO {
 	public int qnaConfirm(QnaVO qvo);
 	public int qnaQname(QnaVO qvo);
 	public int qnaPwdConfirm(QnaVO qvo);
+	public List<QnaVO> myQnA(MemberVO vo);
+	public int myQnaCnt(MemberVO vo);
 }

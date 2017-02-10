@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aonproject.admin.qna.dao.QnaDAO;
 import com.aonproject.admin.qna.vo.QnaVO;
+import com.aonproject.client.mInfo.vo.MemberVO;
 
 @Service
 @Transactional
@@ -70,6 +71,18 @@ public class QnaServiceImpl implements QnaService{
 		int result = 0;
 		result = qnaDAO.qnaPwdConfirm(qvo);
 		return result;
+	}
+
+	@Override
+	public List<QnaVO> myQnA(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return qnaDAO.myQnA(vo);
+	}
+
+	@Override
+	public int myQnaCnt(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return qnaDAO.myQnaCnt(vo);
 	}
 
 }

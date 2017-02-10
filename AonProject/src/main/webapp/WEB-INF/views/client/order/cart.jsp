@@ -401,15 +401,17 @@
 				var thisPno = $(".checkBoxs").eq(i).attr("data-val"); 
 				var thisCnt = $(".checkBoxs").eq(i).attr("data-cnt");
 				$("#cart").append("<input type = 'hidden' class = 'p_nos' name = 'p_nos["+i+"]' value = '"+thisPno+"'>");
-				$("#cart").append("<input type = 'hidden' class = 'o_cnts' name = 'o_cnts["+i+"]' value = '"+thisCnt+"'>")
+				$("#cart").append("<input type = 'hidden' class = 'o_cnts' name = 'o_cnts["+i+"]' value = '"+thisCnt+"'>");
 			} 
-			
+
 			
 			$("#cart").attr({
 				"method" : "post",
 				"action" : "/order/order"
 			});
+
 			$("#cart").submit();
+
 		});
 		
 		$(".abtns").click(function(event){

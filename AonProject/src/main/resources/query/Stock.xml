@@ -4,4 +4,8 @@
 	<select id="stockChk" parameterType="stock" resultType="java.lang.Integer">
 		select nvl(stock_cnt, 0) stock_cnt from stock where upper(p_no) = upper(#{p_no})
 	</select>
+	
+	<update id="stockOrder" parameterType="stock">
+		update stock set stock_cnt = stock_cnt - #{stock_cnt} where p_no = #{p_no}
+	</update>
 </mapper>

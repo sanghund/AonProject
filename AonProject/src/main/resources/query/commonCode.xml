@@ -4,7 +4,8 @@
 <mapper namespace="com.aonproject.admin.commoncode.dao.CommonCodeDAO">
 	<!-- 공통코드 리스트 조회 -->
 	<select id="commonCodeList" resultType="commonCode" parameterType="commonCode">
-		select cc_no, upper(cc_name) as cc_name, cc_group, cc_desc, cc_date 
+		/* commonCode - commonCodeList */
+		select upper(cc_no) as cc_no, upper(cc_name) as cc_name, cc_group, cc_desc, cc_date 
 		from common_code
 	</select>
 	

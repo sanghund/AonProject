@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.aonproject.client.order.vo.Product_orderVO;
-
+import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.client.order.vo.CartVO;
 
 @Repository
@@ -23,8 +23,28 @@ public class OrderDAOImpl implements OrderDAO{
 	
 	@Override
 	public CartVO cartList(CartVO vo) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("cartList", vo);
 	}
 
+	@Override
+	public int orderInsert(Product_orderVO ovo) {
+		return sqlSession.insert("orderInsert", ovo);
+	}
+
+	@Override
+	public String checkOnum() {
+		return sqlSession.selectOne("checkOnum");
+	}
+
+	@Override
+	public List<Product_orderVO> myOrder(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("myOrder", vo);
+	}
+
+	@Override
+	public int myOrderCnt(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("myOrder", vo);
+	}
 }

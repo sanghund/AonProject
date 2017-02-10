@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.aonproject.admin.review.vo.ReviewVO;
+import com.aonproject.client.mInfo.vo.MemberVO;
 
 @Repository
 public class ReviewDAOImpl implements ReviewDAO{
@@ -95,5 +96,15 @@ public class ReviewDAOImpl implements ReviewDAO{
 	@Override
 	public String reviewOrderConfirm(ReviewVO rvo) {
 		return session.selectOne("reviewOrderConfirm");
+	}
+	@Override
+	public List<ReviewVO> myReview(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return session.selectList("myReview", vo);
+	}
+	@Override
+	public int myReviewCnt(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("myReviewCnt", vo);
 	}
 }

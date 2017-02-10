@@ -57,13 +57,12 @@ public class ReviewController2 {
 		if(chkP_no > -1) p_no = p_no.substring(0, chkP_no);
 		
 		System.out.println(p_no);*/
-		
-		/*int result = rvo.getP_no().indexOf("C");
+		System.out.println("p_no="+rvo.getP_no());
+		int result = rvo.getP_no().indexOf("C");
 		if(result > -1){
 			rvo.setP_no(rvo.getP_no().substring(0, result));
-		}*/
-		
-		
+		}
+	
 		//페이징 처리
 		int cnt = 0;
 		cnt = reviewService.cntList();
@@ -118,7 +117,7 @@ public class ReviewController2 {
 			int selectreno = rvo.getRe_no();
 			logger.info("selectreno="+selectreno);
 			
-			result = reviewService.reviewInsert(rvo); //글이 서버에 등록되면 1이 된다.
+			result = reviewService.reviewUserInsert(rvo); //글이 서버에 등록되면 1이 된다.
 			logger.info("result="+result);
 			int temp = rvo.getRe_no(); //temp에 re_no값이 담겨있다.
 			logger.info("temp="+temp);
@@ -143,11 +142,6 @@ public class ReviewController2 {
 			
 			resultS = "success";
 		}
-
-		
-		
-		
-		
 		return resultS;
 	}
 	//리뷰쓰기(이미지 파일 없을 때)
@@ -181,6 +175,7 @@ public class ReviewController2 {
 			logger.info("result="+result);
 
 			if(result == 1){//글이 입력이 되었을 때
+				reviewService.InsertID(rvo);
 				logger.info(result);
 			}else{
 				logger.info(result);
@@ -243,10 +238,6 @@ public class ReviewController2 {
 		mode = "update";
 		logger.info("reviewUpdate호출 성공");
 		int re_no = revo.getRe_no();
-		int resultpno = rvo.getP_no().indexOf("C");
-		if(resultpno > -1){
-			rvo.setP_no(rvo.getP_no().substring(0, resultpno));
-		}
 		
 		int result = 0;
 		result = reviewService.reviewUpdate(rvo);
@@ -283,11 +274,6 @@ public class ReviewController2 {
 	public String reviewUserUpdate(@ModelAttribute ReviewVO rvo, HttpServletRequest request){
 		logger.info("reviewUpdate호출 성공");
 		
-		int resultpno = rvo.getP_no().indexOf("C");
-		if(resultpno > -1){
-			rvo.setP_no(rvo.getP_no().substring(0, resultpno));
-		}
-		
 		int result = 0;
 		result = reviewService.reviewUserUpdate(rvo);
 		logger.info("result="+result);
@@ -315,14 +301,14 @@ public class ReviewController2 {
 		System.out.println(rvo.getP_no().indexOf("1"));
 		System.out.println("-------------------------------");
 		
-		int result = rvo.getP_no().indexOf("C");
+		/*int result = rvo.getP_no().indexOf("C");
 		System.out.println(rvo.getP_no().substring(0, result));
 		
 		
 		System.out.println("result = "+result);
 		if(result > -1){
 			rvo.setP_no(rvo.getP_no().substring(0, result));
-		}
+		}*/
 		
 		String confirm = "";
 		confirm = reviewService.reviewOrderConfirm(rvo);

@@ -24,7 +24,7 @@
 		<c:when test="${not empty productForCategory}">
 			<c:forEach items="${productForCategory}" varStatus="status">
 				<div class="item" data-num="${productForCategory[status.index].p_no}">
-					<a href="/detail?no=${productForCategory[status.index].p_no}">
+					<a href="/detail?no=${fn:substring(productForCategory[status.index].p_no,0,7)}">
 						<img src="/productUpload/${productForCategory[status.index].pi_file}" />
 					</a>
 					<ul>
