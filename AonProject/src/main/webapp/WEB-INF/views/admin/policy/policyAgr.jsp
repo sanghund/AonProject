@@ -149,7 +149,7 @@
 								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] eq adminVO.totalPage and adminVO.totalPage ne pNum}" >
 									<a href = "/admin/policyAgr?pageNum=${adminVO.totalPage }" data-num = "${adminVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
-								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] ne admin VO.totalPage}" >
+								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] ne adminVO.totalPage}" >
 									<a href = "/admin/policyAgr?pageNum=${adminVO.totalPage }" data-num = "${adminVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
 							</td>
