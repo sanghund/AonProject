@@ -135,5 +135,10 @@ public class ReviewServiceImpl implements ReviewService{
 		// TODO Auto-generated method stub
 		return reviewDAO.myReview(vo);
 	}
+	@Override
+	public int myReviewCnt(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return reviewDAO.myReviewCnt(vo);
+	}
 
 }

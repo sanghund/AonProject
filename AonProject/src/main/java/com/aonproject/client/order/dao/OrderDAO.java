@@ -14,4 +14,5 @@ public interface OrderDAO {
 	public int orderInsert(Product_orderVO ovo);
 	public String checkOnum();
 	public List<Product_orderVO> myOrder(MemberVO vo);
+	public int myOrderCnt(MemberVO vo);
 }

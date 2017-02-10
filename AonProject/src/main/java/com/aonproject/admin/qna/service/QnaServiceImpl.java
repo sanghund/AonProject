@@ -79,4 +79,10 @@ public class QnaServiceImpl implements QnaService{
 		return qnaDAO.myQnA(vo);
 	}
 
+	@Override
+	public int myQnaCnt(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return qnaDAO.myQnaCnt(vo);
+	}
+
 }

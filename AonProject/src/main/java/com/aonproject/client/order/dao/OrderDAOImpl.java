@@ -41,4 +41,10 @@ public class OrderDAOImpl implements OrderDAO{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("myOrder", vo);
 	}
+
+	@Override
+	public int myOrderCnt(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("myOrder", vo);
+	}
 }

@@ -14,4 +14,6 @@ public interface OrderService {
 	public String checkOnum();
 	public int orderInsert(Product_orderVO ovo);
 	public List<Product_orderVO> myOrder(MemberVO vo);
+	public int myOrderCnt(MemberVO vo);
+	
 }

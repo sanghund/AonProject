@@ -98,4 +98,9 @@ public class ReviewDAOImpl implements ReviewDAO{
 		// TODO Auto-generated method stub
 		return session.selectList("myReview", vo);
 	}
+	@Override
+	public int myReviewCnt(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("myReviewCnt", vo);
+	}
 }

@@ -16,4 +16,5 @@ public interface QnaService {
 	public int qnaQname(QnaVO qvo);
 	public int qnaPwdConfirm(QnaVO qvo);
 	public List<QnaVO> myQnA(MemberVO vo);
+	public int myQnaCnt(MemberVO vo);
 }
