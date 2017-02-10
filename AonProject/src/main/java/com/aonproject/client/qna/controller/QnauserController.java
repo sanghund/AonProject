@@ -40,6 +40,8 @@ public class QnauserController {
 	public String qnaList(@ModelAttribute QnaVO qvo, @ModelAttribute CommentQnAVO cqvo,Model model){
 		logger.info("qnaList호출 성공");
 		
+		System.out.println(qvo.getP_no());
+		
 		int cnt = 0;
 		/*cnt = qnaService.cntList();*/
 		qvo.setCountList(5);
