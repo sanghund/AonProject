@@ -110,7 +110,6 @@
 	) where rownum <![CDATA[<=]]> #{end_data})
 		where rnum <![CDATA[>=]]> #{start_data}
 	</select>
-	
 	<!-- 마이페이지 리뷰 cnt -->
 	<select id="myReviewCnt" resultType="java.lang.Integer" parameterType="member">	
 select nvl(count(*), 0) from (select p_no, re_title, re_content, re_date, pi_route, pi_file from (select ppno, pno, pi_route, pi_file from (select min(pno) ppno, p_no pno from (select pno, substr(p_no, 1, instr(p_no, 'S') - 1) p_no from (select DISTINCT min(pi_no) pno, p_no from product_img group by(p_no))) group by (p_no)) inner join product_img on pi_no = ppno) end1
