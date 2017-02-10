@@ -12,6 +12,7 @@
 				ca_no = #{ca_no}
 			</if>
 		</where>
+		order by ca_no asc
 	</select>
 	
 	<insert id="categoryInsert" parameterType="category">

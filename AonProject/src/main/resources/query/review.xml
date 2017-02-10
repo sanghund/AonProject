@@ -120,7 +120,7 @@
 	) where rownum <![CDATA[<=]]> #{end_data})
 		where rnum <![CDATA[>=]]> #{start_data}
 	</select>
-	
+
 	<!-- 마이페이지 리뷰 cnt -->
 	<select id="myReviewCnt" resultType="java.lang.Integer" parameterType="member">	
 		select nvl(count(*), 0) from (select p_no, re_title, re_content, re_date, pi_route, pi_file from 
