@@ -23,4 +23,5 @@ public interface ReviewDAO {
 	public int InsertID(ReviewVO rvo);
 	public int confirmMno(ReviewVO rvo);
 	public List<ReviewVO> myReview(MemberVO vo);
+	public int myReviewCnt(MemberVO vo);
 }

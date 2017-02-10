@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link rel = "stylesheet" href = "/resources/include/fontello/css/fontello.css">
 <style type = "text/css">
 	.main{
 		box-sizing: border-box;
@@ -100,6 +102,15 @@
 			height: 100%;
 			display: inline-block;
 		}
+		.pagingNumbers{
+			height: auto;
+			text-align: center;
+			font-size: 15px;
+		}
+		.pagingNumbers a{
+			text-decoration: none;
+			color: black;
+		}
 </style>
 <div class = "main">
 	<h2 id = "aTitle">MyPage</h2>
@@ -149,6 +160,59 @@
 						<td colspan="3">${reviewList[status.index].re_content }</td>
 					</tr>
 				</c:forEach>
+				<tr class= "pagingNumbers">
+							<td colspan="3" id = "pageLow">
+								<c:if test = "${memberVO.totalPage < memberVO.pageNum }">
+									<c:set var = "pNum" value= "${memberVO.totalPage }"/>
+								</c:if>
+								<c:if test = "${memberVO.totalPage >= memberVO.pageNum }">
+									<c:set var = "pNum" value= "${memberVO.pageNum }"/>
+								</c:if>
+							
+								<c:if test = "${memberVO.pageTotal[0] eq 1 and pNum eq 1}" >
+									<span class = "icon-angle-double-left"></span>
+								</c:if>
+								<c:if test = "${memberVO.pageTotal[0] eq 1 and pNum ne 1}" >
+									<a href = "/member/mypage/review?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
+								</c:if>
+								<c:if test = "${memberVO.pageTotal[0] ne 1}" >
+									<a href = "/member/mypage/review?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
+								</c:if>
+								<c:if test = "${memberVO.pageTotal[0] eq 1}" >
+									<span class = "icon-angle-left"></span>
+								</c:if>
+								<c:if test = "${memberVO.pageTotal[0] ne 1}" >
+									<a href = "/member/mypage/review?pageNum=${memberVO.pageTotal[0] - fn:length(memberVO.pageTotal) }" data-num = "${memberVO.pageTotal[0] - fn:length(memberVO.pageTotal) }" class = "icon-angle-left"></a>
+								</c:if>
+					
+								<c:forEach items="${memberVO.pageTotal }" varStatus="status">
+									<c:if test = "${memberVO.pageTotal[status.index] eq pNum}" >
+										<span>${memberVO.pageTotal[status.index] }</span>
+									</c:if>
+									<c:if test = "${memberVO.pageTotal[status.index] ne pNum}" >
+										<a href = "/member/mypage/review?pageNum=${memberVO.pageTotal[status.index] }" data-num = "${memberVO.pageTotal[status.index]}">
+					 						${memberVO.pageTotal[status.index] } 
+										</a>
+									</c:if>
+								</c:forEach>
+	
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage}" >
+									<span class = "icon-angle-right"></span>
+								</c:if>
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne memberVO.totalPage}" >
+									<a href = "/member/mypage/review?pageNum=${memberVO.pageTotal[0] + fn:length(memberVO.pageTotal) }" data-num = "${memberVO.pageTotal[0] + fn:length(memberVO.pageTotal) }" class = "icon-angle-right"></a>
+								</c:if>
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.totalPage eq pNum}" >
+									<span class = "icon-angle-double-right"></span>
+								</c:if>
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.totalPage ne pNum}" >
+									<a href = "/member/mypage/review?pageNum=${memberVO.totalPage }" data-num = "${memberVO.totalPage }" class = "icon-angle-double-right"></a>
+								</c:if>
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne memberVO.totalPage}" >
+									<a href = "/member/mypage/review?pageNum=${memberVO.totalPage }" data-num = "${memberVO.totalPage }" class = "icon-angle-double-right"></a>
+								</c:if>
+							</td>
+						</tr>
 			</c:if>
 		</table>
 	</div>

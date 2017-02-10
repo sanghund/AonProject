@@ -18,7 +18,49 @@ public class Product_orderVO {
 	
 	private String pi_file = "";
 	private String pi_route = "";
+	private String p_name = "";
+	private String size_code = "";
+	private String color_code = "";
+	private String p_color = "";
+	private String p_size = "";
+	private String p_type = "";
 	
+	public String getP_name() {
+		return p_name;
+	}
+	public void setP_name(String p_name) {
+		this.p_name = p_name;
+	}
+	public String getSize_code() {
+		return size_code;
+	}
+	public void setSize_code(String size_code) {
+		this.size_code = size_code;
+	}
+	public String getColor_code() {
+		return color_code;
+	}
+	public void setColor_code(String color_code) {
+		this.color_code = color_code;
+	}
+	public String getP_color() {
+		return p_color;
+	}
+	public void setP_color(String p_color) {
+		this.p_color = p_color;
+	}
+	public String getP_size() {
+		return p_size;
+	}
+	public void setP_size(String p_size) {
+		this.p_size = p_size;
+	}
+	public String getP_type() {
+		return p_type;
+	}
+	public void setP_type(String p_type) {
+		this.p_type = p_type;
+	}
 	public String getPi_file() {
 		return pi_file;
 	}

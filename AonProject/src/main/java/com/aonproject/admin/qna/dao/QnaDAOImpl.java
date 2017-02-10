@@ -58,5 +58,10 @@ public class QnaDAOImpl implements QnaDAO{
 		// TODO Auto-generated method stub
 		return session.selectList("myQnA", vo);
 	}
+	@Override
+	public int myQnaCnt(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("myQnaCnt", vo);
+	}
 
 }

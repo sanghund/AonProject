@@ -34,6 +34,7 @@ import com.aonproject.client.order.vo.Product_orderVO;
 import com.aonproject.common.util.email.Certification;
 import com.aonproject.common.util.email.Email;
 import com.aonproject.common.util.email.EmailSender;
+import com.aonproject.common.util.paging.PagingSet;
 import com.aonproject.common.util.security.ShaEncoder;
 import com.aonproject.common.util.vo.PolicyAgrVO;
 
@@ -100,8 +101,11 @@ public class MemberController {
 	
 	// 아이디 / 비밀번호 찾기
 	@RequestMapping(value="/lostme")
-	public String lostme(){
+	public String lostme(@ModelAttribute CategoryVO cvo, Model model){
 		logger.info("lostme 호출 성공");
+		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
+		model.addAttribute("categoryList", categoryList);
+		
 		return "client/cInfo/lostme";
 	}
 	
@@ -191,10 +195,17 @@ public class MemberController {
 	
 	// 마이페이지 - 주문조회+취소 내역
 	@RequestMapping(value="/mypage/orderlist")
-	public ModelAndView orderlist(Authentication auth){
+	public ModelAndView orderlist(Authentication auth, @ModelAttribute CategoryVO cvo){
 		logger.info("orderlist 호출 성공");
+		
 		ModelAndView mav = new ModelAndView();
+		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
+		mav.addObject("categoryList", categoryList);
+		
 		MemberVO vo = (MemberVO) auth.getPrincipal();
+		
+		int cnt = orderService.myOrderCnt(vo);
+		PagingSet.setPageing(vo, cnt);
 		List<Product_orderVO> list = orderService.myOrder(vo);
 		
 		if(list != null){
@@ -202,46 +213,66 @@ public class MemberController {
 		}
 		
 		mav.setViewName("client/mypage/orderlist");
+
+		mav.addObject("memberVO", vo);
 		return mav;
 	}
 	
 	// 마이페이지 - 구매 후기 내역
 	@RequestMapping(value="/mypage/review")
-	public ModelAndView review(Authentication auth){
+	public ModelAndView review(Authentication auth, @ModelAttribute CategoryVO cvo){
 		logger.info("review 호출 성공");
+		
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		ModelAndView mav = new ModelAndView();
+		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
+		mav.addObject("categoryList", categoryList);
+
+		int cnt = reviewService.myReviewCnt(vo);
+		PagingSet.setPageing(vo, cnt);
 		List<ReviewVO> list = reviewService.myReview(vo);
 		
 		if(list != null){
 			mav.addObject("reviewList", list);
 		}
-		
+
+		mav.addObject("memberVO", vo);
 		mav.setViewName("client/mypage/review");
+		
 		return mav;
 	}
 	
 	// 마이페이지 - 상품 문의 내역
 	@RequestMapping(value="/mypage/qna")
-	public ModelAndView qna(Authentication auth){
+	public ModelAndView qna(Authentication auth, @ModelAttribute CategoryVO cvo){
 		logger.info("qna 호출 성공");
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		ModelAndView mav = new ModelAndView();
+
+		int cnt = qnaService.myQnaCnt(vo);
+		PagingSet.setPageing(vo, cnt);
+		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
+		mav.addObject("categoryList", categoryList);
+		
 		List<QnaVO> list = qnaService.myQnA(vo);
 		
 		if(list != null){
 			mav.addObject("qnaList", list);
 		}
 		
+		mav.addObject("memberVO", vo);
 		mav.setViewName("client/mypage/qna");
 		return mav;
 	}
 	
 	// 마이페이지 - 내 정보
 	@RequestMapping(value="/mypage/myinfo")
-	public ModelAndView myinfo(Authentication auth){
+	public ModelAndView myinfo(Authentication auth, @ModelAttribute CategoryVO cvo){
 		logger.info("myinfo 호출 성공");
 		ModelAndView mav = new ModelAndView();
+		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
+		mav.addObject("categoryList", categoryList);
+		
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		
 		MemberVO mvo = memberService.memberInfo(vo);	
