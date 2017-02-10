@@ -21,4 +21,5 @@ public interface ReviewService {
 	public int reviewUserUpdate(ReviewVO rvo);
 	public int InsertID(ReviewVO rvo);
 	public int confirmMno(ReviewVO rvo);
+	public String reviewOrderConfirm(ReviewVO rvo);
 }

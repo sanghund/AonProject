@@ -28,7 +28,7 @@
 	</select>
 	<select id="reviewuserList" resultType="review" parameterType="review">
 		select re_no, re_title, re_content, to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') as re_date, 
-				re_chk, m_no, p_no, re_name from review where p_no = #{p_no}
+				re_chk, m_no, p_no, re_name, o_no from review where p_no like #{p_no}<!-- ||'%' -->
 	</select>
 	
 	<select id="selectReno" resultType="int">
@@ -40,12 +40,12 @@
 	</select>
 	
 	<select id="confirmMno" resultType="int">
-		select count(re_no) from review where m_no = #{m_no} and p_no = #{p_no}
+		select count(re_no) from review where m_no = #{m_no} and p_no = #{p_no}<!-- ||'%' -->
 	</select>
 	
 	<insert id="reviewInsert" parameterType="review">
 		insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no) 
-			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, #{p_no})
+			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, #{p_no}<!-- ||'%' -->)
 	</insert>
 	
 	<!-- <select id="reviewDetail" parameterType="review" resultType="review">
@@ -87,7 +87,7 @@
 	
 	<insert id="reviewUserInsert" parameterType="review">
 		insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no) 
-			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, #{p_no})
+			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, #{p_no}<!-- ||'%' -->)
 	</insert>
 	
 	<update id="reviewUserUpdate" parameterType="review">
@@ -100,4 +100,13 @@
 	<update id="InsertID" parameterType="review">
 		update review set re_name = (select m_id from member where m_no = #{m_no}) 
 	</update>
+	
+	<select id="reviewOrderConfirm" parameterType="review" resultType="String">
+		<!-- select o_no from 
+			(select p1.o_no from product_order p1, 
+				(select nvl(count(*),0) as count from 
+					(select count(o_no) from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' and o_confirm = 'Y')) test 
+						where m_no = #{m_no} and p_no like #{p_no}||'%' and o_confirm = 'Y' and  count != 0 order by o_no desc) where rownum = 1 -->
+		select count(o_no) from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' and o_confirm = 'Y'
+	</select>
 </mapper>

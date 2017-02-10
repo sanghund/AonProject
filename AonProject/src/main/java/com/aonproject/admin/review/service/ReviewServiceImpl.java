@@ -129,5 +129,11 @@ public class ReviewServiceImpl implements ReviewService{
 		result = reviewDAO.confirmMno(rvo);
 		return result;
 	}
+	@Override
+	public String reviewOrderConfirm(ReviewVO rvo) {
+		String result = "";
+		result = reviewDAO.reviewOrderConfirm(rvo);
+		return result;
+	}
 
 }

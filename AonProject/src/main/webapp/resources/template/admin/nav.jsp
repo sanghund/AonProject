@@ -19,7 +19,8 @@
 		  
 		  $(".commentQnAList").click(function(){
 			  location.href = "/admin/commentQnA/commentQnAList"
-
+		  });
+	
 		  $(".mImage").click(function() {
 			  location.href = "/admin/imageUploadList";
 		  });

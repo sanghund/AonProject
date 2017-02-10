@@ -3,16 +3,16 @@ package com.aonproject.admin.review.vo;
 import com.aonproject.common.util.vo.CommonPagingVO;
 
 public class ReviewVO extends CommonPagingVO{ 
-	private int re_no;           //등록번호
-	private String re_title;    //리뷰 제목
-	private String re_content;	//리뷰 내용
-	private String re_date;  	//리뷰 등록일
-	private String re_pwd;		//리뷰 비밀번호
-	private String re_chk;  	//댓글 등록여부(Y, N)
-	private String re_name;     //작성자
-	private int m_no;           //멤버 번호
-	private int o_no;           //주문번호
-	private String p_no;        //상품 번호
+	private int re_no = 0;           //등록번호
+	private String re_title = "";    //리뷰 제목
+	private String re_content = "";	//리뷰 내용
+	private String re_date = "";  	//리뷰 등록일
+	private String re_pwd = "";		//리뷰 비밀번호
+	private String re_chk = "";  	//댓글 등록여부(Y, N)
+	private String re_name = "";     //작성자
+	private int m_no = 0;           //멤버 번호
+	private int o_no = 0;           //주문번호
+	private String p_no = "";        //상품 번호
 	public int getRe_no() {
 		return re_no;
 	}

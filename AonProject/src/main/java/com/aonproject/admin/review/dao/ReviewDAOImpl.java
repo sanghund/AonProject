@@ -92,4 +92,8 @@ public class ReviewDAOImpl implements ReviewDAO{
 	public int confirmMno(ReviewVO rvo){
 		return session.selectOne("confirmMno");
 	}
+	@Override
+	public String reviewOrderConfirm(ReviewVO rvo) {
+		return session.selectOne("reviewOrderConfirm");
+	}
 }

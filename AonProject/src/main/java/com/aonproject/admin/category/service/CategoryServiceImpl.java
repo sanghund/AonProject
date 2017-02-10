@@ -31,6 +31,13 @@ public class CategoryServiceImpl implements CategoryService {
 		return result;
 	}
 
+	@Override
+	public int caUpdate(CategoryVO cavo) {
+		int result = 0;
+		result = categoryDAO.caUpdate(cavo);
+		return result;
+	}
+
 //	@Override
 //	public CategoryVO categorySelect(CategoryVO cvo) {
 //		CategoryVO categorySelect = null;
