@@ -312,9 +312,9 @@
 	<script src = "/resources/include/js/daumAddr.js"></script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	<script type="text/javascript">
+	var emailOverlopChk2 = false;
 		$(document).ready(function(){
 			var omg = "#!@@!#";
-			
 			// 성별
 			var ggg = $("#ygender").text();
 			
@@ -427,29 +427,55 @@
     				$("#m_pwd2").focus();
     				return;
     			}
+    			
     			else{
     				$("#m_tel").val($("#m_tel1").val() + "-" + $("#m_tel2").val() + "-" + $("#m_tel3").val());
     				$("#m_email").val($("#m_email1").val() + $("#arroba").text() + $("#m_email2").val());
-    				$("#m_addr").val($("#a_addr1").val() + omg + $("#a_addr2").val() + omg + $("#a_addr3").val());
+    				$("#m_addr").val($("#a_addr1").val() + omg + $("#a_addr2").val() + omg + $("#a_addr3").val());	
     				
+    				var id = $("#m_email").attr("id");
+    				var val = $("#m_email").val();
+
     				$.ajax({
-    					url : "/member/myinfoU",
-    					data : $("#updateForm").serialize(),
-    					type : "post",
+    					url : "/member/emailChk",
+    					data : id+"="+val,
     					dataType : "text",
+    					type : "post",
     					error : function(){
     						alert("시스템 에러입니다.");
     					},
     					success : function(result){
     						if(result == "success"){
-    							alert("정보가 수정되었습니다!");
-    							location.reload();
+    								emailOverlopChk2 = true;
+    								$.ajax({
+    			    					url : "/member/mypage/myinfoU",
+    			    					data : $("#updateForm").serialize(),
+    			    					type : "post",
+    			    					dataType : "text",
+    			    					error : function(){
+    			    						alert("시스템 에러입니다.");
+    			    					},
+    			    					success : function(result){
+    			    						if(result == "success"){
+    			    							alert("정보가 수정되었습니다!");
+    			    							location.reload();
+    			    						}
+    			    						else{
+    			    							alert("시스템 에러입니다.");
+    			    						}
+    			    					}
+    			    				});	
     						}
     						else{
-    							alert("시스템 에러입니다.");
+    								alert("이미 사용중인 이메일입니다.");
+    								emailOverlopChk2 = false; 
     						}
     					}
-    				});	
+    				});
+    				
+    				
+    				
+    				
     			}
     		});
     	});

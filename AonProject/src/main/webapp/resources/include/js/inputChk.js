@@ -101,6 +101,7 @@ function overlapChk(main, item, type){
 	else{
 		target = "/member/idChk";
 	}
+	var dd = type;
 	$.ajax({
 		url : target,
 		data : id+"="+val,
@@ -111,7 +112,7 @@ function overlapChk(main, item, type){
 		},
 		success : function(result){
 			if(result == "success"){
-				if(type = "m_email"){
+				if(dd == "m_email"){
 					item.html("사용 가능한 이메일입니다.");
 					emailOverlopChk = true
 				}
@@ -121,7 +122,7 @@ function overlapChk(main, item, type){
 				}
 			}
 			else{
-				if(type = "m_email"){
+				if(dd == "m_email"){
 					item.html("이미 사용중인 이메일입니다.");
 					emailOverlopChk = false;
 				}
@@ -138,9 +139,8 @@ function overlapChk(main, item, type){
 자기 정보를 제외한 이메일 중복 체크
 main : 검사 대상
 */
-var idOverlopChk = false;
-var emailOverlopChk = false;
-function overlapChk(main){
+var emailOverlopChk2 = false;
+function overlapChk2(main){
 var id = main.attr("id");
 var val = main.val();
 
@@ -154,12 +154,11 @@ $.ajax({
 	},
 	success : function(result){
 		if(result == "success"){
-				alert("사용 가능한 이메일입니다.");
-				emailOverlopChk = true
+				emailOverlopChk2 = true;
 		}
 		else{
 				alert("이미 사용중인 이메일입니다.");
-				emailOverlopChk = false;
+				emailOverlopChk2 = false;
 		}
 	}
 });

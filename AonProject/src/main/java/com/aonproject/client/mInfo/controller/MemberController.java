@@ -316,7 +316,6 @@ public class MemberController {
 	public String myinfoD(Authentication auth, @ModelAttribute MemberSubAddressVO vo){
 		logger.info("myinfoD 호출 성공");
 		String result = "";
-
 		MemberVO mvo = (MemberVO) auth.getPrincipal();
 		vo.setM_no(mvo.getM_no());
 		
@@ -396,7 +395,7 @@ public class MemberController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/emailChk", method={RequestMethod.GET, RequestMethod.POST})
-	public String emailChk(@ModelAttribute MemberVO vo, HttpServletRequest request){
+	public String emailChk(Authentication auth, @ModelAttribute MemberVO vo, HttpServletRequest request){
 		logger.info("overlapChk 호출성공");
 		String result = "";
 		int gogo = 0;
@@ -404,6 +403,8 @@ public class MemberController {
 			gogo = memberService.emailChk(vo);
 		}
 		else if(request.getMethod().equals("POST")){
+			MemberVO mvo = (MemberVO) auth.getPrincipal();
+			vo.setM_no(mvo.getM_no());
 			gogo = memberService.emailChk2(vo);
 		}
 		
