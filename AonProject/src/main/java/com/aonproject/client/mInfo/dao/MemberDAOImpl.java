@@ -21,7 +21,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.stereotype.Repository;
 
+import com.aonproject.client.mInfo.vo.MemberSubAddressVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
+import com.aonproject.common.util.vo.Numbers;
 
 @Repository
 public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
@@ -117,5 +119,106 @@ public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
 		return sqlSession.selectOne("newNo");
 	}
 
+	@Override
+	public int addAddr(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("addAddr", vo);
+	}
+
+	@Override
+	public MemberVO memberInfo(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberInfo", vo);
+	}
+
+	@Override
+	public int memberExpire(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberExpire", vo);
+	}
+
+	@Override
+	public int memberGoodBye(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberGoodBye", vo);
+	}
+
+	@Override
+	public int memberAddrGoodBye(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("memberAddrGoodBye", vo);
+	}
+
+	@Override
+	public List<Numbers> numbers() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("numbers");
+	}
+
+	@Override
+	public int myInfoUpdate(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("myInfoUpdate", vo);
+	}
+
+	@Override
+	public int myAddrUpdate(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("myAddrUpdate", vo);
+	}
+
+	@Override
+	public List<MemberSubAddressVO> mSubAddrs(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("mSumAddr", vo);
+	}
+
+	@Override
+	public int msaD(MemberSubAddressVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("msaD", vo);
+	}
+
+	@Override
+	public int lostIdChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("lostIdChk", vo);
+	}
+
+	@Override
+	public int lostPwdChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("lostPwdChk", vo);
+	}
+
+	@Override
+	public String sendId(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("sendId", vo);
+	}
+
+	@Override
+	public int sendPwd(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("sendPwd", vo);
+	}
+
+	@Override
+	public int emailChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("emailChk", vo);
+	}
+
+	@Override
+	public int emailChk2(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("emailChk2", vo);
+	}
+
+	@Override
+	public int idChk(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("idChk", vo);
+	}
 
 }

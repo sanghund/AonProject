@@ -29,11 +29,13 @@ public class MemberVO extends CommonPagingVO implements UserDetails{
 	private String m_gender = "";
 	private String m_tel = "";
 	private String m_email = "";
+	private String m_addr = "";
 	private String m_leave = "";
 	private String m_date = "";
 	private Set<GrantedAuthority> authorities; // 계정이 가지고 있는 권한 목록
 	
 	private String memberSearch = "";
+	
 	
 	public MemberVO() {}
 	
@@ -72,7 +74,6 @@ public class MemberVO extends CommonPagingVO implements UserDetails{
 		}
 		
 	}
-
 
 	public String getMemberSearch() {
 		return memberSearch;
@@ -121,6 +122,12 @@ public class MemberVO extends CommonPagingVO implements UserDetails{
 	}
 	public void setM_email(String m_email) {
 		this.m_email = m_email;
+	}
+	public String getM_addr() {
+		return m_addr;
+	}
+	public void setM_addr(String m_addr) {
+		this.m_addr = m_addr;
 	}
 	public String getM_leave() {
 		return m_leave;

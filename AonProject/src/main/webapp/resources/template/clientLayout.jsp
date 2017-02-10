@@ -9,7 +9,6 @@
 		<div class="body_section">
 			<tiles:insertAttribute name="main" />
 		</div>
-		<tiles:insertAttribute name="footer" />
 	</div>
 </body>
 </html>

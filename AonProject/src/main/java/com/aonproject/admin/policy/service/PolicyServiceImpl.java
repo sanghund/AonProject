@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.admin.policy.dao.PolicyDAO;
 import com.aonproject.admin.policy.vo.PolicyVO;
+import com.aonproject.client.mInfo.vo.MemberVO;
+import com.aonproject.common.util.vo.Numbers;
 import com.aonproject.common.util.vo.PolicyAgrVO;
 
 @Service
@@ -59,5 +61,43 @@ public class PolicyServiceImpl implements PolicyService{
 		// TODO Auto-generated method stub
 		return policyDAO.pagr2(avo);
 	}
+
+	@Override
+	public int memberListCnt(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		return policyDAO.memberListCnt(mvo);
+	}
+
+	@Override
+	public List<PolicyAgrVO> memberList(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		return policyDAO.memberList(mvo);
+	}
+
+	@Override
+	public int policyAgrDenial(PolicyAgrVO vo) {
+		// TODO Auto-generated method stub
+		return policyDAO.policyAgrDenial(vo);
+	}
+
+	@Override
+	public List<Numbers> numbers() {
+		// TODO Auto-generated method stub
+		return policyDAO.numbers();
+	}
+
+	@Override
+	public List<PolicyAgrVO> excelList(PolicyVO vo) {
+		// TODO Auto-generated method stub
+		return policyDAO.excelList(vo);
+	}
+
+	@Override
+	public int forLoop() {
+		// TODO Auto-generated method stub
+		return policyDAO.forLoop();
+	}
+
+	
 
 }

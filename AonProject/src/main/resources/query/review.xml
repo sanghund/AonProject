@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aonproject.admin.review.dao.ReviewDAO">
+	<!-- <sql id="reviewCommon">
+		select re_no, re_title, re_date, re_content
+		from review
+		<where>
+			<if test="search=='re_title'">
+				<![CDATA[ re_title like '%' || #{keyword} ||'%']]>
+			</if>
+			<if test="search=='re_content'">
+				<![CDATA[ re_content like '%' || #{keyword} ||'%']]>
+			</if>
+			<if test="start_date!='' and end_date!=''">
+				<![CDATA[ to_char(re_date, 'YYYY-MM-DD') between #{start_date} and #{end_date}]]>
+			</if>
+		</where>
+	</sql> -->
+	
+	<select id="reviewList" resultType="review" parameterType="review">
+		select re_no, re_title, re_content, re_date, re_chk, m_no, p_no, re_name, rnum from 
+			(select re_no, re_title, re_content, re_date, re_chk, m_no, p_no, re_name, rownum as rnum from 
+				(select r1.re_no, re_title, re_content, to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') as re_date, 
+				re_chk, m_no, p_no, re_name, rownum as rnum from review r1 inner join (select max(re_no) re_no from review group by m_no) 
+				r2 on r1.re_no = r2.re_no<!--  where p_no = #{p_no} --> order by re_no desc) 
+			where rownum <![CDATA[<=]]> #{end_data}) 
+			where rnum <![CDATA[>=]]> #{start_data}
+	</select>
+	<select id="reviewuserList" resultType="review" parameterType="review">
+		select re_no, re_title, re_content, to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') as re_date, 
+				re_chk, m_no, p_no, re_name from review where p_no = #{p_no}
+	</select>
+	
+	<select id="selectReno" resultType="int">
+		select review_seq.nextval from dual
+	</select>
+	
+	<select id="reviewSelectNo" resultType="int">
+		select re_no from review where re_no = #{re_no}
+	</select>
+	
+	<select id="confirmMno" resultType="int">
+		select count(re_no) from review where m_no = #{m_no} and p_no = #{p_no}
+	</select>
+	
+	<insert id="reviewInsert" parameterType="review">
+		insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no) 
+			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, #{p_no})
+	</insert>
+	
+	<!-- <select id="reviewDetail" parameterType="review" resultType="review">
+		select re_title, re_content, to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') as re_date
+		from review
+		where re_no = #{re_no}
+	</select> -->
+	
+	<!-- 비밀번호 확인 -->
+	<select id="pwdConfirm" resultType="int" parameterType="review">
+		select nvl((select 1 from review where re_no=#{re_no} and re_pwd=#{re_pwd}), 0)as state from dual
+	</select>
+	
+	<!-- 수정폼 -->
+	<update id="reviewUpdate" parameterType="review">
+		update review set
+			re_content = #{re_content},
+			re_date = sysdate
+		where re_no = #{re_no}
+	</update>
+	
+	<delete id="reviewDelete" parameterType="int">
+		delete from review where re_no=#{re_no}
+	</delete>
+	
+	<update id="rechkUpdate" parameterType="review">
+		update review set 
+			re_chk = 1
+		where re_no = #{re_no}
+	</update>
+	
+	<select id="cntList" resultType="int">
+		select count(*) from review
+	</select>
+	
+	<select id="mnoList" resultType="review">
+		select m_no from member
+	</select>
+	
+	<insert id="reviewUserInsert" parameterType="review">
+		insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no) 
+			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, #{p_no})
+	</insert>
+	
+	<update id="reviewUserUpdate" parameterType="review">
+		update review set
+			re_content = #{re_content},
+			re_date = sysdate
+		where re_no = #{re_no}
+	</update>
+	
+	<update id="InsertID" parameterType="review">
+		update review set re_name = (select m_id from member where m_no = #{m_no}) 
+	</update>
+	
+	<!-- 마이페이지 리뷰 -->
+	<select id="myReview" resultType="review" parameterType="member">
+		select * from(
+	select rownum as rnum, p_no, re_title, re_content, re_date, pi_route, pi_file from(		
+		select p_no, re_title, re_content, re_date, pi_route, pi_file from (select ppno, pno, pi_route, pi_file from (select min(pno) ppno, p_no pno from (select pno, substr(p_no, 1, instr(p_no, 'S') - 1) p_no from (select DISTINCT min(pi_no) pno, p_no from product_img group by(p_no))) group by (p_no)) inner join product_img on pi_no = ppno) end1
+		inner join (select re_no, re_title, re_content, to_char(re_date, 'yyyy-MM-dd hh24:mm:ss') re_date, o_no, substr(p_no, 1, 7) p_no from review where m_no = #{m_no} order by re_no desc) end2 on pno = p_no order by re_no desc
+	) where rownum <![CDATA[<=]]> #{end_data})
+		where rnum <![CDATA[>=]]> #{start_data}
+	</select>
+	
+	<select id="">
+		<if test=""></if>
+	</select>
+	
+	<!-- 마이페이지 리뷰 cnt -->
+	<select id="myReviewCnt" resultType="java.lang.Integer" parameterType="member">	
+select nvl(count(*), 0) from (select p_no, re_title, re_content, re_date, pi_route, pi_file from (select ppno, pno, pi_route, pi_file from (select min(pno) ppno, p_no pno from (select pno, substr(p_no, 1, instr(p_no, 'S') - 1) p_no from (select DISTINCT min(pi_no) pno, p_no from product_img group by(p_no))) group by (p_no)) inner join product_img on pi_no = ppno) end1
+		inner join (select re_no, re_title, re_content, to_char(re_date, 'yyyy-MM-dd hh24:mm:ss') re_date, o_no, substr(p_no, 1, 7) p_no from review where m_no = #{m_no} order by re_no desc) end2 on pno = p_no order by re_no desc)
+	</select>
+</mapper>

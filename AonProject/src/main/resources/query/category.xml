@@ -7,5 +7,15 @@
 		/* category - categoryList */
 		select category.ca_no, ca_name, ca_date 
 		from category
+		<where>
+			<if test = "ca_no != 0">
+				ca_no = #{ca_no}
+			</if>
+		</where>
 	</select>
+	
+	<insert id="categoryInsert" parameterType="category">
+		insert into category(ca_no, ca_name) values(category_seq.nextval, #{ca_name})
+	</insert>
+	
 </mapper>

@@ -19,9 +19,11 @@
 		})
 		$(".productPack").click(function(){
 			var product_no = $(this).attr("data-no");
-			$("#p_no").val(product_no);
+			var product_color = $(this).children("td:eq(4)").attr("data-num");
+			var product_size = $(this).children("td:eq(5)").attr("data-num");
+			$("#p_no").val(product_no+product_color+product_size);
 			$("#detailForm").attr({"method":"post", "action":"/admin/productDetail"});
-			$("#detailForm").submit(); 
+			$("#detailForm").submit();
 			console.log(product_no);
 
 		})
@@ -40,7 +42,7 @@
 	</div>
 	<!-- 상품 검색 제어 -->
 	<div class="btnContainer">
-		<div>
+		<!-- <div>
 			<select name="search" id="search">
 				<option value="all">전체</option>
 				<option value="all">상품번호</option>
@@ -56,7 +58,7 @@
 		</div>
 		<div>
 			<input type="text" id="keyword" name="keyword">
-		</div>
+		</div> -->
 	</div>
 	<!-- 상품 리스트 출력 -->
 	<div class="itemList">
@@ -76,7 +78,6 @@
 					<td>가격</td>
 					<td>할인율</td>
 					<td>소재</td>
-					<td>주의사항</td>
 					<td>등록일</td>
 				</tr>
 			</thead>
@@ -89,12 +90,11 @@
 								<td>${product.ca_name}</td>
 								<td>${product.p_type_name}</td>
 								<td>${product.p_name}</td>
-								<td>${product.color}</td>
-								<td>${product.size}</td>
+								<td data-num="${product.color_code}">${product.color}</td>
+								<td data-num="${product.size_code}">${product.size}</td>
 								<td>${product.p_price}</td>
 								<td>${product.p_discount}%</td>
 								<td>${product.p_fabric}</td>
-								<td>${product.p_caution}</td>
 								<td>${product.p_date}</td>
 							</tr>
 						</c:forEach>

@@ -16,12 +16,10 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 	@Autowired
 	private CommonCodeDAO commonCodeDAO;
 	
-	/*°øÅëÄÚµå ¸®½ºÆ® ±¸Çö*/
+	// æ€¨ë“¯ë„» è‚„ë¶¾ë±¶ ç”±ÑŠë’ªï¿½ë“ƒ æ´Ñ‹ì½
 	@Override
 	public List<CommonCodeVO> commonCodeList(CommonCodeVO cvo) {
-		List<CommonCodeVO> commonCodeList = null;
-		commonCodeList = commonCodeDAO.commonCodeList(cvo);
-		return commonCodeList;
+		return commonCodeDAO.commonCodeList(cvo);
 	}
 
 }

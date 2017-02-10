@@ -7,7 +7,7 @@ public class Paging {
 	
 	public static void setPage(CommonVO cvo) {
 		int page = Util.nvl(cvo.getPage(),1);
-		int pageSize = Util.nvl(cvo.getPageSize(), 5); // 페이지 간격
+		int pageSize = Util.nvl(cvo.getPageSize(), 5);
 		
 		if(cvo.getPage()==null)cvo.setPage(page+"");
 		if(cvo.getPageSize()==null)cvo.setPageSize(pageSize+"");

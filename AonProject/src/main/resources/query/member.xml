@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aonproject.client.mInfo.dao.MemberDAO">
+	<resultMap type="com.aonproject.common.util.vo.Numbers" id="numbersQ">
+		<result column="m_no" property="no" />
+	</resultMap>
+	
+	<!-- member m_no 전체 가져오기 -->
+	<select id="numbers" resultMap="numbersQ">
+		select m_no from policy order by m_no desc
+	</select>
+	
 	<!-- 유저 회원 가입 -->
 	<insert id="joinGo" parameterType="member">
 		<selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="m_no">
@@ -10,10 +19,123 @@
 		values(#{m_no}, #{m_id}, #{m_pwd}, #{m_name}, #{m_gender}, #{m_tel}, #{m_email})
 	</insert>
 	
+	<!-- 유저 주소 추가 -->
+	<insert id="addAddr" parameterType="member">
+		insert into member_addr(ma_no, m_no, m_addr)
+		values(member_addr_seq.nextval, #{m_no}, #{m_addr})
+	</insert>
+	
 	<!-- 최신 회원 번호 조회 -->
 	<select id="newNo" resultType="java.lang.Integer">
 		select * from (select m_no from member order by m_no desc) where rownum = 1
 	</select>
 	
+	<!-- 유저 정보 조회 -->
+	<select id = "memberInfo" parameterType="member" resultType="member">
+		select member.m_no, m_id, m_name, m_gender, m_email, m_addr, m_tel, m_date 
+		from member 
+		inner join (select * from (select min(ma_no) as mno from member_addr group by(m_no)) g1 inner join (select * from member_addr) on mno = ma_no) member_addr 
+		on member.m_no = member_addr.m_no 
+		where member.m_no = #{m_no}
+	</select>
 	
+	<!-- 유저 정보 조회(추가 주소) -->
+	<select id = "mSubAddrs" parameterType="member" resultType="msa">
+		select ma_no, m_addr from 
+		(select min(ma_no) as mno from member_addr group by(m_no) having m_no = #{m_no}), 
+		member_addr where mno != ma_no order by ma_no
+	</select>
+	
+	<!-- 약관 거부시 계정 탈퇴 _ 탈퇴 테이블로 이동 -->
+	<insert id = "memberExpire" parameterType="member">
+		insert into member_expire(
+			me_no,
+			me_id,
+			me_name,
+			me_tel,
+			me_email
+			) values(
+			#{m_no},
+			#{m_id},
+			#{m_name},
+			#{m_tel},
+			#{m_email}
+			)
+	</insert>
+	
+	<!-- 약관 거부시 계정 탈퇴 _ 회원 테이블에서 데이터 제거 -->
+	<update id = "memberGoodBye" parameterType="member">
+		update member set
+			m_pwd = null,
+			m_name = null,
+			m_gender = null,
+			m_tel = null,
+			m_email = null,
+			m_leave = #{m_leave}
+			where m_no = #{m_no}
+	</update>
+	
+	<!-- 약관 거부시 계정 탈퇴 _ 회원 주소 테이블에서 데이터 제거 -->
+	<delete id="memberAddrGoodBye" parameterType="member">
+		delete from member_addr where m_no = #{m_no}
+	</delete>
+	
+	<!-- 회원 정보 수정 -->
+	<update id="myInfoUpdate" parameterType="member">
+		update member set 
+			<if test="m_pwd != ''">
+				m_pwd = #{m_pwd},
+			</if>
+			m_name = #{m_name},
+			m_tel = #{m_tel},
+			m_email = #{m_email}
+		where m_no = #{m_no}
+	</update>
+	
+	<!-- 회원 정보 수정(기본 주소) -->
+	<update id="myAddrUpdate" parameterType="member">		
+		update member_addr set 
+			m_addr = #{m_addr}
+		where m_no = #{m_no} and (select min(ma_no) as mno from member_addr group by(m_no) having m_no = #{m_no}) = ma_no
+	</update>
+	
+	<!-- 회원 정보 삭제(추가 주소) -->
+	<delete id="msaD" parameterType="msa">
+		delete from member_addr where m_no = #{m_no} and ma_no = #{ma_no}
+	</delete>
+	
+	<!-- 아이디 찾기 검사 -->
+	<select id="lostIdChk" resultType="java.lang.Integer" parameterType="member">
+		select nvl((select count(*) from member where m_name = #{m_name} and m_email = #{m_email}), 0) from dual
+	</select>
+	
+	<!-- 비밀번호 찾기 검사 -->
+	<select id="lostPwdChk" resultType="java.lang.Integer" parameterType="member">
+		select nvl((select count(*) from member where m_id = #{m_id} and m_email = #{m_email}), 0) from dual
+	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="sendId" resultType="java.lang.String" parameterType="member">
+		select m_id from member where m_name = #{m_name} and m_email = #{m_email}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<update id="sendPwd" parameterType="member">
+		update member 	set m_pwd = #{m_pwd} where m_id = #{m_id}
+	</update>
+	
+	<!-- 회원가입 중복 아이디  검사 -->
+	<select id="idChk" resultType="java.lang.Integer" parameterType="member">
+		select nvl((select count(*) from member where m_id = #{m_id}), 0) from dual
+	</select>
+	
+	<!-- 회원가입 중복 이메일  검사 -->
+	<select id="emailChk" resultType="java.lang.Integer" parameterType="member">
+		select nvl((select count(*) from member where m_email = #{m_email}), 0) from dual
+	</select>
+	
+	<!-- 정보 수정 중복(자신 제외) 이메일  검사 -->
+	<select id="emailChk2" resultType="java.lang.Integer" parameterType="member">
+		select nvl((select count(*) from member where m_email = #{m_email} and m_no <![CDATA[!=]]> #{m_no}), 0) from dual
+	</select>
 </mapper>

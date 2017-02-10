@@ -1,0 +1,310 @@
+@CHARSET "UTF-8";
+
+	#qnabody{
+		max-width:1000px;	
+		margin-left:200px;
+		}
+	.qna_hd{
+		margin: 80px 0 20px 0;
+	    margin-left: 0px;
+	    text-align: center;
+	    font-size: 18px;
+	    color: #414141;
+	    padding: 3px 15px;
+	    border-bottom: 1px solid #414141;
+		}
+	.all_btns{
+		text-align: left;
+		letter-spacing: 1px;
+	    font-size: 10px;
+	    color: #000;
+	    border: 1px solid #000;
+	    background: #fff;
+	    padding: 9px 15px;
+	    line-height: 1;
+	    cursor: pointer;
+	    text-align: center;
+	    font-weight: normal;
+	    white-space: nowrap;
+	    display: inline-block;
+	    transition: 1s;
+	    zoom: 1;
+		}
+	.all_btns:hover{
+		background:rgba(0,0,0,1); 
+		color:white;
+		}
+	
+	.qna-table-list table{
+		width: 100%;
+	    border-collapse: collapse;
+	    border-spacing: 0;
+	    table-layout: fixed;
+	    word-wrap: break-word;
+	    word-break: keep-all;
+	    margin-top:10px;
+	    font-size:12px;
+		}
+	.qna-table-list table caption{
+		display: none;
+		}
+	.qna-table-list thead{
+		display: table-header-group;
+	    vertical-align: middle;
+	    border-color: inherit;
+		}
+	.qna-table-list thead tr{
+		display: table-row;
+	    vertical-align: inherit;
+	    border-color: inherit;
+		}
+	.qna-table-list thead tr th{
+		padding: 10px 0;
+	    background-color: #fcfcfc;
+	    border-top: 1px solid #333;
+	    border-bottom: 1px solid #ccc;
+	    color: #777;
+		}
+	.tb-center{
+		text-align: center
+		}
+	.qna_tr, .qna_tr1, .qna_tr2, .qna_tr3, .qna_tr4{
+		display: table-row;
+	    vertical-align: inherit;
+	    border-color: inherit;
+	    cursor: pointer;	
+		}
+	.qna-table-list tbody .qna_tr td{
+		padding: 10px 0;
+	    background-color: #fcfcfc;
+	    border-top: 1px solid #333;
+	    border-bottom: 1px solid #ccc;
+	    color: #777;
+		} 
+	.qna-table-list tbody .qna_tr1 td{
+		padding: 10px 0;
+	    background-color: #fcfcfc;
+	    border-top: 1px solid #333;
+	    border-bottom: 1px solid #ccc;
+	    color: #777;
+		}  
+	.qna-table-list tbody .qna_tr2 td{
+		padding: 10px 0;
+	    background-color: #fcfcfc;
+	    border-top: 1px solid #333;
+	    border-bottom: 1px solid #ccc;
+	    color: #777;
+		}  
+	.qna-table-list tbody .qna_tr3 td{
+		padding: 10px 0;
+	    background-color: #fcfcfc;
+	    border-top: 1px solid #333;
+	    border-bottom: 1px solid #ccc;
+	    color: #777;
+		}  
+	.qna-table-list tbody .qna_tr4 td{
+		padding: 10px 0;
+	    background-color: #fcfcfc;
+	    border-top: 1px solid #333;
+	    border-bottom: 1px solid #ccc;
+	    color: #777;
+		}  
+	.user_qnacontent{
+		margin:20px 30px 20px 30px;
+		
+		}
+	.comment-insert{
+		border: 1px solid #e7e7e7;
+		padding: 15px;
+		margin-top: 10px;
+		}
+		
+	.comment-list{
+		padding:20px 30px 20px 30px;
+		}
+	.comment-list h3{
+		font-size: 13px;
+	    height: 30px;
+	    color: #666;
+	    font-family: '맑은 고딕','arial','돋움',sans-serif;
+		}	
+	.comment-cover{
+		border: 1px solid #e7e7e7;
+    	padding: 5px 15px;
+		}
+	.comment-content{
+		border-top: 0px solid #e9e9e9;
+	    border-bottom: 0px solid #e9e9e9;
+	    font-family: 'arial','돋움',sans-serif;
+		}
+	.comment-content .content-top{
+		position: relative;
+	    overflow: hidden;
+	    padding: 10px 20px 10px 10px;
+	    color: #999;
+	    text-align: left;
+	    line-height: 140%;
+		}
+	.comment_insert{
+		margin: 0 0px 0 0;
+	    font-size: 10px;
+	    padding: 2px 6px;
+	    border: 1px solid #e7e7e7;
+	    color: #ccc;
+		}
+	.comment_insert:hover{
+		color:black;
+		}
+	.comment_modify{
+		margin: 0 0px 0 0;
+	    font-size: 10px;
+	    padding: 2px 6px;
+	    border: 1px solid #e7e7e7;
+	    color: #ccc;
+		}
+	.comment_delete{
+		margin: 0 0px 0 0;
+	    font-size: 10px;
+	    padding: 2px 6px;
+	    border: 1px solid #e7e7e7;
+	    color: #ccc;
+		}
+	.comment_modify:hover{
+		color:black;
+		}	
+	.comment_delete:hover{
+		color:black;
+		}
+		
+		
+	.fieldset_insert{
+		margin: 10px 0;
+	    padding: 10px 20px 20px;
+	    border: 1px solid #e7e7e7;
+	    background: #f8f8f8;
+	    font-size: 11px;
+	    color: #202020;
+		}
+	.fieldset_insert fieldset{
+		border: none;
+    	vertical-align: top;
+		}	
+	legend{visibility: hidden;}
+	.fieldset_insert fieldset .comment_inner{
+		margin: 10px 0 0;
+		}
+	.fieldset_insert fieldset .comment_inner label{
+		margin: 10px 0 0;
+		width:70px;
+	}
+	.fieldset_insert fieldset .comment_inner input{
+		width: 200px;
+	    height: 20px;
+	    margin: 0 10px 0 9px;
+	    padding: 2px 2px 2px 4px;
+	    border: 1px solid #d9d9d9;
+	    color: #202020;
+		}
+	.fieldset_insert fieldset .comment_inner textarea{
+		width: 433px;
+    	height: 50px;
+    	margin: 8px 10px 0 9px;
+	    padding: 2px 2px 2px 4px;
+	    border: 1px solid #d9d9d9;
+	    color: #202020;	
+		}
+	.fieldset_insert fieldset .comment_inner a{
+		letter-spacing: 1px;
+	    font-size: 13px;
+	    color: #000;
+	    border: 1px solid #000;
+	    background: #fff;
+	    padding: 18px 15px;
+	    margin-top:8px;
+	    cursor: pointer;
+	    text-align: center;
+	    display: inline-block;
+	    transition: 1s;
+		}
+	.fieldset_insert fieldset .comment_inner a:hover{
+		background:rgba(0,0,0,1); 
+		color:white;
+		}
+	
+	.fieldset_modify{
+		margin: 10px 0;
+	    padding: 10px 20px 20px;
+	    border: 1px solid #e7e7e7;
+	    background: #f8f8f8;
+	    font-size: 11px;
+	    color: #202020;
+		}
+	.fieldset_modify fieldset{
+		border: none;
+    	vertical-align: top;
+		}	
+	.fieldset_modify fieldset .comment_inner{
+		margin: 10px 0 0;
+		}
+	.fieldset_modify fieldset .comment_inner label{
+		margin: 10px 0 0;
+	}
+	.fieldset_modify fieldset .comment_inner input{
+		width: 200px;
+	    height: 20px;
+	    margin: 0 10px 0 9px;
+	    padding: 2px 2px 2px 4px;
+	    border: 1px solid #d9d9d9;
+	    color: #202020;
+		}
+	.fieldset_modify fieldset .comment_inner textarea{
+		width: 433px;
+    	height: 50px;
+    	margin: 8px 10px 0 9px;
+	    padding: 2px 2px 2px 4px;
+	    border: 1px solid #d9d9d9;
+	    color: #202020;	
+		}
+	.fieldset_modify fieldset .comment_inner a{
+		letter-spacing: 1px;
+	    font-size: 13px;
+	    color: #000;
+	    border: 1px solid #000;
+	    background: #fff;
+	    padding: 18px 15px;
+	    margin-top:8px;
+	    cursor: pointer;
+	    text-align: center;
+	    display: inline-block;
+	    transition: 1s;
+		}
+	.fieldset_modify fieldset .comment_inner a:hover{
+		background:rgba(0,0,0,1); 
+		color:white;
+		}
+	
+	.showComment{
+		margin: 10px 0;
+	    padding: 10px 20px 20px;
+	    background: #f8f8f8;
+	    font-size: 13px;
+	    color: #BDBDBD;
+		}	
+		
+		.page_tr{
+		text-align: center;
+		}
+	.page_tr td{
+		padding-top: 10px;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

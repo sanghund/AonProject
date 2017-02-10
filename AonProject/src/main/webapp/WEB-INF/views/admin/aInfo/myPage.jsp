@@ -169,9 +169,6 @@
     		$("#a_email1").keydown(function(event){
     			nextEnter(event, $("#go"), true);
     		});
-    		$("#a_email2").keydown(function(event){
-    			nextEnter(event, $("#go"), false);
-    		});
     		$("#a_addr3").keydown(function(event){
     			nextEnter(event, $("#gogo"), false);
     		});

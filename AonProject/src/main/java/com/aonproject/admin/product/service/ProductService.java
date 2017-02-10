@@ -17,4 +17,6 @@ public interface ProductService {
 	public int productUpdate(ProductVO pvo);
 	public int productDelete(ProductVO pvo);
 	
+	public List<ProductVO> productForCategory(ProductVO pvo);
+	
 }
