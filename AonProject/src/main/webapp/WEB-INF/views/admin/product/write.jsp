@@ -81,6 +81,7 @@
 					success		: function(data){
 						alert("성공!");
 					}
+					
 				})
 			}
 		})
