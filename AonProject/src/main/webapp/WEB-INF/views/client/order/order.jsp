@@ -189,6 +189,9 @@
 	<!-- form -->
 	<form name="orderForm" id="orderForm">
 		<div class="hidden none">
+			<c:if test="${not empty mode }">
+				<input type = "hidden" id = "mode" name ="mode" value="${mode }">
+			</c:if>
 			<input type="hidden" name="m_addr" id="m_addr">
 			<input type="hidden" name="o_mode" id="o_mode">
 			<input type="hidden" name="o_confirm" id="o_confirm">

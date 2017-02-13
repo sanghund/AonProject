@@ -6,7 +6,7 @@ public class PolicyVO {
 	private String po_content = "";
 	private String po_type = "";
 	private String po_date = "";
-	
+
 	public int getPo_no() {
 		return po_no;
 	}

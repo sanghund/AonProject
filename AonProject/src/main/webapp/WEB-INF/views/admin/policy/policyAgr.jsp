@@ -273,15 +273,15 @@
 									<span class = "icon-angle-right"></span>
 								</c:if>
 								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne memberVO.totalPage}" >
-									<a href = "/admin/policyAgr?pageNum=${adminVO.pageTotal[0] + fn:length(adminVO.pageTotal) }" data-num = "${adminVO.pageTotal[0] + fn:length(adminVO.pageTotal) }" class = "icon-angle-right"></a>
+									<a href = "/admin/policyAgr?pageNum=${memberVO.pageTotal[0] + fn:length(memberVO.pageTotal) }" data-num = "${memberVO.pageTotal[0] + fn:length(memberVO.pageTotal) }" class = "icon-angle-right"></a>
 								</c:if>
-								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq pNum}" >
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq pNum2}" >
 									<span class = "icon-angle-double-right"></span>
 								</c:if>
-								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne pNum}" >
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne pNum2}" >
 									<a href = "/admin/policyAgr?pageNum=${memberVO.totalPage }" data-num = "${memberVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
-								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne member.totalPage}" >
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne memberVO.totalPage}" >
 									<a href = "/admin/policyAgr?pageNum=${memberVO.totalPage }" data-num = "${memberVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
 							</td>
