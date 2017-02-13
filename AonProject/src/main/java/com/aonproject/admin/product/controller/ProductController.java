@@ -20,7 +20,6 @@ import com.aonproject.admin.commoncode.service.CommonCodeService;
 import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 import com.aonproject.admin.product.service.ProductService;
 import com.aonproject.admin.product.vo.ProductVO;
-import com.aonproject.admin.stock.service.StockService;
 import com.aonproject.admin.stock.vo.StockVO;
 import com.aonproject.common.util.upload.FileUploadUtil;
 import com.aonproject.common.util.upload.service.UploadService;
@@ -43,8 +42,6 @@ public class ProductController {
 	@Autowired
 	private UploadService uploadService;
 	
-	@Autowired
-	private StockService stockService;
 	
 	String mode = "";
 	
@@ -96,7 +93,7 @@ public class ProductController {
 	/*move writeForm*/
 	@RequestMapping(value = "/writeForm")
 	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
-		logger.info("writeFrom ȣ�� ����!");
+		logger.info("writeFrom 호占쏙옙 占쏙옙占쏙옙!");
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
@@ -114,12 +111,12 @@ public class ProductController {
 	/*Product Insert*/
 	@RequestMapping(value = "/productInsert")
 	public String itemInsert (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
-		logger.info("itemInsert ȣ�� ����!");
+		logger.info("itemInsert 호占쏙옙 占쏙옙占쏙옙!");
 		mode = "insert";
 		int result = 0;
 		String createP_no = "";
 		
-		//��ǰ��ȣ(p_no) ����
+		//占쏙옙품占쏙옙호(p_no) 占쏙옙占쏙옙
 		logger.info("p_no1="+pvo.getP_no().length());
 		
 		StockVO svo = new StockVO();
@@ -158,11 +155,11 @@ public class ProductController {
 		return "redirect:"+url;
 	}
 	
-	/*��ǰ ������Ʈ*/
+	/*占쏙옙품 占쏙옙占쏙옙占쏙옙트*/
 	@RequestMapping(value = "/productUpdate")
 	public String itemUpdate (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
 		mode = "update";
-		logger.info("itemUpdate ȣ�� ����!");
+		logger.info("itemUpdate 호占쏙옙 占쏙옙占쏙옙!");
 		
 		int result = 0;
 		result = productService.productUpdate(pvo);
@@ -170,7 +167,7 @@ public class ProductController {
 		if(result == 1){
 			List<MultipartFile> files = uvo.getFiles();
 			
-			/*���ϸ� Ȯ��*/
+			/*占쏙옙占싹몌옙 확占쏙옙*/
 			String fileChk = files.get(0).getOriginalFilename().toString();
 			
 			if(fileChk != ""){
@@ -190,7 +187,7 @@ public class ProductController {
 		return "redirect:"+url;
 	}
 	
-	/*��ǰ�̹��� ���, ����*/
+	/*占쏙옙품占싱뱄옙占쏙옙 占쏙옙占�, 占쏙옙占쏙옙*/
 	public int imgInsert(UploadVO uvo, HttpServletRequest request) throws IOException {
 		int fileResult = 0;
 		
@@ -211,7 +208,7 @@ public class ProductController {
 		return fileResult;
 	}
 	
-	/*��ǰ ����*/
+	/*占쏙옙품 占쏙옙占쏙옙*/
 	@RequestMapping(value = "/productDelete")
 	public String itemDelete (@ModelAttribute ProductVO pvo) {
 		mode = "update";
