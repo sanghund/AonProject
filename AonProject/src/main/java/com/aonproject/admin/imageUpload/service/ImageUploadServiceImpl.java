@@ -30,9 +30,9 @@ public class ImageUploadServiceImpl implements ImageUploadService {
 	}
 
 	@Override
-	public List<String> main() {
-		// TODO Auto-generated method stub
-		return imageUploadDAO.main();
+	public List<ImageUploadVO> main() {
+		List<ImageUploadVO> main = imageUploadDAO.main(); 
+		return main;
 	}
 
 }

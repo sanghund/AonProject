@@ -25,13 +25,13 @@ public class FileUploadUtil {
 			real_name = fileOption+"."+System.currentTimeMillis()+org_name;
 			dummyRoot = request.getSession().getServletContext().getRealPath("/"+fileRoute);
 			docRoot = fileRoute;
-			File fileDir = new File(docRoot);
+			File fileDir = new File(dummyRoot);
 			if(!fileDir.exists()){
 				fileDir.mkdirs();
 			}
-			File fileAdd = new File(docRoot+"/"+real_name);
-			System.out.println(docRoot);
-			logger.info(dummyRoot);
+			File fileAdd = new File(dummyRoot+"/"+real_name);
+			System.out.println("docRoot: "+docRoot);
+			logger.info("dummyRoot: "+dummyRoot);
 			logger.info("upload file= "+fileAdd);
 			
 			file.transferTo(fileAdd);
@@ -39,10 +39,10 @@ public class FileUploadUtil {
 		return docRoot+"@@@"+real_name;
 	}
 	
-	public static void fileDelete(String fileName, HttpServletRequest request) throws IOException {
+	public static void fileDelete(String fileName, String fileRoute, HttpServletRequest request) throws IOException {
 		logger.info("fileDelete calling");
 		boolean result = false;
-		String docRoot = request.getSession().getServletContext().getRealPath("/productUpload");
+		String docRoot = request.getSession().getServletContext().getRealPath("/"+fileRoute);
 		
 		File fileDelete = new File(docRoot+"/"+fileName);
 		logger.info("delete file= "+fileDelete);

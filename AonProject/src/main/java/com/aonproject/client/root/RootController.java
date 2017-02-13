@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
 import com.aonproject.admin.imageUpload.service.ImageUploadService;
+import com.aonproject.admin.imageUpload.vo.ImageUploadVO;
 
 @Controller
 public class RootController {
@@ -31,8 +32,13 @@ public class RootController {
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		List<String> main = (List<String>) imageUploadService.main();
+		List<ImageUploadVO> main = imageUploadService.main();
 		model.addAttribute("main", main);
+		
+		for(int i=0; i<main.size(); i++){
+			logger.info(main.get(i).getMp_file());
+			//logger.info(main.get(i).getMp_route());
+		}
 		
 		return "client/index";
 	}

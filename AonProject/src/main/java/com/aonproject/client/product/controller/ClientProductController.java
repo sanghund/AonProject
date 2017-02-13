@@ -17,6 +17,7 @@ import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 import com.aonproject.admin.product.service.ProductService;
 import com.aonproject.admin.product.vo.ProductVO;
 import com.aonproject.client.root.RootController;
+import com.aonproject.common.util.paging.PagingSet;
 import com.aonproject.common.util.upload.service.UploadService;
 import com.aonproject.common.util.upload.vo.UploadVO;
 
@@ -42,6 +43,12 @@ public class ClientProductController {
 		model.addAttribute("categoryList", categoryList);
 		
 		logger.info(no);
+		
+		//paging
+		/*int cnt = 0;
+		cnt = productService.cntList();
+		pvo.setCountList(20);
+		PagingSet.setPageing(pvo, cnt);*/
 		
 		cvo.setCa_no(no);
 		List<CategoryVO> categorySelect = categoryService.categoryList(cvo);

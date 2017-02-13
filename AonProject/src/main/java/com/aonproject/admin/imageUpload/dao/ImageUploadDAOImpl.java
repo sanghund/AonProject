@@ -28,8 +28,7 @@ public class ImageUploadDAOImpl implements ImageUploadDAO {
 	}
 
 	@Override
-	public List<String> main() {
-		// TODO Auto-generated method stub
+	public List<ImageUploadVO> main() {
 		return session.selectList("main");
 	}
 

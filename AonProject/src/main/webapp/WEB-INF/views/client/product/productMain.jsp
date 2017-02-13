@@ -26,7 +26,7 @@
 			<c:forEach items="${productForCategory}" varStatus="status">
 				<div class="item" data-num="${productForCategory[status.index].p_no}">
 					<a href="/detail?no=${fn:substring(productForCategory[status.index].p_no,0,7)}">
-						<img src="/${productForCategory[status.index].pi_route}/${productForCategory[status.index].pi_file}" />
+						<img src="${productForCategory[status.index].pi_route}/${productForCategory[status.index].pi_file}" />
 					</a>
 					<ul>
 						<li class="bold">[AON PROJECT]</li>
@@ -38,4 +38,59 @@
 			</c:forEach>
 		</c:when>
 	</c:choose>
+	<%-- <table>
+		<tr>
+			<td colspan="8" id = "pageLow">
+				<c:if test = "${productForCategory.totalPage < productForCategory.pageNum }">
+					<c:set var = "pNum" value= "${productVO.totalPage }"/>
+				</c:if>
+				<c:if test = "${productForCategory.totalPage >= productForCategory.pageNum }">
+					<c:set var = "pNum" value= "${productForCategory.pageNum }"/>
+				</c:if>
+			
+				<c:if test = "${productForCategory.pageTotal[0] eq 1 and pNum eq 1}" >
+					<span class = "icon-angle-double-left"></span>
+				</c:if>
+				<c:if test = "${productForCategory.pageTotal[0] eq 1 and pNum ne 1}" >
+					<a href = "/admin/policyAgr?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
+				</c:if>
+				<c:if test = "${productForCategory.pageTotal[0] ne 1}" >
+					<a href = "/admin/policyAgr?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
+				</c:if>
+				<c:if test = "${productForCategory.pageTotal[0] eq 1}" >
+					<span class = "icon-angle-left"></span>
+				</c:if>
+				<c:if test = "${productForCategory.pageTotal[0] ne 1}" >
+					<a href = "/admin/policyAgr?pageNum=${productForCategory.pageTotal[0] - fn:length(productForCategory.pageTotal) }" data-num = "${productForCategory.pageTotal[0] - fn:length(productForCategory.pageTotal) }" class = "icon-angle-left"></a>
+				</c:if>
+	
+				<c:forEach items="${productForCategory.pageTotal }" varStatus="status">
+					<c:if test = "${productForCategory.pageTotal[status.index] eq pNum}" >
+						<span>${productForCategory.pageTotal[status.index] }</span>
+					</c:if>
+					<c:if test = "${productForCategory.pageTotal[status.index] ne pNum}" >
+						<a href = "/admin/policyAgr?pageNum=${productForCategory.pageTotal[status.index] }" data-num = "${productForCategory.pageTotal[status.index]}">
+	 						${productForCategory.pageTotal[status.index] } 
+						</a>
+					</c:if>
+				</c:forEach>
+	
+				<c:if test = "${productForCategory.pageTotal[fn:length(productForCategory.pageTotal) - 1] eq productForCategory.totalPage}" >
+					<span class = "icon-angle-right"></span>
+				</c:if>
+				<c:if test = "${productForCategory.pageTotal[fn:length(adminVO.pageTotal) - 1] ne productForCategory.totalPage}" >
+					<a href = "/admin/policyAgr?pageNum=${productForCategory.pageTotal[0] + fn:length(productForCategory.pageTotal) }" data-num = "${productForCategory.pageTotal[0] + fn:length(productForCategory.pageTotal) }" class = "icon-angle-right"></a>
+				</c:if>
+				<c:if test = "${productForCategory.pageTotal[fn:length(productForCategory.pageTotal) - 1] eq productForCategory.totalPage and productForCategory.totalPage eq pNum}" >
+					<span class = "icon-angle-double-right"></span>
+				</c:if>
+				<c:if test = "${productForCategory.pageTotal[fn:length(adminVO.pageTotal) - 1] eq productForCategory.totalPage and productForCategory.totalPage ne pNum}" >
+					<a href = "/admin/policyAgr?pageNum=${productForCategory.totalPage }" data-num = "${productForCategory.totalPage }" class = "icon-angle-double-right"></a>
+				</c:if>
+				<c:if test = "${productForCategory.pageTotal[fn:length(adminVO.pageTotal) - 1] ne productForCategory.totalPage}" >
+					<a href = "/admin/policyAgr?pageNum=${productForCategory.totalPage }" data-num = "${productForCategory.totalPage }" class = "icon-angle-double-right"></a>
+				</c:if>
+			</td>
+		</tr>
+	</table> --%>
 </div>

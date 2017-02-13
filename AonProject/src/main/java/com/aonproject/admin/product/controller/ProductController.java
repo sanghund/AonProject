@@ -5,13 +5,17 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aonproject.admin.category.service.CategoryService;
@@ -89,6 +93,26 @@ public class ProductController {
 		return "admin/product/detail";
 	}
 	
+	
+	/* product Detail Support */
+	@ResponseBody
+	@RequestMapping(value = "/productDetailSupport")
+	public ProductVO detailInfo(@Param("p_no") String p_no){
+		logger.info("productInsertSupport calling");
+		ProductVO detailInfo = null;
+		/*try{
+			entity = new ResponseEntity<>(productService.productDetail(p_no, HttpServletRequest request));
+		}catch(Exception e){
+			e.printStackTrace();
+			entity = new ResponseEntity<>(productService.productDetail(HttpStatus.BAD_REQUEST));
+		}*/
+		
+		detailInfo = productService.productDetailSupport(p_no);
+		
+		return detailInfo;
+	}
+	
+	
 	/*move writeForm*/
 	@RequestMapping(value = "/writeForm")
 	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
@@ -155,6 +179,8 @@ public class ProductController {
 		mode = "update";
 		logger.info("itemUpdate calling");
 		
+		String fileRoute = "productUpload";
+		
 		int result = 0;
 		result = productService.productUpdate(pvo);
 		
@@ -165,7 +191,7 @@ public class ProductController {
 			String fileChk = files.get(0).getOriginalFilename().toString();
 			
 			if(fileChk != ""){
-				FileUploadUtil.fileDelete(uvo.getPi_file(), request);
+				FileUploadUtil.fileDelete(uvo.getPi_file(), fileRoute, request);
 				uploadService.uploadDelete(uvo);
 				for(MultipartFile file : files ){
 					uvo.setFile(file);
@@ -183,8 +209,7 @@ public class ProductController {
 	public int imgInsert(UploadVO uvo, HttpServletRequest request) throws IOException {
 		int fileResult = 0;
 		
-		String fileRoute = "/productUpload";
-		//String fileRoute = "C:\\AonProject\\src\\main\\webapp\\resources\\productImg";
+		String fileRoute = "productUpload";
 		
 		String pi_files = FileUploadUtil.fileUpload(uvo.getP_no(), fileRoute, uvo.getFile(), request);
 		String pi_file[] = pi_files.split("@@@");

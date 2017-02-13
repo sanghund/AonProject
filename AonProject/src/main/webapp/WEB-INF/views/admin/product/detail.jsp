@@ -119,7 +119,7 @@
 		$("input[type='text']").removeAttr("disabled");
 		$("input[type='number']").removeAttr("disabled");
 		$("textarea").removeAttr("disabled");
-		$("select option").not(":selected").removeAttr("disabled");
+		//$("select option").not(":selected").removeAttr("disabled");
 	}
 </script>
 <style>

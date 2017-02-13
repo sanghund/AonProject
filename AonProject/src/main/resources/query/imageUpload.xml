@@ -16,7 +16,8 @@
 	            values(mainimageupload_seq.nextval, #{mp_file}, #{mp_route})
 	</insert>
 	
-	<select id="main" resultType="java.lang.String">
+	<!-- image detail -->
+	<select id="main" resultType="imageUpload">
 		select (mp_route||'/'||mp_file) as mp_file from (select mp_file, mp_route from mainimageupload order by mp_no desc) where rownum <![CDATA[<=]]> 5
 	</select>
 	

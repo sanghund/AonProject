@@ -56,6 +56,21 @@
 		where product.p_no like #{p_no} || '%' and rownum = 1
 	</select>
 	
+	<!-- 상품  디테일 등록 서포트 -->
+	<select id="productDetailSupport" resultType="product" parameterType="product">
+		/* product - productDetail */
+		select product.p_no, category.ca_name, p_type_cd.cc_name "p_type_name", product.p_name, product.p_price, product.p_discount, p3.pi_file,
+			   p3.pi_route, p_info, color_cd.cc_name "color", color_code, upper(size_cd.cc_name) "size", size_code, p_fabric, p_caution, 
+			   to_char(product.p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date
+		from product 
+		left join category on product.ca_no = category.ca_no 
+		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
+		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
+		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no)
+    	inner join (select * from product_img inner join (select min(pi_no) pi_no from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no) p3 on product.p_no = p3.p_no
+		where product.p_no = #{p_no}
+	</select>
+	
 	<!-- 상품번호 생성 -->
 	<select id="createP_no" resultType="String">
 		select product_seq.nextval from dual
@@ -88,4 +103,9 @@
 		/* product - productDelete */
 		update product set p_del = #{p_del} where p_no = #{p_no}
 	</update>
+	
+	<!-- product count -->
+	<select id="cntList" resultType="int">
+		select count(*) from product
+	</select>
 </mapper>

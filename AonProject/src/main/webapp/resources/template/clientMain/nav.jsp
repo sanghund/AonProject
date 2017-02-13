@@ -12,7 +12,7 @@
 	<li><span class="shop bold">SHOP</span></li>
 		<c:choose>
 			<c:when test="${not empty categoryList}">
-				<c:forEach var="categoryList" begin="1" end="4" items="${categoryList}">
+				<c:forEach var="categoryList" begin="0" end="4" items="${categoryList}">
 					<li><a href="/category?no=${categoryList.ca_no}">${categoryList.ca_name}</a></li>
 				</c:forEach>
 			</c:when>
