@@ -58,12 +58,12 @@ public class OrderController{
 
 	@RequestMapping(value="/orderResult")
 	public String orderResult(Authentication auth, @ModelAttribute ProductVO povo, @ModelAttribute CategoryVO cvo, Model model){
-		logger.info("orderResult ȣ�� ����");
+		logger.info("orderResult calling");
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		/*ȸ������ ���*/
+		
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		MemberVO memberInfo = memberService.memberInfo(vo);
 		model.addAttribute("memberInfo", memberInfo);
@@ -71,7 +71,7 @@ public class OrderController{
 		List<Product_orderVO> orderInfo = new ArrayList<Product_orderVO>();
 		List<ProductVO> productList = new ArrayList<ProductVO>();
 		
-		//o_num ���� : max(o_no)+1
+		
 		String checkOnum = orderService.checkOnum();
 		if(checkOnum == "" || checkOnum == null){
 			checkOnum = 1+"";
@@ -87,7 +87,6 @@ public class OrderController{
 			cal.setP_no(povo.getP_nos().get(i).toString());
 			cal = productService.productDetail(cal);
 			
-			//�ֹ�VO �׸� ���
 			ovo.setP_no(povo.getP_nos().get(i).toString());
 			//logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+ovo.getP_no());
 			ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
@@ -101,7 +100,6 @@ public class OrderController{
 			int result = orderService.orderInsert(ovo);
 			logger.info("orderInser="+result);
 			
-			//��ǰVO �׸� ���
 			cal.setO_cnt(ovo.getO_cnt());
 			cal.setO_mode(ovo.getO_mode());
 			cal.setO_confirm(ovo.getO_confirm());
@@ -124,14 +122,14 @@ public class OrderController{
 	
 	@RequestMapping(value= "/order")
 	public String order(Authentication auth, @ModelAttribute Product_orderVO povo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute ProductVO pvo, HttpServletRequest request, Model model){
-		logger.info("order ȣ�� ����");
+		logger.info("order calling");
 		
-		/*ȸ������ ���*/
+		
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		MemberVO memberInfo = memberService.memberInfo(vo);
 		model.addAttribute("memberInfo", memberInfo);
 		
-		/*ī�װ� ����Ʈ ���*/
+		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
@@ -169,10 +167,10 @@ public class OrderController{
 	}
 	
 	
-	// ��ٱ���
+	
 	@RequestMapping(value= "/cart")
 	public ModelAndView cart(@ModelAttribute CategoryVO cvo, HttpServletRequest request, HttpServletResponse response){
-		logger.info("cart ȣ�� ����");
+		logger.info("cart calling");
 		ModelAndView mav = new ModelAndView();
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		mav.addObject("categoryList", categoryList);
@@ -220,10 +218,10 @@ public class OrderController{
 		return mav;
 	}
 	
-	// ��ٱ��� ����
+	
 	@RequestMapping(value="/cartD", method = RequestMethod.POST)
 	public String cartD(@ModelAttribute CartVO vo, HttpServletRequest request, HttpServletResponse response){
-		logger.info("cartD ȣ�� ����");
+		logger.info("cartD calling");
 
 		Cookie[] cookies = request.getCookies();
 		Cookie cookie = null;
@@ -288,10 +286,10 @@ public class OrderController{
 		return "redirect:/order/cart";
 	}
 	
-	// ��ٱ��� ���
+	
 	@RequestMapping(value="/wish", method = RequestMethod.POST)
 	public ModelAndView wish(RedirectAttributes redirectAttributes, @ModelAttribute CartVO vo ,HttpServletRequest request, HttpServletResponse response){
-		logger.info("wish ȣ�� ����");
+		logger.info("wish calling");
 		ModelAndView mav = new ModelAndView();
 		
 		String goodNo = "";

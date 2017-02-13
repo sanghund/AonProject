@@ -17,13 +17,11 @@ public class ImageUploadDAOImpl implements ImageUploadDAO {
 	@Autowired
 	private SqlSession session;
 	
-	/*메인 이미지 리스트 구현*/
 	@Override
 	public List<ImageUploadVO> imageUploadList(ImageUploadVO iuvo) {
 		return session.selectList("imageUploadList", iuvo);
 	}
 	
-	/*메인 이미지 등록*/
 	@Override
 	public int imageUploadInsert(ImageUploadVO iuvo) {
 		return session.insert("imageUploadInsert", iuvo);

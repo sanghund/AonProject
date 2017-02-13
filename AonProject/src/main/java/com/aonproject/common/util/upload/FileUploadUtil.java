@@ -11,41 +11,36 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileUploadUtil {
 	static Logger logger = Logger.getLogger(FileUploadUtil.class);
 	
-	/*���� ���ε� �޼���*/
-	public static String fileUpload(String fileOption, MultipartFile file, HttpServletRequest request) throws IOException{
-		logger.info("fileUpload ȣ�⼺��");
+	public static String fileUpload(String fileOption, String fileRoute, MultipartFile file, HttpServletRequest request) throws IOException{
+		logger.info("fileUpload calling");
 		
 		String real_name = null;
 		String org_name = file.getOriginalFilename();
-		logger.info("org_name= "+org_name);
+		String docRoot = "";
+		String dummyRoot = "";
 		
-		
-		//���ϸ� ����
 		if(org_name != null && (!org_name.equals(""))){
-			//real_name = fileOption+"_"+System.currentTimeMillis()+"_"+org_name;
-			/**********************************************************************
-			 * ���ϸ� ��� ��Ģ - ����Ÿ��.����и���.���m���ϸ���Ȯ����(��:��ǰ�ڵ�_����и���.Ȯ����->TEST.14804650.jpg)
-			 * ���� ����Ʈ�� ��½� '.'�� �����Ͽ� �ι��� �׸����� ��������
-			 **********************************************************************/
+			
 			org_name = org_name.substring(org_name.lastIndexOf("."));
 			real_name = fileOption+"."+System.currentTimeMillis()+org_name;
-			String docRoot = request.getSession().getServletContext().getRealPath("/productUpload");
+			dummyRoot = request.getSession().getServletContext().getRealPath("/"+fileRoute);
+			docRoot = fileRoute;
 			File fileDir = new File(docRoot);
 			if(!fileDir.exists()){
 				fileDir.mkdirs();
 			}
 			File fileAdd = new File(docRoot+"/"+real_name);
 			System.out.println(docRoot);
+			logger.info(dummyRoot);
 			logger.info("upload file= "+fileAdd);
 			
 			file.transferTo(fileAdd);
 		}
-		return real_name;
+		return docRoot+"@@@"+real_name;
 	}
 	
-	/*���� ���� �޼���*/
 	public static void fileDelete(String fileName, HttpServletRequest request) throws IOException {
-		logger.info("fileDelete ȣ�� ����");
+		logger.info("fileDelete calling");
 		boolean result = false;
 		String docRoot = request.getSession().getServletContext().getRealPath("/productUpload");
 		
@@ -55,6 +50,6 @@ public class FileUploadUtil {
 		if(fileDelete.exists() && fileDelete.isFile()){
 			result = fileDelete.delete();
 		}
-		logger.info("��������(true/false): "+result);
+		logger.info("fileDelete(true/false): "+result);
 	}
 }

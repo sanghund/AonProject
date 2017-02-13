@@ -36,35 +36,28 @@ public class ClientProductController {
 	@Autowired
 	private UploadService uploadService;
 	
-	//��ǰ ����Ʈ ���
 	@RequestMapping(value = "category")
 	public String productList (@ModelAttribute CategoryVO cvo, ProductVO pvo, Model model, @RequestParam("no") int no){
-		/*ī�װ� ����Ʈ ���*/
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
 		logger.info(no);
 		
-		/*ī�װ� ���� �̸� ���*/
 		cvo.setCa_no(no);
 		List<CategoryVO> categorySelect = categoryService.categoryList(cvo);
 		logger.info(cvo.getCa_name());
 		model.addAttribute("categorySelect", categorySelect);
 		
-		/*��ǰ����Ʈ ���� ī�װ� ��ȣ ����*/
 		pvo.setCa_no(no);
 		
-		/*��ǰ ����Ʈ ���*/
 		List<ProductVO> productForCategory = productService.productForCategory(pvo);
 		model.addAttribute("productForCategory", productForCategory);
 		
 		return "client/product/productMain";
 	}
 	
-	//��ǰ ������ ���
 	@RequestMapping(value = "detail")
 	public String productDetail (@ModelAttribute CategoryVO cvo, @ModelAttribute ProductVO pvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute UploadVO uvo, Model model, @RequestParam("no") String no){
-		/*ī�װ� ����Ʈ ���*/
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		

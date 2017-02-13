@@ -26,7 +26,7 @@
 			<c:forEach items="${productForCategory}" varStatus="status">
 				<div class="item" data-num="${productForCategory[status.index].p_no}">
 					<a href="/detail?no=${fn:substring(productForCategory[status.index].p_no,0,7)}">
-						<img src="/productUpload/${productForCategory[status.index].pi_file}" />
+						<img src="/${productForCategory[status.index].pi_route}/${productForCategory[status.index].pi_file}" />
 					</a>
 					<ul>
 						<li class="bold">[AON PROJECT]</li>

@@ -24,10 +24,9 @@ public class RootController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	// ���� ������
 	@RequestMapping(value = "/")
 	public String root(@ModelAttribute CategoryVO cvo, Model model, Authentication auth){
-		logger.info("root ȣ�� ����");
+		logger.info("root calling");
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);

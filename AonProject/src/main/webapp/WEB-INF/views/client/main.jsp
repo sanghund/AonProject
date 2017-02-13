@@ -8,10 +8,11 @@
 	<section class = "section five"></section>
 	<script type = "text/javascript">
 		$(document).ready(function(){
-			$(".section.one").css("background-image", "url(/productUpload/<c:out value="${main[0] }"/>)");
-			$(".section.two").css("background-image", "url(/productUpload/<c:out value="${main[1] }"/>)");
-			$(".section.three").css("background-image", "url(/productUpload/<c:out value="${main[2] }"/>)");
-			$(".section.four").css("background-image", "url(/productUpload/<c:out value="${main[3] }"/>)");
-			$(".section.five").css("background-image", "url(/productUpload/<c:out value="${main[4] }"/>)");
+			$(".section.one").css("background-image", "url(/<c:out value="${main[0] }"/>)");
+			$(".section.two").css("background-image", "url(/<c:out value="${main[1] }"/>)");
+			$(".section.three").css("background-image", "url(/<c:out value="${main[2] }"/>)");
+			$(".section.four").css("background-image", "url(/<c:out value="${main[3] }"/>)");
+			$(".section.five").css("background-image", "url(/<c:out value="${main[4] }"/>)");
 		})
 	</script>
+	
