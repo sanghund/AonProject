@@ -93,5 +93,14 @@ public class ReviewVO extends CommonPagingVO{
 		this.p_no = p_no;
 	}
 	
+	@Override
+	public String toString() {
+		return "ReviewVO [re_no=" + re_no + ", re_title=" + re_title + ", re_content=" + re_content + ", re_date="
+				+ re_date + ", re_pwd=" + re_pwd + ", re_chk=" + re_chk + ", re_name=" + re_name + ", m_no=" + m_no
+				+ ", o_no=" + o_no + ", p_no=" + p_no + ", pi_route=" + pi_route + ", pi_file=" + pi_file + "]";
+	}
+	
+	
+	
 	
 }

@@ -43,10 +43,12 @@
 		select count(re_no) from review where m_no = #{m_no} and p_no like #{p_no}||'%'
 	</select>
 	
-	<insert id="reviewInsert" parameterType="review">
-		insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no) 
-			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, 
-			(select p_no from product_order where o_no = (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%')))
+	<insert id="reviewInsert" parameterType="review">		
+		<selectKey order="BEFORE" keyProperty="p_no" >
+			select p_no from product_order inner join (select max(o_no) o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%') tt on tt.o_no = product_order.o_no 
+		</selectKey>	
+			insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no, o_no) 
+			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no},  #{p_no}, (select max(o_no) o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%'))
 	</insert>
 	
 	<!-- <select id="reviewDetail" parameterType="review" resultType="review">
@@ -87,10 +89,11 @@
 	</select>
 	
 	<insert id="reviewUserInsert" parameterType="review">
+		<selectKey order="BEFORE" keyProperty="p_no" resultType="java.lang.String">
+			select p_no from product_order inner join (select max(o_no) o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%') tt on tt.o_no = product_order.o_no 
+		</selectKey>
 		insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no, o_no) 
-			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, 
-			(select p_no from product_order where o_no = (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%'))
-			, (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%'))
+			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, #{p_no}, (select max(o_no) o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%'))
 	</insert>
 	
 	<update id="reviewUserUpdate" parameterType="review">
