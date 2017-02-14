@@ -42,7 +42,6 @@ public class ProductController {
 	@Autowired
 	private UploadService uploadService;
 	
-	
 	String mode = "";
 	
 	/*Product List*/

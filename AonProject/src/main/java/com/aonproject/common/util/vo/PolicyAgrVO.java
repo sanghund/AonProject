@@ -14,8 +14,15 @@ public class PolicyAgrVO extends PolicyVO{
 	private String m_name = "";
 	private String m_tel = "";
 	private String m_email = "";
+	private int a_no = 0;
 	
 	
+	public int getA_no() {
+		return a_no;
+	}
+	public void setA_no(int a_no) {
+		this.a_no = a_no;
+	}
 	public String getPo_date() {
 		return po_date;
 	}
