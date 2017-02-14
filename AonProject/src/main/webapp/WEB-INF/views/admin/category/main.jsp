@@ -19,7 +19,7 @@
 					break;
 				}
 			} */
-			var ca_name = name+caselect;
+			var ca_name = name+" "+caselect;
 			if(!chkSubmit($("#ca_name"),"연도를 입력해주세요(ex:2017)"))return;
 			else{
 				if(confirm("입력하시겠습니까?")){
@@ -58,7 +58,7 @@
 			var ca_no = $(this).parents("td").children(".ca_no").val();
 			var caname = $(this).parents("td").children().find("#ca_name").val();
 			var caselect = $(this).parents("td").children().find("#caselect option:selected").text();
-			var ca_name = caname+caselect;
+			var ca_name = caname+" "+caselect;
 			/* if(!chkSubmit($(caname),"연도를 입력해주세요(ex:2017)"))return; */
 			if(confirm("수정하시겠습니까?")){
 				$(this).parent().click();

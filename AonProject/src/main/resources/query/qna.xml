@@ -13,7 +13,7 @@
 				(select q1.q_no, q_title, q_content, to_char(q_date, 'YYYY-MM-DD HH24:MI:SS') as q_date, 
 				Q_CONFIRM, m_no, p_no, q_name, rownum as rnum from qna q1 inner join (select q_no from qna) 
 				q2 on q1.q_no = q2.q_no order by q_no desc)
-				where rownum <![CDATA[<=]]> #{end_data}) 
+				where rownum <![CDATA[<=]]> #{end_data} order by q_confirm asc) 
 			where rnum <![CDATA[>=]]> #{start_data}
 	</select>
 	
@@ -37,7 +37,7 @@
 	</update>
 	
 	<update id="qnaQname" parameterType="qna">
-		update qna set q_name = ((select m_id from member where m_no = #{m_no}))
+		update qna set q_name = (select substr((select m_id from member where m_no = #{m_no}), 1,length((select m_id from member where m_no = #{m_no))-3) from dual)
 	</update>
 	
 	<select id="qnaPwdConfirm" parameterType="qna" resultType="int">

@@ -296,30 +296,20 @@ public class ReviewController2 {
 		MemberVO mvo = (MemberVO) auth.getPrincipal();
 		rvo.setM_no(mvo.getM_no());
 		String resultS = "";
-		System.out.println(rvo.getM_no());
-		System.out.println(rvo.getP_no());
-		System.out.println(rvo.getP_no().indexOf("1"));
-		System.out.println("-------------------------------");
-		
-		/*int result = rvo.getP_no().indexOf("C");
-		System.out.println(rvo.getP_no().substring(0, result));
-		
-		
-		System.out.println("result = "+result);
-		if(result > -1){
-			rvo.setP_no(rvo.getP_no().substring(0, result));
-		}*/
-		
 		String confirm = "";
-		confirm = reviewService.reviewOrderConfirm(rvo);
-		logger.info("confirm = " + confirm);
-		
-		System.out.println("confirm = " + confirm);
-		
+		confirm = reviewService.reviewOrderConfirm(rvo); //상품 주문을 했는지 안했는지 검사
+		int reCon = 0;
+		reCon = reviewService.reviewConfirm(rvo);//상품주문을 했지만 리뷰를 썻는지 안썻는지 검사
+		System.out.println("reCon = " + reCon);
 		if(Integer.parseInt(confirm) ==0){
 			resultS = "fail";
 		}else if(Integer.parseInt(confirm) > 0){
-			resultS = "success";
+			if(reCon == 0){
+				resultS = "success";
+			}else if(reCon > 0){
+				resultS = "fails";
+			}
+			
 		}
 		return resultS;
 	}
