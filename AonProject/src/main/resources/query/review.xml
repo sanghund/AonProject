@@ -21,8 +21,8 @@
 		select re_no, re_title, re_content, re_date, re_chk, m_no, p_no, re_name, rnum from 
 			(select re_no, re_title, re_content, re_date, re_chk, m_no, p_no, re_name, rownum as rnum from 
 				(select r1.re_no, re_title, re_content, to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') as re_date, 
-				re_chk, m_no, p_no, re_name, rownum as rnum from review r1 inner join (select max(re_no) re_no from review group by m_no) 
-				r2 on r1.re_no = r2.re_no<!--  where p_no = #{p_no} --> order by re_no desc) 
+				re_chk, m_no, p_no, re_name, rownum as rnum from review r1 inner join (select max(re_no) re_no from review group by p_no) 
+				r2 on r1.re_no = r2.re_no order by re_chk asc) 
 			where rownum <![CDATA[<=]]> #{end_data}) 
 			where rnum <![CDATA[>=]]> #{start_data}
 	</select>

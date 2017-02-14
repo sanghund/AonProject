@@ -368,7 +368,7 @@
 						<c:otherwise>
 							<tr>
 								<td colspan="4">
-									<div class="tb-center">등록된 리뷰가 없습니다.</div>
+									<div class="tb-center">등록된 문의가 없습니다.</div>
 								</td>
 							</tr>
 						</c:otherwise>
