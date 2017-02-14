@@ -27,4 +27,10 @@ public class mInfoDAOImpl implements mInfoDAO {
 		// type change
 		return (mInfoVO)session.selectOne("mDetailForm");
 	}
+	
+	// member delete
+	@Override
+	public int mInfoDelete(int m_no) {
+		return session.delete("mInfoDelete");
+	}
 }

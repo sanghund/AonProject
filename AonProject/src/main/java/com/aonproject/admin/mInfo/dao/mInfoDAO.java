@@ -9,5 +9,7 @@ public interface mInfoDAO {
 	public List<mInfoVO> mInfoList(mInfoVO mvo);
 	// member detail
 	public mInfoVO mDetailForm(mInfoVO mvo);
+	// member delete
+	public int mInfoDelete(int m_no);
 
 }
