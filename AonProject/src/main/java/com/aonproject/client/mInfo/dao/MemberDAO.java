@@ -1,6 +1,7 @@
 package com.aonproject.client.mInfo.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.aonproject.client.mInfo.vo.MemberSubAddressVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
@@ -26,4 +27,6 @@ public interface MemberDAO {
 	public int emailChk(MemberVO vo);
 	public int emailChk2(MemberVO vo);
 	public int idChk(MemberVO vo);
+	public Map<String, Integer> memberSexDistribution();
+	public Map<String, Integer> memberCount(MemberVO vo);
 }

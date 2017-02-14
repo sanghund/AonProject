@@ -11,7 +11,6 @@
 		box-sizing: border-box;
 		padding: 10px;
 	}
-	
 	#aTitle {
 			font-size: 25px;
 			padding : 10px 0;
@@ -93,8 +92,8 @@
 
 		}
 		.viewImg a{
-			width: 100%;
-			height: 100%;
+			width: 150px;
+			height: 150px;
 			display: inline-block;
 		}
 		.viewImg img{
@@ -111,6 +110,16 @@
 			text-decoration: none;
 			color: black;
 		}	
+		.hahaha td{
+			border-bottom: 1px solid grey;
+		}
+		.pagingNumbers{
+			font-size: 25px;
+			margin-top: 15px;
+		}
+		.viewImg{
+			border-left: 1px solid black;		
+		}
 </style>
 <div class = "main">
 	<h2 id = "aTitle">MyPage</h2>
@@ -133,11 +142,11 @@
 	<div class= "orderList">
 		<table id = "orderTable">
 			<colgroup>
-				<col width="15%">
-				<col width="40%">
-				<col width="15%">
 				<col width="20%">
-				<col width="10%">
+				<col width="15%">
+				<col width="30%">
+				<col width="25%">
+				<col width="20%">
 			</colgroup>
 			<tr id = "tableH">
 				<th>주문번호/일자</th>
@@ -153,7 +162,7 @@
 			<c:if test="${not empty orderList }">
 				<c:forEach items="${orderList }" varStatus="status">
 					<tr class = "hahaha">
-						<td class= "${orderList[status.index].o_num }" data-num = "${orderList[status.index].o_num }">
+						<td class= "o_num${orderList[status.index].o_num }">
 							<div class= "o_numLine">
 								${orderList[status.index].o_num }
 							</div>
@@ -161,7 +170,7 @@
 								${orderList[status.index].o_date }	
 							</div>
 						</td>
-						<td class= "viewImg"><a href = "/detail?no=${orderList[status.index].p_no }"><img src = "/productUpload/${orderList[status.index].pi_file }"></a></td>
+						<td class= "viewImg" data-num = "${orderList[status.index].o_no }"><a href = "/detail?no=${orderList[status.index].p_no }"><img src = "/productUpload/${orderList[status.index].pi_file }"></a></td>
 						<td>
 							<div class= "o_nameLine">
 								${orderList[status.index].p_type }
@@ -190,7 +199,7 @@
 					</tr>
 				</c:forEach>
 				<tr class= "pagingNumbers">
-							<td colspan="3" id = "pageLow">
+							<td colspan="5" id = "pageLow">
 								<c:if test = "${memberVO.totalPage < memberVO.pageNum }">
 									<c:set var = "pNum" value= "${memberVO.totalPage }"/>
 								</c:if>
@@ -264,4 +273,19 @@
 			$(".step").eq(1).css("border-right", "none");
 		});
 	</script>
-	
+	<script type = "text/javascript">
+		$(document).ready(function(){
+			var loopGo = $(".hahaha").length;
+			
+			for(var i = 0; i < loopGo; i++){
+				var test = $(".hahaha").eq(i).find("td").eq(0).attr("class");
+				var test2 = $("."+test+"").length;
+				if(test2 != 1){
+					$(".hahaha").eq(i).find("td").eq(0).attr("rowspan", test2);
+					$("."+test+"").not($("."+test+"").eq(0)).remove();
+					i = i + test2 - 1;
+				}	
+				
+			}
+		});
+	</script>

@@ -93,8 +93,8 @@
 
 		}
 		.viewImg a{
-			width: 100%;
-			height: 100%;
+			width: 150px;
+			height: 150px;
 			display: inline-block;
 		}
 		.viewImg img{
@@ -110,6 +110,19 @@
 		.pagingNumbers a{
 			text-decoration: none;
 			color: black;
+		}
+		.pagingNumbers{
+			font-size: 25px;
+			margin-top: 15px;
+		}
+		.hahaha td{
+			border-bottom: 1px solid lightgrey;
+		}
+		.clickEvent td{
+			text-align: left !important;
+		}
+		.clickEvent{
+			border-bottom: 1px solid lightgrey;
 		}
 </style>
 <div class = "main">
@@ -238,10 +251,10 @@
 	
 	<script type = "text/javascript">
 		$(document).ready(function(){
-			$(".clickEvent").attr("display", "none");
+			$(".clickEvent").css("display", "none");
 			$(".hahaha").click(function(){
 				if($(this).next().css("display") == "none"){
-					$(this).next().css("display", "block");
+					$(this).next().css("display", "table-row");
 				}else{
 					$(this).next().css("display", "none");
 				}	

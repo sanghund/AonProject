@@ -120,6 +120,7 @@ public class ProductController {
 	@RequestMapping(value = "/writeForm")
 	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
 		logger.info("writeFrom calling");
+
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);

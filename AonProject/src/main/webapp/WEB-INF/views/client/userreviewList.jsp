@@ -42,7 +42,6 @@
 			$(".review_write").hide();
 			$(".write_button").click(function(){
 				var p_no = $(this).children(".p_no").val();	
-				alert("h2");
 				$.ajax({
 					url:"/review/reviewOrderConfirm",
 					type:"post",
@@ -59,6 +58,8 @@
 							alert("글을 쓰실 수 있습니다.");
 						}else if(result == "fail"){
 							alert("상품주문 후에 작성하실 수 있습니다.");
+						}else if(result = "fails"){
+							alert("이미 주문한 상품에대해 리뷰를 작성하였습니다. 다른 의견 작성은 문의 게시판을 이용해주세요.")
 						}
 					}
 				});
@@ -273,9 +274,9 @@
 			</div>
 		</div>
 		<div class="reviewTopBtn">
-			<div class="board_btns">
+			<a class="board_btns" href="#">
 				ALL VIEW
-			</div>
+			</a>
 			<sec:authorize access="hasRole('user')">
 			
 				<div class="write_button">
@@ -317,7 +318,7 @@
 							<th><div class="tb-left">내용 : </div></th>
 							<td>
 								<div class="tb-left frm-w">
-									<textarea rows="8" cols="70" id="re_content" name="re_content"></textarea>
+									<textarea rows="8" cols="70" id="re_content" name="re_content" maxlength="4000"></textarea>
 								</div>
 								
 							</td>
@@ -409,7 +410,7 @@
 										<div class="update_content">
 											<form id="update_form">
 												<input type="hidden" name="re_no" id="re_no" value="${review.re_no }">
-												<textarea rows="8" cols="70" id="re_content" name="re_content">${review.re_content }</textarea>
+												<textarea rows="8" cols="70" id="re_content" name="re_content" maxlength="4000">${review.re_content }</textarea>
 												<div class="mo_file"> 
 													<input type="file" id="files" name="files" style="padding-top:8px;" multiple><br />
 													<div class="imgView" style="padding-top:14px;">

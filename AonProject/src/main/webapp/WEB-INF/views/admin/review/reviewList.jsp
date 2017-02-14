@@ -217,6 +217,7 @@
 			$(".comment_insert").click(function(){
 				$(".fieldset_insert").show();
 				$(".fieldset_modify").hide();
+				$(".showComment").hide();
 			});
 			
 			//comment_insertBtn입력버튼
@@ -254,6 +255,7 @@
 			$(".comment_modify").click(function(){
 				$(".fieldset_insert").hide();
 				$(".fieldset_modify").show();
+				$(".showComment").hide();
 			});
 			
 			$(".comment_modifyBtn").click(function(){
@@ -289,11 +291,13 @@
 			//comment_incancel
 			$(".comment_incancel").click(function(){
 				reset();
+				$(".showComment").show();
 			});
 			
 			//comment_mocancel
 			$(".comment_mocancel").click(function(){
 				$(".fieldset_modify").hide();
+				$(".showComment").show();
 			});
 
 		});
@@ -499,7 +503,7 @@
 										</div>
 										
 										<!-- 관리자 코멘트가 시작되는 구간 -->
-										<div class="comment-list">
+										<div class="reviewcomment-list">
 											<h3>COMMENT LIST</h3>
 											<div class="comment-cover">
 												<div class="comment-content">

@@ -195,7 +195,7 @@ public class MemberController {
 	
 	// 마이페이지 - 주문조회+취소 내역
 	@RequestMapping(value="/mypage/orderlist")
-	public ModelAndView orderlist(Authentication auth, @ModelAttribute CategoryVO cvo){
+	public ModelAndView orderlist(Authentication auth, @ModelAttribute CategoryVO cvo, HttpServletRequest request){
 		logger.info("orderlist 호출 성공");
 		
 		ModelAndView mav = new ModelAndView();
@@ -203,6 +203,9 @@ public class MemberController {
 		mav.addObject("categoryList", categoryList);
 		
 		MemberVO vo = (MemberVO) auth.getPrincipal();
+		
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum != null) vo.setPageNum(pageNum);
 		
 		int cnt = orderService.myOrderCnt(vo);
 		PagingSet.setPageing(vo, cnt);
@@ -220,10 +223,13 @@ public class MemberController {
 	
 	// 마이페이지 - 구매 후기 내역
 	@RequestMapping(value="/mypage/review")
-	public ModelAndView review(Authentication auth, @ModelAttribute CategoryVO cvo){
+	public ModelAndView review(Authentication auth, @ModelAttribute CategoryVO cvo, HttpServletRequest request){
 		logger.info("review 호출 성공");
 		
 		MemberVO vo = (MemberVO) auth.getPrincipal();
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum != null) vo.setPageNum(pageNum);
+		
 		ModelAndView mav = new ModelAndView();
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		mav.addObject("categoryList", categoryList);
@@ -244,9 +250,12 @@ public class MemberController {
 	
 	// 마이페이지 - 상품 문의 내역
 	@RequestMapping(value="/mypage/qna")
-	public ModelAndView qna(Authentication auth, @ModelAttribute CategoryVO cvo){
+	public ModelAndView qna(Authentication auth, @ModelAttribute CategoryVO cvo, HttpServletRequest request){
 		logger.info("qna 호출 성공");
 		MemberVO vo = (MemberVO) auth.getPrincipal();
+		String pageNum = request.getParameter("pageNum");
+		if(pageNum != null) vo.setPageNum(pageNum);
+		
 		ModelAndView mav = new ModelAndView();
 
 		int cnt = qnaService.myQnaCnt(vo);

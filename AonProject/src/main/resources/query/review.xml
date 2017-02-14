@@ -21,9 +21,9 @@
 		select re_no, re_title, re_content, re_date, re_chk, m_no, p_no, re_name, rnum from 
 			(select re_no, re_title, re_content, re_date, re_chk, m_no, p_no, re_name, rownum as rnum from 
 				(select r1.re_no, re_title, re_content, to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') as re_date, 
-				re_chk, m_no, p_no, re_name, rownum as rnum from review r1 inner join (select max(re_no) re_no from review group by m_no) 
-				r2 on r1.re_no = r2.re_no<!--  where p_no = #{p_no} --> order by re_no desc) 
-			where rownum <![CDATA[<=]]> #{end_data}) 
+				re_chk, m_no, p_no, re_name, rownum as rnum from review r1 inner join (select max(re_no) re_no from review group by p_no) 
+				r2 on r1.re_no = r2.re_no order by re_no desc) 
+			where rownum <![CDATA[<=]]> #{end_data} order by re_chk asc) 
 			where rnum <![CDATA[>=]]> #{start_data}
 	</select>
 	<select id="reviewuserList" resultType="review" parameterType="review">
@@ -40,7 +40,7 @@
 	</select>
 	
 	<select id="confirmMno" resultType="int">
-		select count(re_no) from review where m_no = #{m_no} and p_no = #{p_no}||'%'
+		select count(re_no) from review where m_no = #{m_no} and p_no like #{p_no}||'%'
 	</select>
 	
 	<insert id="reviewInsert" parameterType="review">
@@ -87,9 +87,10 @@
 	</select>
 	
 	<insert id="reviewUserInsert" parameterType="review">
-		insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no) 
+		insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no, o_no) 
 			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, 
-			(select p_no from product_order where o_no = (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%')))
+			(select p_no from product_order where o_no = (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%'))
+			, (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%'))
 	</insert>
 	
 	<update id="reviewUserUpdate" parameterType="review">
@@ -111,7 +112,13 @@
 						where m_no = #{m_no} and p_no like #{p_no}||'%' and o_confirm = 'Y' and  count != 0 order by o_no desc) where rownum = 1 -->
 		select count(o_no) from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' and o_confirm = 'Y'
 	</select>
-	<!-- 마이페이지 리뷰 -->
+	
+	<select id="reviewConfirm" resultType="int">
+		select count(re_no) from review where m_no = #{m_no} and p_no like #{p_no}||'%' and 
+			o_no = (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%')
+	</select>
+
+	<!-- 마이페이지 리뷰 -->	
 	<select id="myReview" resultType="review" parameterType="member">
 		select * from(
 	select rownum as rnum, p_no, re_title, re_content, re_date, pi_route, pi_file from(		
