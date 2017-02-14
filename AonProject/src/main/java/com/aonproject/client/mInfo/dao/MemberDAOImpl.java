@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -220,5 +221,18 @@ public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("idChk", vo);
 	}
+
+	@Override
+	public Map<String, Integer> memberSexDistribution() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectMap("memberSexDistribution", "");
+	}
+
+	@Override
+	public Map<String, Integer> memberCount(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectMap("memberCount", "");
+	}
+
 
 }

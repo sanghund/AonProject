@@ -49,6 +49,13 @@
 	.textCenter{
 		text-align: center;
 	}
+	#excelGo{
+		text-align: center;
+	}
+	#excel{
+		margin-bottom: 15px;
+		font-size: 25px;
+	}
 </style>
 <div class = "main">
 	<h2 id = "pTitle">약관 동의</h2>

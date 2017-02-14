@@ -110,7 +110,7 @@
 			</if>
 		</where>
 		order by m_no desc) member 
-		on addPolicy.m_no = member.m_no order by pa_date, m_id desc
+		on addPolicy.m_no = member.m_no order by pa_date desc, m_id desc
 		) where rownum <![CDATA[<=]]> #{end_data})
 		where rnum <![CDATA[>=]]> #{start_data}
 	</select>

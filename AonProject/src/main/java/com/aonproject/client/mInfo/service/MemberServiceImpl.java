@@ -1,6 +1,7 @@
 package com.aonproject.client.mInfo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -130,5 +131,18 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return memberDAO.idChk(vo);
 	}
+
+	@Override
+	public Map<String, Integer> memberSexDistribution() {
+		// TODO Auto-generated method stub
+		return memberDAO.memberSexDistribution();
+	}
+
+	@Override
+	public Map<String, Integer> memberCount(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.memberCount(vo);
+	}
+
 
 }

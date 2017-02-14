@@ -111,7 +111,7 @@
 						where m_no = #{m_no} and p_no like #{p_no}||'%' and o_confirm = 'Y' and  count != 0 order by o_no desc) where rownum = 1 -->
 		select count(o_no) from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' and o_confirm = 'Y'
 	</select>
-	<!-- 마이페이지 리뷰 -->
+	<!-- 마이페이지 리뷰 -->	
 	<select id="myReview" resultType="review" parameterType="member">
 		select * from(
 	select rownum as rnum, p_no, re_title, re_content, re_date, pi_route, pi_file from(		
