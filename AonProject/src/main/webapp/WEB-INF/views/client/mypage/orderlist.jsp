@@ -147,7 +147,7 @@
 			</tr>
 			<c:if test="${empty orderList }">
 				<tr>
-					<td colspan="5">등록된 문의가 없습니다.</td>
+					<td colspan="5">등록된 주문이 없습니다.</td>
 				</tr>
 			</c:if>
 			<c:if test="${not empty orderList }">

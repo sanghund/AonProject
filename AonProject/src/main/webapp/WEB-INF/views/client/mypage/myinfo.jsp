@@ -148,7 +148,7 @@
 			<div id = "update">
 				<div><span class = "array">아이디</span><span id = "m_id">${vo.m_id }</span></div>	
 				<div><span class = "array">비밀번호</span><input type = "password" maxlength="20"  id = "m_pwd" name = "m_pwd"><span id = "pwdChkMsg1"></span></div>	
-				<div><span class = "array">비밀번호 확인</span><input type = "password" maxlength="20"  id = "a_pwd2" name = "m_pwd2"><span id = "pwdChkMsg2"></span></div>		
+				<div><span class = "array">비밀번호 확인</span><input type = "password" maxlength="20"  id = "m_pwd2" name = "m_pwd2"><span id = "pwdChkMsg2"></span></div>		
 				<div><span class = "array">이름</span><input type = "text" value= "${vo.m_name }" maxlength="20"  id = "m_name" name = "m_name"><span id = "nameChkMsg"></span></div>		
 				<div><span class = "array">성별</span><span id = "ygender">${vo.m_gender }</span></div>		
 				<div>

@@ -42,7 +42,6 @@
 			$(".review_write").hide();
 			$(".write_button").click(function(){
 				var p_no = $(this).children(".p_no").val();	
-				alert("h2");
 				$.ajax({
 					url:"/review/reviewOrderConfirm",
 					type:"post",
@@ -59,6 +58,8 @@
 							alert("글을 쓰실 수 있습니다.");
 						}else if(result == "fail"){
 							alert("상품주문 후에 작성하실 수 있습니다.");
+						}else if(result = "fails"){
+							alert("이미 주문한 상품에대해 리뷰를 작성하였습니다. 다른 의견 작성은 문의 게시판을 이용해주세요.")
 						}
 					}
 				});
@@ -273,9 +274,9 @@
 			</div>
 		</div>
 		<div class="reviewTopBtn">
-			<div class="board_btns">
+			<a class="board_btns" href="#">
 				ALL VIEW
-			</div>
+			</a>
 			<sec:authorize access="hasRole('user')">
 			
 				<div class="write_button">
