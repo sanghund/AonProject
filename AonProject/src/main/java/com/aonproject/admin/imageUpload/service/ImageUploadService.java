@@ -8,5 +8,5 @@ public interface ImageUploadService {
 	
     public List<ImageUploadVO> imageUploadList(ImageUploadVO iuvo);
     public int imageUploadInsert(ImageUploadVO iuvo);
-	public List<String> main();
+	public List<ImageUploadVO> main();
 }

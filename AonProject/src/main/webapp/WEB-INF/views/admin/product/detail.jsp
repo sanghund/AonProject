@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
+<style>
+	.hidden {display:hidden;}
+</style>
 <script type="text/javascript" src="/resources/include/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
 <script type="text/javascript" src="/resources/include/js/jquery.form.js"></script>
@@ -76,10 +78,11 @@
 		//파일명 hover시 이미지 확인
 		var img = $("<img>");
 		$(".imgThumb").hover(function(){
+			var targetRoute = $(this).parent().find(".imgRoute").html();
 			var target = $(this).html();
 			$(this).css({"color" : "#ff0000"});
 			img.attr({
-				"src" 		: "/productUpload/"+target,
+				"src" 		: "/"+targetRoute+"/"+target,
 				"display" 	: "block",
 				"width" 	: "300px"
 			});
@@ -116,7 +119,7 @@
 		$("input[type='text']").removeAttr("disabled");
 		$("input[type='number']").removeAttr("disabled");
 		$("textarea").removeAttr("disabled");
-		$("select option").not(":selected").removeAttr("disabled");
+		//$("select option").not(":selected").removeAttr("disabled");
 	}
 </script>
 <style>
@@ -274,13 +277,11 @@
 						<td>상품이미지</td>
 						<td>
 							<div class="fileUploadContainer">
-								<%-- <input type="file" class="file" name="file" value="${uploadList.pi_file}"><input type="button" class="addFileBtn" value="+"> --%>
 								<c:choose>
 									<c:when test="${not empty uploadList}">
 										<c:forEach var="uploadList" items="${uploadList}">
-											<%-- <img src="/productUpload/${uploadList.pi_file}" width="300" > --%>
 											<div>
-												imgFile :<span class="imgThumb">${uploadList.pi_file}</span>
+												imgFile :<span class="imgRoute hidden">${uploadList.pi_route}</span><span class="imgThumb">${uploadList.pi_file}</span>
 												<div class="imgThumbContainer"></div>
 											</div>
 										</c:forEach>

@@ -15,4 +15,10 @@ public interface ProductDAO {
 	public int productDelete(ProductVO pvo);
 	
  	public List<ProductVO> productForCategory(ProductVO pvo);
+ 	
+ 	
+ 	public ProductVO productDetailSupport(String p_no);
+ 	
+ 	//product count
+ 	//public int cntList();
 }

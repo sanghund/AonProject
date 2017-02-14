@@ -59,6 +59,16 @@ public class ProductDAOImpl implements ProductDAO {
 		return session.selectList("productForCategory", pvo);
 	}
 
+	@Override
+	public ProductVO productDetailSupport(String p_no) {
+		return session.selectOne("productDetailSupport", p_no);
+	}
+
+	/*@Override
+	public int cntList() {
+		return session.selectOne("cntList");
+	}*/
+
 	
 
 }
