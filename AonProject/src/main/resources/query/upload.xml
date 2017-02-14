@@ -10,13 +10,13 @@
 	<!-- 이미지 신규등록 -->
 	<insert id="uploadInsert" parameterType="upload">
 		/* upload - uploadInsert */
-		insert into product_img(pi_no, p_no, pi_file)
-						 values(product_img_seq.nextval, upper(#{p_no}), #{pi_file})
+		insert into product_img(pi_no, p_no, pi_file, pi_route)
+						 values(product_img_seq.nextval, upper(#{p_no}), #{pi_file}, #{pi_route})
 	</insert>
 	
 	<update id="uploadUpdate" parameterType="upload">
 		/* upload - uploadUpdate */
-		update product_img set pi_file = #{pi_file} where pi_no = #{pi_no} and p_no = #{p_no}
+		update product_img set pi_file = #{pi_file}, pi_route = #{pi_route} where pi_no = #{pi_no} and p_no = #{p_no}
 	</update>
 	
 	<delete id="uploadDelete" parameterType="upload">

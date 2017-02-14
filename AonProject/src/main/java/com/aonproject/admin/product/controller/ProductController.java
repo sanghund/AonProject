@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aonproject.admin.category.service.CategoryService;
@@ -74,7 +76,6 @@ public class ProductController {
 			model.addAttribute("productDetail" , productDetail);
 			model.addAttribute("mode", "update");
 		}
-		//logger.info("pno"+productDetail.getP_no());
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
@@ -89,10 +90,26 @@ public class ProductController {
 		return "admin/product/detail";
 	}
 	
+	
+	/* product Detail Support */
+	@ResponseBody
+	@RequestMapping(value = "/productDetailSupport")
+	public ProductVO detailInfo(@RequestBody ProductVO pvo, Model model){
+		logger.info("productInsertSupport calling");
+		ProductVO detailInfo = null;
+		detailInfo = productService.productDetail(pvo);
+		logger.info(detailInfo.getP_no());
+		
+		model.addAttribute("detailInfo", detailInfo);
+		
+		return detailInfo;
+	}
+	
+	
 	/*move writeForm*/
 	@RequestMapping(value = "/writeForm")
 	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
-		logger.info("writeFrom 호占쏙옙 占쏙옙占쏙옙!");
+		logger.info("writeFrom calling");
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
@@ -110,13 +127,11 @@ public class ProductController {
 	/*Product Insert*/
 	@RequestMapping(value = "/productInsert")
 	public String itemInsert (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
-		logger.info("itemInsert 호占쏙옙 占쏙옙占쏙옙!");
+		logger.info("itemInsert calling");
 		mode = "insert";
 		int result = 0;
 		String createP_no = "";
 		
-		//占쏙옙품占쏙옙호(p_no) 占쏙옙占쏙옙
-		logger.info("p_no1="+pvo.getP_no().length());
 		
 		StockVO svo = new StockVO();
 		
@@ -141,24 +156,23 @@ public class ProductController {
 			if(files != null && files.size()>0){
 				for(MultipartFile file : files ){
 					uvo.setFile(file);
-					/*int fileResult = */imgInsert(uvo, request);
+					imgInsert(uvo, request);
 				}
 			}
 		}else {
 		}
 		
-		
-		
-		
 		String url = "product";
 		return "redirect:"+url;
 	}
 	
-	/*占쏙옙품 占쏙옙占쏙옙占쏙옙트*/
+	/* product update */
 	@RequestMapping(value = "/productUpdate")
 	public String itemUpdate (@ModelAttribute ProductVO pvo, @ModelAttribute UploadVO uvo, HttpServletRequest request) throws IllegalStateException, IOException {
 		mode = "update";
-		logger.info("itemUpdate 호占쏙옙 占쏙옙占쏙옙!");
+		logger.info("itemUpdate calling");
+		
+		String fileRoute = "productUpload";
 		
 		int result = 0;
 		result = productService.productUpdate(pvo);
@@ -166,19 +180,17 @@ public class ProductController {
 		if(result == 1){
 			List<MultipartFile> files = uvo.getFiles();
 			
-			/*占쏙옙占싹몌옙 확占쏙옙*/
+			/* file is null check */
 			String fileChk = files.get(0).getOriginalFilename().toString();
 			
 			if(fileChk != ""){
-				FileUploadUtil.fileDelete(uvo.getPi_file(), request);
+				FileUploadUtil.fileDelete(uvo.getPi_file(), fileRoute, request);
 				uploadService.uploadDelete(uvo);
 				for(MultipartFile file : files ){
 					uvo.setFile(file);
-					/*int fileResult = */imgInsert(uvo, request);
-					/*logger.info(fileResult);*/
+					imgInsert(uvo, request);
 				}
 			}
-		}else {
 		}
 		
 		String url = "productDetail?p_no="+pvo.getP_no();
@@ -186,39 +198,36 @@ public class ProductController {
 		return "redirect:"+url;
 	}
 	
-	/*占쏙옙품占싱뱄옙占쏙옙 占쏙옙占�, 占쏙옙占쏙옙*/
+	/* image insert */
 	public int imgInsert(UploadVO uvo, HttpServletRequest request) throws IOException {
 		int fileResult = 0;
 		
-		String pi_file = FileUploadUtil.fileUpload(uvo.getP_no(), uvo.getFile(), request);
-		uvo.setPi_file(pi_file);
+		String fileRoute = "productUpload";
+		
+		String pi_files = FileUploadUtil.fileUpload(uvo.getP_no(), fileRoute, uvo.getFile(), request);
+		String pi_file[] = pi_files.split("@@@");
+		
+		logger.info(pi_file[0]);
+		logger.info(pi_file[1]);
+		
+		uvo.setPi_route(pi_file[0]);
+		uvo.setPi_file(pi_file[1]);
 		if(pi_file != null){
 			if(mode == "insert"){
 				fileResult = uploadService.uploadInsert(uvo);
 			}else if(mode == "update"){
 				fileResult = uploadService.uploadInsert(uvo);
 			}
-			/*if(fileResult == 1){
-				logger.info("fileResult="+fileResult);
-			}else{
-				logger.info("fileResult="+fileResult);
-			}*/
 		}
 		return fileResult;
 	}
 	
-	/*占쏙옙품 占쏙옙占쏙옙*/
+	/* product delete */
 	@RequestMapping(value = "/productDelete")
 	public String itemDelete (@ModelAttribute ProductVO pvo) {
 		mode = "update";
-		/*int result = 0;*/
-		/*result = */productService.productDelete(pvo);
 		
-		/*if(result == 1){
-			logger.info("success = "+result);
-		}else {
-			logger.info("fail = "+result);
-		}*/
+		productService.productDelete(pvo);
 		
 		String url = "product";
 		return "redirect:"+url;

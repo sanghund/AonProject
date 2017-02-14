@@ -12,12 +12,13 @@
 	<!-- 메인 이미지 등록 -->
 	<insert id="imageUploadInsert" parameterType="imageUpload">
 	/* imageUpload - imageUploadInsert */
-	insert into mainimageupload(mp_no, mp_file)
-	            values(mainimageupload_seq.nextval, #{mp_file})
+	insert into mainimageupload(mp_no, mp_file, mp_route)
+	            values(mainimageupload_seq.nextval, #{mp_file}, #{mp_route})
 	</insert>
 	
-	<select id="main" resultType="java.lang.String">
-		select mp_file from (select mp_file from mainimageupload order by mp_no desc) where rownum <![CDATA[<=]]> 5
+	<!-- image detail -->
+	<select id="main" resultType="imageUpload">
+		select (mp_route||'/'||mp_file) as mp_file from (select mp_file, mp_route from mainimageupload order by mp_no desc) where rownum <![CDATA[<=]]> 5
 	</select>
 	
 </mapper>
