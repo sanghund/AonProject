@@ -128,7 +128,7 @@
 <div class="content">
 	<div class="imgContainer width40">
 		<c:forEach var="uploadList" begin="0" end="0" items="${uploadList}">
-			<img src="/productUpload/${uploadList.pi_file}" />
+			<img src="/${uploadList.pi_route}/${uploadList.pi_file}" />
 		</c:forEach>
 	</div>
 	<div class="itemOption width40">
@@ -187,7 +187,7 @@
 	</div>
 	<div class="productImg">
 		<c:forEach var="uploadList" begin="1" items="${uploadList}">
-			<img src="/productUpload/${uploadList.pi_file}" />
+			<img src="/${uploadList.pi_route}/${uploadList.pi_file}" />
 		</c:forEach>
 	</div>
 		

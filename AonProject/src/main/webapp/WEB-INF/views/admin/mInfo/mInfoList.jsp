@@ -52,6 +52,37 @@
 
     <!-- Custom Theme Style -->
     <link href="/resources/bootstrap/css/custom.min.css" rel="stylesheet">
+    
+    <style type = "text/css">
+    	.chartView{
+    		display : inline-block;
+    		position : relative;
+    		left : 50%;
+    		transform : translateX(-50%);
+    		clear: both;
+ 			font: left;
+    	}
+    	.chartView > div{
+    		display: inline-block;
+    	}
+    	.chartView > div:LAST-CHILD {
+    		margin-left: 20px;
+		}
+		.dateSelect{
+			text-align: center;
+		}
+		.dateSelect input{
+			font-size: 21px;
+			margin : 20px 0;
+		}
+		.imgErrorCss{
+			display: inline-block;
+			width: 720px;
+			font-size: 30px;
+			text-align: center;
+			font-weight: bold;
+		}
+    </style>
 </head>
 <form id="mDetailForm">
  <input type="hidden" id="m_no" name="m_no" value="">
@@ -225,6 +256,32 @@
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
+          	<div class = "chartView">
+          		<div class = "mGender">
+          			<img src = "/chart/memberSexDistribution.jpg" />
+          		</div>
+          		<div class = "mCount">
+          			<img id="mCountView" />
+          		</div>
+          	</div>
+          	<div class = "dateSelect"><input type="date" id = "kia" name = "kia" /></div>
+            <script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
+          		<script type = "text/javascript">
+          			$(document).ready(function(){
+          				document.getElementById('kia').valueAsDate = new Date();	
+          				$("#mCountView").attr("src", "/chart/memberCount"+$("#kia").val()+".jpg");
+          				$("#kia").blur(function(){
+          					$("#imgError").remove();
+          					$("#mCountView").attr("src", "/chart/memberCount"+$("#kia").val()+".jpg");
+          					$("#mCountView").show();
+          					$("#mCountView").error(function() {
+          						$("#mCountView").hide();
+          				       $(".mCount").append("<span id = 'imgError'>자료가 존재하지 않습니다.</span");
+          				       $("#imgError").addClass("imgErrorCss");
+          				   	});
+          				});
+          			});
+          		</script>
             <div class="page-title">
               <div class="title_left">
                 <h3>회원관리</h3>
@@ -239,10 +296,13 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>회원관리 <small>회원관리>회원조회</small></h2>
+                    <h2>회원조회 <small>회원관리>회원조회</small></h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
+                  <form id="getNo" name="getNo">
+                    <input type="hidden" name="m_no" value="${mInfo.m_no}">
+                  </form>
                   <form id="mInfoList">
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>

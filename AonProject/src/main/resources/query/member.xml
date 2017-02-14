@@ -5,9 +5,22 @@
 		<result column="m_no" property="no" />
 	</resultMap>
 	
+	<resultMap type = "java.util.TreeMap" id = "chart" />
+	
+	<!-- 일별 가입한 회원수 + 오늘 탈퇴한 회원수 + 전체 회원수 + 누적 가입수 + 누적 탈퇴수-->
+	<select id="memberCount" resultMap="chart" parameterType="member">
+          select * from (select nvl(count(*), 0) as "당일 가입수" from (select * from member where to_char(m_date, 'yyyy-MM-dd') =  #{m_date})), (select nvl(count(*), 0) as "당일 탈퇴수" from (select * from MEMBER_EXPIRE where to_char(me_date, 'yyyy-MM-dd') = #{m_date})), (select nvl(count(*), 0) as "총 회원수" from (select * from member where m_leave = 'false')), (select nvl(count(*), 0) as "누적 가입수" from (select * from member where to_char(m_date, 'yyyy-MM-dd') <![CDATA[<=]]>  #{m_date})), (select nvl(count(*), 0) as "누적 탈퇴수" from (select * from member_expire where to_char(me_date, 'yyyy-MM-dd') <![CDATA[<=]]> #{m_date})) 	
+    </select>
+    
+	<!-- 회원 성별 분포도 -->
+	<select id = "memberSexDistribution" resultMap = "chart">
+		select count(case when gender = '여자' then 1 end) as "여성", count(case when gender = '남자' then 1 end) as "남성" from (select (case when m_gender in ('m') then '남자' else '여자' end) gender from member where m_leave = 'false')
+	</select>
+	
+	
 	<!-- member m_no 전체 가져오기 -->
 	<select id="numbers" resultMap="numbersQ">
-		select m_no from policy order by m_no desc
+		select m_no from member where <![CDATA[m_leave != 'true']]> order by m_no desc
 	</select>
 	
 	<!-- 유저 회원 가입 -->
@@ -43,7 +56,7 @@
 	<select id = "mSubAddrs" parameterType="member" resultType="msa">
 		select ma_no, m_addr from 
 		(select min(ma_no) as mno from member_addr group by(m_no) having m_no = #{m_no}), 
-		member_addr where mno != ma_no order by ma_no
+		member_addr where mno != ma_no and m_no = #{m_no} order by ma_no
 	</select>
 	
 	<!-- 약관 거부시 계정 탈퇴 _ 탈퇴 테이블로 이동 -->
@@ -106,36 +119,36 @@
 	
 	<!-- 아이디 찾기 검사 -->
 	<select id="lostIdChk" resultType="java.lang.Integer" parameterType="member">
-		select nvl((select count(*) from member where m_name = #{m_name} and m_email = #{m_email}), 0) from dual
+		select nvl((select count(*) from member where m_name = #{m_name} and m_email = #{m_email} and m_leave <![CDATA[!= 'true']]>), 0) from dual
 	</select>
 	
 	<!-- 비밀번호 찾기 검사 -->
 	<select id="lostPwdChk" resultType="java.lang.Integer" parameterType="member">
-		select nvl((select count(*) from member where m_id = #{m_id} and m_email = #{m_email}), 0) from dual
+		select nvl((select count(*) from member where m_id = #{m_id} and m_email = #{m_email} and m_leave <![CDATA[!= 'true']]>), 0) from dual
 	</select>
 	
 	<!-- 아이디 찾기 -->
 	<select id="sendId" resultType="java.lang.String" parameterType="member">
-		select m_id from member where m_name = #{m_name} and m_email = #{m_email}
+		select m_id from member where m_name = #{m_name} and m_email = #{m_email} and m_leave <![CDATA[!= 'true']]>
 	</select>
 	
 	<!-- 비밀번호 찾기 -->
 	<update id="sendPwd" parameterType="member">
-		update member 	set m_pwd = #{m_pwd} where m_id = #{m_id}
+		update member 	set m_pwd = #{m_pwd} where m_id = #{m_id} and m_leave <![CDATA[!= 'true']]>
 	</update>
 	
 	<!-- 회원가입 중복 아이디  검사 -->
 	<select id="idChk" resultType="java.lang.Integer" parameterType="member">
-		select nvl((select count(*) from member where m_id = #{m_id}), 0) from dual
+		select nvl((select count(*) from member where m_id = #{m_id} and m_leave <![CDATA[!= 'true']]>), 0) from dual
 	</select>
 	
 	<!-- 회원가입 중복 이메일  검사 -->
 	<select id="emailChk" resultType="java.lang.Integer" parameterType="member">
-		select nvl((select count(*) from member where m_email = #{m_email}), 0) from dual
+		select nvl((select count(*) from member where m_email = #{m_email} and m_leave <![CDATA[!= 'true']]>), 0) from dual
 	</select>
 	
 	<!-- 정보 수정 중복(자신 제외) 이메일  검사 -->
 	<select id="emailChk2" resultType="java.lang.Integer" parameterType="member">
-		select nvl((select count(*) from member where m_email = #{m_email} and m_no <![CDATA[!=]]> #{m_no}), 0) from dual
+		select nvl((select count(*) from member where m_email = #{m_email} and m_no <![CDATA[!=]]> #{m_no} and m_leave <![CDATA[!= 'true']]>), 0) from dual
 	</select>
 </mapper>

@@ -2,7 +2,9 @@ package com.aonproject.client.order.vo;
 
 import java.util.List;
 
-public class Product_orderVO {
+import com.aonproject.common.util.vo.CommonPagingVO;
+
+public class Product_orderVO extends CommonPagingVO {
 	private int 	o_no = 0;			//주문번호		
 	private int 	o_cnt = 0;			//주문수량
 	private int 	o_price = 0;		//주문가격

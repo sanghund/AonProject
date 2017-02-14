@@ -31,7 +31,7 @@ public class ProductVO extends Product_orderVO {
 	
 	//파일 업로드 위한 속성
 	private MultipartFile file;	//첨부파일
-	private String pi_file =""; 	//실제 서버에 저장한 파일명
+	private String pi_file =""; //실제 서버에 저장한 파일명
 	
 	
 	

@@ -117,7 +117,8 @@
 		select count(re_no) from review where m_no = #{m_no} and p_no like #{p_no}||'%' and 
 			o_no = (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%')
 	</select>
-	<!-- 마이페이지 리뷰 -->
+
+	<!-- 마이페이지 리뷰 -->	
 	<select id="myReview" resultType="review" parameterType="member">
 		select * from(
 	select rownum as rnum, p_no, re_title, re_content, re_date, pi_route, pi_file from(		

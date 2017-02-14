@@ -17,14 +17,12 @@ public class ImageUploadServiceImpl implements ImageUploadService {
 	private ImageUploadDAO imageUploadDAO;
 	
 	
-	/*메인 이미지 리스트 구현*/
 	public List<ImageUploadVO> imageUploadList(ImageUploadVO iuvo) {
 		List<ImageUploadVO> imageUploadList = null;
 		imageUploadList = imageUploadDAO.imageUploadList(iuvo);
 		return imageUploadList;
 	}
 	
-	/*메인 이미지 등록 구현*/
 	public int imageUploadInsert(ImageUploadVO iuvo) {
 		int result = 0;
 		result = imageUploadDAO.imageUploadInsert(iuvo);
@@ -32,9 +30,9 @@ public class ImageUploadServiceImpl implements ImageUploadService {
 	}
 
 	@Override
-	public List<String> main() {
-		// TODO Auto-generated method stub
-		return imageUploadDAO.main();
+	public List<ImageUploadVO> main() {
+		List<ImageUploadVO> main = imageUploadDAO.main(); 
+		return main;
 	}
 
 }
