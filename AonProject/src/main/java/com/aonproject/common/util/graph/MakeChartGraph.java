@@ -26,7 +26,6 @@ public class MakeChartGraph {
 		String docRoot = request.getSession().getServletContext().getRealPath("/chart");
 		File fileDir = new File(docRoot);
 		if(!fileDir.exists()) fileDir.mkdir();
-		
 		logger.info("업로드할 파일 경로 : " + docRoot);
 		
 		String sysdate = "";
