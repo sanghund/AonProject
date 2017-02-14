@@ -65,7 +65,7 @@ public class CommentQnAController {
 		result = commentQnAService.commentQnAInsert(cqvo);
 		
 		if(result == 1){
-			qnaService.qnaQconfirm(q_no);
+			qnaService.qnaQconfirm(q_no);//확인을 0에서 1로 바꾼
 			logger.info("insert성공");
 		}
 		String good = "success";

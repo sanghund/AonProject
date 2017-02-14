@@ -318,7 +318,7 @@
 							<th><div class="tb-left">내용 : </div></th>
 							<td>
 								<div class="tb-left frm-w">
-									<textarea rows="8" cols="70" id="re_content" name="re_content"></textarea>
+									<textarea rows="8" cols="70" id="re_content" name="re_content" maxlength="4000"></textarea>
 								</div>
 								
 							</td>
@@ -410,7 +410,7 @@
 										<div class="update_content">
 											<form id="update_form">
 												<input type="hidden" name="re_no" id="re_no" value="${review.re_no }">
-												<textarea rows="8" cols="70" id="re_content" name="re_content">${review.re_content }</textarea>
+												<textarea rows="8" cols="70" id="re_content" name="re_content" maxlength="4000">${review.re_content }</textarea>
 												<div class="mo_file"> 
 													<input type="file" id="files" name="files" style="padding-top:8px;" multiple><br />
 													<div class="imgView" style="padding-top:14px;">

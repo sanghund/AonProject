@@ -70,12 +70,13 @@ public class QnauserController {
 		int result = 0;
 		int success=0;
 		result = qnaService.qnaUserInsert(qvo);
-		if(result ==1){
-			success = qnaService.qnaConfirm(qvo);
-			if(success == 1){
-				qnaService.qnaQname(qvo);
-			}
+		if(result ==1){ //글입력이 성공했을때
+			qnaService.qnaQname(qvo);  //이름 입력 성공
 			logger.info("qnaUserInsert성공");
+			success = qnaService.qnaConfirm(qvo); //관리자가 코멘트를 달면 1 안달면 0
+			if(success == 1){
+				logger.info("관리자 코멘트 성공");
+			}
 		}
 		String end = "success";
 		

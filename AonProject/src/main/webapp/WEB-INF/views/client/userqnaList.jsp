@@ -155,6 +155,7 @@
 			$(".cq_content").hide();
 			$(".qnaContent").hide();
 		}
+		
 	</script>
 <div id="qnabody">
 	<div class="qna_top">
@@ -207,7 +208,7 @@
 							<th><div class="tb-left">내용 : </div></th>
 							<td>
 								<div class="tb-left frm-w">
-									<textarea rows="8" cols="70" id="q_content" name="q_content"></textarea>
+									<textarea rows="8" cols="70" id="q_content" name="q_content" maxlength="4000"></textarea>
 								</div>
 								
 							</td>
@@ -285,7 +286,7 @@
 											</c:forEach>										
 										</div>
 									</td>
-									<td><div class="tb-center">${qna.q_name }</div></td>
+									<td><div class="tb-center">${qna.q_name }***</div></td>
 									<td><div class="tb-center">${qna.q_date }</div></td>
 								</tr>
 								<tr class="qna_tr2">
@@ -320,7 +321,7 @@
 													</div>
 												</td>
 												<td><div class="tb-center"><img src="/resources/include/image/qnaimage/neo_reply.gif" >&nbsp;비밀글입니다.</div></td>
-												<td><div class="tb-center">${commentQnA.cq_title }</div></td>
+												<td><div class="tb-center">AON관리자</div></td>
 												<td><div class="tb-center">${commentQnA.cq_date }</div></td>
 											</c:if>
 										</c:forEach>
