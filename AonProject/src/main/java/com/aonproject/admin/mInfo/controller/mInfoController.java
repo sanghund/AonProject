@@ -25,7 +25,7 @@ public class mInfoController {
 	// member list
 	@RequestMapping(value="/mInfoList", method = RequestMethod.GET)
 	public String mInfoList(@ModelAttribute mInfoVO mvo, Model model) {
-		logger.info("mInfoList 호출 성공");
+		logger.info("mInfoList calling success");
 		
 		// 정렬에 대한 기본값 설정
 		if(mvo.getOrder_by()==null) mvo.setOrder_by("m_no");
@@ -43,10 +43,9 @@ public class mInfoController {
 	}
 	
 	// member detail
-	/*==================상세 정보 보기===========================*/
 	@RequestMapping(value="/mDetailForm", method=RequestMethod.GET)
 	public String mDetailForm(@ModelAttribute mInfoVO mvo, Model model){
-		logger.info("mDetailForm 호출 성공");
+		logger.info("mDetailForm calling success");
 		logger.info("m_no = " + mvo.getM_no());
 		
 		mInfoVO mDetail = mInfoService.mDetailForm(mvo);
@@ -55,6 +54,23 @@ public class mInfoController {
 		String url = "admin/mInfo/mDetailForm";
 		
 		return url;
+	}
+	// member delete
+	@RequestMapping(value="/mInfoDelete", method=RequestMethod.POST)
+	public String mInfoDelete(@ModelAttribute mInfoVO mvo, Model model) {
+		logger.info("mInfoDelete calling success");
+		
+		int result = 0;
+		String url = "";
+		
+		logger.info("m_no="+ mvo.getM_no());
+		
+		result = mInfoService.mInfoDelete(mvo.getM_no());
+		
+		if(result == 1){
+			url = "/admin/noticeList";
+		}
+		return "redirect:"+url;
 	}
 
 }

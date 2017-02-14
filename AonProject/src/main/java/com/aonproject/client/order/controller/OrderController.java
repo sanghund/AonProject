@@ -57,9 +57,9 @@ public class OrderController{
 	private MemberService memberService;
 
 	@RequestMapping(value="/orderResult")
-	public String orderResult(Authentication auth, @ModelAttribute ProductVO povo, @ModelAttribute CategoryVO cvo, Model model){
+	public String orderResult(Authentication auth, @ModelAttribute ProductVO povo, @ModelAttribute CategoryVO cvo, Model model, HttpServletRequest request, HttpServletResponse response){
 		logger.info("orderResult calling");
-		
+
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
@@ -114,6 +114,23 @@ public class OrderController{
 			logger.info("stockResult="+stockResult);
 		}
 		
+		String mode = request.getParameter("mode");
+		System.out.println(mode);
+		if(mode != null){
+			if(mode.equals("cartOrder")){
+				Cookie[] cookies = request.getCookies();
+				if(cookies != null){
+					for(Cookie cookie : cookies){
+						if(cookie.getName().equals("cartList")){
+							cookie.setMaxAge(0);
+							response.addCookie(cookie);
+							break;
+						}
+					}
+				}
+			}
+		}
+		
 		model.addAttribute("orderInfo", orderInfo);
 		model.addAttribute("productList", productList);
 		
@@ -122,7 +139,13 @@ public class OrderController{
 	
 	@RequestMapping(value= "/order")
 	public String order(Authentication auth, @ModelAttribute Product_orderVO povo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute ProductVO pvo, HttpServletRequest request, Model model){
+
 		logger.info("order calling");
+
+		String mode = request.getParameter("mode");
+		System.out.println(mode);
+		if(mode != null) model.addAttribute("mode", mode);
+
 		
 		
 		MemberVO vo = (MemberVO) auth.getPrincipal();
@@ -251,12 +274,15 @@ public class OrderController{
 			if(cList.size() > 0){
 				for(int i = 0; i < vo.getCd().size(); i++){
 					String line = (String) vo.getCd().get(i).toString().toUpperCase();
+					int k = 0;
 					for(String test : cList){
 						int cNum = test.indexOf(line);
 						if(cNum > -1){
 							chk = true;
-							numbers.add(i);
+							numbers.add(k);
+							break;
 						}
+						k++;
 					}
 				}
 			}

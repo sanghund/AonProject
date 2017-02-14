@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aonproject.admin.aInfo.dao.AdminDAO">
 	<resultMap type="com.aonproject.common.util.vo.Numbers" id="numbersQ">
-		<result column="po_no" property="no" />
+		<result column="a_no" property="no" />
 	</resultMap>
 	
 	<!-- admin a_no 전체 가져오기 -->
 	<select id="numbers" resultMap="numbersQ">
-		select a_no from policy order by a_no desc
+		select a_no from admin order by a_no desc
 	</select>
 	
 	

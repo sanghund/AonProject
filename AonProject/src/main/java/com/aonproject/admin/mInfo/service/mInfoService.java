@@ -9,5 +9,7 @@ public interface mInfoService {
 	public List<mInfoVO> mInfoList(mInfoVO mvo);
 	// member detail
 	public mInfoVO mDetailForm(mInfoVO mvo);
+	// memeber delete
+	public int mInfoDelete(int m_no);
 
 }

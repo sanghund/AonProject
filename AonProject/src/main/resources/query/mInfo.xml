@@ -8,11 +8,16 @@
 		from member
 	</select>
 	
-	<!-- 게시물 상세 페이지  -->
+	<!-- mInfo detail  -->
 	<select id="mDetailForm" resultType="mInfo" parameterType="mInfo">
 		select M_NO, M_ID, M_PWD, M_NAME, M_GENDER, M_TEL, M_EMAIL, M_LEAVE, to_char(M_DATE, 'YYYY-MM-DD HH24:MI:SS') as M_DATE
 		from member 
 		where m_no = #{m_no}
 	</select>
+	
+	<!-- mInfo delete -->
+	<delete id="mInfoDelete" parameterType="int">
+		delete from member where m_no = #{m_no}
+	</delete>
 	
 </mapper>

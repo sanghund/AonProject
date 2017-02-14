@@ -2,6 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 	<style type = "text/css">
+	#aTitle {
+			font-size: 25px;
+			padding : 10px 0;
+			padding-left : 5px;
+			border : 1px solid graytext;
+			display: block;
+			border-bottom: 1px solid #73879C;
+			margin-bottom: 15px;
+		}
 		.step-panels{
 			display: block;
 			width : 100%;
@@ -9,6 +18,7 @@
 			height: 37px;
 			
 		}
+		
 		#align{
 			width : 99%;
 			text-align: center;
@@ -92,6 +102,61 @@
 			border: none;
 		
 		}
+		.showText,.emailCertification{
+			border : 1px solid lightgrey;
+			padding: 10px 10px;
+			font-size : 16px;
+		}
+		.showText h3{
+			margin-bottom: 15px;
+		}
+		.showText h3,.emailCertification h3{
+			font-weight: bold;
+			font-size: 21px;
+		}
+		.emailCertification h3 small{
+			font-size : 16px;
+			font-weight: normal;
+			margin-bottom: 0px;
+			margin-top: 15px;		
+		}
+		#emailLine{
+			text-align: center;
+		}
+		#emailForm{
+			margin-top: 30px;
+			text-align: center;
+			font-size: 21px;
+			color : white;
+			border: 1px solid black;
+			background-color: black;
+			cursor: pointer;
+			border-radius: 5px;	
+			width: 240px; 
+		}
+		#arroba{
+			margin: 0 5px;
+		}
+		#mHeader{
+			font-size: 18px;
+			font-weight: bold;
+		}
+		.array{
+			margin-right: 10px; 
+		}
+		#gogoEmail{
+			border: 1px solid black;
+			background-color: white;
+			cursor: pointer; 
+		}
+		#chkNum{
+			border: 1px solid black;
+			background-color: white;
+			cursor: pointer; 
+			text-align: center;
+			font-size: 21px;
+			padding: 5px 10px;
+		}
 	</style>
 	<div class = "main">
 		<h2 id = "aTitle">회원가입</h2>
@@ -125,9 +190,9 @@
 						이메일 인증 서비스는 신용평가정보(주)의 개정된 정보통신망법을 준수하여 개별 웹 사이트에서 주민등록번호를 수집/이용하지 않고 실명 여부를 확인 합니다. 입력하신 개인정보는 본인확인 및 비밀번호 확인 용도로만 사용되며, 실명확인기관 외에는 제공되지 않으므로 개인 정보 유출의 위험이 없습니다.					
 					</small>
 				</h3>
-				<div>
-					<input type="button" id="emailForm" value="이메일 인증">
-				</div>
+			</div>
+			<div id = "emailLine">
+				<input type="button" id="emailForm" value="이메일 인증">
 			</div>
 		</div>
 		<div class = "certificationForm">
@@ -140,8 +205,7 @@
 					<div id = 'mBody'>
 						<form id = "getEmailNum">
 							<div>
-								<span class = "array">이메일</span><input type = "text" maxlength="30" id = "m_email1" name = "m_email1">
-								<span id = "arroba">@</span><input type = "text" maxlength="30" id = "m_email2" name = "m_email2">
+								<span class = "array">이메일</span><input type = "text" maxlength="30" id = "m_email1" name = "m_email1"><span id = "arroba">@</span><input type = "text" maxlength="30" id = "m_email2" name = "m_email2">
 								<input type = "button" id = "gogoEmail" value="인증번호받기">
 							</div>
 							<div id = "borderB">
@@ -162,6 +226,7 @@
 	</div>
 	
 	<script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
+	<script src = "/resources/include/js/inputChk.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#mainLayer").hide();
@@ -177,6 +242,9 @@
 			});
 			
 			$("#gogoEmail").click(function(){
+				if(!vacuumChkAlert($("#m_email1"), "이메일을", true)) return;
+				else if(!vacuumChkAlert($("#m_email1"), "이메일을", true)) return;
+				else{
 				$("#m_email").val($("#m_email1").val() + $("#arroba").text() + $("#m_email2").val());
 				$.ajax({
 					url : "/member/join/emailCertification",
@@ -195,9 +263,12 @@
 						}
 					}
 				});
+				}
 			});
 			
 			$("#chkNum").click(function(){
+				if(!vacuumChkAlert($("#certificationNum"), "인증번호를", true)) return;
+				else{
 				$.ajax({
 					url : "/member/join/emailCertificationChk",
 					type : "post",
@@ -220,6 +291,7 @@
 						}
 					}
 				});
+				}
 			});
 		});
 	</script>

@@ -5,6 +5,15 @@
 
 <link rel="stylesheet" type="text/css" href="/resources/include/css/font-awesome.min.css">
 <style>
+#aTitle {
+			font-size: 25px;
+			padding : 10px 0;
+			padding-left : 5px;
+			border : 1px solid graytext;
+			display: block;
+			border-bottom: 1px solid #73879C;
+			margin-bottom: 15px;
+		}
 	.stepContainer {width:101%; height:38px;}
 	.step {display : table; text-align : center; letter-spacing: -1px; height: 37px; float: left; width : 33%; border: 1px solid gray;}
 	.step:FIRST-CHILD{border-right: none;}
@@ -63,7 +72,7 @@
 
 <div class="content">
 	<div class="orderInfo">
-		<h2 id = "aTitle">주문</h2>
+		<h2 id = "aTitle">Order</h2>
 		<div class="stepContainer">
 			<div class="step">
 				<span>장바구니</span>
@@ -189,6 +198,9 @@
 	<!-- form -->
 	<form name="orderForm" id="orderForm">
 		<div class="hidden none">
+			<c:if test="${not empty mode }">
+				<input type = "hidden" id = "mode" name ="mode" value="${mode }">
+			</c:if>
 			<input type="hidden" name="m_addr" id="m_addr">
 			<input type="hidden" name="o_mode" id="o_mode">
 			<input type="hidden" name="o_confirm" id="o_confirm">

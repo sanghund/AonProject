@@ -8,26 +8,26 @@ public class PolicyAgrVO extends PolicyVO{
 	private int m_no = 0;
 	private int po_no = 0;
 	private String po_date = "";
-	private int a_no = 0;
 	private String a_id = "";
 	private String po_name = "";
 	private String m_id = "";
 	private String m_name = "";
 	private String m_tel = "";
 	private String m_email = "";
+	private int a_no = 0;
 	
 	
-	public String getPo_date() {
-		return po_date;
-	}
-	public void setPo_date(String po_date) {
-		this.po_date = po_date;
-	}
 	public int getA_no() {
 		return a_no;
 	}
 	public void setA_no(int a_no) {
 		this.a_no = a_no;
+	}
+	public String getPo_date() {
+		return po_date;
+	}
+	public void setPo_date(String po_date) {
+		this.po_date = po_date;
 	}
 	public String getA_id() {
 		return a_id;
