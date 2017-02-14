@@ -57,7 +57,7 @@
 	</select>
 	
 	<!-- 상품  디테일 등록 서포트 -->
-	<select id="productDetailSupport" resultType="product" parameterType="product">
+	<select id="productDetailSupport" resultType="product" parameterType="String">
 		/* product - productDetail */
 		select product.p_no, category.ca_name, p_type_cd.cc_name "p_type_name", product.p_name, product.p_price, product.p_discount, p3.pi_file,
 			   p3.pi_route, p_info, color_cd.cc_name "color", color_code, upper(size_cd.cc_name) "size", size_code, p_fabric, p_caution, 

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -97,17 +98,13 @@ public class ProductController {
 	/* product Detail Support */
 	@ResponseBody
 	@RequestMapping(value = "/productDetailSupport")
-	public ProductVO detailInfo(@Param("p_no") String p_no){
+	public ProductVO detailInfo(@RequestBody ProductVO pvo, Model model){
 		logger.info("productInsertSupport calling");
 		ProductVO detailInfo = null;
-		/*try{
-			entity = new ResponseEntity<>(productService.productDetail(p_no, HttpServletRequest request));
-		}catch(Exception e){
-			e.printStackTrace();
-			entity = new ResponseEntity<>(productService.productDetail(HttpStatus.BAD_REQUEST));
-		}*/
+		detailInfo = productService.productDetail(pvo);
+		logger.info(detailInfo.getP_no());
 		
-		detailInfo = productService.productDetailSupport(p_no);
+		model.addAttribute("detailInfo", detailInfo);
 		
 		return detailInfo;
 	}

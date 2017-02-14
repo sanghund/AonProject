@@ -63,14 +63,15 @@
 		})
 		
 		$("#p_no").change(function(){
+			console.log($("#p_no").val());
 			if($("#p_no").val() != ""){
 				$.ajax({
 					url 		: "/admin/productDetailSupport",
 					datatype	: "text",
 					type		: "post",
-					headers		: {
-						"Content-Type":"application/json",
-						"X-HTTP-Method-Override":"post"
+					headers	: {
+						'Accept': 'application/json',
+	                    'Content-Type': 'application/json'
 					},
 					data		: JSON.stringify({
 						p_no	: $("#p_no").val()
@@ -79,7 +80,8 @@
 						alert("시스템 오류 발생. 관리자에게 문의 요망");
 					},
 					success		: function(data){
-						alert("성공!");
+						/* detailInfo */
+						$("#p_name").val("${detailInfo.p_name}");
 					}
 					
 				})
