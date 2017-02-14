@@ -23,6 +23,7 @@ import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 import com.aonproject.admin.product.service.ProductService;
 import com.aonproject.admin.product.vo.ProductVO;
 import com.aonproject.admin.stock.vo.StockVO;
+import com.aonproject.common.util.paging.PagingSet;
 import com.aonproject.common.util.upload.FileUploadUtil;
 import com.aonproject.common.util.upload.service.UploadService;
 import com.aonproject.common.util.upload.vo.UploadVO;
@@ -48,12 +49,23 @@ public class ProductController {
 	
 	/*Product List*/
 	@RequestMapping(value = "/product", method=RequestMethod.GET)
-	public String itemList(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, Model model){
+	public String itemList(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, Model model, HttpServletRequest request){
 		logger.info("itemList load");
 		logger.info(pvo.getCa_no());
 		
+	
+		/*product page set*/
+		String productPageNum = request.getParameter("productPageNum");
+		if(productPageNum != null){
+			pvo.setPageNum(productPageNum);
+		}
+		
+		/*product total count*/
+		int productCnt = productService.productCnt(pvo);
+		PagingSet.setPageing(pvo, productCnt);
 		List<ProductVO> productList = productService.productList(pvo);
 		model.addAttribute("productList", productList);
+		model.addAttribute("productVO", pvo);
 		
 		return "admin/product/main";
 	}
@@ -100,8 +112,6 @@ public class ProductController {
 		detailInfo = productService.productDetail(pvo);
 		logger.info(detailInfo.getP_no());
 		
-		model.addAttribute("detailInfo", detailInfo);
-		
 		return detailInfo;
 	}
 	
@@ -139,10 +149,8 @@ public class ProductController {
 		if(pvo.getP_no().length()==0){
 			createP_no = productService.createP_no();
 			pvo.setP_no(createP_no+pvo.getColor_code().toUpperCase()+pvo.getSize_code().toUpperCase());
-			//svo.setP_no(createP_no+pvo.getColor_code().toUpperCase()+pvo.getSize_code().toUpperCase());
 		}else{
 			pvo.setP_no(pvo.getP_no()+pvo.getColor_code()+pvo.getSize_code());
-			//svo.setP_no(pvo.getP_no()+pvo.getColor_code().toUpperCase()+pvo.getSize_code().toUpperCase());
 			logger.info(svo.getP_no());
 		}
 				
@@ -150,7 +158,6 @@ public class ProductController {
 		
 		uvo.setP_no(pvo.getP_no());
 		if(result == 1){
-			//stockService.stockInsert(svo);
 			
 			List<MultipartFile> files = uvo.getFiles();
 			

@@ -117,6 +117,7 @@ public class ReviewController2 {
 			int selectreno = rvo.getRe_no();
 			logger.info("selectreno="+selectreno);
 			
+			System.out.println(rvo.toString());
 			result = reviewService.reviewUserInsert(rvo); //글이 서버에 등록되면 1이 된다.
 			logger.info("result="+result);
 			int temp = rvo.getRe_no(); //temp에 re_no값이 담겨있다.
