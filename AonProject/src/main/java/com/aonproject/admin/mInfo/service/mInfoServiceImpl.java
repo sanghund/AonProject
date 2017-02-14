@@ -36,5 +36,14 @@ public class mInfoServiceImpl implements mInfoService {
 		mDetail = mInfoDAO.mDetailForm(mvo);
 		return mDetail;
 		}
+	
+	// memeber delete
+	@Override
+	public int mInfoDelete(int m_no) {
+		int result = 0;
+		result = mInfoDAO.mInfoDelete(m_no);
+		
+		return result;
+	}
 
 }

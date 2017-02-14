@@ -239,10 +239,13 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>회원관리 <small>회원관리>회원조회</small></h2>
+                    <h2>회원조회 <small>회원관리>회원조회</small></h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
+                  <form id="getNo" name="getNo">
+                    <input type="hidden" name="m_no" value="${mInfo.m_no}">
+                  </form>
                   <form id="mInfoList">
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>

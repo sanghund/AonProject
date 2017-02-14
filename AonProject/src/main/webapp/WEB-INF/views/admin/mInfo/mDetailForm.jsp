@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela!</title>
+    <title>A O N !</title>
     
     <link rel="stylesheet" href="/resources/include/css/reset.css">
     <!-- Bootstrap -->
@@ -58,7 +58,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>A O N !</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -224,7 +224,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Form Elements</h3>
+                <h3>회원 관리</h3>
               </div>
 
               <div class="title_right">
@@ -237,18 +237,9 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Form Design <small>different form elements</small></h2>
+                    <h2>회원조회 <small>회원관리>회원조회</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
                       </li>
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
@@ -267,60 +258,65 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">회원번호 <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="hidden" name="m_no" value="${mDetail.m_no}" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" readonly name="m_no" value="${mDetail.m_no}" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">회원아이디 <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="m_id" value="${mDetail.m_id}" required="required" class="form-control col-md-7 col-xs-12">
+                          <input type="text" readonly name="m_id" value="${mDetail.m_id}" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">비밀번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="m_pwd" value="${mDetail.m_pwd}" class="form-control col-md-7 col-xs-12">
+                          <input type="text" readonly name="m_pwd" value="${mDetail.m_pwd}" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">이름</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="m_name" value="${mDetail.m_name}" class="form-control col-md-7 col-xs-12">
+                          <input type="text" readonly name="m_name" value="${mDetail.m_name}" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">성별</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="m_gender" value="${mDetail.m_gender}" class="form-control col-md-7 col-xs-12">
+                          <input type="text" readonly name="m_gender" value="${mDetail.m_gender}" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">전화번호</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="m_tel" value="${mDetail.m_tel}" class="form-control col-md-7 col-xs-12">
+                          <input type="text" readonly name="m_tel" value="${mDetail.m_tel}" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">이메일</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="m_email" value="${mDetail.m_email}" class="form-control col-md-7 col-xs-12">
+                          <input type="text" readonly name="m_email" value="${mDetail.m_email}" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">지역</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="m_leave" value="${mDetail.m_leave}" class="form-control col-md-7 col-xs-12">
+                          <input type="text" readonly name="m_leave" value="${mDetail.m_leave}" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">가입일</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" name="m_date" value="${mDetail.m_date}" class="form-control col-md-7 col-xs-12">
+                          <input type="text" readonly name="m_date" value="${mDetail.m_date}" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="ln_solid"></div>
-                  
+                        <div class="form-group">
+                          <div class="col-md-6 col-md-offset-3">
+                            <input type="button" id="mInfoListBtn" name="mInfoListBtn" value="목록" class="btn btn-info">
+                            <input type="button" id="mInfoDeleteBtn" name="mInfoDeleteBtn" value="삭제" class="btn btn-danger">
+                        </div>
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -376,6 +372,21 @@
     <!-- bootstrap-daterangepicker -->
     <script>
     $(function() {
+    	
+    	  /* 삭제 버튼 클릭시 */
+    	  $("#mInfoDeleteBtn").click(function(){
+					$("#getNo").attr({
+						"method" : "post",
+						"action" : "/admin/mInfoDelete"
+					});
+					$("#getNo").submit();
+				});
+    	
+    	  /*목록 버튼 클릭시*/
+		  $("#mInfoListBtn").click(function() {
+			  location.href="/admin/mInfoList";
+		  });
+    	
 		  // 회원조회 클릭 시
 		  $(".mInfo").click(function() {
 			  location.href = "/admin/mInfoList";
