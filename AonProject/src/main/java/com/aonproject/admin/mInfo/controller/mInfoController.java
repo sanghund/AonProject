@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.aonproject.admin.mInfo.vo.mInfoVO;
-import com.aonproject.admin.notice.vo.NoticeVO;
 import com.aonproject.admin.mInfo.service.mInfoService;
 import com.aonproject.common.page.Paging;
  
