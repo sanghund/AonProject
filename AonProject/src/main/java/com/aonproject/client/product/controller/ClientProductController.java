@@ -41,6 +41,7 @@ public class ClientProductController {
 	
 	@RequestMapping(value = "category")
 	public String productList (@ModelAttribute CategoryVO cvo, ProductVO pvo, Model model, @RequestParam("no") int no, HttpServletRequest request){
+		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
@@ -53,6 +54,7 @@ public class ClientProductController {
 		/*product total count*/
 		int productCnt = productService.productCnt(pvo);
 		PagingSet.setPageing(pvo, productCnt);
+		
 		cvo.setCa_no(no);
 		List<CategoryVO> categorySelect = categoryService.categoryList(cvo);
 		
@@ -70,9 +72,19 @@ public class ClientProductController {
 	}
 	
 	@RequestMapping(value = "detail")
-	public String productDetail (@ModelAttribute CategoryVO cvo, @ModelAttribute ProductVO pvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute UploadVO uvo, Model model, @RequestParam("no") String no){
+	public String productDetail (@ModelAttribute CategoryVO cvo, @ModelAttribute ProductVO pvo, @ModelAttribute CommonCodeVO cmvo, @ModelAttribute UploadVO uvo, Model model, @RequestParam("no") String no, HttpServletRequest request){
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
+		
+		/*product page set*/
+		String productPageNum = request.getParameter("productPageNum");
+		if(productPageNum != null){
+			pvo.setPageNum(productPageNum);
+		}
+		
+		/*product total count*/
+		int productCnt = productService.productCnt(pvo);
+		PagingSet.setPageing(pvo, productCnt);
 		
 		List<CommonCodeVO> commonCodeList = commonCodeService.CommonCodeList(cmvo);
 		model.addAttribute("commonCodeList", commonCodeList);
@@ -89,7 +101,18 @@ public class ClientProductController {
 		List<ProductVO> productList = productService.productList(pvo);
 		model.addAttribute("productList", productList);
 		
+		///////////////////////////////////////////////
+		for(int i=0; i<productList.size(); i++){
+			logger.info("list: "+productList.get(i).getP_no());
+		}
+		///////////////////////////////////////////////
+		
 		productDetail.setP_no(pvo.getP_no());
+		
+		///////////////////////////////////////////////
+		logger.info("target: "+productDetail.getP_no());
+		///////////////////////////////////////////////
+		
 		model.addAttribute("productDetail", productDetail);
 		
 		return "client/product/productDetail";

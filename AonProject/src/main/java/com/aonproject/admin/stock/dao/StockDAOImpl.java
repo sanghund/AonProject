@@ -17,7 +17,6 @@ public class StockDAOImpl implements StockDAO{
 
 	@Override
 	public int stockChk(CartVO vo) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("stockChk", vo);
 	}
 
