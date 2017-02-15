@@ -290,6 +290,8 @@
         		else{
         			$("#m_email2").attr("readonly", "true");
         			$("#m_email2").val($("#choiceEmailType").val());
+        			$("#m_email").val($("#m_email1").val() + $("#arroba").text() + $("#m_email2").val());
+    				overlapChk($("#m_email"), $("#emailChkMsg"), "m_email");
         		}	
     		});
     		
