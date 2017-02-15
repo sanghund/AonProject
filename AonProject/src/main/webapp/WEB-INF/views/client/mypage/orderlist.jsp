@@ -101,15 +101,6 @@
 			height: 100%;
 			display: inline-block;
 		}
-		.pagingNumbers{
-			height: auto;
-			text-align: center;
-			font-size: 15px;
-		}
-		.pagingNumbers a{
-			text-decoration: none;
-			color: black;
-		}	
 		.hahaha td{
 			border-bottom: 1px solid grey;
 		}
@@ -119,6 +110,37 @@
 		}
 		.viewImg{
 			border-left: 1px solid black;		
+		}
+		.pagingNumbers{
+			height: auto;
+			text-align: center;
+			font-size: 15px;
+		}
+		.pagingNumbers a{
+			text-decoration: none;
+			color: black;
+		}	
+		.karkar{
+			color: red;
+		}
+		.hihihi{
+			color:black;
+			margin-bottom: 10px;
+			font-weight: bold;
+			text-decoration: underline;
+		}
+		.o_numLine{
+			margin-bottom: 10px;
+		}
+		.forbold{
+			display : inline-block;
+			font-weight: bold;
+		}
+		.arrayLine > div{
+			margin-bottom: 10px;
+		}
+		.o_info2{
+			margin-bottom: 0px;
 		}
 </style>
 <div class = "main">
@@ -164,22 +186,22 @@
 					<tr class = "hahaha">
 						<td class= "o_num${orderList[status.index].o_num }">
 							<div class= "o_numLine">
-								${orderList[status.index].o_num }
+								<form class = "gogogomove"><input type = "hidden" class = "forO_num" name = "o_num" value="${orderList[status.index].o_num }" /><a href = "#" class="hihihi">${orderList[status.index].o_num }</a></form>
 							</div>
 							<div class = "o_dateLine">
 								${orderList[status.index].o_date }	
 							</div>
 						</td>
 						<td class= "viewImg" data-num = "${orderList[status.index].o_no }"><a href = "/detail?no=${orderList[status.index].p_no }"><img src = "/productUpload/${orderList[status.index].pi_file }"></a></td>
-						<td>
+						<td class = "arrayLine">
 							<div class= "o_nameLine">
 								${orderList[status.index].p_type }
 							</div>
 							<div class= "o_info">
-								[${orderList[status.index].p_name }] ${orderList[status.index].p_no }${orderList[status.index].color_code }
+								[${orderList[status.index].p_name }] <span class = "forbold">${orderList[status.index].p_no }</span>
 							</div>
 							<div class= "o_info2">
-								${orderList[status.index].p_size }/${orderList[status.index].p_color }/${orderList[status.index].o_cnt }
+								${orderList[status.index].p_size }/${orderList[status.index].p_color }/${orderList[status.index].o_cnt }(개)
 							</div>
 						</td>
 						<td>
@@ -225,7 +247,7 @@
 					
 								<c:forEach items="${memberVO.pageTotal }" varStatus="status">
 									<c:if test = "${memberVO.pageTotal[status.index] eq pNum}" >
-										<span>${memberVO.pageTotal[status.index] }</span>
+										<span class = "karkar">${memberVO.pageTotal[status.index] }</span>
 									</c:if>
 									<c:if test = "${memberVO.pageTotal[status.index] ne pNum}" >
 										<a href = "/member/mypage/orderlist?pageNum=${memberVO.pageTotal[status.index] }" data-num = "${memberVO.pageTotal[status.index]}">
@@ -287,5 +309,14 @@
 				}	
 				
 			}
+			
+			$(".hihihi").click(function(event){
+				event.preventDefault();
+				$(this).closest(".gogogomove").attr({
+					"method" : "get",
+					"action" : "/member/mypage/orderview"
+				});
+				$(this).closest(".gogogomove").submit();
+			});
 		});
 	</script>
