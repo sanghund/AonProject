@@ -29,9 +29,9 @@
 				<c:choose>
 					<c:when test="${not empty categoryList}">
 						<c:forEach var="categoryList" items="${categoryList}">
-							<%-- <c:if test="${category.ca_confirm == 'N' }"> --%>
+							
 								<li><a href="/category?no=${categoryList.ca_no}">${categoryList.ca_name}</a></li>
-							<%-- </c:if> --%>
+							
 						</c:forEach>
 					</c:when>
 				</c:choose>
