@@ -22,6 +22,7 @@ import com.aonproject.admin.commoncode.service.CommonCodeService;
 import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 import com.aonproject.admin.product.service.ProductService;
 import com.aonproject.admin.product.vo.ProductVO;
+import com.aonproject.admin.stock.service.StockService;
 import com.aonproject.admin.stock.vo.StockVO;
 import com.aonproject.common.util.paging.PagingSet;
 import com.aonproject.common.util.upload.FileUploadUtil;
@@ -44,6 +45,9 @@ public class ProductController {
 	
 	@Autowired
 	private UploadService uploadService;
+	
+	@Autowired
+	private StockService stockService;
 	
 	String mode = "";
 	
@@ -158,7 +162,6 @@ public class ProductController {
 		
 		uvo.setP_no(pvo.getP_no());
 		if(result == 1){
-			
 			List<MultipartFile> files = uvo.getFiles();
 			
 			if(files != null && files.size()>0){
@@ -167,7 +170,10 @@ public class ProductController {
 					imgInsert(uvo, request);
 				}
 			}
-		}else {
+			StockVO stock = new StockVO();
+			stock.setP_no(uvo.getP_no());
+			stockService.stockInsert(stock);
+			logger.info("stock: "+stock.getP_no());
 		}
 		
 		String url = "product";
