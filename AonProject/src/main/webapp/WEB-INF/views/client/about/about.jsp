@@ -8,7 +8,6 @@
 	
     <div class="about_body">
     	<!-- <img id="bar" src="/resources/include/image/about/back.png" class="backImg"> -->
-    	
     	<div class="about_content">
     		<!-- concept -->
     		<div class="about_concept">
