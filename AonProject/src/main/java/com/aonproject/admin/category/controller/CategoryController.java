@@ -64,4 +64,19 @@ public class CategoryController {
 		}
 		return success;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/caDelete", method=RequestMethod.POST)
+	public String caDelete(@ModelAttribute CategoryVO cavo, HttpServletRequest request){
+		System.out.println("삭제 시작");
+		int result = 0;
+		result = categoryService.caDelete(cavo);
+		String success = "";
+		
+		if(result == 1){
+			success = "success";
+		}
+		
+		return success;
+	}
 }

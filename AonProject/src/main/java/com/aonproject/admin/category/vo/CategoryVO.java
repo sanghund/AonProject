@@ -5,7 +5,15 @@ public class CategoryVO {
 	private int ca_no;			//카테고리 번호
 	private String ca_name;		//카테고리 이름
 	private String ca_date;		//등록일
+	private String ca_confirm;	//카테고리 등장 
 	
+	
+	public String getCa_confirm() {
+		return ca_confirm;
+	}
+	public void setCa_confirm(String ca_confirm) {
+		this.ca_confirm = ca_confirm;
+	}
 	public int getCa_no() {
 		return ca_no;
 	}
