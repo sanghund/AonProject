@@ -35,7 +35,7 @@
 		product.ca_no, p3.pi_file, p3.pi_route, product.p_caution, p_info
 		from (select * from product where rowid in(select max(rowid) from product group by substr(p_no,1,7)) and ca_no = #{ca_no}) product 
 		inner join (select * from product_img inner join (select min(pi_no) pi_no 
-		from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no) p3 on product.p_no = p3.p_no order by p_no desc
+		from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no order by product_img.p_no asc) p3 on product.p_no = p3.p_no order by p_no desc
 		) tt where rownum <![CDATA[<=]]> #{end_data}
 		) where rnum <![CDATA[>=]]> #{start_data}
 	

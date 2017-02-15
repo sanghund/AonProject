@@ -28,6 +28,6 @@
 	</update>
 	
 	<insert id="stockInsert">
-		insert into stock(p_no) values(#{p_no})
+		insert into stock(p_no, stock_cnt) values(#{p_no}, 0)
 	</insert>
 </mapper>

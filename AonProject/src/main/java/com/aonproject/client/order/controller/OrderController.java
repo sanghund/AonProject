@@ -28,6 +28,7 @@ import com.aonproject.admin.product.vo.ProductVO;
 import com.aonproject.admin.stock.service.StockService;
 import com.aonproject.admin.stock.vo.StockVO;
 import com.aonproject.client.mInfo.service.MemberService;
+import com.aonproject.client.mInfo.vo.MemberSubAddressVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.client.order.service.OrderService;
 import com.aonproject.client.order.vo.CartVO;
@@ -57,7 +58,7 @@ public class OrderController{
 	private MemberService memberService;
 
 	@RequestMapping(value="/orderResult")
-	public String orderResult(Authentication auth, @ModelAttribute ProductVO povo, @ModelAttribute CategoryVO cvo, Model model, HttpServletRequest request, HttpServletResponse response){
+	public String orderResult(Authentication auth, @ModelAttribute MemberVO mvo, @ModelAttribute ProductVO povo, @ModelAttribute CategoryVO cvo, Model model, HttpServletRequest request, HttpServletResponse response){
 		logger.info("orderResult calling");
 
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
@@ -69,15 +70,16 @@ public class OrderController{
 		model.addAttribute("memberInfo", memberInfo);
 		
 		List<Product_orderVO> orderInfo = new ArrayList<Product_orderVO>();
-		List<ProductVO> productList = new ArrayList<ProductVO>();
+		//List<ProductVO> productList = new ArrayList<ProductVO>();
 		
-		
+		//o_num check (when o_num="" > 1, when o_num!="" > o_num+1)
 		String checkOnum = orderService.checkOnum();
 		if(checkOnum == "" || checkOnum == null){
 			checkOnum = 1+"";
 		}else{
 			checkOnum = (Integer.parseInt(checkOnum)+1)+"";
 		}
+		
 		for(int i=0; i<povo.getP_nos().size(); i++){
 			Product_orderVO ovo = new Product_orderVO();
 			
@@ -92,22 +94,36 @@ public class OrderController{
 			ovo.setM_no(vo.getM_no());
 			ovo.setO_price(cal.getP_price()-(cal.getP_price() * (cal.getP_discount() / 100)) * ovo.getO_cnt());
 			ovo.setO_num(checkOnum);
-			ovo.setMa_no(memberInfo.getMa_no());
-			logger.info("cal.ma_no1: "+memberInfo.getMa_no());
-
+			
+			if(ovo.getAddrChk() == "y"){
+				ovo.setMa_no(memberInfo.getMa_no());
+				logger.info("cal.ma_no1: "+memberInfo.getMa_no());
+			}else if(ovo.getAddrChk() == "n"){
+				memberInfo.setM_addr(mvo.getM_addr());
+				logger.info("memberInfo m_no: "+memberInfo.getM_no());
+				logger.info("memberInfo addr: "+memberInfo.getM_addr());
+				
+				//new address insert
+				memberService.addAddr(memberInfo);
+				
+				memberInfo = memberService.memberInfo(memberInfo);
+				ovo.setMa_no(memberInfo.getMa_no());
+				logger.info("cal.ma_no2: "+memberInfo.getMa_no());
+			}
+			
 			orderInfo.add(ovo);
 			int result = orderService.orderInsert(ovo);
 			logger.info("orderInsert="+result);
 			
-			cal.setO_cnt(ovo.getO_cnt());
+			/*cal.setO_cnt(ovo.getO_cnt());
 			cal.setO_mode(ovo.getO_mode());
 			cal.setO_confirm(ovo.getO_confirm());
 			cal.setO_num(ovo.getO_num());
 			cal.setM_no(ovo.getM_no());
 			cal.setMa_no(ovo.getMa_no());
-			logger.info("cal.ma_no: "+cal.getMa_no());
+			logger.info("cal.ma_no: "+cal.getMa_no());*/
 			
-			productList.add(cal);
+			//productList.add(cal);
 			
 			StockVO svo = new StockVO();
 			svo.setP_no(ovo.getP_no());
@@ -134,7 +150,7 @@ public class OrderController{
 		}
 		
 		model.addAttribute("orderInfo", orderInfo);
-		model.addAttribute("productList", productList);
+		//model.addAttribute("productList", productList);
 		
 		return "client/order/orderResult";
 	}

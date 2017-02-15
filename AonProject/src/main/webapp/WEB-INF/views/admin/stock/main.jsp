@@ -21,10 +21,7 @@
 	})
 </script>
 <style>
-	/* .itemList {width:800px; height:500px; overflow-x:hidden; overflow-y:auto;} */
-	.listTable {border-collapse:collapes; width:1000px;}
-	.listTable td {border:1px solid #222; padding:1em;}
-	.stockList {width:1000px;}
+	.listTable td {padding:1em;}
 	
 </style>
 
@@ -34,9 +31,9 @@
 		<!-- 상품 디테일 확인 폼 -->
 		<form id="detailForm">
 			<input type="hidden" name="p_no" id="p_no">
-			<table class="listTable">
+			<table class="table table-striped jambo_table bulk_action">
 				<thead>
-					<tr>
+					<tr class="headings">
 						<td>카테고리</td>
 						<td>상품유형</td>
 						<td>상품번호</td>
@@ -63,7 +60,7 @@
 									<td>${stockList.p_price}</td>
 									<td>${stockList.stock_cnt}</td>
 									<td>${stockList.stock_date}</td>
-									<td><span></span><input type="button" class="addStock" value="등록"><input type="button" class="submit" value="완료"></td>
+									<td><span></span><input type="button" class="addStock btn btn-primary" value="등록"><input type="button" class="submit btn btn-success" value="완료"></td>
 								</tr>
 							</c:forEach>
 						</c:when>
@@ -85,14 +82,26 @@
 			$(".submit").hide();
 			
 			$(".addStock").click(function(){
+				p_no = $(this).parents("tr").attr("data-no");
+				
 				var inputObj = $("<input>")
 				inputObj.attr({"type":"number", "name":"stock_cnt"})
 				inputObj.addClass("count");
+				
 				var inputArea = $(this).parent().find("span");
 				inputArea.append(inputObj);
-				p_no = $(this).parents("tr").attr("data-no");
-				$(this).parent().find(".submit").show();
+				
+				var thisInputArea = $(this).parent().find(".count");
+				
+				var btnSubmit = $(this).parent().find(".submit");
+				btnSubmit.show();
+				
+				var addStock = $(this).parent().children(".addStock");
+				
 				$(this).hide();
+				$(".addStock").not(addStock).show();
+				$(".count").not(thisInputArea).remove();
+				$(".submit").not(btnSubmit).hide();
 			});
 			
 			$(".submit").click(function(){
@@ -114,7 +123,6 @@
 						alert("시스템 오류입니다. 관리자에게 문의하세요.");
 					},
 					success	: function(stockUpdate){
-						alert(stockUpdate);
 						if(stockUpdate == "SUCCESS"){
 							alert(" 등록이 완료 되었습니다.");
 							location.href="/admin/stockList"
