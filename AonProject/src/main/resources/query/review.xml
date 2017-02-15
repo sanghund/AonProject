@@ -93,7 +93,9 @@
 			select p_no from product_order inner join (select max(o_no) o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%') tt on tt.o_no = product_order.o_no 
 		</selectKey>
 		insert into review(re_no, re_title, re_content, re_pwd, re_chk, m_no, p_no, o_no) 
-			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, #{p_no}, (select max(o_no) o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%'))
+			values(#{re_no}, #{re_title}, #{re_content}, #{re_pwd}, 0, #{m_no}, 
+			(select p_no from product_order where o_no = (select * from (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' order by o_no asc) where rownum = 1))
+			, (select * from (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' order by o_no asc) where rownum = 1))
 	</insert>
 	
 	<update id="reviewUserUpdate" parameterType="review">
@@ -117,8 +119,7 @@
 	</select>
 	
 	<select id="reviewConfirm" resultType="int">
-		select count(re_no) from review where m_no = #{m_no} and p_no like #{p_no}||'%' and 
-			o_no = (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%')
+		select count(re_no) from review where m_no = #{m_no} and p_no like #{p_no}||'%' and o_no = ( select * from (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' order by o_no asc) where rownum = 1)
 	</select>
 
 	<!-- 마이페이지 리뷰 -->	

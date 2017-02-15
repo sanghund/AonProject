@@ -54,6 +54,7 @@
 				$(this).parents("td").children(".ca_name2").show();
 		});
 		
+		//수정할 때 확인 버튼.
 		$(".caokBtn").click(function(){
 			var ca_no = $(this).parents("td").children(".ca_no").val();
 			var caname = $(this).parents("td").children().find("#ca_name").val();
@@ -76,6 +77,37 @@
 				success:function(result){
 					if(result=="success"){
 						alert("수정에 성공했습니다.")
+						location.reload();
+					}
+				}
+			});
+		});
+		
+		$(".cacancelBtn").click(function(){
+			$(this).parents(".ca_name2").hide();
+			$(this).parents("td").children(".ca_name1").show();
+			$(this).parents("td").children(".caBtn").show();
+		});
+		
+		//삭제버튼
+		$(".caDeleteBtn").click(function(){
+			var ca_no = $(this).parents("td").children(".ca_no");
+			if(confirm("삭제하시겠습니까?")){
+				$(this).parents().click();
+			}else{
+				return false;
+			}
+			$.ajax({
+				url:"/admin/caDelete",
+				data:"ca_no="+ca_no.val(),
+				type:"post",
+				dataType:"text",
+				error:function(){
+					alert("시스템 오류입니다. 관리자에게 문의하세요.");
+				},
+				success:function(result){
+					if(result == "success"){
+						alert("삭제되었습니다.");
 						location.reload();
 					}
 				}
@@ -122,6 +154,7 @@
 				<c:choose>
 					<c:when test="${not empty categoryList}">
 						<c:forEach var="category" items="${categoryList}">
+							<c:if test="${category.ca_confirm == 'N' }">
 							<tr>
 								<td colspan="2"> 
 									<input type="hidden" class="ca_no" value="${category.ca_no }">
@@ -133,12 +166,15 @@
 											<option value="caoption2">F/W</option>
 										</select>
 										<input type="button" class="caokBtn" value="확인">
+										<input type="button" class="cacancelBtn" value="취소">
 									</div>
 									<div class="caBtn" style="float:right">
-										<input type="button" class="caUpdateBtn" value="수정">	
+										<input type="button" class="caUpdateBtn" value="수정">
+										<input type="button" class="caDeleteBtn" value="삭제">	
 									</div>	
 								</td>
-							</tr>	
+							</tr>
+							</c:if>	
 						</c:forEach>
 					</c:when>
 					<c:otherwise>

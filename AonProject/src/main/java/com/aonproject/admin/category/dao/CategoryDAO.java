@@ -12,4 +12,5 @@ public interface CategoryDAO {
 	public int categoryInsert(CategoryVO cvo);
 	public int caUpdate(CategoryVO cavo);
 	
+	public int caDelete(CategoryVO cavo);
 }
