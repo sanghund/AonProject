@@ -11,7 +11,6 @@
 		box-sizing: border-box;
 		padding: 10px;
 	}
-	
 	#aTitle {
 			font-size: 25px;
 			padding : 10px 0;

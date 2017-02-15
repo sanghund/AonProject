@@ -2,6 +2,8 @@ package com.aonproject.client.product.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import com.aonproject.admin.commoncode.vo.CommonCodeVO;
 import com.aonproject.admin.product.service.ProductService;
 import com.aonproject.admin.product.vo.ProductVO;
 import com.aonproject.client.root.RootController;
+import com.aonproject.common.util.paging.PagingSet;
 import com.aonproject.common.util.upload.service.UploadService;
 import com.aonproject.common.util.upload.vo.UploadVO;
 
@@ -37,27 +40,31 @@ public class ClientProductController {
 	private UploadService uploadService;
 	
 	@RequestMapping(value = "category")
-	public String productList (@ModelAttribute CategoryVO cvo, ProductVO pvo, Model model, @RequestParam("no") int no){
+	public String productList (@ModelAttribute CategoryVO cvo, ProductVO pvo, Model model, @RequestParam("no") int no, HttpServletRequest request){
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
-		logger.info(no);
+		/*product page set*/
+		String productPageNum = request.getParameter("productPageNum");
+		if(productPageNum != null){
+			pvo.setPageNum(productPageNum);
+		}
 		
-		//paging
-		/*int cnt = 0;
-		cnt = productService.cntList();
-		pvo.setCountList(20);
-		PagingSet.setPageing(pvo, cnt);*/
-		
+		/*product total count*/
+		int productCnt = productService.productCnt(pvo);
+		PagingSet.setPageing(pvo, productCnt);
 		cvo.setCa_no(no);
 		List<CategoryVO> categorySelect = categoryService.categoryList(cvo);
-		logger.info(cvo.getCa_name());
-		model.addAttribute("categorySelect", categorySelect);
 		
 		pvo.setCa_no(no);
 		
 		List<ProductVO> productForCategory = productService.productForCategory(pvo);
+		System.out.println(pvo.toString());
+		logger.info("totalPage = "+pvo.getTotalPage());
 		model.addAttribute("productForCategory", productForCategory);
+		model.addAttribute("categorySelect", categorySelect);
+		model.addAttribute("productVO", pvo);
+		
 		
 		return "client/product/productMain";
 	}

@@ -64,10 +64,11 @@ public class ProductDAOImpl implements ProductDAO {
 		return session.selectOne("productDetailSupport", p_no);
 	}
 
-	/*@Override
-	public int cntList() {
-		return session.selectOne("cntList");
-	}*/
+	@Override
+	public int productCnt(ProductVO pvo) {
+		return session.selectOne("productCnt", pvo);
+	}
+
 
 	
 

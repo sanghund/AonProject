@@ -78,12 +78,13 @@ public class ProductServiceImpl implements ProductService {
 		ProductVO productDetailSupport = productDAO.productDetailSupport(p_no);
 		return productDetailSupport;
 	}
-	
-	//item count
-	/*@Override
-	public int cntList() {
-		return productDAO.cntList();
-	}*/
+
+	@Override
+	public int productCnt(ProductVO pvo) {
+		int result = 0;
+		result = productDAO.productCnt(pvo);
+		return result;
+	}
 
 	
 

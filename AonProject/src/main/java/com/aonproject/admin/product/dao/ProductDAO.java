@@ -19,6 +19,5 @@ public interface ProductDAO {
  	
  	public ProductVO productDetailSupport(String p_no);
  	
- 	//product count
- 	//public int cntList();
+ 	public int productCnt(ProductVO pvo);
 }

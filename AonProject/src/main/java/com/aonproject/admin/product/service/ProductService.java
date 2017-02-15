@@ -22,5 +22,5 @@ public interface ProductService {
 	
 	public ProductVO productDetailSupport(String p_no);
 	
-	//public int cntList();
+	public int productCnt(ProductVO pvo);
 }
