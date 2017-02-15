@@ -122,9 +122,8 @@ public class ProductController {
 	
 	/*move writeForm*/
 	@RequestMapping(value = "/writeForm")
-	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model){
+	public String writeFrom (@ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, Model model, HttpServletRequest request){
 		logger.info("writeFrom calling");
-
 		
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
@@ -133,6 +132,23 @@ public class ProductController {
 		model.addAttribute("commonCodeList", commonCodeList);
 		
 		ProductVO pvo = new ProductVO();
+		
+		/*product page set*/
+		String productPageNum = request.getParameter("productPageNum");
+		if(productPageNum != null){
+			pvo.setPageNum(productPageNum);
+		}
+		
+		/*product total count*/
+		int productCnt = productService.productCnt(pvo);
+		PagingSet.setPageing(pvo, productCnt);
+		
+		/*product list all*/
+		pvo.setStart_data(0);
+		pvo.setEnd_data(productCnt);
+		logger.info("endData:"+pvo.getEnd_data());
+		
+		//ProductVO pvo = new ProductVO();
 		List<ProductVO> productList = productService.productList(pvo);
 		model.addAttribute("productList", productList);
 		
@@ -146,7 +162,6 @@ public class ProductController {
 		mode = "insert";
 		int result = 0;
 		String createP_no = "";
-		
 		
 		StockVO svo = new StockVO();
 		

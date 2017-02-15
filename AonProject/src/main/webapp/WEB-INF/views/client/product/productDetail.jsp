@@ -36,7 +36,7 @@
 				var orderOption = $("<tr>");
 				var td = $("<td>");
 				var sizeNo = ($(this).find("option:selected").val()).toUpperCase();
-				var orderCnt = $("<td><input class='cnt' type='text' readonly value='1'><input type='hidden' class='arrayP_no' value='${productDetail.p_no}"+sizeNo+"'><input type='button' class='cntUp' value='+'><input type='button' class='cntDown' value='-'></td>");
+				var orderCnt = $("<td><input class='cnt' type='text' readonly value='1'><input type='hidden' class='arrayP_no' value='${productDetail.p_no}"+sizeNo+"'><input type='button' class='cntUp' value='+'><input type='button' class='cntDown' value='-'><input type='button' class='cntDel' value='x'></td>");
 				orderOption.html("<td class='orderChk'>${productDetail.color}"+$("#size option:selected").html()+"</td>");
 				td.append(orderCnt)
 				orderOption.append(td);
@@ -78,8 +78,12 @@
 				cntInput.val(1);
 				totalCount();
 			}
-			
 		});
+		
+		//선택 사이즈 삭제
+		$(document).on("click", ".cntDel", function(){
+			$(this).parents("tr").remove();
+		})
 		
 		var orderPrice = $("<div id='price'>");
 		orderPrice.css("margin", "1em 0");
@@ -88,7 +92,7 @@
 		
 		//구매버튼 클릭 처리 이벤트
 		$("#order").click(function(){
-			if($("#size").val()==""){
+			if($(".cnt").val()=="" || $(".cnt").val()==null){
 				alert("사이즈를 선택해 주세요");
 				return;
 			}else{
@@ -104,10 +108,9 @@
 			}
 		});
 		
-		
 		//장바구니 클릭 처리 이벤트
 		$("#cart").click(function(){
-			if($("#size").val()==""){
+			if($(".cnt").val()=="" || $(".cnt").val()==null){
 				alert("사이즈를 선택해 주세요");
 				return;
 			}else{

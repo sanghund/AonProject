@@ -49,7 +49,7 @@
 	<!-- 상품  디테일 조회 -->
 	<select id="productDetail" resultType="product" parameterType="product">
 		/* product - productDetail */
-		select product.p_no, category.ca_name, p_type_cd.cc_name "p_type_name", product.p_name, product.p_price, product.p_discount, p3.pi_file,
+		select product.p_no, category.ca_name, p_type_cd.cc_name "p_type_name", p_type, product.p_name, product.p_price, product.p_discount, p3.pi_file,
 			   p3.pi_route, p_info, color_cd.cc_name "color", color_code, upper(size_cd.cc_name) "size", size_code, p_fabric, p_caution, 
 			   to_char(product.p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date
 		from product 

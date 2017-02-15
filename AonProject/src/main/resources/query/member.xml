@@ -45,7 +45,8 @@
 	
 	<!-- 유저 정보 조회 -->
 	<select id = "memberInfo" parameterType="member" resultType="member">
-		select member.m_no, m_id, m_name, m_gender, m_email, m_addr, m_tel, m_date 
+		<!-- select column ma_no add -->
+		select member.m_no, m_id, m_name, m_gender, m_email, ma_no, m_addr, m_tel, m_date 
 		from member 
 		inner join (select * from (select min(ma_no) as mno from member_addr group by(m_no)) g1 inner join (select * from member_addr) on mno = ma_no) member_addr 
 		on member.m_no = member_addr.m_no 

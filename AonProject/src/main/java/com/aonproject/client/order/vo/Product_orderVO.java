@@ -12,6 +12,7 @@ public class Product_orderVO extends CommonPagingVO {
 	private String 	o_confirm = "";		//결재유무
 	private String 	o_date = "";		//등록일
 	private int 	m_no = 0;			//회원번호
+	private int 	ma_no = 0;			//회원주소
 	private String 	p_no = "";			//상품번호
 	private String  o_num = "";
 	
@@ -27,6 +28,14 @@ public class Product_orderVO extends CommonPagingVO {
 	private String p_size = "";
 	private String p_type = "";
 	
+	
+	
+	public int getMa_no() {
+		return ma_no;
+	}
+	public void setMa_no(int ma_no) {
+		this.ma_no = ma_no;
+	}
 	public String getP_name() {
 		return p_name;
 	}

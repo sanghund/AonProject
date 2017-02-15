@@ -17,8 +17,8 @@
 	</select>
 	
 	<insert id="orderInsert">
-		insert into product_order(o_no, p_no, o_cnt, o_price, o_mode, o_confirm, m_no, o_num) 
-		values(order_seq.nextval, #{p_no}, #{o_cnt}, #{o_price}, #{o_mode}, #{o_confirm}, #{m_no}, #{o_num})
+		insert into product_order(o_no, p_no, o_cnt, o_price, o_mode, o_confirm, m_no, ma_no, o_num) 
+		values(order_seq.nextval, #{p_no}, #{o_cnt}, #{o_price}, #{o_mode}, #{o_confirm}, #{m_no}, #{ma_no}, #{o_num})
 		<selectKey keyProperty="o_no" resultType="java.lang.Integer" order="AFTER">
 			select order_seq.currval from dual
 		</selectKey>

@@ -80,10 +80,15 @@
 						alert("시스템 오류 발생. 관리자에게 문의 요망");
 					},
 					success		: function(detailInfo){
+						$("#p_type option:selected").val(detailInfo.p_type);
 						$("#p_type option:selected").text(detailInfo.p_type_name);
+						$("#p_type option").removeAttr("selected");
+						//$("#p_type option[value='"+detailInfo.p_type+"']").attr("selected","selected");
 						$("#p_name").val(detailInfo.p_name);
 						$("#p_info").val(detailInfo.p_info);
+						$("#color_code option:selected").val(detailInfo.color_code);
 						$("#color_code option:selected").text(detailInfo.color);
+						$("#size_code option:selected").val(detailInfo.size_code);
 						$("#size_code option:selected").text(detailInfo.size);
 						$("#p_price").val(detailInfo.p_price);
 						$("p_discount option:selected").text(detailInfo.p_discount);
@@ -163,21 +168,17 @@
 						<td>상품타입</td>
 						<td>
 							<select id="p_type" name="p_type">
+								<option value="">타입선택</option>
 								<c:choose>
 									<c:when test="${not empty commonCodeList}">
 										<c:forEach var="commonCodeList" items="${commonCodeList}">
 											<c:if test="${commonCodeList.cc_group eq 'p_type'}">
-												<c:if test="${commonCodeList.cc_no ne productDetail.p_type}">
-													<option value="${commonCodeList.cc_no}">${commonCodeList.cc_name}</option>
-												</c:if>
-												<c:if test="${commonCodeList.cc_no eq productDetail.p_type}">
-													<option value="${commonCodeList.cc_no}" selected="selected">${commonCodeList.cc_name}</option>
-												</c:if>
+												<option value="${commonCodeList.cc_no}">${commonCodeList.cc_name}</option>
 											</c:if>
 										</c:forEach>
 									</c:when>
 									<c:otherwise>
-										<option value="">등록된 색상이 없습니다.</option>
+										<option value="">등록된 상품이 없습니다.</option>
 									</c:otherwise>
 								</c:choose>
 							</select>

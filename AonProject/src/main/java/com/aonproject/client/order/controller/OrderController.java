@@ -78,7 +78,6 @@ public class OrderController{
 		}else{
 			checkOnum = (Integer.parseInt(checkOnum)+1)+"";
 		}
-		//logger.info("aaaaa"+povo.getP_nos());
 		for(int i=0; i<povo.getP_nos().size(); i++){
 			Product_orderVO ovo = new Product_orderVO();
 			
@@ -93,15 +92,21 @@ public class OrderController{
 			ovo.setM_no(vo.getM_no());
 			ovo.setO_price(cal.getP_price()-(cal.getP_price() * (cal.getP_discount() / 100)) * ovo.getO_cnt());
 			ovo.setO_num(checkOnum);
+			ovo.setMa_no(memberInfo.getMa_no());
+			logger.info("cal.ma_no1: "+memberInfo.getMa_no());
+
 			orderInfo.add(ovo);
 			int result = orderService.orderInsert(ovo);
-			logger.info("orderInser="+result);
+			logger.info("orderInsert="+result);
 			
 			cal.setO_cnt(ovo.getO_cnt());
 			cal.setO_mode(ovo.getO_mode());
 			cal.setO_confirm(ovo.getO_confirm());
 			cal.setO_num(ovo.getO_num());
 			cal.setM_no(ovo.getM_no());
+			cal.setMa_no(ovo.getMa_no());
+			logger.info("cal.ma_no: "+cal.getMa_no());
+			
 			productList.add(cal);
 			
 			StockVO svo = new StockVO();
