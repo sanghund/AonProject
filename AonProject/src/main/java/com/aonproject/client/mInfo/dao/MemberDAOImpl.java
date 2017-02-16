@@ -234,5 +234,11 @@ public class MemberDAOImpl extends JdbcDaoImpl implements MemberDAO{
 		return sqlSession.selectMap("memberCount", "");
 	}
 
+	@Override
+	public MemberVO memberAddAddr(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberAddAddr", vo);
+	}
+
 
 }

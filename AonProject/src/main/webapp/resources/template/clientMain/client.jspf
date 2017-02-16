@@ -16,3 +16,4 @@
 <link rel="stylesheet" href="/resources/include/css/reset.css">
 <link rel="stylesheet" type="text/css" href="/resources/include/css/clientCss/custom.css">
 <script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/resources/include/css/btn.css">

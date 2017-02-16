@@ -144,5 +144,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.memberCount(vo);
 	}
 
+	@Override
+	public MemberVO memberAddAddr(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return memberDAO.memberAddAddr(vo);
+	}
+
 
 }

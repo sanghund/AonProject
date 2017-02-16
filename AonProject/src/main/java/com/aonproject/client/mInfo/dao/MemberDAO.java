@@ -29,4 +29,5 @@ public interface MemberDAO {
 	public int idChk(MemberVO vo);
 	public Map<String, Integer> memberSexDistribution();
 	public Map<String, Integer> memberCount(MemberVO vo);
+	public MemberVO memberAddAddr(MemberVO vo);
 }

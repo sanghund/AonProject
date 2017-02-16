@@ -1,6 +1,8 @@
 package com.aonproject.admin.stock.vo;
 
-public class StockVO {
+import com.aonproject.common.util.vo.CommonPagingVO;
+
+public class StockVO extends CommonPagingVO {
 	private String p_no = "";			//상품번호
 	private int stock_cnt = 0;			//재고수량
 	private String stock_date = "";		//등록일

@@ -29,8 +29,8 @@ public class StockServiceImpl implements StockService{
 	}
 
 	@Override
-	public List<StockVO> stockList() {
-		return stockDAO.stockList();
+	public List<StockVO> stockList(StockVO svo) {
+		return stockDAO.stockList(svo);
 	}
 
 	@Override
@@ -41,6 +41,11 @@ public class StockServiceImpl implements StockService{
 	@Override
 	public int stockInsert(StockVO svo) {
 		return stockDAO.stockInsert(svo);
+	}
+
+	@Override
+	public int productCnt(StockVO svo) {
+		return stockDAO.productCnt(svo);
 	}
 
 }

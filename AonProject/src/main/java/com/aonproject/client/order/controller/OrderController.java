@@ -28,7 +28,6 @@ import com.aonproject.admin.product.vo.ProductVO;
 import com.aonproject.admin.stock.service.StockService;
 import com.aonproject.admin.stock.vo.StockVO;
 import com.aonproject.client.mInfo.service.MemberService;
-import com.aonproject.client.mInfo.vo.MemberSubAddressVO;
 import com.aonproject.client.mInfo.vo.MemberVO;
 import com.aonproject.client.order.service.OrderService;
 import com.aonproject.client.order.vo.CartVO;
@@ -70,7 +69,7 @@ public class OrderController{
 		model.addAttribute("memberInfo", memberInfo);
 		
 		List<Product_orderVO> orderInfo = new ArrayList<Product_orderVO>();
-		//List<ProductVO> productList = new ArrayList<ProductVO>();
+		List<ProductVO> productList = new ArrayList<ProductVO>();
 		
 		//o_num check (when o_num="" > 1, when o_num!="" > o_num+1)
 		String checkOnum = orderService.checkOnum();
@@ -89,47 +88,44 @@ public class OrderController{
 			
 			ovo.setP_no(povo.getP_nos().get(i).toString());
 			ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
+			logger.info("count: "+ovo.getO_cnt());
 			ovo.setO_mode(povo.getO_mode().toString());
 			ovo.setO_confirm(povo.getO_confirm().toString());
 			ovo.setM_no(vo.getM_no());
-			ovo.setO_price(cal.getP_price()-(cal.getP_price() * (cal.getP_discount() / 100)) * ovo.getO_cnt());
+			ovo.setO_price(((cal.getP_price()-(cal.getP_price() * (cal.getP_discount() / 100))) * ovo.getO_cnt()));
+		
 			ovo.setO_num(checkOnum);
 			
-			if(ovo.getAddrChk() == "y"){
+			if(povo.getAddrChk().equals("y")){
 				ovo.setMa_no(memberInfo.getMa_no());
-				logger.info("cal.ma_no1: "+memberInfo.getMa_no());
-			}else if(ovo.getAddrChk() == "n"){
+			}else if(povo.getAddrChk().equals("n")){
 				memberInfo.setM_addr(mvo.getM_addr());
-				logger.info("memberInfo m_no: "+memberInfo.getM_no());
-				logger.info("memberInfo addr: "+memberInfo.getM_addr());
 				
 				//new address insert
 				memberService.addAddr(memberInfo);
 				
-				memberInfo = memberService.memberInfo(memberInfo);
+				//call address no
+				memberInfo = memberService.memberAddAddr(memberInfo);
 				ovo.setMa_no(memberInfo.getMa_no());
-				logger.info("cal.ma_no2: "+memberInfo.getMa_no());
 			}
 			
 			orderInfo.add(ovo);
-			int result = orderService.orderInsert(ovo);
-			logger.info("orderInsert="+result);
+			orderService.orderInsert(ovo);
 			
-			/*cal.setO_cnt(ovo.getO_cnt());
+			//order result request data
+			cal.setO_cnt(ovo.getO_cnt());
 			cal.setO_mode(ovo.getO_mode());
 			cal.setO_confirm(ovo.getO_confirm());
 			cal.setO_num(ovo.getO_num());
 			cal.setM_no(ovo.getM_no());
 			cal.setMa_no(ovo.getMa_no());
-			logger.info("cal.ma_no: "+cal.getMa_no());*/
 			
-			//productList.add(cal);
+			productList.add(cal);
 			
 			StockVO svo = new StockVO();
 			svo.setP_no(ovo.getP_no());
 			svo.setStock_cnt(ovo.getO_cnt());
-			int stockResult = stockService.stockOrder(svo);
-			logger.info("stockResult="+stockResult);
+			stockService.stockOrder(svo);
 		}
 		
 		String mode = request.getParameter("mode");
@@ -150,7 +146,7 @@ public class OrderController{
 		}
 		
 		model.addAttribute("orderInfo", orderInfo);
-		//model.addAttribute("productList", productList);
+		model.addAttribute("productList", productList);
 		
 		return "client/order/orderResult";
 	}
@@ -164,8 +160,6 @@ public class OrderController{
 		System.out.println(mode);
 		if(mode != null) model.addAttribute("mode", mode);
 
-		
-		
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		MemberVO memberInfo = memberService.memberInfo(vo);
 		model.addAttribute("memberInfo", memberInfo);
@@ -187,9 +181,7 @@ public class OrderController{
 			
 			orderList.add(productService.productDetail(pvo));
 			orderList.get(i).setP_no(p_noSplit.substring(0,7));
-			//-------------------------------------------------------s
 			orderList.get(i).setO_cnt(povo.getO_cnts().get(i));
-			//-------------------------------------------------------e
 		}
 		
 		if(orderList.size()>0){
@@ -198,7 +190,6 @@ public class OrderController{
 				ovo.setP_no(orderList.get(i).getP_no().toString());
 			    ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
 			    orderInfo.add(ovo);
-			    System.out.println("---------------------\n"+ovo.toString() + "\n-------------------");
 			}
 			model.addAttribute("orderInfo", orderInfo);
 		}

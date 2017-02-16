@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.admin.category.service.CategoryService;
 import com.aonproject.admin.category.vo.CategoryVO;
 import com.aonproject.admin.commoncode.service.CommonCodeService;
@@ -53,10 +56,11 @@ public class ProductController {
 	
 	/*Product List*/
 	@RequestMapping(value = "/product", method=RequestMethod.GET)
-	public String itemList(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, Model model, HttpServletRequest request){
+	public String itemList(Authentication auth, @ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, Model model, HttpServletRequest request){
 		logger.info("itemList load");
-		logger.info(pvo.getCa_no());
 		
+		UserDetails vo = (AdminVO) auth.getPrincipal();
+		model.addAttribute("vo", vo);
 	
 		/*product page set*/
 		String productPageNum = request.getParameter("productPageNum");
@@ -76,12 +80,12 @@ public class ProductController {
 	
 	/*Product Detail*/
 	@RequestMapping(value = "/productDetail")
-	public String itemDetail(@ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, @ModelAttribute UploadVO uvo, Model model){
-
+	public String itemDetail(Authentication auth, @ModelAttribute ProductVO pvo, @ModelAttribute CategoryVO cvo, @ModelAttribute CommonCodeVO ovo, @ModelAttribute UploadVO uvo, Model model){
 		logger.info("itemDetail load");
-		logger.info("p_no: "+pvo.getP_no());
-		logger.info("cc_no: "+cvo.getCa_no());
-		logger.info("cc_name: "+cvo.getCa_name());
+		
+		UserDetails vo = (AdminVO) auth.getPrincipal();
+		model.addAttribute("vo", vo);
+		
 		
 		ProductVO productDetail = null;
 		

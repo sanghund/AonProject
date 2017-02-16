@@ -38,6 +38,11 @@
 		values(member_addr_seq.nextval, #{m_no}, #{m_addr})
 	</insert>
 	
+	<!-- 회원 신규등록 주소 번호 조회 -->
+	<select id="memberAddAddr" parameterType="member" resultType="member">
+		select * from member_addr where ma_no = (select max(ma_no) from member_addr where m_no=#{m_no} and m_addr=#{m_addr})
+	</select>
+	
 	<!-- 최신 회원 번호 조회 -->
 	<select id="newNo" resultType="java.lang.Integer">
 		select * from (select m_no from member order by m_no desc) where rownum = 1

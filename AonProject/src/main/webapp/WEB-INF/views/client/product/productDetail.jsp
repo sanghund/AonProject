@@ -18,9 +18,12 @@
 	.productImg img {margin:10px auto; display:block;}
 	
 	.orderDetail {margin:2rem 0 1rem 0; border-bottom:1px solid #e1e1e1;}
+	.orderDetail tr > td:first-child{width:70%;}
 	td {height:2rem;}
 	
 	.discountPrice {color:red;}
+	
+	.cntUp, .cntDown, .cntDel {margin:0 2px;}
 </style>
 <script type="text/javascript">
 	var totalCnt = 1;
@@ -36,7 +39,7 @@
 				var orderOption = $("<tr>");
 				var td = $("<td>");
 				var sizeNo = ($(this).find("option:selected").val()).toUpperCase();
-				var orderCnt = $("<td><input class='cnt' type='text' readonly value='1'><input type='hidden' class='arrayP_no' value='${productDetail.p_no}"+sizeNo+"'><input type='button' class='cntUp' value='+'><input type='button' class='cntDown' value='-'><input type='button' class='cntDel' value='x'></td>");
+				var orderCnt = $("<td><input class='cnt' type='text' readonly value='1'><input type='hidden' class='arrayP_no' value='${productDetail.p_no}"+sizeNo+"'><input type='button' class='cntUp btn btn-dark btn-xs' value='+'><input type='button' class='cntDown btn btn-dark btn-xs' value='-'><input type='button' class='cntDel btn btn-dark btn-xs' value='x'></td>");
 				orderOption.html("<td class='orderChk'>${productDetail.color}"+$("#size option:selected").html()+"</td>");
 				td.append(orderCnt)
 				orderOption.append(td);
@@ -195,8 +198,8 @@
 			</table>	
 		</form>	
 		<div class="orderBtnContainer">
-			<input type="button" id="order" value="구매하기">
-			<input type="button" id="cart" value="장바구니">
+			<input type="button" id="order" class="btn btn-dark" value="구매하기">
+			<input type="button" id="cart" class="btn btn-default" value="장바구니">
 		</div>
 	</div>
 	<div class="productImg">

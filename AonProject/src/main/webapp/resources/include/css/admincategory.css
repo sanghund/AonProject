@@ -45,10 +45,11 @@
 		float:left;
 		width:33%;
 		padding-top:6px;
+		line-height:25px;
 		}
 	.caDeleteBtn, .caUpdateBtn{
-		width:50px;
-		height: 30px;
+		/* width:50px;
+		height: 30px; */
 		}
 	
 	
