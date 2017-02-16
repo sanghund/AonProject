@@ -124,6 +124,9 @@
 		.clickEvent{
 			border-bottom: 1px solid lightgrey;
 		}
+		.karkar{
+			color: red;
+		}
 </style>
 <div class = "main">
 	<h2 id = "aTitle">MyPage</h2>
@@ -200,7 +203,7 @@
 					
 								<c:forEach items="${memberVO.pageTotal }" varStatus="status">
 									<c:if test = "${memberVO.pageTotal[status.index] eq pNum}" >
-										<span>${memberVO.pageTotal[status.index] }</span>
+										<span class = "karkar">${memberVO.pageTotal[status.index] }</span>
 									</c:if>
 									<c:if test = "${memberVO.pageTotal[status.index] ne pNum}" >
 										<a href = "/member/mypage/review?pageNum=${memberVO.pageTotal[status.index] }" data-num = "${memberVO.pageTotal[status.index]}">

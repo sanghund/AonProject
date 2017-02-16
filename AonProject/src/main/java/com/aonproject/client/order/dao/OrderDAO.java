@@ -15,4 +15,5 @@ public interface OrderDAO {
 	public String checkOnum();
 	public List<Product_orderVO> myOrder(MemberVO vo);
 	public int myOrderCnt(MemberVO vo);
+	public List<Product_orderVO> orderview(Product_orderVO povo);
 }
