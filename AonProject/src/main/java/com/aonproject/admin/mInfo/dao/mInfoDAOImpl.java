@@ -28,9 +28,27 @@ public class mInfoDAOImpl implements mInfoDAO {
 		return (mInfoVO)session.selectOne("mDetailForm");
 	}
 	
-	// member delete
+	// user address
 	@Override
-	public int mInfoDelete(int m_no) {
-		return session.delete("mInfoDelete");
+	public int addAddr(mInfoVO mvo) {
+		return session.insert("addAddr", mvo);
+	}
+
+	@Override
+	public int memberExpire(mInfoVO mvo) {
+		// TODO Auto-generated method stub
+		return session.insert("memberExpire", mvo);
+	}
+
+	@Override
+	public int memberGoodBye(mInfoVO mvo) {
+		// TODO Auto-generated method stub
+		return session.update("memberGoodBye", mvo);
+	}
+
+	@Override
+	public int memberAddrGoodBye(mInfoVO mvo) {
+		// TODO Auto-generated method stub
+		return session.delete("memberAddrGoodBye", mvo);
 	}
 }

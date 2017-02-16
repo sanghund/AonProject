@@ -50,6 +50,14 @@
 		<level value="info"></level>
 	</logger>
 	
+	<logger name="com.aonproject.admin.mInfo">
+		<level value="info"></level>
+	</logger>
+	
+	<logger name="com.aonproject.admin.mInfo.dao">
+		<level value="TRACE"></level>
+	</logger>
+	
 	<logger name="com.aonproject.client.mInfo.dao">
 		<level value="TRACE"></level>
 	</logger>

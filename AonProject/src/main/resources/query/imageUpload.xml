@@ -5,9 +5,8 @@
 
     <!-- 메인 이미지 리스트 -->
 	<select id="imageUploadList" parameterType="imageUpload" resultType="imageUpload">
-	select * from mainimageupload where mp_no = #{mp_no}
+	    select * from mainimageupload where mp_no = #{mp_no}
 	</select>
-	
 	
 	<!-- 메인 이미지 등록 -->
 	<insert id="imageUploadInsert" parameterType="imageUpload">
