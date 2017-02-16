@@ -4,9 +4,8 @@
 	<link rel = "stylesheet" href = "/resources/include/fontello/css/fontello.css">
 	<link rel="stylesheet" type="text/css" href="/resources/include/css/about/reset.css">
 	<link rel="stylesheet" type="text/css" href="/resources/include/css/about/about.css">
-
 	
-    <div class="about_body">
+    <div class="about_body" id = "about_main">
     	<!-- <img id="bar" src="/resources/include/image/about/back.png" class="backImg"> -->
     	<div class="about_content">
     		<!-- concept -->
@@ -76,3 +75,52 @@
     		</div>
     	</div>
     </div>
+    <script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/mojs/latest/mo.min.js"></script>
+    <script type="text/javascript">
+    var first = new mojs.Shape({
+        shape: 'circle',
+        radius: {
+            0: 'rand(120,160)'
+        },
+        stroke: 'cyan',
+        strokeWidth: {
+            0 : 0
+        },
+        fill: 'none',
+        left: '50%',
+        top: '50%',
+        duration: 300
+    });
+
+    var seconds = [];
+    for (var i = 0; i < 5; i++) {
+        var second = new mojs.Shape({
+            parent: first.el,
+            shape: 'circle',
+            radius: {
+                0: 'rand(45,135)'
+            },
+            stroke: 'black',
+            strokeWidth: {
+                10 : 0
+            },
+            fill: 'none',
+            left: '50%',
+            top: '50%',
+            x: 'rand(-350, 350)',
+            y: 'rand(-350, 350)',
+            duration: 300,
+        });
+        seconds.push(second);
+    };
+    
+    function playPlay() {
+    	first.generate().replay();
+        for (var i = 0; i < seconds.length; i++) {
+            seconds[i].generate().replay();
+        };
+    };
+    
+    setInterval("playPlay()", 1000);
+    </script>

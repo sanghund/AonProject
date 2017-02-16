@@ -215,8 +215,14 @@
 						<c:if test="${orderList[status.index].o_confirm eq 'Y' }">
 							<td>결제완료</td>
 						</c:if>
-						<c:if test="${orderList[status.index].o_confirm ne 'Y' }">
+						<c:if test="${orderList[status.index].o_confirm eq 'N' }">
 							<td>입금대기</td>
+						</c:if>
+						<c:if test="${orderList[status.index].o_confirm eq 'R' }">
+							<td>환불대기</td>
+						</c:if>
+						<c:if test="${orderList[status.index].o_confirm eq 'F' }">
+							<td>환불완료</td>
 						</c:if>
 					</tr>
 				</c:forEach>

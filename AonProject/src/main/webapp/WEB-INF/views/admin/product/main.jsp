@@ -25,7 +25,6 @@
 			$("#p_no").val(product_no+product_color+product_size);
 			$("#detailForm").attr({"method":"post", "action":"/admin/productDetail"});
 			$("#detailForm").submit();
-			console.log(product_no);
 
 		})
 	})
@@ -42,26 +41,6 @@
 	<!-- 상품   제어 버튼 -->
 	<div class="btnContainer">
 		<input type="button" id="insertBtn" class="btn btn-primary" value="신규등록">
-	</div>
-	<!-- 상품 검색 제어 -->
-	<div class="btnContainer">
-		<!-- <div>
-			<select name="search" id="search">
-				<option value="all">전체</option>
-				<option value="all">상품번호</option>
-				<option value="all">카테고리</option>
-				<option value="all">상품분류</option>
-				<option value="all">상품명</option>
-				<option value="all">사이즈</option>
-				<option value="all">색상</option>
-				<option value="all">할인율</option>
-				<option value="all">소재</option>
-				<option value="all">등록일</option>
-			</select>
-		</div>
-		<div>
-			<input type="text" id="keyword" name="keyword">
-		</div> -->
 	</div>
 	<!-- 상품 리스트 출력 -->
 	<div class="itemList">
@@ -113,7 +92,7 @@
 						</tr>
 					</c:otherwise> --%>
 				</c:choose>
-				<tr>
+			<tr>
 				<td colspan="10" id = "pageLow" class="tc">
 					<c:if test = "${productVO.totalPage < productVO.pageNum }">
 						<c:set var = "pNum" value= "${productVO.totalPage }"/>
@@ -152,7 +131,7 @@
 					<c:if test = "${productVO.pageTotal[fn:length(productVO.pageTotal) - 1] eq productVO.totalPage}" >
 						<span class = "icon-angle-right"></span>
 					</c:if>
-					<c:if test = "${productVO.pageTotal[fn:length(adminVO.pageTotal) - 1] ne productVO.totalPage}" >
+					<c:if test = "${productVO.pageTotal[fn:length(productVO.pageTotal) - 1] ne productVO.totalPage}" >
 						<a href = "/admin/product?pageNum=${productVO.pageTotal[0] + fn:length(productVO.pageTotal) }" data-num = "${productVO.pageTotal[0] + fn:length(productVO.pageTotal) }" class = "icon-angle-right"></a>
 					</c:if>
 					<c:if test = "${productVO.pageTotal[fn:length(productVO.pageTotal) - 1] eq productVO.totalPage and productVO.totalPage eq pNum}" >

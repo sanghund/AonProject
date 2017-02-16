@@ -53,4 +53,58 @@ public class OrderDAOImpl implements OrderDAO{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("orderview", povo);
 	}
+
+	@Override
+	public int odrerRefundRequest(int o_num) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("odrerRefundRequest", o_num);
+	}
+
+	@Override
+	public List<Product_orderVO> adminOrderList(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("adminOrderList", povo);
+	}
+
+	@Override
+	public int adminOrderListCnt(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adminOrderListCnt", povo);
+	}
+
+	@Override
+	public List<Product_orderVO> orderPaymentList(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("orderPaymentList", povo);
+	}
+
+	@Override
+	public List<Product_orderVO> orderRefundList(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("orderRefundList", povo);
+	}
+
+	@Override
+	public int orderPaymentListCnt(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("orderPaymentListCnt", povo);
+	}
+
+	@Override
+	public int orderRefundListCnt(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("orderRefundListCnt", povo);
+	}
+
+	@Override
+	public int orderPaymentListY(int o_num) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("orderPaymentListY", o_num);
+	}
+
+	@Override
+	public int orderRefundListF(int o_num) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("orderRefundListF", o_num);
+	}
 }

@@ -57,7 +57,7 @@ public class OrderController{
 	private MemberService memberService;
 
 	@RequestMapping(value="/orderResult")
-	public String orderResult(Authentication auth, @ModelAttribute ProductVO povo, @ModelAttribute CategoryVO cvo, Model model, HttpServletRequest request, HttpServletResponse response){
+	public String orderResult(Authentication auth, @ModelAttribute MemberVO mvo, @ModelAttribute ProductVO povo, @ModelAttribute CategoryVO cvo, Model model, HttpServletRequest request, HttpServletResponse response){
 		logger.info("orderResult calling");
 
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
@@ -71,14 +71,14 @@ public class OrderController{
 		List<Product_orderVO> orderInfo = new ArrayList<Product_orderVO>();
 		List<ProductVO> productList = new ArrayList<ProductVO>();
 		
-		
+		//o_num check (when o_num="" > 1, when o_num!="" > o_num+1)
 		String checkOnum = orderService.checkOnum();
 		if(checkOnum == "" || checkOnum == null){
 			checkOnum = 1+"";
 		}else{
 			checkOnum = (Integer.parseInt(checkOnum)+1)+"";
 		}
-		//logger.info("aaaaa"+povo.getP_nos());
+		
 		for(int i=0; i<povo.getP_nos().size(); i++){
 			Product_orderVO ovo = new Product_orderVO();
 			
@@ -88,41 +88,109 @@ public class OrderController{
 			
 			ovo.setP_no(povo.getP_nos().get(i).toString());
 			ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
+			logger.info("count: "+ovo.getO_cnt());
 			ovo.setO_mode(povo.getO_mode().toString());
 			ovo.setO_confirm(povo.getO_confirm().toString());
 			ovo.setM_no(vo.getM_no());
-			ovo.setO_price(cal.getP_price()-(cal.getP_price() * (cal.getP_discount() / 100)) * ovo.getO_cnt());
+			ovo.setO_price(((cal.getP_price()-(cal.getP_price() * (cal.getP_discount() / 100))) * ovo.getO_cnt()));
+		
 			ovo.setO_num(checkOnum);
-			orderInfo.add(ovo);
-			int result = orderService.orderInsert(ovo);
-			logger.info("orderInser="+result);
 			
+			if(povo.getAddrChk().equals("y")){
+				ovo.setMa_no(memberInfo.getMa_no());
+			}else if(povo.getAddrChk().equals("n")){
+				memberInfo.setM_addr(mvo.getM_addr());
+				
+				//new address insert
+				memberService.addAddr(memberInfo);
+				
+				//call address no
+				memberInfo = memberService.memberAddAddr(memberInfo);
+				ovo.setMa_no(memberInfo.getMa_no());
+			}
+			
+			orderInfo.add(ovo);
+			orderService.orderInsert(ovo);
+			
+			//order result request data
 			cal.setO_cnt(ovo.getO_cnt());
 			cal.setO_mode(ovo.getO_mode());
 			cal.setO_confirm(ovo.getO_confirm());
 			cal.setO_num(ovo.getO_num());
 			cal.setM_no(ovo.getM_no());
+			cal.setMa_no(ovo.getMa_no());
+			
 			productList.add(cal);
 			
 			StockVO svo = new StockVO();
 			svo.setP_no(ovo.getP_no());
 			svo.setStock_cnt(ovo.getO_cnt());
-			int stockResult = stockService.stockOrder(svo);
-			logger.info("stockResult="+stockResult);
+			stockService.stockOrder(svo);
 		}
 		
+		
 		String mode = request.getParameter("mode");
-		System.out.println(mode);
 		if(mode != null){
 			if(mode.equals("cartOrder")){
+				Cookie cookie = null;
+				int time = 0;
 				Cookie[] cookies = request.getCookies();
 				if(cookies != null){
-					for(Cookie cookie : cookies){
-						if(cookie.getName().equals("cartList")){
-							cookie.setMaxAge(0);
-							response.addCookie(cookie);
+					for(Cookie cookiee : cookies){
+						if(cookiee.getName().equals("cartList")){
+							cookie = cookiee;
+							time = cookiee.getMaxAge();
 							break;
 						}
+					}
+				}
+				
+				if(cookie != null){
+					StringBuffer content = new StringBuffer("");
+					StringTokenizer contents = new StringTokenizer(cookie.getValue(), "%");
+				
+					boolean chk = false;
+					ArrayList<String> cList = new ArrayList<String>();
+					ArrayList<Integer> numbers = new ArrayList<Integer>(); 
+					while(contents.hasMoreTokens()){
+						String line = contents.nextToken();
+						cList.add(line);
+					}
+					if(cList.size() > 0){
+						for(int i = 0; i < orderInfo.size(); i++){
+							String line = (String) orderInfo.get(i).getP_no().toString().toUpperCase();
+							int k = 0;
+							for(String test : cList){
+								int cNum = test.indexOf(line);
+								if(cNum > -1){
+									chk = true;
+									numbers.add(k);
+									break;
+								}
+								k++;
+							}
+						}
+					}
+					if(chk){
+						for(int i = 0; i < cList.size(); i++){
+							boolean omg = false;
+							for(int num : numbers){
+								if(num == i){
+									omg = true;
+									break;
+								}
+							}
+							if(!omg){
+								content.append("%"+cList.get(i));
+							}
+						}
+						cookie = new Cookie("cartList", content.toString());
+						if(content.toString().equals("")){
+							cookie.setMaxAge(0);
+						}else{
+							cookie.setMaxAge(time);
+						}
+						response.addCookie(cookie);
 					}
 				}
 			}
@@ -143,8 +211,6 @@ public class OrderController{
 		System.out.println(mode);
 		if(mode != null) model.addAttribute("mode", mode);
 
-		
-		
 		MemberVO vo = (MemberVO) auth.getPrincipal();
 		MemberVO memberInfo = memberService.memberInfo(vo);
 		model.addAttribute("memberInfo", memberInfo);
@@ -166,9 +232,7 @@ public class OrderController{
 			
 			orderList.add(productService.productDetail(pvo));
 			orderList.get(i).setP_no(p_noSplit.substring(0,7));
-			//-------------------------------------------------------s
 			orderList.get(i).setO_cnt(povo.getO_cnts().get(i));
-			//-------------------------------------------------------e
 		}
 		
 		if(orderList.size()>0){
@@ -177,7 +241,6 @@ public class OrderController{
 				ovo.setP_no(orderList.get(i).getP_no().toString());
 			    ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
 			    orderInfo.add(ovo);
-			    System.out.println("---------------------\n"+ovo.toString() + "\n-------------------");
 			}
 			model.addAttribute("orderInfo", orderInfo);
 		}

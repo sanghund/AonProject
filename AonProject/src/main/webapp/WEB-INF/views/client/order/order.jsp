@@ -2,8 +2,8 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
 <link rel="stylesheet" type="text/css" href="/resources/include/css/font-awesome.min.css">
+
 <style>
 #aTitle {
 			font-size: 25px;
@@ -39,7 +39,7 @@
 	.orderImg {width:150px; height:150px; overflow:hidden; padding:0 1em; float:left;}
 	.orderImg img {width:150px;}
 	
-	.orderDesc {float:left;}
+	/* .orderDesc {float:left;} */
 	.orderDesc > ul {padding-top:0.1em;}
 	.orderDesc > ul li {margin:0.4em 0;}
 	.orderDesc > ul li:first-child {margin-bottom:0.8em;}
@@ -54,7 +54,7 @@
 	.w100 > div:nth-child(odd) {border-right:1px solid #ccc;}
 	.w100 > p {height:17px; text-align:center; border-top:1px solid #ccc; padding:10px; margin:0;}
 	
-	.deleteProduct{position:absolute; right:0px; margin-right:1em;}
+	.deleteProduct{position:absolute; right:0px; margin:-0.4em 0.4em;}
 	
 	.sizeAdd {width:1em; display:inline-block; padding:0 0.3em; border-right:1px solid #9a9a9a;}
 	.sizeAdd:last-child {border-right:0;}
@@ -62,13 +62,17 @@
 	.cntAdd:last-child {border-right:0;}
 	
 	.none {display:none;}
+	
+	.userInfo > div, .userDetail > div {margin-bottom:1em;}
+	.userInfo > div > label {width:90px; display:inline-block;}
+	.userDetail > div > label {width:90px; display:inline-block;}
+	.userDetail > div > .array {float:left; line-height:26px; width:95px;}
+	
+	#a_addr2 {width:270px;}
+	
+	input[type='text'] {height:22px;}
+	.btnContainer {width:100%; text-align:center;}
 </style>
-
-<script src = "/resources/include/js/daumAddr.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script>
-	var pnoCnt = 0;
-</script>
 
 <div class="content">
 	<div class="orderInfo">
@@ -195,65 +199,70 @@
 			<input type="text" name="m_email2" id="m_email2">
 		</div>
 	</div>
-	<!-- form -->
+	<!-- form1 -->
 	<form name="orderForm" id="orderForm">
 		<div class="hidden none">
 			<c:if test="${not empty mode }">
-				<input type = "hidden" id = "mode" name ="mode" value="${mode }">
+				<input type = "hidden" id = "mode" name ="mode" value="${mode}">
 			</c:if>
 			<input type="hidden" name="m_addr" id="m_addr">
 			<input type="hidden" name="o_mode" id="o_mode">
 			<input type="hidden" name="o_confirm" id="o_confirm">
 			<input type="hidden" name="o_price" id="o_price">
+			<input type="hidden" name="addrChk" id="addrChk">
 		</div>
-		</form>
-		<div class="userDetail">
-			<h4 class="bold">배송 정보</h4>
-			<div>
-				<input type="radio" name="userChk" class="userChk" value="y"><label>주문자와 동일</label>
-				<input type="radio" name="userChk" class="userChk" value="n"><label>새로입력</label>
-			</div>
-			<div>
-				<label for="m_name">주문자</label>
-				<input type="text" name="m_name" class="m_name" readonly>
-			</div>
-			<!-- address -->
-			<span class = "array" id = "forAddr">주소</span>
+	</form>
+	<!-- form1 -->
+	<div class="userDetail">
+		<h4 class="bold">배송 정보</h4>
+		<div>
+			<input type="radio" name="addrChkM" class="addrChkM" value="y" checked="checked"><label>주문자와 동일</label>
+			<input type="radio" name="addrChkM" class="addrChkM" value="n"><label>새로입력</label>
+		</div>
+		<div>
+			<label for="m_name">주문자</label>
+			<input type="text" name="m_name" class="m_name" readonly>
+		</div>
+		<!-- address -->
+		<div>
+			<label class = "array" id = "forAddr">주소</label>
 			<div id = "forAdress">
 				<span id = "daumApi">
-					<input type = "text" id = "m_addr1" name = "m_addr1" readonly="readonly">
-					<input type = "button" id = "go" name = "go" value = "주소 검색">
+					<input type = "text" id = "a_addr1" name = "a_addr1" readonly="readonly">
+					<input type = "button" id = "go" name = "go" class="btn btn-dark btn-sm" value = "주소 검색">
 					<span id = "addrChkMsg1"></span>
 				</span>
-				<input type = "text" width="500px" id = "m_addr2" name = "m_addr2" readonly="readonly">
-				<input type = "text" width="500px" id = "m_addr3" name = "m_addr3">
+				<input type = "text" id = "a_addr2" name = "a_addr2" readonly="readonly">
+				<input type = "text" id = "a_addr3" name = "a_addr3">
 				<span id = "addrChkMsg2"></span>
 			</div>
-			<!-- address -->
-			<div>
-				<label for="m_tel">연락처</label>
-				<input type="text" name="m_tel1" class="m_tel1" readonly>
-				<input type="text" name="m_tel2" class="m_tel2" readonly>
-				<input type="text" name="m_tel3" class="m_tel3" readonly>
-			</div>
 		</div>
-		<div class="creditInfo">
-			<h4 class="bold">결제방법 선택</h4>
-			<div>
-				<input type="radio" name="o_modes" class="o_modes" value="credit"><label>신용카드</label>
-				<input type="radio" name="o_modes" class="o_modes" value="banking"><label>계좌이체</label>
-				<input type="radio" name="o_modes" class="o_modes" value="noaccount"><label>무통장입금</label>
-			</div>
+		<!-- address -->
+		<div>
+			<label for="m_tel">연락처</label>
+			<input type="text" name="m_tel1" class="m_tel1" readonly>
+			<input type="text" name="m_tel2" class="m_tel2" readonly>
+			<input type="text" name="m_tel3" class="m_tel3" readonly>
 		</div>
-	<!-- form -->
+	</div>
+	<div class="creditInfo">
+		<h4 class="bold">결제방법 선택</h4>
+		<div>
+			<input type="radio" name="o_modes" class="o_modes" value="credit"><label>신용카드</label>
+			<input type="radio" name="o_modes" class="o_modes" value="banking"><label>계좌이체</label>
+			<input type="radio" name="o_modes" class="o_modes" value="noaccount"><label>무통장입금</label>
+		</div>
+	</div>
 	<div class="btnContainer">
-		<input type="button" name="order" id="order" value="주문">
-		<input type="button" name="cancel" id="cancel" value="취소">
+		<input type="button" name="order" id="order" class="btn btn-dark" value="주문">
+		<input type="button" name="cancel" id="cancel" class="btn btn-default" value="취소">
 	</div>
 </div>
 
-
+<script src = "/resources/include/js/daumAddr.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
+	var pnoCnt = 0;
 	var totalPrice = 0;
 	var discountPrice = 0;
 	var orderPrice = 0;
@@ -278,16 +287,6 @@
 			orderPriceCal()
 		});
 		
-		$(".sizeAdd").css("cursor", "pointer");
-		$(document).on("click", ".sizeAdd", function(){
-			var size = $(this).parent().find(".sizeAdd").length;
-			console.log(size);
-			var test = $(this).next()
-			test.remove();
-			$(this).remove();
-			orderPriceCal()
-		})
-		
 		//주문자 정보 입력
 		var telContainer = "${memberInfo.m_tel}";
 		var emailContainer = "${memberInfo.m_email}";
@@ -301,28 +300,42 @@
 		$(".m_tel3").val(tels[2]);
 		$("#m_email1").val(emails[0]);
 		$("#m_email2").val(emails[1]);
-		$("#m_addr1").val(addrs[0]);
-		$("#m_addr2").val(addrs[1]);
-		$("#m_addr3").val(addrs[2]);
+		$("#a_addr1").val(addrs[0]);
+		$("#a_addr2").val(addrs[1]);
+		$("#a_addr3").val(addrs[2]);
 		
-		$("input[name='userChk']").change(function(){
+		$("input[name='addrChkM']").change(function(){
 			if($(this).val() == 'y'){
-				$("#m_addr1").val(addrs[0]);
-				$("#m_addr2").val(addrs[1]);
-				$("#m_addr3").val(addrs[2]);
+				$("#a_addr1").val(addrs[0]);
+				$("#a_addr2").val(addrs[1]);
+				$("#a_addr3").val(addrs[2]);
 			}else if($(this).val() == 'n'){
-				$("#m_addr1").val("");
-				$("#m_addr2").val("");
-				$("#m_addr3").val("");
+				$("#a_addr1").val("");
+				$("#a_addr2").val("");
+				$("#a_addr3").val("");
 			}
 		});
 		orderPriceCal();
+		
+		//order cancel
+		$("#cancel").click(function(){
+			history.go(-1);
+		})
 	})
 
 	
 	//전송 버튼 이벤트
 	$(document).ready(function(){
 		$("#order").click(function(){
+			var productCnt = $(".preview").length;
+			if(productCnt < 1){
+				alert("주문 상품이 없습니다.");
+				return;
+			}
+			if($("input[name='o_modes']:checked").val() == "" || $("input[name='o_modes']:checked").val() == null){
+				alert("결제방법을 선택해 주세요");
+				return;
+			}
 			var info = false;
 			if(info == false){
 				makeHidden();
@@ -334,10 +347,13 @@
 					$("#o_confirm").val("N");
 				}
 				$("#o_price").val(orderPrice);
-				var addr = $("#m_addr1").val()+omg+$("#m_addr2").val()+omg+$("#m_addr3").val();
+				
+				var addr = $("#a_addr1").val()+omg+$("#a_addr2").val()+omg+$("#a_addr3").val();
+				var addrChk = $("input[name='addrChkM']:checked").val();
+				$("#addrChk").val(addrChk);
+				
 				$("#m_addr").val(addr);
 				info = true;
-				console.log(info);
 			}
 			
 			if(info == true){
@@ -355,7 +371,6 @@
 	//상품번호 수량 생성
 	function makeHidden(){
 		var orderListLength = "${fn:length(orderList)}";
-		console.log("orderListLength="+orderListLength);
 		
 		for(var i=0; i<orderListLength; i++){
 			var targetSpan = $(".orderContainer").eq(i).find("ul li").eq(2).find("span")
@@ -364,9 +379,7 @@
 			var len = targetSpan.length;
 			var arrPno = new Array();
 			var arrCnt = new Array();
-			
-			console.log("len"+len);
-			
+
 			for(var j=0; j<len; j++){
 				var p = targetSpanP.text();
 				var no = targetSpanNo.eq(j).text();
@@ -378,9 +391,7 @@
 				arrCnt = targetSpan.eq(j).text();
 				var inputCnt = $("<input type='hidden' name='o_cnts["+cnt+"]'>")
 				inputCnt.val(arrCnt);
-				console.log("cnt!!"+cnt);
 				cnt++;
-				console.log("cnt!!"+cnt);
 				$(".hidden").append(inputCnt).append(inputPno);
 			}
 		}
@@ -390,7 +401,6 @@
 	function orderPriceCal(){
 		//상품 등록 갯수 확인
 		itemCnt = $('.orderContainer').length;
-		console.log("itemCnt:"+itemCnt);
 		
 		for(var i=0; i<itemCnt; i++){
 			var itemPrice = $('.orderContainer').eq(i).find('.orderDesc ul > li').eq(4).find("span").text();
