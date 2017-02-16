@@ -31,14 +31,14 @@ nav {position:fixed; width:200px; height:100vh; padding:10px; display:inline-blo
 /* .contentContainer {height:600px; border:1px solid #f00} */
 
 /*푸터*/
-footer {height:200px; margin:0 10px 0 230px; background:#efefef; padding:1em 0; font-size:0.8rem; color:#777; clear:both;}
+footer {height:300px; margin:0 10px 0 230px; background:#efefef; padding:1em 0; font-size:0.8rem; color:#777; clear:both;}
 footer .borderR{border-right:1px solid #d8d5d5;}
 footer .borderL{border-left:1px solid #d8d5d5;}
   .footerContentLogo {width:20%; min-width:70px; height:100%; margin-right:10px;}
-    .footerLogo {position:relative; width:82%; min-width:70px; height:64px; top:30%; margin:0 auto;}
-  .footerContentInfo {width:34%; min-width:70px; height:50%; margin-right:10px;}
-  .footerContent {width:20%; min-width:70px; height:50%; margin-right:10px;}
-  .footerContentCompanyInfo {width:76%; min-width:70px; height:44%; margin-top:1%;}
+    .footerLogo {position:relative; width:82%; min-width:70px; height:64px; top:30%; margin : 20px 0 0 20px;}
+  .footerContentInfo {width:34%; min-width:70px; height:40%; margin-right:10px; margin-top: 50px;}
+  .footerContent {width:20%; min-width:70px; height:40%; margin-right:10px; margin-top: 40px;	}
+  .footerContentCompanyInfo {width:76%; min-width:70px; margin-top:1%;}
 footer h3 {font-size:16px; margin-bottom:0.6rem;}
   .floatL >  ul > li {margin:0.4em 0; line-height:1.2em;}
   .ellipsis { width: 100%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }

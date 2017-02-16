@@ -27,7 +27,6 @@ public class CategoryController {
 	/*카테고리 리스트 구현*/
 	@RequestMapping(value = "/category", method=RequestMethod.GET)
 	public String categoryList(@ModelAttribute CategoryVO cvo, Model model){
-		logger.info("categoryList 호출 성공!");
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		
 		model.addAttribute("categoryList", categoryList);
@@ -38,7 +37,6 @@ public class CategoryController {
 	@ResponseBody
 	@RequestMapping(value="/categoryInsert", method=RequestMethod.POST)
 	public String categoryInsert(@ModelAttribute CategoryVO cvo, HttpServletRequest request){
-		logger.info("categoryInsert호출 성공");
 		
 		int result = 0;
 		String success = "";
@@ -53,7 +51,6 @@ public class CategoryController {
 	@ResponseBody
 	@RequestMapping(value="/caUpdate", method=RequestMethod.POST)
 	public String caUpdate(@ModelAttribute CategoryVO cavo,HttpServletRequest request){
-		logger.info("caUpdate호출 성공");
 		
 		int result = 0;
 		String success = "";
@@ -68,7 +65,7 @@ public class CategoryController {
 	@ResponseBody
 	@RequestMapping(value="/caDelete", method=RequestMethod.POST)
 	public String caDelete(@ModelAttribute CategoryVO cavo, HttpServletRequest request){
-		System.out.println("삭제 시작");
+		
 		int result = 0;
 		result = categoryService.caDelete(cavo);
 		String success = "";

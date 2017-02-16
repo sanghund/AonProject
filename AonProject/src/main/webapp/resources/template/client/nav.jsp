@@ -29,9 +29,7 @@
 				<c:choose>
 					<c:when test="${not empty categoryList}">
 						<c:forEach var="categoryList" items="${categoryList}">
-							
 								<li><a href="/category?no=${categoryList.ca_no}">${categoryList.ca_name}</a></li>
-							
 						</c:forEach>
 					</c:when>
 				</c:choose>

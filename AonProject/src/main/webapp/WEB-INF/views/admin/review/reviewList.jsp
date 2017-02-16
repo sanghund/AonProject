@@ -51,7 +51,6 @@
 				if(!chkSubmit($("#re_title"),"제목을"))return;
 				else if(!chkSubmit($("#re_pwd"),"비밀번호를"))return;
 				else if(!chkSubmit($("#re_content"),"내용을"))return;
-				//else if(!chkFile($("#files"),"첨부파일 입력해서요.(이미지 파일만 등록가능합니다.)"))return; 
 				else{
 					$(wirteForm).ajaxForm({
 						url:"/review/reviewInsert",
@@ -302,12 +301,6 @@
 		});
 		//취소 
 		function reset(){
-			/* $(".update_content").hide();
-			$(".content").show();
-			$(".content_modify").show();
-			$(".ree_pwd").val("");
-			$("input[type='text']").val("");
-			$("#write_form textarea").val(""); */
 			$(".fieldset_insert").hide();
 			$(".fieldset_modify").hide();
 			$(".fieldset_insert .comment_inner .com_title").val("");
