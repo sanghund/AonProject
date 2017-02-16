@@ -39,7 +39,13 @@
 	    color: #777;
 	    text-decoration: none;
 		}	
-		
+	.warning{
+		float: right;
+		font-size: 13px;
+		color: red;
+		vertical-align: middle;
+		padding-top:8px;
+		}	
 /****************************/			
 	.qna_write{
 		margin-top: 15px;

@@ -33,11 +33,6 @@
 	           
 			}); 
 			
-			//비밀번호 영역 닫기
-			/* $(".fieldset").hide(); */
-			//comment구역 숨기기
-			
-			
 			//글 입력폼띄우기
 			$(".review_write").hide();
 			$(".write_button").click(function(){
@@ -63,7 +58,6 @@
 						}
 					}
 				});
-				
 			});
 			
 			//write버튼을 클릭했을 때 입력
@@ -136,21 +130,6 @@
 			$(".delete_mobtn").click(function(){
 				rollBack();
 			});
-			
-			
-			//첨부파일 이미지 보여주기 위한 속성 추가 #imgView
-			/* var img = $("<img>");
-			$(".imgView").hover(function(){
-				img.attr({
-					src:"/reviewUpload/",
-					width:"450px",
-					height:"200px"
-				});
-				img.addClass("imgViewData");
-				$(".imgArea").append(img);
-			}, function(){
-				$(".imgViewData").remove();
-			}); */
 			
 			//비밀번호 확인 버튼 클릭시 실질적인 처리 함수
 			$(document).on("click", ".pwdBtn", function(){
@@ -253,18 +232,6 @@
 			$("input[type='password']").val("");
 			$("#write_form textarea").val("");
 		}
-		
-		function readURL(input){
-			if(input.files && input.files[0]){
-				var reader = new FileReader();
-				
-				reader.onload = function(e){
-					 $('#blah').attr('src', e.target.result);
-				}
-				
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
 		 
 	</script>
 <div id="m_review">
@@ -278,12 +245,15 @@
 				ALL VIEW
 			</a>
 			<sec:authorize access="hasRole('user')">
-			
 				<div class="write_button">
 					WRITE
 					<input type="hidden" class="p_no" name="p_no" value="${param.no }">
 				</div>
-		
+			</sec:authorize>
+			<sec:authorize ifNotGranted="user">
+				<div class="warning">
+					<span>회원로그인 후 작성할 수 있습니다.</span>
+				</div>
 			</sec:authorize>
 		</div>
 		<sec:authorize access="hasRole('user')">
@@ -384,9 +354,6 @@
 											<c:if test="${review.re_chk == 1 }">
 												(<label style="color:red">답변완료</label>)
 											</c:if>
-											<c:if test="${review.re_chk ==0}">
-												(<label style="color:red">답변대기</label>)
-											</c:if>
 										</c:forEach>
 									</td>
 									<td class="name">${review.re_name }님</td>
@@ -436,6 +403,11 @@
 										</div>
 										<sec:authorize access="hasRole('user')">
 											<div class="content_modify">modify</div>
+										</sec:authorize>
+										<sec:authorize ifNotGranted="user">
+											<div class="warning_modify">
+												<span>회원로그인 후 수정할 수 있습니다.</span>
+											</div>
 										</sec:authorize>
 										
 										<%--==========비밀번호 확인 버튼 및 버튼 추가 시작======== --%>
@@ -546,7 +518,7 @@
 						</c:when>
 						<c:otherwise>
 							<tr>
-								<td colspan="4">
+								<td colspan="4" style="border-bottom: 1px solid #bdbdbd; border-top: 1px solid #bdbdbd; color: #777;">
 									<div class="tb-center">등록된 리뷰가 없습니다.</div>
 								</td>
 							</tr>

@@ -46,18 +46,7 @@ public class ReviewController2 {
 	//리스트 불러오기
 	@RequestMapping(value="/reviewuserList", method=RequestMethod.GET)
 	public String reviewList(Authentication auth,@ModelAttribute ReviewVO rvo, @ModelAttribute ReviewImgVO revo, @ModelAttribute RecommentVO comvo, Model model){
-		logger.info("reviewList호출 성공");
-		//member 선언
-		/*MemberVO mvo = (MemberVO) auth.getPrincipal();
-		rvo.setM_no(mvo.getM_no());*/
 		
-		/*rvo.setP_no(p_no);
-		
-		int chkP_no = p_no.indexOf(",");
-		if(chkP_no > -1) p_no = p_no.substring(0, chkP_no);
-		
-		System.out.println(p_no);*/
-		System.out.println("p_no="+rvo.getP_no());
 		int result = rvo.getP_no().indexOf("C");
 		if(result > -1){
 			rvo.setP_no(rvo.getP_no().substring(0, result));
@@ -71,18 +60,15 @@ public class ReviewController2 {
 		
 		//리스트 담기 (내용만)
 		List<ReviewVO> reviewuserList = reviewService.reviewuserList(rvo);
-		logger.info("reviewuserList="+reviewuserList);
 		model.addAttribute("reviewuserList", reviewuserList);
 		model.addAttribute("reviweVO",rvo);
 		
 		//리스트 담기(사진만)
 		List<ReviewImgVO> reviewImgList = reviewImgService.reviewImgList(revo);
-		logger.info("reviewImgList="+reviewImgList);
 		model.addAttribute("reviewImgList",reviewImgList);
 		
 		//이건 코멘트
 		List<RecommentVO> recommentList = recommentService.recommentList(comvo);
-		logger.info("recommentList="+recommentList);
 		model.addAttribute("recommentList",recommentList);
 		
 		return "client/userreviewList";
@@ -93,20 +79,16 @@ public class ReviewController2 {
 	@ResponseBody
 	@RequestMapping(value="/reviewuserInsert", method=RequestMethod.POST)
 	public String reviewInsert(Authentication auth ,@ModelAttribute ReviewVO rvo, @ModelAttribute ReviewImgVO revo, HttpServletRequest request) throws IllegalAccessException, IOException{
-		logger.info("reviewuserInsert호출 성공");
+		
 		MemberVO mvo = (MemberVO) auth.getPrincipal();
 		rvo.setM_no(mvo.getM_no());
-		/*int resultpno = rvo.getP_no().indexOf("C");
-		if(resultpno > -1){
-			rvo.setP_no(rvo.getP_no().substring(0, resultpno));
-		}*/
+		
 		String resultS = "";
 		mode = "insert";
 		int result = 0;
 		int reno = 0;
 		int selectAll = 0;
 		selectAll = reviewService.confirmMno(rvo);
-		System.out.println("selectAll = " + selectAll);
 		
 		if(selectAll!=0){
 			resultS = "fail";
@@ -114,21 +96,14 @@ public class ReviewController2 {
 		}else if(selectAll == 0){
 			reno = reviewService.selectReno();
 			rvo.setRe_no(reno);//reno에 review테이블의 re_no가 담겨있다.
-			int selectreno = rvo.getRe_no();
-			logger.info("selectreno="+selectreno);
-			
-			System.out.println(rvo.toString());
+
 			result = reviewService.reviewUserInsert(rvo); //글이 서버에 등록되면 1이 된다.
-			logger.info("result="+result);
 			int temp = rvo.getRe_no(); //temp에 re_no값이 담겨있다.
-			logger.info("temp="+temp);
-			
 			revo.setRe_no(temp);
 
 			if(result == 1){//글이 입력이 되었을 때
 				reviewService.InsertID(rvo);
 				List<MultipartFile>	files = revo.getFiles();
-				logger.info("files="+files);
 					
 				if(files != null && files.size() > 0){
 					for(MultipartFile file : files){
@@ -149,17 +124,14 @@ public class ReviewController2 {
 	@ResponseBody
 	@RequestMapping(value="/reviewUserInsert", method=RequestMethod.POST)
 	public String reviewUserInsert(Authentication auth, @ModelAttribute ReviewVO rvo, HttpServletRequest request){
-		logger.info("reviewUserInsert호출 성공");
+		
 		MemberVO mvo = (MemberVO) auth.getPrincipal();
 		rvo.setM_no(mvo.getM_no());
-		/*int resultpno = rvo.getP_no().indexOf("C");
-		if(resultpno > -1){
-			rvo.setP_no(rvo.getP_no().substring(0, resultpno));
-		}*/
+		
 		String resultS = "";
 		int selectAll = 0;
 		selectAll = reviewService.confirmMno(rvo);
-		System.out.println("selectAll = " + selectAll);
+
 		mode = "insert";
 		int result = 0;
 		int reno = 0;
@@ -169,17 +141,13 @@ public class ReviewController2 {
 		}else if(selectAll == 0){
 			reno = reviewService.selectReno();
 			rvo.setRe_no(reno);//reno에 review테이블의 re_no가 담겨있다.
-			int selectreno = rvo.getRe_no();
-			logger.info("selectreno="+selectreno);
 			
 			result = reviewService.reviewUserInsert(rvo); //글이 서버에 등록되면 1이 된다.
-			logger.info("result="+result);
 
 			if(result == 1){//글이 입력이 되었을 때
 				reviewService.InsertID(rvo);
-				logger.info(result);
 			}else{
-				logger.info(result);
+				
 			}
 			
 			resultS = "success";
@@ -215,7 +183,7 @@ public class ReviewController2 {
 	//비밀번호 확인
 	@RequestMapping(value="/reviewConfirm", method=RequestMethod.POST)
 	public ResponseEntity<Integer> pwdConfirm(@ModelAttribute ReviewVO rvo){
-		logger.info("pwdConfirm 호출 성공");
+		
 		ResponseEntity<Integer> entity = null;
 		int result = 0;
 		try{
@@ -237,12 +205,10 @@ public class ReviewController2 {
 	@RequestMapping(value="/reviewuserUpdate", method=RequestMethod.POST)
 	public String reviewUpdate(@ModelAttribute ReviewVO rvo,@ModelAttribute ReviewImgVO revo, HttpServletRequest request) throws IllegalStateException, IOException{
 		mode = "update";
-		logger.info("reviewUpdate호출 성공");
 		int re_no = revo.getRe_no();
 		
 		int result = 0;
 		result = reviewService.reviewUpdate(rvo);
-		logger.info("result="+result);
 		
 		if(result == 1){
 			List<MultipartFile> files = revo.getFiles();
@@ -277,12 +243,10 @@ public class ReviewController2 {
 		
 		int result = 0;
 		result = reviewService.reviewUserUpdate(rvo);
-		logger.info("result="+result);
-		
 		if(result == 1){
-			logger.info(result);
+			
 		}else{
-			logger.info(result);
+			
 		}
 		
 		String resultData =  "success";
@@ -301,7 +265,7 @@ public class ReviewController2 {
 		confirm = reviewService.reviewOrderConfirm(rvo); //상품 주문을 했는지 안했는지 검사
 		int reCon = 0;
 		reCon = reviewService.reviewConfirm(rvo);//상품주문을 했지만 리뷰를 썻는지 안썻는지 검사
-		System.out.println("reCon = " + reCon);
+		
 		if(Integer.parseInt(confirm) ==0){
 			resultS = "fail";
 		}else if(Integer.parseInt(confirm) > 0){

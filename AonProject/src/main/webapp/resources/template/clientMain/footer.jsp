@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<footer>
+<footer style="font-size: 0.8rem;">
   <div class="footerContentLogo floatL">
     <div class="footerLogo alignC">
       <a href="#" class="brandLogo"><span class="bold">AON</span><br>PROJECT</a>
@@ -33,8 +33,8 @@
   </div>
   <div class="footerContentCompanyInfo floatL">
       <ul>
-        <li>상호 : (주)AON | 대표 : 하병철 | 사업자등록번호 : 200-80-50008</li>
-        <li>사업장소재지 : 서울특별시 영등포구 당산6가 57-39번지 AON 사업부 | TEL : AON (1588-1010) | FAX : 070-0707-0707 | 정보책임자 : 하병철</li>
+        <li>상호 : (주)AON | 대표 : 박기두 | 사업자등록번호 : 200-80-50008</li>
+        <li>사업장소재지 : 서울특별시 영등포구 당산6가 57-39번지 AON 사업부 | TEL : AON (1588-1010) | FAX : 070-0707-0707 | 정보책임자 : 박기두</li>
         <li>Copyright(c) by <a href="">(주)AON</a> .All rights reserved.</li>
       </ul>
   </div>

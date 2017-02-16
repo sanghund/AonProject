@@ -173,6 +173,11 @@
 				WRITE
 			</div>
 		</sec:authorize>
+		<sec:authorize ifNotGranted="user">
+				<div class="warning">
+					<span>회원로그인 후 작성할 수 있습니다.</span>
+				</div>
+			</sec:authorize>
 	</div>
 		<!-- write작성 폼 -->
 		<div class="qna_write">
