@@ -19,6 +19,8 @@ public class mInfoServiceImpl implements mInfoService {
 	@Autowired
 	private mInfoDAO mInfoDAO;
 	
+	
+	
 	// member list
 	@Override
 	public List<mInfoVO> mInfoList(mInfoVO mvo) {
@@ -37,13 +39,29 @@ public class mInfoServiceImpl implements mInfoService {
 		return mDetail;
 		}
 	
-	// memeber delete
+	// user address
 	@Override
-	public int mInfoDelete(int m_no) {
-		int result = 0;
-		result = mInfoDAO.mInfoDelete(m_no);
-		
-		return result;
+	public int addAddr(mInfoVO mvo) {
+		// TODO Auto-generated method stub
+		return mInfoDAO.addAddr(mvo);
+	}
+
+	@Override
+	public int memberExpire(mInfoVO mvo) {
+		// TODO Auto-generated method stub
+		return mInfoDAO.memberExpire(mvo);
+	}
+
+	@Override
+	public int memberGoodBye(mInfoVO mvo) {
+		// TODO Auto-generated method stub
+		return mInfoDAO.memberGoodBye(mvo);
+	}
+
+	@Override
+	public int memberAddrGoodBye(mInfoVO mvo) {
+		// TODO Auto-generated method stub
+		return mInfoDAO.memberAddrGoodBye(mvo);
 	}
 
 }

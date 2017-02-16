@@ -14,15 +14,12 @@
     				<img id="bar" src="/resources/include/image/about/bar.png">
     			</div>
     			<div class="Name_concept">
-    				<span class="concept_span">
-    					<p style="font-size:25px;">
+    				<span class="concept_span" style="font-size:25px;">
     						B R A N D　 C O N C E P T
-    					</p>
     				</span>
     			</div>
     			<div class="content_concept">
     				<span class="concept_content">
-    					<p>
     						AON는 심풀, 미니멀, 컬러감이 있는 것들에서 영감을 <br />
 							받으며, 시즌마다 재미있는 요소를 더한 위트있는 <br />
 							컨템포러리 웨어를 제안합니다.
@@ -31,7 +28,6 @@
 							일상생활, 일 그리고 패션에 대해 <br />
 							자기만의 스타일을 가지고 있는 사람들과 함께 ,<br />
 							오늘도 모든것을 판매합니다.
-    					</p>
     				</span>
     			</div>
     		</div>
@@ -42,18 +38,14 @@
     				<img id="bar" src="/resources/include/image/about/bar.png">
     			</div>
     			<div class="Name_slogan">
-    				<span class="slogan_span">
-    					<p style="font-size:25px;">
+    				<span class="slogan_span" style="font-size:25px;">
     						B R A N D　 S L O G A N
-    					</p>
     				</span>
     				<div class="content_slogan">
 	    				<span class="slogan_content">
-	    					<p>
 	    						WHATEVER YOU WANT  <br />
 								AON에서는 당신이 원하는 무엇이든  <br />
 								당신의 곁으로 다가가려 합니다.
-	    					</p>
 	    				</span>
 	    			</div>
     			</div>
@@ -65,14 +57,11 @@
     				<img id="bar" src="/resources/include/image/about/bar.png">
     			</div>
     			<div class="Name_story">
-    				<span class="story_span">
-    					<p style="font-size:25px;">
+    				<span class="story_span" style="font-size:25px;"> 
     						B R A N D　 S T O R Y
-    					</p>
     				</span>
     				<div class="content_story">
 	    				<span class="story_content">
-	    					<p>
 	    						준비하지 못한채로 하루를 맞이하는 요즘,   <br />
 								당신의 열정과 용기를 마음에 품은 당신을 위해  <br />
 								AON은 그 마음을 드러낼 수 있는 의복을 만들고 싶었습니다.<br />
@@ -80,7 +69,6 @@
 								<br />
 								베이직하지만 단순하지 않고, 특별하지만 별나지 않은 디자인으로<br />
 								당신의 마음을 응원합니다.
-	    					</p>
 	    				</span>
 	    			</div>
     			</div>

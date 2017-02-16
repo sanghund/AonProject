@@ -325,11 +325,18 @@
                                   
                                     <td>${mInfo.m_no }</td>
                                     <td class="goMDetail">${mInfo.m_id}</td>
-                                    <td class="date">${mInfo.m_name }</td>
-                                    <td class="name">${mInfo.m_gender }</td>
-                                    <td class="name">${mInfo.m_tel }</td>
-                                    <td class="name">${mInfo.m_email }</td>
-                                    <td class="name">${mInfo.m_leave }</td>
+                                    <td class="name">${mInfo.m_name }</td>
+                                    <c:forEach items="${mInfo.m_gender }">
+									  <c:if test="${mInfo.m_gender == 'm' }">
+									    <td class="gender">남자</td>
+									  </c:if>
+									  <c:if test="${mInfo.m_gender == 'f' }">
+										<td class="gender">여자</td>
+									  </c:if>
+								    </c:forEach>
+                                    <td class="tel">${mInfo.m_tel }</td>
+                                    <td class="email">${mInfo.m_email }</td>
+                                    <td class="leave">${mInfo.m_addr }</td>
                                   </tr>
                                 </c:forEach>
                               </c:when>

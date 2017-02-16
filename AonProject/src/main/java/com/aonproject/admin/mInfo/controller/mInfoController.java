@@ -1,12 +1,12 @@
 package com.aonproject.admin.mInfo.controller;
 
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.aonproject.admin.mInfo.vo.mInfoVO;
 import com.aonproject.client.mInfo.service.MemberService;
 import com.aonproject.client.mInfo.vo.MemberVO;
@@ -47,8 +49,27 @@ public class mInfoController {
 		
 		//�럹�씠吏� �꽭�똿
 		Paging.setPage(mvo);
-		
 		List<mInfoVO> mInfoList = mInfoService.mInfoList(mvo);
+		
+		/*String addrs[] = mvo.getM_addr().toString().split("#!@@!#");
+		mvo.setM_addr(addrs[1]);*/
+		
+		for(int i=0; i<mInfoList.size(); i++){
+			String addrs = mInfoList.get(i).getM_addr();
+			
+			/*String remakeAddr = "";
+			remakeAddr = addrs.replace("#!@@!#", " ");*/
+			
+			String addr[] = addrs.split("#!@@!#");
+			String remakeAddr = "";
+			for(int j=0; j<addr.length; j++){
+				remakeAddr += addr[j]+" ";
+			}
+
+			logger.info("result : "+remakeAddr);
+			mInfoList.get(i).setM_addr(remakeAddr);
+		}
+		logger.info("레코드 수 = "+mInfoList.size());
 		
 		Map<String, Integer> map = memberService.memberSexDistribution();
 		MakeChartGraph.memberSexDistribution(request, map);
@@ -78,27 +99,72 @@ public class mInfoController {
 		
 		mInfoVO mDetail = mInfoService.mDetailForm(mvo);
 		
-		model.addAttribute("mDetail", mDetail);
-		String url = "admin/mInfo/mDetailForm";
+			String addrs = mDetail.getM_addr();
+			
+			/*String remakeAddr = "";
+			remakeAddr = addrs.replace("#!@@!#", " ");*/
+			
+			String addr[] = addrs.split("#!@@!#");
+			String remakeAddr = "";
+			for(int j=0; j<addr.length; j++){
+				remakeAddr += addr[j]+" ";
+			}
+
+			logger.info("result : "+remakeAddr);
+			mDetail.setM_addr(remakeAddr);
 		
-		return url;
+		    model.addAttribute("mDetail", mDetail);
+		    String url = "admin/mInfo/mDetailForm";
+		
+		    return url;
 	}
-	// member delete
+	
+	@ResponseBody
 	@RequestMapping(value="/mInfoDelete", method=RequestMethod.POST)
-	public String mInfoDelete(@ModelAttribute mInfoVO mvo, Model model) {
+	public String memberExpire(@ModelAttribute mInfoVO mvo, Model model){
 		logger.info("mInfoDelete calling success");
 		
-		int result = 0;
 		String url = "";
 		
-		logger.info("m_no="+ mvo.getM_no());
+		logger.info("m_no="+mvo.getM_no());
 		
-		result = mInfoService.mInfoDelete(mvo.getM_no());
+		String result2 = "";
 		
-		if(result == 1){
-			url = "/admin/noticeList";
-		}
+			mvo.setM_no(mvo.getM_no());
+			mvo = mInfoService.mDetailForm(mvo);
+			
+			int min2 = mInfoService.memberExpire(mvo);
+			
+			if(min2 == 1) {
+				mvo.setM_leave("true");
+				int a = mInfoService.memberGoodBye(mvo);
+				int b = mInfoService.memberAddrGoodBye(mvo);
+				if(a == 1 && b == 1) {
+					result2 = "success";
+				}
+				return result2;
+			}
+		
 		return "redirect:"+url;
+		
+		
+		
+		/*String result = "";
+		int gogo = policyService.policyAgrDenial(vo);
+		if(gogo == 1){
+			MemberVO mvo = new MemberVO();
+			mvo.setM_no(vo.getM_no());
+			mvo = memberService.memberInfo(mvo);
+			int gogo2 = memberService.memberExpire(mvo);
+			if(gogo2 == 1){
+				mvo.setM_leave("true");
+				int a = memberService.memberGoodBye(mvo);
+				int b = memberService.memberAddrGoodBye(mvo);
+				if(a == 1 && b == 1){
+					result = "success";
+				}
+			}
+		}
+		return result; */
 	}
-
 }

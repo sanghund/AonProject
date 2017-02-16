@@ -17,6 +17,7 @@
 		</where>
 	</sql> -->
 	
+	<!-- 리뷰 관리자 화면 리스트  -->
 	<select id="reviewList" resultType="review" parameterType="review">
 		select re_no, re_title, re_content, re_date, re_chk, m_no, p_no, re_name, rnum from 
 			(select re_no, re_title, re_content, re_date, re_chk, m_no, p_no, re_name, rownum as rnum from 
@@ -26,23 +27,29 @@
 			where rownum <![CDATA[<=]]> #{end_data} order by re_chk asc) 
 			where rnum <![CDATA[>=]]> #{start_data}
 	</select>
+	
+	<!-- 리뷰 사용자 화면 리스트 -->
 	<select id="reviewuserList" resultType="review" parameterType="review">
 		select re_no, re_title, re_content, to_char(re_date, 'YYYY-MM-DD HH24:MI:SS') as re_date, 
 				re_chk, m_no, p_no, re_name, o_no from review where p_no like #{p_no}||'%'
 	</select>
 	
+	<!-- 리뷰 시퀀스 번호 중복 확인 -->
 	<select id="selectReno" resultType="int">
 		select review_seq.nextval from dual
 	</select>
 	
+	<!-- 리뷰 시퀀스 번호를 얻기위해서 쓰는 것 -->
 	<select id="reviewSelectNo" resultType="int">
 		select re_no from review where re_no = #{re_no}
 	</select>
 	
+	<!-- 회원번호와 상품번호를 가져와서 리뷰가 있는지 없는지 확인 -->
 	<select id="confirmMno" resultType="int">
 		select count(re_no) from review where m_no = #{m_no} and p_no like #{p_no}||'%'
 	</select>
 	
+	<!-- 리뷰 글쓰기(중복있어서 확인가능) -->
 	<insert id="reviewInsert" parameterType="review">		
 		<selectKey order="BEFORE" keyProperty="p_no" >
 			select p_no from product_order inner join (select max(o_no) o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%') tt on tt.o_no = product_order.o_no 
@@ -70,24 +77,29 @@
 		where re_no = #{re_no}
 	</update>
 	
+	<!-- 리뷰 삭제 -->
 	<delete id="reviewDelete" parameterType="int">
 		delete from review where re_no=#{re_no}
 	</delete>
 	
+	<!-- 리뷰 커멘트 달리면 1로 바뀜 -->
 	<update id="rechkUpdate" parameterType="review">
 		update review set 
 			re_chk = 1
 		where re_no = #{re_no}
 	</update>
 	
+	<!-- 리뷰 모든 카운트 -->
 	<select id="cntList" resultType="int">
 		select count(*) from review
 	</select>
 	
+	<!-- 회원 번호 얻기 위해서 쓰는 쿼리 -->
 	<select id="mnoList" resultType="review">
 		select m_no from member
 	</select>
 	
+	<!-- 리뷰 등록 -->
 	<insert id="reviewUserInsert" parameterType="review">
 		<selectKey order="BEFORE" keyProperty="p_no" resultType="java.lang.String">
 			select p_no from product_order inner join (select max(o_no) o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%') tt on tt.o_no = product_order.o_no 
@@ -98,6 +110,7 @@
 			, (select * from (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' order by o_no asc) where rownum = 1))
 	</insert>
 	
+	<!-- 리뷰 번호로 리뷰 내용 업뎃 -->
 	<update id="reviewUserUpdate" parameterType="review">
 		update review set
 			re_content = #{re_content},
@@ -105,10 +118,12 @@
 		where re_no = #{re_no}
 	</update>
 	
+	<!-- 리뷰에서 작성자 아이디 얻기 위한 쿼리 -->
 	<update id="InsertID" parameterType="review">
 		update review set re_name = (select m_id from member where m_no = #{m_no}) 
 	</update>
 	
+	<!-- 주문했는지 안했는지 조회하기 위해서 씀 -->
 	<select id="reviewOrderConfirm" parameterType="review" resultType="String">
 		<!-- select o_no from 
 			(select p1.o_no from product_order p1, 
@@ -118,6 +133,7 @@
 		select count(o_no) from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' and o_confirm = 'Y'
 	</select>
 	
+	<!--  리뷰를 작성했는지 안했는지 판단 -->
 	<select id="reviewConfirm" resultType="int">
 		select count(re_no) from review where m_no = #{m_no} and p_no like #{p_no}||'%' and o_no = ( select * from (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' order by o_no asc) where rownum = 1)
 	</select>
