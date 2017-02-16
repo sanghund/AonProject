@@ -402,6 +402,8 @@
 		//상품 등록 갯수 확인
 		itemCnt = $('.orderContainer').length;
 		
+		console.log("itemCnt: "+itemCnt);
+		
 		for(var i=0; i<itemCnt; i++){
 			var itemPrice = $('.orderContainer').eq(i).find('.orderDesc ul > li').eq(4).find("span").text();
 			var itemDiscount = $('.orderContainer').eq(i).find('.orderDesc ul > li').eq(5).find("span").text();
@@ -410,6 +412,8 @@
 			for(var j=0; j<productCnt; j++){
 				cntSum += ($('.orderContainer').eq(i).find(".cntAdd").eq(j).text())*1;
 			}
+			console.log("cntSum: "+cntSum);
+			
 			totalPrice += parseInt(itemPrice) * cntSum;
 			discountPrice += ((parseInt(itemPrice) * parseInt(itemDiscount) / 100) * cntSum);
 		} 
