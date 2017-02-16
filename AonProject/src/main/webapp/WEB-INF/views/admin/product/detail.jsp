@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
+<style>
+	.hidden {display:hidden;}
+	.btnContainer {margin-top:1em;}
+</style>
 <script type="text/javascript" src="/resources/include/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
 <script type="text/javascript" src="/resources/include/js/jquery.form.js"></script>
@@ -20,6 +23,7 @@
 			//$("#updateBtn").attr({"id":"update", "value":"수정완료"});
 			var updateExecute = $("<input>");
 			updateExecute.attr({"type":"button", "id":"update", "value":"수정완료"});
+			updateExecute.addClass("btn btn-warning");
 			updateExecute.css("margin-right","6px");
 			$("#deleteBtn").before(updateExecute);
 			$("#updateBtn").hide();
@@ -76,10 +80,11 @@
 		//파일명 hover시 이미지 확인
 		var img = $("<img>");
 		$(".imgThumb").hover(function(){
+			var targetRoute = $(this).parent().find(".imgRoute").html();
 			var target = $(this).html();
 			$(this).css({"color" : "#ff0000"});
 			img.attr({
-				"src" 		: "/productUpload/"+target,
+				"src" 		: "/"+targetRoute+"/"+target,
 				"display" 	: "block",
 				"width" 	: "300px"
 			});
@@ -93,11 +98,11 @@
 	//파일첨부 추가 버튼 생성
 	function addFile(){
 		var fileInput = $("<input>");
-		fileInput.attr({"type":"file", "name":"files["+(++fileCnt)+"]", "class":"file"});
+		fileInput.attr({"type":"file", "name":"files["+(++fileCnt)+"]", "class":"file btn btn-default btn-xs"});
 		var fileAddBtn = $("<input>")
-		fileAddBtn.attr({"type":"button", "class":"addFileBtn", "value":"+"});
+		fileAddBtn.attr({"type":"button", "class":"addFileBtn btn btn-primary btn-xs", "value":"+"});
 		var fileRemoveBtn = $("<input>")
-		fileRemoveBtn.attr({"type":"button", "class":"removeFileBtn", "value":"-"});
+		fileRemoveBtn.attr({"type":"button", "class":"removeFileBtn btn btn-danger btn-xs", "value":"-"});
 		var fileContainer = $("<div>");
 		fileContainer.append(fileInput).append(fileAddBtn).append(fileRemoveBtn);
 		$(".fileUploadContainer").append(fileContainer);
@@ -274,19 +279,17 @@
 						<td>상품이미지</td>
 						<td>
 							<div class="fileUploadContainer">
-								<%-- <input type="file" class="file" name="file" value="${uploadList.pi_file}"><input type="button" class="addFileBtn" value="+"> --%>
 								<c:choose>
 									<c:when test="${not empty uploadList}">
 										<c:forEach var="uploadList" items="${uploadList}">
-											<%-- <img src="/productUpload/${uploadList.pi_file}" width="300" > --%>
 											<div>
-												imgFile :<span class="imgThumb">${uploadList.pi_file}</span>
+												imgFile :<span class="imgRoute hidden">${uploadList.pi_route}</span><span class="imgThumb">${uploadList.pi_file}</span>
 												<div class="imgThumbContainer"></div>
 											</div>
 										</c:forEach>
 									</c:when>
 								</c:choose>
-								<input type="file" class="file" name="files[0]" multiple="multiple"><input type="button" class="addFileBtn" value="+">
+								<input type="file" class="file btn btn-default btn-xs" name="files[0]" multiple="multiple"><input type="button" class="addFileBtn btn btn-primary btn-xs" value="+">
 							</div>
 						</td>
 					</tr>
@@ -300,7 +303,7 @@
 	</div>
 	<!-- 상품 등록, 수정, 삭제 제어 버튼 -->
 	<div class="btnContainer">
-		<input type="button" id="updateBtn" value="상품수정">
-		<input type="button" id="deleteBtn" value="상품삭제">
-		<input type="button" id="listBtn" value="목록">
+		<input type="button" id="updateBtn" class="btn btn-success" value="상품수정">
+		<input type="button" id="deleteBtn" class="btn btn-danger" value="상품삭제">
+		<input type="button" id="listBtn" class="btn btn-primary" value="목록">
 	</div>

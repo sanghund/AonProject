@@ -131,13 +131,26 @@ public class ReviewServiceImpl implements ReviewService{
 		return result;
 	}
 	@Override
+	public String reviewOrderConfirm(ReviewVO rvo) {
+		String result = "";
+		result = reviewDAO.reviewOrderConfirm(rvo);
+		return result;
+	}
+	 
+	@Override
+	public int reviewConfirm(ReviewVO rvo){
+		//회원이 상품을 구매 했지만 리뷰를 썻는지 안썻는지 확인하는 과정
+		int result = 0;
+		result = reviewDAO.reviewConfirm(rvo);
+		return result;
+	}
+	
+	@Override
 	public List<ReviewVO> myReview(MemberVO vo) {
-		// TODO Auto-generated method stub
 		return reviewDAO.myReview(vo);
 	}
 	@Override
 	public int myReviewCnt(MemberVO vo) {
-		// TODO Auto-generated method stub
 		return reviewDAO.myReviewCnt(vo);
 	}
 

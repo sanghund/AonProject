@@ -41,7 +41,15 @@
 	.caList table td{
 		padding:10px 0 10px 0;
 		}
-	
+	.ca_name1{
+		float:left;
+		width:33%;
+		padding-top:6px;
+		}
+	.caDeleteBtn, .caUpdateBtn{
+		width:50px;
+		height: 30px;
+		}
 	
 	
 	

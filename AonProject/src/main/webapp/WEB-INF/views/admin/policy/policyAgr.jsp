@@ -49,6 +49,13 @@
 	.textCenter{
 		text-align: center;
 	}
+	#excelGo{
+		text-align: center;
+	}
+	#excel{
+		margin-bottom: 15px;
+		font-size: 25px;
+	}
 </style>
 <div class = "main">
 	<h2 id = "pTitle">약관 동의</h2>
@@ -149,7 +156,7 @@
 								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] eq adminVO.totalPage and adminVO.totalPage ne pNum}" >
 									<a href = "/admin/policyAgr?pageNum=${adminVO.totalPage }" data-num = "${adminVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
-								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] ne admin VO.totalPage}" >
+								<c:if test = "${adminVO.pageTotal[fn:length(adminVO.pageTotal) - 1] ne adminVO.totalPage}" >
 									<a href = "/admin/policyAgr?pageNum=${adminVO.totalPage }" data-num = "${adminVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
 							</td>
@@ -273,15 +280,15 @@
 									<span class = "icon-angle-right"></span>
 								</c:if>
 								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne memberVO.totalPage}" >
-									<a href = "/admin/policyAgr?pageNum=${adminVO.pageTotal[0] + fn:length(adminVO.pageTotal) }" data-num = "${adminVO.pageTotal[0] + fn:length(adminVO.pageTotal) }" class = "icon-angle-right"></a>
+									<a href = "/admin/policyAgr?pageNum=${memberVO.pageTotal[0] + fn:length(memberVO.pageTotal) }" data-num = "${memberVO.pageTotal[0] + fn:length(memberVO.pageTotal) }" class = "icon-angle-right"></a>
 								</c:if>
-								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq pNum}" >
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq pNum2}" >
 									<span class = "icon-angle-double-right"></span>
 								</c:if>
-								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne pNum}" >
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] eq memberVO.totalPage and memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne pNum2}" >
 									<a href = "/admin/policyAgr?pageNum=${memberVO.totalPage }" data-num = "${memberVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
-								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne member.totalPage}" >
+								<c:if test = "${memberVO.pageTotal[fn:length(memberVO.pageTotal) - 1] ne memberVO.totalPage}" >
 									<a href = "/admin/policyAgr?pageNum=${memberVO.totalPage }" data-num = "${memberVO.totalPage }" class = "icon-angle-double-right"></a>
 								</c:if>
 							</td>

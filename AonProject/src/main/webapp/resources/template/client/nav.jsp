@@ -22,14 +22,16 @@
 		</div>
 		<div class="left_category">
 			<ul>
-				<li><a href="#">ABOUT</a></li>
+				<li><a href="/client/about">ABOUT</a></li>
 				
 				<li>&nbsp;</li>
 				<li><a href="productPage.do" style="font-weight: bold; color:black">SHOP</a></li>
 				<c:choose>
 					<c:when test="${not empty categoryList}">
-						<c:forEach var="categoryList"  begin="1" end="4"  items="${categoryList}">
-							<li><a href="/category?no=${categoryList.ca_no}">${categoryList.ca_name}</a></li>
+						<c:forEach var="categoryList" items="${categoryList}">
+							
+								<li><a href="/category?no=${categoryList.ca_no}">${categoryList.ca_name}</a></li>
+							
 						</c:forEach>
 					</c:when>
 				</c:choose>

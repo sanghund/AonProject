@@ -19,4 +19,8 @@ public interface ProductService {
 	
 	public List<ProductVO> productForCategory(ProductVO pvo);
 	
+	
+	public ProductVO productDetailSupport(String p_no);
+	
+	public int productCnt(ProductVO pvo);
 }

@@ -40,6 +40,8 @@ public class QnauserController {
 	public String qnaList(@ModelAttribute QnaVO qvo, @ModelAttribute CommentQnAVO cqvo,Model model){
 		logger.info("qnaList호출 성공");
 		
+		System.out.println(qvo.getP_no());
+		
 		int cnt = 0;
 		/*cnt = qnaService.cntList();*/
 		qvo.setCountList(5);
@@ -68,18 +70,21 @@ public class QnauserController {
 		int result = 0;
 		int success=0;
 		result = qnaService.qnaUserInsert(qvo);
-		if(result ==1){
-			success = qnaService.qnaConfirm(qvo);
+		System.out.println("result값 = "+result);
+		if(result ==1){ //글입력이 성공했을때
+			qnaService.qnaQname(qvo);  //이름 입력 성공
+			
+			success = qnaService.qnaConfirm(qvo); //관리자가 코멘트를 달면 1 안달면 0
 			if(success == 1){
-				qnaService.qnaQname(qvo);
+				logger.info("관리자 코멘트 성공");
 			}
-			logger.info("qnaUserInsert성공");
 		}
 		String end = "success";
 		
 		return end;
 	}
 	
+	//비밀번호 확인
 	@RequestMapping(value="/qnaPwdConfirm", method=RequestMethod.POST)
 	public ResponseEntity<Integer> qnaPwdConfirm(@ModelAttribute QnaVO qvo){
 		logger.info("qnaConfirm호출 확인");

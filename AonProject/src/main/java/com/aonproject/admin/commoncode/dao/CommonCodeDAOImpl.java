@@ -18,13 +18,13 @@ public class CommonCodeDAOImpl implements CommonCodeDAO {
 	@Autowired
 	private SqlSession session;
 	
-	// 공통 코드 리스트 구현
+	// 怨듯넻 肄붾뱶 由ъ뒪�듃 援ы쁽
 	@Override
 	public List<CommonCodeVO> CommonCodeList(CommonCodeVO cvo) {
-		return session.selectList("commonCodeList", cvo);
+		return session.selectList("CommonCodeList", cvo);
 	}
 	
-	// size, color, type 코드 리스트 구현
+	// size, color, type 肄붾뱶 由ъ뒪�듃 援ы쁽
 	@Override
 	public List<CommonCodeVO> sCommonCodeList(CommonCodeVO cvo) {
 		return session.selectList("sCommonCodeList", cvo);
@@ -38,19 +38,19 @@ public class CommonCodeDAOImpl implements CommonCodeDAO {
 		return session.selectList("tCommonCodeList", cvo);
 	}
 	
-	// size 코드 등록 구현
+	// size 肄붾뱶 �벑濡� 援ы쁽
 	@Override
 	public int sCommonCodeInsert(CommonCodeVO cvo) {
 		return session.insert("sCommonCodeInsert", cvo);
 	}
 	
-	// color 코드 등록 구현
+	// color 肄붾뱶 �벑濡� 援ы쁽
 	@Override
 	public int cCommonCodeInsert(CommonCodeVO cvo) {
 		return session.insert("cCommonCodeInsert", cvo);
 	}
 	
-	// type 코드 등록 구현
+	// type 肄붾뱶 �벑濡� 援ы쁽
 	@Override
 	public int tCommonCodeInsert(CommonCodeVO cvo) {
 		return session.insert("tCommonCodeInsert", cvo);

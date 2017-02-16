@@ -403,7 +403,7 @@
 				$("#cart").append("<input type = 'hidden' class = 'p_nos' name = 'p_nos["+i+"]' value = '"+thisPno+"'>");
 				$("#cart").append("<input type = 'hidden' class = 'o_cnts' name = 'o_cnts["+i+"]' value = '"+thisCnt+"'>");
 			} 
-
+			$("#cart").append('<input type = "hidden" id = "mode" name = "mode" value = "cartOrder" />');
 			
 			$("#cart").attr({
 				"method" : "post",
@@ -418,7 +418,8 @@
 			event.preventDefault();
 			var btnId = $(this).attr("id");
 			if(btnId == "allc"){
-				$(".checkBoxs").click();
+				$(".checkBoxs").not($(".checkBoxs:checked")).click();
+	
 			}
 			else if(btnId == "allnc"){
 				$(".checkBoxs").removeAttr("checked");
@@ -426,7 +427,7 @@
 			else if(btnId == "checkedD"){
 				var cleng = $(".checkBoxs:checked").length;
 				for(var j = 0; j < cleng; j++){
-					$(".checkBoxs:checked").attr("name", "cd["+j+"]");
+					$(".checkBoxs:checked").eq(j).attr("name", "cd["+j+"]");
 				}
 				$("#cart").attr({
 					"action" : "/order/cartD",

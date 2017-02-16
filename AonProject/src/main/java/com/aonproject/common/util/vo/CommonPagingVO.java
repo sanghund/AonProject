@@ -1,5 +1,7 @@
 package com.aonproject.common.util.vo;
 
+import java.util.Arrays;
+
 public class CommonPagingVO {
 	protected String pageNum = "0"; // 페이지 번호
 	protected int totalCount = 0; // 총 데이터 수
@@ -57,6 +59,12 @@ public class CommonPagingVO {
 	}
 	public void setEnd_data(int end_data) {
 		this.end_data = end_data;
+	}
+	@Override
+	public String toString() {
+		return "CommonPagingVO [pageNum=" + pageNum + ", totalCount=" + totalCount + ", countList=" + countList
+				+ ", countPage=" + countPage + ", totalPage=" + totalPage + ", pageTotal=" + Arrays.toString(pageTotal)
+				+ ", start_data=" + start_data + ", end_data=" + end_data + "]";
 	}
 	
 	

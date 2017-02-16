@@ -94,6 +94,14 @@ public class ReviewDAOImpl implements ReviewDAO{
 		return session.selectOne("confirmMno");
 	}
 	@Override
+	public String reviewOrderConfirm(ReviewVO rvo) {
+		return session.selectOne("reviewOrderConfirm");
+	}
+	@Override
+	public int reviewConfirm(ReviewVO rvo){
+		return session.selectOne("reviewConfirm");
+	}
+	@Override
 	public List<ReviewVO> myReview(MemberVO vo) {
 		// TODO Auto-generated method stub
 		return session.selectList("myReview", vo);

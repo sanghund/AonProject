@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link rel = "stylesheet" href = "/resources/include/fontello/css/fontello.css">
 <style>
 	.item {width:300px; float:left; margin:2em;}
 	.item > a {width: 260px; height: 270px; overflow: hidden; display: block; margin: 0 auto;}
 	.item > a > img {width:260px; margin:10px auto; display:block;}
 	.content ul {text-align:center; margin:1em 0;}
 	.content ul li {line-height:1.2rem;}
+	.menuTit {width:100%; background:#222; color:#fff;}
+	.menuTit p {padding:0.6em;}
+	.productPage {display:none;}
 </style>
 
 
@@ -26,7 +30,7 @@
 			<c:forEach items="${productForCategory}" varStatus="status">
 				<div class="item" data-num="${productForCategory[status.index].p_no}">
 					<a href="/detail?no=${fn:substring(productForCategory[status.index].p_no,0,7)}">
-						<img src="/productUpload/${productForCategory[status.index].pi_file}" />
+						<img src="${productForCategory[status.index].pi_route}/${productForCategory[status.index].pi_file}" />
 					</a>
 					<ul>
 						<li class="bold">[AON PROJECT]</li>
@@ -38,4 +42,61 @@
 			</c:forEach>
 		</c:when>
 	</c:choose>
+	<table class="productPage">
+		<tbody>
+			<tr>
+				<td colspan="10" id = "pageLow" class="tc">
+					<c:if test = "${productVO.totalPage < productVO.pageNum }">
+						<c:set var = "pNum" value= "${productVO.totalPage }"/>
+					</c:if>
+					 <c:if test = "${productVO.totalPage >= productVO.pageNum }">
+						<c:set var = "pNum" value= "${productVO.pageNum }"/>
+					</c:if>
+				
+					<c:if test = "${productVO.pageTotal[0] eq 1 and pNum eq 1}" >
+						<span class = "icon-angle-double-left"></span>
+					</c:if>
+					<c:if test = "${productVO.pageTotal[0] eq 1 and pNum ne 1}" >
+						<a href = "/category?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
+					</c:if>
+					<c:if test = "${productVO.pageTotal[0] ne 1}" >
+						<a href = "/category?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
+					</c:if>
+					<c:if test = "${productVO.pageTotal[0] eq 1}" >
+						<span class = "icon-angle-left"></span>
+					</c:if>
+					<c:if test = "${productVO.pageTotal[0] ne 1}" >
+						<a href = "/category?pageNum=${productVO.pageTotal[0] - fn:length(productVO.pageTotal) }" data-num = "${productVO.pageTotal[0] - fn:length(productVO.pageTotal) }" class = "icon-angle-left"></a>
+					</c:if>
+		
+					<c:forEach items="${productVO.pageTotal }" varStatus="status">
+						<c:if test = "${productVO.pageTotal[status.index] eq pNum}" >
+							<span>${productVO.pageTotal[status.index] }</span>
+						</c:if>
+						<c:if test = "${productVO.pageTotal[status.index] ne pNum}" >
+							<a href = "/category?pageNum=${productVO.pageTotal[status.index] }" data-num = "${productVO.pageTotal[status.index]}">
+		 						${productVO.pageTotal[status.index] } 
+							</a>
+						</c:if>
+					</c:forEach>
+		
+					<c:if test = "${productVO.pageTotal[fn:length(productVO.pageTotal) - 1] eq productVO.totalPage}" >
+						<span class = "icon-angle-right"></span>
+					</c:if>
+					<c:if test = "${productVO.pageTotal[fn:length(adminVO.pageTotal) - 1] ne productVO.totalPage}" >
+						<a href = "/category?pageNum=${productVO.pageTotal[0] + fn:length(productVO.pageTotal) }" data-num = "${productVO.pageTotal[0] + fn:length(productVO.pageTotal) }" class = "icon-angle-right"></a>
+					</c:if>
+					<c:if test = "${productVO.pageTotal[fn:length(productVO.pageTotal) - 1] eq productVO.totalPage and productVO.totalPage eq pNum}" >
+						<span class = "icon-angle-double-right"></span>
+					</c:if>
+					<c:if test = "${productVO.pageTotal[fn:length(productVO.pageTotal) - 1] eq productVO.totalPage and productVO.totalPage ne pNum}" >
+						<a href = "/category?pageNum=${productVO.totalPage }" data-num = "${productVO.totalPage }" class = "icon-angle-double-right"></a>
+					</c:if>
+					<c:if test = "${productVO.pageTotal[fn:length(productVO.pageTotal) - 1] ne productVO.totalPage}" >
+						<a href = "/category?pageNum=${productVO.totalPage }" data-num = "${productVO.totalPage }" class = "icon-angle-double-right"></a>
+					</c:if>
+				</td>
+			</tr>
+			</tbody>
+		</table>
 </div>

@@ -17,6 +17,9 @@
    <resources location="/mainUpload/" mapping="/mainUpload/**"></resources>
    <resources location="/productUpload/" mapping="/productUpload/**"></resources>
    <resources location="/reviewFileUpload/" mapping="/reviewFileUpload/**"></resources>
+   <resources location="/chart/" mapping = "/chart/**"></resources>
+   <resources location="/mainImgUpload/" mapping="/mainImgUpload/**"></resources>
+
    
    <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
    <!-- tiles + default -->

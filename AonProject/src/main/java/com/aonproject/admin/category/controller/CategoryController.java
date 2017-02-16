@@ -49,4 +49,34 @@ public class CategoryController {
 		}
 		return success;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/caUpdate", method=RequestMethod.POST)
+	public String caUpdate(@ModelAttribute CategoryVO cavo,HttpServletRequest request){
+		logger.info("caUpdate호출 성공");
+		
+		int result = 0;
+		String success = "";
+		result = categoryService.caUpdate(cavo);
+		
+		if(result == 1){
+			success = "success";
+		}
+		return success;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/caDelete", method=RequestMethod.POST)
+	public String caDelete(@ModelAttribute CategoryVO cavo, HttpServletRequest request){
+		System.out.println("삭제 시작");
+		int result = 0;
+		result = categoryService.caDelete(cavo);
+		String success = "";
+		
+		if(result == 1){
+			success = "success";
+		}
+		
+		return success;
+	}
 }

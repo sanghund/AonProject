@@ -27,10 +27,10 @@ public class ImageUploadController {
 	@Autowired
 	private ImageUploadService imageUploadService;
 	
-	/*메인 이미지 리스트*/
+	/*image list*/
 	@RequestMapping(value = "/imageUploadList", method=RequestMethod.GET)
 	public String imageUploadList(@ModelAttribute ImageUploadVO iuvo, Model model){
-		logger.info("imageUploadList 호출 성공");
+		logger.info("imageUploadList calling");
 		
 		List<ImageUploadVO> imageuploadList = imageUploadService.imageUploadList(iuvo);
 		
@@ -39,17 +39,26 @@ public class ImageUploadController {
 		return "admin/imageUpload/upload";
 	}
 	
-	/*메인 이미지 등록*/
+	/*image upload*/
 	@RequestMapping(value = "/upload/ImageUploadInsert")
 	public String imageUploadInsert(@ModelAttribute ImageUploadVO iuvo, HttpServletRequest request) throws IllegalStateException, IOException {
-		logger.info("imageUploadInsert 호출 성공");
-				
+
+		logger.info("imageUploadInsert calling");
+		
 		List<MultipartFile> files = iuvo.getFiles();
 		
 		for(int i=0; i<files.size(); i++){
 			ImageUploadVO ivo = iuvo;
 			ivo.setFile(ivo.getFiles().get(i));
-			ivo.setMp_file(FileUploadUtil.fileUpload("main", ivo.getFile(), request));
+			String fileRoute = "mainImgUpload";
+			String mp_files = FileUploadUtil.fileUpload("main", fileRoute, ivo.getFile(), request);
+			String mp_file[] = mp_files.split("@@@");
+			ivo.setMp_route(mp_file[0]);
+			ivo.setMp_file(mp_file[1]);
+			
+			logger.info(ivo.getMp_route());
+			logger.info(ivo.getMp_file());
+			
 			imageUploadService.imageUploadInsert(ivo);
 		}
 		

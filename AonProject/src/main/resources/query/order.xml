@@ -34,11 +34,11 @@
 (select m_no, o_num,o_no, o_cnt, o_price, o_mode, o_confirm, o_date, p1.p_no, pi_file, pi_route, p_name, p_type, size_code, color_code from
 (select m_no, o_num,o_no, o_cnt, o_price, o_mode, o_confirm, o_date, p_no, pi_file, pi_route from (select ppno, pno, pi_route, pi_file from (select min(pno) ppno, p_no pno from (select pno, p_no from (select DISTINCT min(pi_no) pno, p_no from product_img group by(p_no))) group by (p_no)) inner join product_img on pi_no = ppno) end1
 inner join
-(select m_no, o_num, o_no, o_cnt, o_price, o_mode, o_confirm, to_char(o_date, 'yyyy-MM-dd hh24:mm:ss') o_date, p_no from product_order where m_no = 5)
+(select m_no, o_num, o_no, o_cnt, o_price, o_mode, o_confirm, to_char(o_date, 'yyyy-MM-dd hh24:mm:ss') o_date, p_no from product_order where m_no = #{m_no})
 on pno = p_no order by o_no desc) p1 inner join (select p_no, p_name, p_type, size_code, color_code from product) p2 on p1.p_no = p2.p_no) p4 inner join common_code on size_code = cc_no) p5
-inner join common_code on color_code = cc_no) inner join common_code on p_type = cc_no 
+inner join common_code on color_code = cc_no) inner join common_code on p_type = cc_no order by o_num desc, o_no desc
 ) where rownum <![CDATA[<=]]> #{end_data})
-		where rnum <![CDATA[>=]]> #{start_data} order by o_num desc,o_no desc
+		where rnum <![CDATA[>=]]> #{start_data}
 	</select>	
 	
 	<!-- 마이페이지 주문내역 cnt -->
@@ -49,8 +49,21 @@ inner join common_code on color_code = cc_no) inner join common_code on p_type =
 (select m_no, o_num,o_no, o_cnt, o_price, o_mode, o_confirm, o_date, p1.p_no, pi_file, pi_route, p_name, p_type, size_code, color_code from
 (select m_no, o_num,o_no, o_cnt, o_price, o_mode, o_confirm, o_date, p_no, pi_file, pi_route from (select ppno, pno, pi_route, pi_file from (select min(pno) ppno, p_no pno from (select pno, p_no from (select DISTINCT min(pi_no) pno, p_no from product_img group by(p_no))) group by (p_no)) inner join product_img on pi_no = ppno) end1
 inner join
-(select m_no, o_num, o_no, o_cnt, o_price, o_mode, o_confirm, to_char(o_date, 'yyyy-MM-dd hh24:mm:ss') o_date, p_no from product_order where m_no = 5)
+(select m_no, o_num, o_no, o_cnt, o_price, o_mode, o_confirm, to_char(o_date, 'yyyy-MM-dd hh24:mm:ss') o_date, p_no from product_order where m_no = #{m_no})
 on pno = p_no order by o_no desc) p1 inner join (select p_no, p_name, p_type, size_code, color_code from product) p2 on p1.p_no = p2.p_no) p4 inner join common_code on size_code = cc_no) p5
 inner join common_code on color_code = cc_no) inner join common_code on p_type = cc_no order by o_no desc)
+	</select>
+	
+	<!-- 마이페이지 주문내역 상세 -->
+	<select id="orderview" parameterType="order" resultType="order">
+	select m_no, o_num,o_no, o_cnt, o_price, o_mode, o_confirm, o_date, p_no, pi_file, pi_route, p_name, size_code, color_code, p_color, p_size, cc_name p_type from
+(select m_no, o_num,o_no, o_cnt, o_price, o_mode, o_confirm, o_date, p_no, pi_file, pi_route, p_name, p_type, size_code, color_code, color as p_color, cc_name p_size from
+(select m_no, o_num,o_no, o_cnt, o_price, o_mode, o_confirm, o_date, p_no, pi_file, pi_route, p_name, p_type, size_code, color_code, cc_name color from
+(select m_no, o_num,o_no, o_cnt, o_price, o_mode, o_confirm, o_date, p1.p_no, pi_file, pi_route, p_name, p_type, size_code, color_code from
+(select m_no, o_num,o_no, o_cnt, o_price, o_mode, o_confirm, o_date, p_no, pi_file, pi_route from (select ppno, pno, pi_route, pi_file from (select min(pno) ppno, p_no pno from (select pno, p_no from (select DISTINCT min(pi_no) pno, p_no from product_img group by(p_no))) group by (p_no)) inner join product_img on pi_no = ppno) end1
+inner join
+(select m_no, o_num, o_no, o_cnt, o_price, o_mode, o_confirm, to_char(o_date, 'yyyy-MM-dd hh24:mm:ss') o_date, p_no from product_order where m_no = #{m_no} and o_num = #{o_num})
+on pno = p_no order by o_no desc) p1 inner join (select p_no, p_name, p_type, size_code, color_code from product) p2 on p1.p_no = p2.p_no) p4 inner join common_code on size_code = cc_no) p5
+inner join common_code on color_code = cc_no) inner join common_code on p_type = cc_no order by o_num desc, o_no desc
 	</select>
 </mapper>

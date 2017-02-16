@@ -83,7 +83,7 @@ public class PolicyController {
 			}
 			
 			List<Numbers> memberNs = memberService.numbers();
-			for(int i = 0; i < adminNs.size(); i++){
+			for(int i = 0; i < memberNs.size(); i++){
 				PolicyAgrVO pvo = new PolicyAgrVO();
 				pvo.setPo_no(po_no);
 				pvo.setM_no((int) memberNs.get(i).getNo());
@@ -143,14 +143,19 @@ public class PolicyController {
 			MemberVO mvo = new MemberVO();
 			mvo.setM_no(vo.getM_no());
 			mvo = memberService.memberInfo(mvo);
-			int gogo2 = memberService.memberExpire(mvo);
-			if(gogo2 == 1){
-				mvo.setM_leave("true");
-				int a = memberService.memberGoodBye(mvo);
-				int b = memberService.memberAddrGoodBye(mvo);
-				if(a == 1 && b == 1){
-					result = "success";
+			if(mvo != null){
+				int gogo2 = memberService.memberExpire(mvo);
+				if(gogo2 == 1){
+					mvo.setM_leave("true");
+					int a = memberService.memberGoodBye(mvo);
+					int b = memberService.memberAddrGoodBye(mvo);
+					if(a == 1 && b == 1){
+						result = "success";
+					}
 				}
+			}
+			else{
+				result = "success";
 			}
 		}
 		return result;

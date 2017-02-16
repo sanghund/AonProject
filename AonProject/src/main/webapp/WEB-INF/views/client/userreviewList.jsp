@@ -41,10 +41,29 @@
 			//글 입력폼띄우기
 			$(".review_write").hide();
 			$(".write_button").click(function(){
-				$(".review_write").show();
-				$(".find_review").find("td").hide();
-				$(".qna_write").hide();
-				rollBack();
+				var p_no = $(this).children(".p_no").val();	
+				$.ajax({
+					url:"/review/reviewOrderConfirm",
+					type:"post",
+					dataType:"text",
+					data: "p_no="+p_no,
+					error:function(){
+						alert("시스템 오류입니다. 관리자에게 문의하세요.");
+					},
+					success:function(result){
+						if(result == "success"){
+							$(".review_write").show();
+							$(".find_review").find("td").hide();
+							rollBack();
+							alert("글을 쓰실 수 있습니다.");
+						}else if(result == "fail"){
+							alert("상품주문 후에 작성하실 수 있습니다.");
+						}else if(result = "fails"){
+							alert("이미 주문한 상품에대해 리뷰를 작성하였습니다. 다른 의견 작성은 문의 게시판을 이용해주세요.")
+						}
+					}
+				});
+				
 			});
 			
 			//write버튼을 클릭했을 때 입력
@@ -199,6 +218,7 @@
 						});
 					}
 					else if($(re_file).val()!=""){
+						
 						$(update_form).ajaxForm({
 							url:"/review/reviewuserUpdate",
 							type:"post",
@@ -254,13 +274,16 @@
 			</div>
 		</div>
 		<div class="reviewTopBtn">
-			<div class="board_btns">
+			<a class="board_btns" href="#">
 				ALL VIEW
-			</div>
+			</a>
 			<sec:authorize access="hasRole('user')">
+			
 				<div class="write_button">
 					WRITE
+					<input type="hidden" class="p_no" name="p_no" value="${param.no }">
 				</div>
+		
 			</sec:authorize>
 		</div>
 		<sec:authorize access="hasRole('user')">
@@ -285,14 +308,17 @@
 						<tr>
 							<th><div class="tb-left">비밀번호 : </div></th>
 							<td>
-								<div class="tb-left frm-w"><input type="password" name="re_pwd" id="re_pwd" size="20" maxlength="30"></div>
+								<div class="tb-left frm-w">
+									<input type="password" name="re_pwd" id="re_pwd" size="20" maxlength="30">
+									<span style="color:red;">비밀번호는 자동 저장됩니다.</span>
+								</div>
 							</td>
 						</tr>
 						<tr>
 							<th><div class="tb-left">내용 : </div></th>
 							<td>
 								<div class="tb-left frm-w">
-									<textarea rows="8" cols="70" id="re_content" name="re_content"></textarea>
+									<textarea rows="8" cols="70" id="re_content" name="re_content" maxlength="4000"></textarea>
 								</div>
 								
 							</td>
@@ -384,7 +410,7 @@
 										<div class="update_content">
 											<form id="update_form">
 												<input type="hidden" name="re_no" id="re_no" value="${review.re_no }">
-												<textarea rows="8" cols="70" id="re_content" name="re_content">${review.re_content }</textarea>
+												<textarea rows="8" cols="70" id="re_content" name="re_content" maxlength="4000">${review.re_content }</textarea>
 												<div class="mo_file"> 
 													<input type="file" id="files" name="files" style="padding-top:8px;" multiple><br />
 													<div class="imgView" style="padding-top:14px;">

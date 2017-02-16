@@ -74,13 +74,14 @@
 				}
 			});
 			
-			//comment_modify
-			$(".comment_modify").click(function(){
+			//qnacomment_modify
+			$(".qnacomment_modify").click(function(){
 				$(".fieldset_insert").hide();
 				$(".fieldset_modify").show();
+				$(".qnashowComment").hide();
 			});
 			
-			$(".comment_modifyBtn").click(function(){
+			$(".qnacomment_modifyBtn").click(function(){
 				var commentModifyform = $(this).parents(".commentModify_form");
 				var modifyTitle = $(this).parents(".comment_inner").children(".cq_title");
 				var modifyContent = $(this).parents(".comment_inner").children(".cq_content");
@@ -110,18 +111,24 @@
 				reset();
 			});
 			
-			//comment_mocancel
-			$(".comment_mocancel").click(function(){
+			//Qnacomment_mocancel
+			$(".Qnacomment_mocancel").click(function(){
 				$(".fieldset_modify").hide();
+				$(".qnashowComment").show();
 			});
 			
 			//delete클릭 시 삭제 이벤트
-			$(".comment_delete").click(function(){
+			$(".comment_qnadeleteBtn").click(function(){
 				var ptr1 = $(this).parents("table").children(".qna_tr1");
 				var ptr2 = $(this).parents("table").children(".qna_tr2");
 				var ptr3 = $(this).parents("tr").prev(".qna_tr3"); //한단계 tr
 				var ptr4 = $(this).parents("tr")//이벤트 발생 tr 
 				var curry = $(this).parents("tr").attr("data-no");
+				if(confirm("삭제 하시겠습니까?")) {
+		            $(this).parent().click();
+		        } else {
+		            return false;
+		        }
 				$.ajax({  
 					type:"delete",
 					url:"/admin/commentQnA/"+curry,
@@ -223,7 +230,7 @@
 											</c:forEach>										
 										</div>
 									</td>
-									<td><div class="tb-center">${qna.q_name }</div></td>
+									<td><div class="tb-center">${qna.q_name }***</div></td>
 									<td><div class="tb-center">${qna.q_date }</div></td>
 								</tr>
 								<tr class="qna_tr2">
@@ -273,7 +280,7 @@
 													</div>
 												</td>
 												<td><div class="tb-center"><img src="/resources/include/image/qnaimage/neo_reply.gif" >&nbsp;비밀글입니다.</div></td>
-												<td><div class="tb-center">${commentQnA.cq_title }</div></td>
+												<td><div class="tb-center">AON관리자</div></td>
 												<td><div class="tb-center">${commentQnA.cq_date }</div></td>
 											</c:if>
 										</c:forEach>
@@ -281,13 +288,13 @@
 								</tr>
 								<tr class="qna_tr4" data-no="${qna.q_no }">
 									<td colspan="4">
-										<div class="comment-list">
+										<div class="qnacomment-list">
 											<h3>COMMENT LIST</h3>
 											<div class="comment-cover">
 												<div class="comment-content">
 													<div class="content-top">
-														<a href="javascript:;" class="comment_modify">MODIFY</a>
-														<a href="javascript:;" class="comment_delete">DELETE</a>
+														<a href="javascript:;" class="qnacomment_modify">MODIFY</a>
+														<a href="javascript:;" class="comment_qnadeleteBtn">DELETE</a>
 													</div>
 													<div class="fieldset_modify">
 														<form class="commentModify_form">
@@ -305,10 +312,10 @@
 																				
 																				<label>내용 : </label>
 																				<textarea class="cq_content" name="cq_content">${commentQnA.cq_content }</textarea>						
-																				<a href="javascript:;" class="comment_modifyBtn">
+																				<a href="javascript:;" class="qnacomment_modifyBtn">
 																					수정
 																				</a>
-																				<a href="javascript:;" class="comment_mocancel">
+																				<a href="javascript:;" class="Qnacomment_mocancel">
 																					취소
 																				</a>
 																			</div>
@@ -319,7 +326,7 @@
 															</fieldset>
 														</form>
 													</div>
-													<div class="showComment">
+													<div class="qnashowComment">
 														<c:if test="${not empty commentQnAList }">
 															<c:forEach items="${commentQnAList }" var="commentQnA">
 																<c:if test="${commentQnA.q_no eq qna.q_no}">
@@ -397,9 +404,9 @@
 								</tr>
 						</c:when>
 						<c:otherwise>
-							<tr>
+							<tr class="qna_tr5">
 								<td colspan="4">
-									<div class="tb-center">등록된 리뷰가 없습니다.</div>
+									<div class="tb-center">등록된 문의가 없습니다.</div>
 								</td>
 							</tr>
 						</c:otherwise>

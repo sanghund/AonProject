@@ -22,6 +22,12 @@ public interface ReviewDAO {
 	public int reviewUserUpdate(ReviewVO rvo);
 	public int InsertID(ReviewVO rvo);
 	public int confirmMno(ReviewVO rvo);
+
+	public String reviewOrderConfirm(ReviewVO rvo);
+
 	public List<ReviewVO> myReview(MemberVO vo);
 	public int myReviewCnt(MemberVO vo);
+	
+	//회원이 상품을 구매 했지만 리뷰를 썻는지 안썻는지 확인하는 과정
+	public int reviewConfirm(ReviewVO rvo);
 }

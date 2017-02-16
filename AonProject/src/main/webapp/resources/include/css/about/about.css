@@ -1,0 +1,58 @@
+@CHARSET "UTF-8";
+
+	.about_body{
+		height: 800px;
+		}
+	.backImg{
+		width: 1200px;
+	    position: absolute;
+	    height: 700px;
+	    padding: 0px 100px 100px 100px;
+	    opacity: 0.6;
+	    z-index: -1; 
+		}
+	.con_bar1{
+		padding:90px 0 0 200px;
+		float: left;
+		z-index: -3; 
+		position: absolute;
+		}
+	.Name_concept{
+		padding:113px 0 0 235px;
+		font-weight: bold;
+		}
+	.content_concept{
+		padding:13px 0 0 235px;
+		font-size: 13px;
+		}
+	
+	.con_bar2{
+		padding:20px 0 0 1130px;
+		float: right;
+		z-index: -3; 
+		position: absolute;
+		}
+	.Name_slogan{
+		padding:48px 500px 0 0;
+		float: right;
+		font-weight: bold;
+		}
+	.content_slogan{
+		padding:13px 70px 0 0;
+		font-size: 13px;
+		float: right;
+		}
+	
+	.con_bar3{
+		padding:200px 0 0 200px;
+		position: absolute;
+		z-index: -3; 
+		}
+	.Name_story{
+		padding: 223px 0 0 240px;
+		font-weight: bold;
+		}
+	.content_story{
+		padding:13px 0 0 0;
+		font-size: 13px;
+		}

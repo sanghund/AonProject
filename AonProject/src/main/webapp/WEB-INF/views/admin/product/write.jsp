@@ -61,17 +61,48 @@
 		$(document).on("click", ".removeFileBtn", function(){
 			$(this).parent().remove();
 		})
-	
+		
+		$("#p_no").change(function(){
+			//console.log($("#p_no").val());
+			if($("#p_no").val() != ""){
+				$.ajax({
+					url 		: "/admin/productDetailSupport",
+					datatype	: "text",
+					type		: "post",
+					headers	: {
+						'Accept': 'application/json',
+	                    'Content-Type': 'application/json'
+					},
+					data		: JSON.stringify({
+						p_no	: $("#p_no").val()
+					}),
+					error		: function(){
+						alert("시스템 오류 발생. 관리자에게 문의 요망");
+					},
+					success		: function(detailInfo){
+						$("#p_type option:selected").text(detailInfo.p_type_name);
+						$("#p_name").val(detailInfo.p_name);
+						$("#p_info").val(detailInfo.p_info);
+						$("#color_code option:selected").text(detailInfo.color);
+						$("#size_code option:selected").text(detailInfo.size);
+						$("#p_price").val(detailInfo.p_price);
+						$("p_discount option:selected").text(detailInfo.p_discount);
+						$("#p_fabric").val(detailInfo.p_fabric);
+						$("#p_caution").val(detailInfo.p_caution);
+					}
+				})
+			}
+		})
 	})
 	
 	//파일첨부 추가 버튼 생성
 	function addFile(){
 		var fileInput = $("<input>");
-		fileInput.attr({"type":"file", "name":"files["+(++fileCnt)+"]", "class":"file"});
+		fileInput.attr({"type":"file", "name":"files["+(++fileCnt)+"]", "class":"file btn btn-default btn-xs"});
 		var fileAddBtn = $("<input>")
-		fileAddBtn.attr({"type":"button", "class":"addFileBtn", "value":"+"});
+		fileAddBtn.attr({"type":"button", "class":"addFileBtn btn btn-primary btn-xs", "value":"+"});
 		var fileRemoveBtn = $("<input>")
-		fileRemoveBtn.attr({"type":"button", "class":"removeFileBtn", "value":"-"});
+		fileRemoveBtn.attr({"type":"button", "class":"removeFileBtn btn btn-danger btn-xs", "value":"-"});
 		var fileContainer = $("<div>");
 		fileContainer.append(fileInput).append(fileAddBtn).append(fileRemoveBtn);
 		$(".fileUploadContainer").append(fileContainer);
@@ -80,6 +111,7 @@
 <style>
 	table {border-collapse:collapes; width:800px;}
 	td {border:1px solid #222; padding:1em;}
+	.btnContainer {margin-top:1em;}
 </style>
 	<h2>상품 디테일</h2>
 	<!-- 상품 등록, 수정, 삭제 입력 폼 -->
@@ -244,7 +276,7 @@
 						<td>상품이미지</td>
 						<td>
 							<div class="fileUploadContainer">
-								<input type="file" class="file" name="files[0]" multiple="multiple"><input type="button" class="addFileBtn" value="+">
+								<input type="file" class="file btn btn-default btn-xs" name="files[0]" multiple="multiple"><input type="button" class="addFileBtn btn btn-primary btn-xs" value="+">
 							</div>
 						</td>
 					</tr>
@@ -254,7 +286,7 @@
 	</div>
 	<!-- 상품 등록, 수정, 삭제 제어 버튼 -->
 	<div class="btnContainer">
-		<input type="button" id="insertBtn" value="상품등록">
-		<input type="button" id="resetBtn" value="초기화">
-		<input type="button" id="listBtn" value="목록">
+		<input type="button" id="insertBtn" class="btn btn-success" value="상품등록">
+		<input type="button" id="resetBtn" class="btn btn-danger" value="초기화">
+		<input type="button" id="listBtn" class="btn btn-primary" value="목록">
 	</div>

@@ -11,7 +11,6 @@
 		box-sizing: border-box;
 		padding: 10px;
 	}
-	
 	#aTitle {
 			font-size: 25px;
 			padding : 10px 0;
@@ -93,14 +92,24 @@
 
 		}
 		.viewImg a{
-			width: 100%;
-			height: 100%;
+			width: 150px;
+			height: 150px;
 			display: inline-block;
 		}
 		.viewImg img{
 			width: 100%;
 			height: 100%;
 			display: inline-block;
+		}
+		.hahaha td{
+			border-bottom: 1px solid grey;
+		}
+		.pagingNumbers{
+			font-size: 25px;
+			margin-top: 15px;
+		}
+		.viewImg{
+			border-left: 1px solid black;		
 		}
 		.pagingNumbers{
 			height: auto;
@@ -111,6 +120,28 @@
 			text-decoration: none;
 			color: black;
 		}	
+		.karkar{
+			color: red;
+		}
+		.hihihi{
+			color:black;
+			margin-bottom: 10px;
+			font-weight: bold;
+			text-decoration: underline;
+		}
+		.o_numLine{
+			margin-bottom: 10px;
+		}
+		.forbold{
+			display : inline-block;
+			font-weight: bold;
+		}
+		.arrayLine > div{
+			margin-bottom: 10px;
+		}
+		.o_info2{
+			margin-bottom: 0px;
+		}
 </style>
 <div class = "main">
 	<h2 id = "aTitle">MyPage</h2>
@@ -133,11 +164,11 @@
 	<div class= "orderList">
 		<table id = "orderTable">
 			<colgroup>
-				<col width="15%">
-				<col width="40%">
-				<col width="15%">
 				<col width="20%">
-				<col width="10%">
+				<col width="15%">
+				<col width="30%">
+				<col width="25%">
+				<col width="20%">
 			</colgroup>
 			<tr id = "tableH">
 				<th>주문번호/일자</th>
@@ -147,30 +178,30 @@
 			</tr>
 			<c:if test="${empty orderList }">
 				<tr>
-					<td colspan="5">등록된 문의가 없습니다.</td>
+					<td colspan="5">등록된 주문이 없습니다.</td>
 				</tr>
 			</c:if>
 			<c:if test="${not empty orderList }">
 				<c:forEach items="${orderList }" varStatus="status">
 					<tr class = "hahaha">
-						<td class= "${orderList[status.index].o_num }" data-num = "${orderList[status.index].o_num }">
+						<td class= "o_num${orderList[status.index].o_num }">
 							<div class= "o_numLine">
-								${orderList[status.index].o_num }
+								<form class = "gogogomove"><input type = "hidden" class = "forO_num" name = "o_num" value="${orderList[status.index].o_num }" /><a href = "#" class="hihihi">${orderList[status.index].o_num }</a></form>
 							</div>
 							<div class = "o_dateLine">
 								${orderList[status.index].o_date }	
 							</div>
 						</td>
-						<td class= "viewImg"><a href = "/detail?no=${orderList[status.index].p_no }"><img src = "/productUpload/${orderList[status.index].pi_file }"></a></td>
-						<td>
+						<td class= "viewImg" data-num = "${orderList[status.index].o_no }"><a href = "/detail?no=${orderList[status.index].p_no }"><img src = "/productUpload/${orderList[status.index].pi_file }"></a></td>
+						<td class = "arrayLine">
 							<div class= "o_nameLine">
 								${orderList[status.index].p_type }
 							</div>
 							<div class= "o_info">
-								[${orderList[status.index].p_name }] ${orderList[status.index].p_no }${orderList[status.index].color_code }
+								[${orderList[status.index].p_name }] <span class = "forbold">${orderList[status.index].p_no }</span>
 							</div>
 							<div class= "o_info2">
-								${orderList[status.index].p_size }/${orderList[status.index].p_color }/${orderList[status.index].o_cnt }
+								${orderList[status.index].p_size }/${orderList[status.index].p_color }/${orderList[status.index].o_cnt }(개)
 							</div>
 						</td>
 						<td>
@@ -190,7 +221,7 @@
 					</tr>
 				</c:forEach>
 				<tr class= "pagingNumbers">
-							<td colspan="3" id = "pageLow">
+							<td colspan="5" id = "pageLow">
 								<c:if test = "${memberVO.totalPage < memberVO.pageNum }">
 									<c:set var = "pNum" value= "${memberVO.totalPage }"/>
 								</c:if>
@@ -216,7 +247,7 @@
 					
 								<c:forEach items="${memberVO.pageTotal }" varStatus="status">
 									<c:if test = "${memberVO.pageTotal[status.index] eq pNum}" >
-										<span>${memberVO.pageTotal[status.index] }</span>
+										<span class = "karkar">${memberVO.pageTotal[status.index] }</span>
 									</c:if>
 									<c:if test = "${memberVO.pageTotal[status.index] ne pNum}" >
 										<a href = "/member/mypage/orderlist?pageNum=${memberVO.pageTotal[status.index] }" data-num = "${memberVO.pageTotal[status.index]}">
@@ -264,4 +295,28 @@
 			$(".step").eq(1).css("border-right", "none");
 		});
 	</script>
-	
+	<script type = "text/javascript">
+		$(document).ready(function(){
+			var loopGo = $(".hahaha").length;
+			
+			for(var i = 0; i < loopGo; i++){
+				var test = $(".hahaha").eq(i).find("td").eq(0).attr("class");
+				var test2 = $("."+test+"").length;
+				if(test2 != 1){
+					$(".hahaha").eq(i).find("td").eq(0).attr("rowspan", test2);
+					$("."+test+"").not($("."+test+"").eq(0)).remove();
+					i = i + test2 - 1;
+				}	
+				
+			}
+			
+			$(".hihihi").click(function(event){
+				event.preventDefault();
+				$(this).closest(".gogogomove").attr({
+					"method" : "get",
+					"action" : "/member/mypage/orderview"
+				});
+				$(this).closest(".gogogomove").submit();
+			});
+		});
+	</script>

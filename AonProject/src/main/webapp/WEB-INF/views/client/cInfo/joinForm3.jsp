@@ -9,6 +9,15 @@
 			height: 37px;
 			
 		}
+		#aTitle {
+			font-size: 25px;
+			padding : 10px 0;
+			padding-left : 5px;
+			border : 1px solid graytext;
+			display: block;
+			border-bottom: 1px solid #73879C;
+			margin-bottom: 15px;
+		}
 		#align{
 			width : 99%;
 			text-align: center;

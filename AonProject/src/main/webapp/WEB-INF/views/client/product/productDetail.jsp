@@ -88,29 +88,40 @@
 		
 		//구매버튼 클릭 처리 이벤트
 		$("#order").click(function(){
-			for(var j = 0; j < i; j++){
-				$(".cnt").eq(j).attr("name", "o_cnts[" + j + "]");
-				$(".arrayP_no").eq(j).attr("name", "p_nos[" + j + "]");
-			};
-			$("#orderForm").attr({
-				"method" : "post",
-				"action" : "/order/order"
-			});
-			$("#orderForm").submit();
+			if($("#size").val()==""){
+				alert("사이즈를 선택해 주세요");
+				return;
+			}else{
+				for(var j = 0; j < i; j++){
+					$(".cnt").eq(j).attr("name", "o_cnts[" + j + "]");
+					$(".arrayP_no").eq(j).attr("name", "p_nos[" + j + "]");
+				};
+				$("#orderForm").attr({
+					"method" : "post",
+					"action" : "/order/order"
+				});
+				$("#orderForm").submit();
+			}
 		});
+		
 		
 		//장바구니 클릭 처리 이벤트
 		$("#cart").click(function(){
-			for(var j = 0; j < i; j++){
-				$(".cnt").eq(j).attr("name", "o_cnts[" + j + "]");
-				$(".arrayP_no").eq(j).attr("name", "p_nos[" + j + "]");
-			};
-			
-			$("#orderForm").attr({
-				"method" : "post",
-				"action" : "/order/wish"
-			});
-			$("#orderForm").submit();
+			if($("#size").val()==""){
+				alert("사이즈를 선택해 주세요");
+				return;
+			}else{
+				for(var j = 0; j < i; j++){
+					$(".cnt").eq(j).attr("name", "o_cnts[" + j + "]");
+					$(".arrayP_no").eq(j).attr("name", "p_nos[" + j + "]");
+				};
+				
+				$("#orderForm").attr({
+					"method" : "post",
+					"action" : "/order/wish"
+				});
+				$("#orderForm").submit();
+			}
 		});
 		
 	})
@@ -128,7 +139,7 @@
 <div class="content">
 	<div class="imgContainer width40">
 		<c:forEach var="uploadList" begin="0" end="0" items="${uploadList}">
-			<img src="/productUpload/${uploadList.pi_file}" />
+			<img src="/${uploadList.pi_route}/${uploadList.pi_file}" />
 		</c:forEach>
 	</div>
 	<div class="itemOption width40">
@@ -187,7 +198,7 @@
 	</div>
 	<div class="productImg">
 		<c:forEach var="uploadList" begin="1" items="${uploadList}">
-			<img src="/productUpload/${uploadList.pi_file}" />
+			<img src="/${uploadList.pi_route}/${uploadList.pi_file}" />
 		</c:forEach>
 	</div>
 		
