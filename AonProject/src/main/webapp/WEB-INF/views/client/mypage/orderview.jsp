@@ -71,13 +71,14 @@
 		#gogoList{
 			text-align: center;
 		}
-		#gogogogogogo{
+		#gogogogogogo,#refund{
 			border: 1px solid black;
 			margin: 30px 0;
 			background-color: black;
 			color: white;
 			padding: 10px 5px;
 			font-size: 18px;
+			cursor: pointer;
 		}
 		.hihihi{
 			color:black;
@@ -170,8 +171,14 @@
 						<c:if test="${orderList[status.index].o_confirm eq 'Y' }">
 							<td>결제완료</td>
 						</c:if>
-						<c:if test="${orderList[status.index].o_confirm ne 'Y' }">
+						<c:if test="${orderList[status.index].o_confirm eq 'N' }">
 							<td>입금대기</td>
+						</c:if>
+						<c:if test="${orderList[status.index].o_confirm eq 'R' }">
+							<td>환불대기</td>
+						</c:if>
+						<c:if test="${orderList[status.index].o_confirm eq 'F' }">
+							<td>환불완료</td>
 						</c:if>
 						<td>${orderList[status.index].o_date }</td>
 					</tr>
@@ -233,7 +240,19 @@
 		</div>				
 	</c:if>
 	
-	<div id = "gogoList"><input type = "button" id = "gogogogogogo" value="목록으로 가기" /></div>
+	<div id = "gogoList">
+		<c:if test="${orderList[0].o_confirm eq 'Y' }">
+			<input type = "button" id = "refund" value="환불 신청하기">
+		</c:if>
+		<input type = "button" id = "gogogogogogo" value="목록으로 가기" />
+	</div>
+	<c:if test="${not empty orderList }">
+		<div class= "hiddenLine">
+			<form id = "yoyoyoyo">
+				<input type = "hidden" id = "o_numLine" name = "o_num" value="${orderList[0].o_num }">
+			</form>
+		</div>
+	</c:if>
 </div>
 <script src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 <script type = "text/javascript">
@@ -251,3 +270,27 @@
 		});
 	});
 </script>
+<c:if test="${orderList[0].o_confirm eq 'Y' }">
+	<script type = "text/javascript">
+		$(document).ready(function(){
+			$("#refund").click(function(){
+				if(confirm("정말로 환불하시겠습니까?")){
+					$.ajax({
+						url : "/member/mypage/odrerRefundRequest",
+						data : $("#yoyoyoyo").serialize(),
+						dataType : "text",
+						type  : "post",
+						error : function(){
+							alert("시스템 에러입니다.");
+						},
+						success : function(result){
+							if(result == "success") location.reload();
+							else alert("시스템 에러입니다.");
+						}
+					});
+				}
+				else return;
+			});
+		});
+	</script>
+</c:if>

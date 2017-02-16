@@ -12,7 +12,6 @@ import com.aonproject.client.order.vo.Product_orderVO;
 import com.aonproject.client.order.vo.CartVO;
 
 
-
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService{
@@ -59,4 +58,59 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return orderDAO.orderview(povo);
 	}
+
+	@Override
+	public int odrerRefundRequest(int o_num) {
+		// TODO Auto-generated method stub
+		return orderDAO.odrerRefundRequest(o_num);
+	}
+
+	@Override
+	public List<Product_orderVO> adminOrderList(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return orderDAO.adminOrderList(povo);
+	}
+
+	@Override
+	public int adminOrderListCnt(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return orderDAO.adminOrderListCnt(povo);
+	}
+
+	@Override
+	public List<Product_orderVO> orderPaymentList(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return orderDAO.orderPaymentList(povo);
+	}
+
+	@Override
+	public List<Product_orderVO> orderRefundList(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return orderDAO.orderRefundList(povo);
+	}
+
+	@Override
+	public int orderPaymentListCnt(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return orderDAO.orderPaymentListCnt(povo);
+	}
+
+	@Override
+	public int orderRefundListCnt(Product_orderVO povo) {
+		// TODO Auto-generated method stub
+		return orderDAO.orderRefundListCnt(povo);
+	}
+
+	@Override
+	public int orderPaymentListY(int o_num) {
+		// TODO Auto-generated method stub
+		return orderDAO.orderPaymentListY(o_num);
+	}
+
+	@Override
+	public int orderRefundListF(int o_num) {
+		// TODO Auto-generated method stub
+		return orderDAO.orderRefundListF(o_num);
+	}
+
 }

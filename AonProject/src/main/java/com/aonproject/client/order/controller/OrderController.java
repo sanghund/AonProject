@@ -111,18 +111,69 @@ public class OrderController{
 			logger.info("stockResult="+stockResult);
 		}
 		
+		
 		String mode = request.getParameter("mode");
-		System.out.println(mode);
 		if(mode != null){
 			if(mode.equals("cartOrder")){
+				Cookie cookie = null;
+				int time = 0;
 				Cookie[] cookies = request.getCookies();
 				if(cookies != null){
-					for(Cookie cookie : cookies){
-						if(cookie.getName().equals("cartList")){
-							cookie.setMaxAge(0);
-							response.addCookie(cookie);
+					for(Cookie cookiee : cookies){
+						if(cookiee.getName().equals("cartList")){
+							cookie = cookiee;
+							time = cookiee.getMaxAge();
 							break;
 						}
+					}
+				}
+				
+				if(cookie != null){
+					StringBuffer content = new StringBuffer("");
+					StringTokenizer contents = new StringTokenizer(cookie.getValue(), "%");
+				
+					boolean chk = false;
+					ArrayList<String> cList = new ArrayList<String>();
+					ArrayList<Integer> numbers = new ArrayList<Integer>(); 
+					while(contents.hasMoreTokens()){
+						String line = contents.nextToken();
+						cList.add(line);
+					}
+					if(cList.size() > 0){
+						for(int i = 0; i < orderInfo.size(); i++){
+							String line = (String) orderInfo.get(i).getP_no().toString().toUpperCase();
+							int k = 0;
+							for(String test : cList){
+								int cNum = test.indexOf(line);
+								if(cNum > -1){
+									chk = true;
+									numbers.add(k);
+									break;
+								}
+								k++;
+							}
+						}
+					}
+					if(chk){
+						for(int i = 0; i < cList.size(); i++){
+							boolean omg = false;
+							for(int num : numbers){
+								if(num == i){
+									omg = true;
+									break;
+								}
+							}
+							if(!omg){
+								content.append("%"+cList.get(i));
+							}
+						}
+						cookie = new Cookie("cartList", content.toString());
+						if(content.toString().equals("")){
+							cookie.setMaxAge(0);
+						}else{
+							cookie.setMaxAge(time);
+						}
+						response.addCookie(cookie);
 					}
 				}
 			}
