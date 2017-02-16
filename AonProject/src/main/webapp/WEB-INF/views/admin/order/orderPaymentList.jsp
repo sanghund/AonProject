@@ -258,20 +258,22 @@
 		
 		$(".goF").click(function(event){
 			event.preventDefault();
-			$("#o_num").val(($(this).closest("td").attr("data-num")));
-			$.ajax({
-				url : "/admin/order/orderPaymentListY",
-				data : $("#searchForm").serialize(),
-				dataType : "text",
-				type : "post",
-				error : function(){
-					alert("시스템 에러입니다.");
-				},
-				success : function(reslut){
-					if(result = "success") location.reload();
-					else alert("시스템 에러입니다.");
-				}
-			});
+			if(confirm("주문번호 : [" + $(this).closest("td").attr("data-num") + "] 정말로 하시겠습니까?")){
+				$("#o_num").val(($(this).closest("td").attr("data-num")));
+				$.ajax({
+					url : "/admin/order/orderPaymentListY",
+					data : $("#searchForm").serialize(),
+					dataType : "text",
+					type : "post",
+					error : function(){
+						alert("시스템 에러입니다.");
+					},
+					success : function(reslut){
+						if(result = "success") location.reload();
+						else alert("시스템 에러입니다.");
+					}
+				});
+			}
 		});	
 	});
 </script>
