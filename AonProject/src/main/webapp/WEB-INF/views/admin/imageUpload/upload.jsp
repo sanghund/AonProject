@@ -5,7 +5,39 @@
 <script type="text/javascript" src="/resources/include/js/jquery.form.js"></script>
 <script>
   $(function() {
-	  $("#ImageInsert").click(function() {
+	  $("#insertBtn1").click(function() {
+		  $("#detailForm").attr({
+			  "method":"post",
+			  "action":"/admin/upload/ImageUploadInsert"
+		  });
+		  $("#detailForm").submit();
+	  });
+	  
+	  $("#insertBtn2").click(function() {
+		  $("#detailForm").attr({
+			  "method":"post",
+			  "action":"/admin/upload/ImageUploadInsert"
+		  });
+		  $("#detailForm").submit();
+	  });
+	  
+	  $("#insertBtn3").click(function() {
+		  $("#detailForm").attr({
+			  "method":"post",
+			  "action":"/admin/upload/ImageUploadInsert"
+		  });
+		  $("#detailForm").submit();
+	  });
+	  
+	  $("#insertBtn4").click(function() {
+		  $("#detailForm").attr({
+			  "method":"post",
+			  "action":"/admin/upload/ImageUploadInsert"
+		  });
+		  $("#detailForm").submit();
+	  });
+	  
+	  $("#insertBtn5").click(function() {
 		  $("#detailForm").attr({
 			  "method":"post",
 			  "action":"/admin/upload/ImageUploadInsert"
@@ -17,6 +49,9 @@
 </script>
 
 <!-- page content -->
+       <form id="detailForm" enctype="multipart/form-data">
+        <input type="hidden" name="img_id" value="${imageUploadList.mp_no}">
+        
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
@@ -27,151 +62,95 @@
             <div class="clearfix"></div>
 
             <div class="row">
-
-
-              <div class="col-md-8 col-sm-12 col-xs-12">
+              
+              <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Form Buttons <small>Sessions</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
+                    <h2>메인 이미지 관리 <small>화면관리 > 메인 이미지 관리</small></h2>
+                    
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
 
-                    <form class="form-horizontal form-label-left">
-
+                    <!-- <form class="form-horizontal form-label-left"> -->
+                    <div class="btnContainer">
+	                
                       <div class="form-group">
-                        <label class="col-sm-3 control-label">이미지 1</label>
+                        <label class="col-sm-2 control-label">이미지 1</label>
                         <div class="col-sm-9">
+                          <input type="file" id = "files" name="files"><br />
                           <div class="input-group">
                             <span class="input-group-btn">
-                                              <button type="button" class="btn btn-primary">Go!</button>
-                                          </span>
-                            <input type="text" class="form-control">
+                               <input type="button" id="insertBtn1" name="insertBtn1" value="등록" class="btn btn-success">
+                               <input type="button" id="deleteBtn1" name="deleteBtn1" value="삭제" class="btn btn-danger">
+                            </span>
                           </div>        
                         </div>
+                        <img src="#">
                       </div>
                       
                       <div class="form-group">
-                        <label class="col-sm-3 control-label">이미지 1</label>
+                        <label class="col-sm-2 control-label">이미지 2</label>
                         <div class="col-sm-9">
+                          <input type="file" id = "files" name="files"><br />
                           <div class="input-group">
                             <span class="input-group-btn">
-                                              <button type="button" class="btn btn-primary">Go!</button>
-                                          </span>
-                            <input type="text" class="form-control">
+                               <input type="button" id="insertBtn2" name="insertBtn2" value="등록" class="btn btn-success">
+                               <input type="button" id="deleteBtn2" name="deleteBtn2" value="삭제" class="btn btn-danger">
+                            </span>
                           </div>        
                         </div>
+                        <img src="#">
                       </div>
                       
                       <div class="form-group">
-                        <label class="col-sm-3 control-label">이미지 1</label>
+                        <label class="col-sm-2 control-label">이미지 3</label>
                         <div class="col-sm-9">
+                          <input type="file" id = "files" name="files"><br />
                           <div class="input-group">
                             <span class="input-group-btn">
-                                              <button type="button" class="btn btn-primary">Go!</button>
-                                          </span>
-                            <input type="text" class="form-control">
+                               <input type="button" id="insertBtn3" name="insertBtn3" value="등록" class="btn btn-success">
+                               <input type="button" id="deleteBtn3" name="deleteBtn3" value="삭제" class="btn btn-danger">
+                            </span>
                           </div>        
                         </div>
+                        <img src="#">
                       </div>
                       
                       <div class="form-group">
-                        <label class="col-sm-3 control-label">이미지 1</label>
+                        <label class="col-sm-2 control-label">이미지 4</label>
                         <div class="col-sm-9">
+                          <input type="file" id = "files" name="files"><br />
                           <div class="input-group">
                             <span class="input-group-btn">
-                                              <button type="button" class="btn btn-primary">Go!</button>
-                                          </span>
-                            <input type="text" class="form-control">
+                               <input type="button" id="insertBtn4" name="insertBtn4" value="등록" class="btn btn-success">
+                               <input type="button" id="deleteBtn4" name="deleteBtn4" value="삭제" class="btn btn-danger">
+                            </span>
                           </div>        
                         </div>
+                        <img src="#">
                       </div>
                       
                       <div class="form-group">
-                        <label class="col-sm-3 control-label">이미지 1</label>
+                        <label class="col-sm-2 control-label">이미지 5</label>
                         <div class="col-sm-9">
+                          <input type="file" id = "files" name="files"><br />
                           <div class="input-group">
                             <span class="input-group-btn">
-                                              <button type="button" class="btn btn-primary">Go!</button>
-                                          </span>
-                            <input type="text" class="form-control">
+                               <input type="button" id="insertBtn5" name="insertBtn5" value="등록" class="btn btn-success">
+                               <input type="button" id="deleteBtn5" name="deleteBtn5" value="삭제" class="btn btn-danger">
+                            </span>
                           </div>        
                         </div>
+                        <img src="#">
                       </div>
-                    </form>
+                    </div>
+                    <!-- </form> -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </form>
         <!-- /page content -->
-
-<h3>img 리스트</h3>
-	<form id="detailForm" enctype="multipart/form-data">
-		<table>
-			<tbody>
-				<tr>
-					<td>메인 이미지</td>
-					<%-- <td><input type="text" id="mp_no" name="mp_no" value="${imageUploadList.mp_no}"></td> --%>
-				</tr>
-				<tr>
-					<td>등록일</td>
-					<td>${imageUploadList.mp_date}</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="btnContainer">
-		<input type="file" id = "files" name="files" multiple="multiple" /><br />
-        <input type="button" id="ImageInsert" value="사진등록"><br />
-		<input type="button" id="deleteBtn" value="사진삭제">
-	</div>
-	</form>
-	
-	
-	<div class="itemList">
-		<c:choose>
-			<c:when test="${not empty imageUploadList}">
-				<c:forEach var="imageUploadList" items="${imageUploadList}">
-	
-				</c:forEach>
-			</c:when>
-			<c:otherwise>
-				<p>등록된 사진이 없습니다</p>
-			</c:otherwise>
-		</c:choose>
-	</div>
-	
-   <%-- <h2>@MultipartRequest 사용</h2>
-   <c:choose>
-     <c:when test="${not empty imageUploadList}">
-       <c:forEach var="image" items="${imageUploadList}">
-       <tr class="tac" data-num="${imageUploadList.mp_no}">
-         <td class="goDetail">${imageUploadList.mp_route}</td>
-         <td>${imageUploadList.mp_file}</td>
-         <td>${imageUploadList.mp_date}</td>
-       </tr>
-       </c:forEach>
-     </c:when>
-   </c:choose> --%>
-   
-    <!-- <form action="upload2.action" method="post"
-        enctype="multipart/form-data">
-          파일 : <input type="file" name="report" multiple="multiple"/><br />
-        <input type="button" id="ImageInsert" value="등록"><br />
-    </form> -->
