@@ -45,7 +45,6 @@ public class ReviewController {
 	//리스트 불러오기
 	@RequestMapping(value="/reviewList", method=RequestMethod.GET)
 	public String reviewList(@ModelAttribute ReviewVO rvo,@ModelAttribute ReviewImgVO revo, @ModelAttribute RecommentVO comvo, Model model){
-		logger.info("reviewList호출 성공"); 
 		
 		int cnt = 0;
 		cnt = reviewService.cntList();
@@ -53,16 +52,13 @@ public class ReviewController {
 		PagingSet.setPageing(rvo, cnt);
 		
 		List<ReviewVO> reviewList = reviewService.reviewList(rvo);
-		logger.info("reviewList="+reviewList);
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("reviweVO",rvo);
 		
 		List<ReviewImgVO> reviewImgList = reviewImgService.reviewImgList(revo);
-		logger.info("reviewImgList="+reviewImgList);
 		model.addAttribute("reviewImgList",reviewImgList);
 		
 		List<RecommentVO> recommentList = recommentService.recommentList(comvo);
-		logger.info("recommentList="+recommentList);
 		model.addAttribute("recommentList",recommentList);
 		
 		
@@ -74,26 +70,22 @@ public class ReviewController {
 	@ResponseBody
 	@RequestMapping(value="/reviewInsert.do", method=RequestMethod.POST)
 	public String reviewInsert(@ModelAttribute ReviewVO rvo, @ModelAttribute ReviewImgVO revo, HttpServletRequest request) throws IllegalAccessException, IOException{
-		logger.info("reviewInsert호출 성공");
 		mode = "insert";
 		int result = 0;
 		int reno = 0;
 		reno = reviewService.selectReno();
 		rvo.setRe_no(reno);//reno에 review테이블의 re_no가 담겨있다.
-		int selectreno = rvo.getRe_no();
-		logger.info("selectreno="+selectreno);
 		
 		result = reviewService.reviewInsert(rvo); //글이 서버에 등록되면 1이 된다.
-		logger.info("result="+result);
+		
 		int temp = rvo.getRe_no(); //temp에 re_no값이 담겨있다.
-		logger.info("temp="+temp);
+
 		
 		revo.setRe_no(temp);
 
 		if(result == 1){//글이 입력이 되었을 때
 			List<MultipartFile>	files = revo.getFiles();
-			logger.info("files="+files);
-				
+			
 			if(files != null && files.size() > 0){
 				for(MultipartFile file : files){
 					revo.setFile(file);
@@ -102,7 +94,7 @@ public class ReviewController {
 				}
 			}
 		}else{
-			logger.info(result);
+			
 		}
 		
 		String resultS = "success";
@@ -122,9 +114,9 @@ public class ReviewController {
 				fileResult = reviewImgService.reviewImgInsert(revo);
 			}
 			if(fileResult == 1){
-				logger.info("fileResult="+fileResult);
+				
 			}else{
-				logger.info("fileResult="+fileResult);
+				
 			}
 		}
 		return fileResult;
@@ -135,7 +127,7 @@ public class ReviewController {
 	//비밀번호 확인
 	@RequestMapping(value="/reviewConfirm.do", method=RequestMethod.POST)
 	public ResponseEntity<Integer> pwdConfirm(@ModelAttribute ReviewVO rvo){
-		logger.info("pwdConfirm 호출 성공");
+	
 		ResponseEntity<Integer> entity = null;
 		int result = 0;
 		try{
@@ -157,19 +149,15 @@ public class ReviewController {
 	@RequestMapping(value="/reviewUpdate.do", method=RequestMethod.POST)
 	public String reviewUpdate(@ModelAttribute ReviewVO rvo,@ModelAttribute ReviewImgVO revo, HttpServletRequest request) throws IllegalStateException, IOException{
 		mode = "update";
-		logger.info("reviewUpdate호출 성공");
 		int re_no = revo.getRe_no();
 		
 		int result = 0;
 		result = reviewService.reviewUpdate(rvo);
-		logger.info("result="+result);
 		
 		if(result == 1){
 			List<MultipartFile> files = revo.getFiles();
-			logger.info("files = "+files.size());
 			
 			String fileName = files.get(0).getOriginalFilename().toString();
-			logger.info("fileName="+fileName);
 			
 			if(fileName != ""){
 				FileUploadUtil.fileDelete(revo.getRi_file(), request);
@@ -181,7 +169,7 @@ public class ReviewController {
 				}
 			}
 		}else{
-			logger.info(result);
+			
 		}
 		
 		String resultData =  "success";
@@ -193,7 +181,7 @@ public class ReviewController {
 	@ResponseBody
 	@RequestMapping(value="/{re_no}", method=RequestMethod.DELETE)
 	public ResponseEntity<String> reviewDelete(@PathVariable("re_no") Integer re_no,@ModelAttribute ReviewImgVO revo,@ModelAttribute RecommentVO comvo, HttpServletRequest request, @ModelAttribute ReviewVO rvo) throws IOException{
-		logger.info("reviewDelete호출 성공");
+		
 		ResponseEntity<String>	entity = null;
 		try{
 			List<ReviewImgVO> fileList = reviewImgService.reviewImgFilename(re_no);

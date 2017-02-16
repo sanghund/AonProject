@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aonproject.admin.qna.dao.QnaDAO">
+	
+	<!-- 문의 리스트 뿌리기 -->
 	<select id="qnaList" resultType="qna" parameterType="qna">
 		select q_no, q_title, q_content, q_pwd, to_char(q_date, 'yyyy-MM-dd hh24:mm:ss')as q_date,
 		q_confirm, p_no, m_no, q_name from qna where p_no like #{p_no}||'%'
 		order by q_confirm asc, q_no desc
 	</select>
 	
+	<!-- 문의 관리자단 리스트 뿌리기 -->
 	<select id="qnacommentList" resultType="qna" parameterType="qna">
 		select q_no, q_title, q_content, q_date, Q_CONFIRM, m_no, p_no, q_name, rnum from 
 			(select q_no, q_title, q_content, q_date, Q_CONFIRM, m_no, p_no, q_name, rownum as rnum from 
@@ -17,29 +20,35 @@
 			where rnum <![CDATA[>=]]> #{start_data}
 	</select>
 	
+	<!-- 문의 삭제 -->
 	<delete id="qnaDelete" parameterType="qna">
 		delete from qna where q_no = #{q_no}
 	</delete>
 	
+	<!-- 문의 코멘트 달면 확인 1로 바뀜 -->
 	<update id="qnaQconfirm" parameterType="qna">
 		update qna set
 			q_confirm = 1
 		where q_no = #{q_no}	
 	</update>
 	
+	<!-- 문의 유저 등록 -->
 	<insert id="qnaUserInsert" parameterType="qna">
 		insert into qna(q_no, q_title, q_content, q_pwd, p_no, m_no) 
 			values(QNA_seq.nextval, #{q_title}, #{q_content}, #{q_pwd}, (select p_no from product_order where o_no =(select * from (select o_no from product_order where m_no = #{m_no} and p_no like #{p_no}||'%' order by o_no asc) where rownum = 1)), #{m_no})
 	</insert>
 	
+	<!-- 처음 문의 등록 시 확인 0으로 입력 -->
 	<update id="qnaConfirm" parameterType="qna">
 		update qna set q_confirm = 0 where m_no = #{m_no}
 	</update>
 	
+	<!-- 문의 이름 넣기 -->
 	<update id="qnaQname" parameterType="qna">
 		update qna set q_name = (select substr((select m_id from member where m_no = #{m_no}), 1,length((select m_id from member where m_no = #{m_no}))-3) from dual) where m_no = #{m_no}
 	</update>
 	
+	<!-- 문의 비번 확인 -->
 	<select id="qnaPwdConfirm" parameterType="qna" resultType="int">
 		select nvl((select 1 from qna where q_no=#{q_no} and q_pwd=#{q_pwd}), 0)as state from dual
 	</select>

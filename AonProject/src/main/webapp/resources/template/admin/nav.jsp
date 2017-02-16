@@ -57,15 +57,14 @@
                   </li>
                   <li><a><i class="fa fa-edit"></i> 주문관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="form.html">null</a></li>
-                      <li><a href="form_advanced.html">null</a></li>
+                      <li><a href="/admin/order/orderList">주문내역</a></li>
+                      <li><a href="/admin/order/orderPaymentList">결제관리</a></li>
+                      <li><a href="/admin/order/orderRefundList">환불관리</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-address-book-o" aria-hidden="true"></i> 회원관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a class="mInfo" id="mInfo">회원조회</a></li>
-                      <li><a href="media_gallery.html">null</a></li>
-                      <li><a href="typography.html">null</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-address-book-o" aria-hidden="true"></i> 약관관리 <span class="fa fa-chevron-down"></span></a>
@@ -77,16 +76,6 @@
                   <li><a><i class="fa fa-table"></i> 재고관리 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="/admin/stockList">재고관리</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> 배송관리 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="chartjs.html">null</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-clone"></i> 매출관리 <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="fixed_sidebar.html">null</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-bug"></i> 게시판관리 <span class="fa fa-chevron-down"></span></a>
@@ -101,9 +90,6 @@
                       <li><a class="size" id="size">사이즈관리</a></li>
                       <li><a class="color" id="color">색상관리</a></li>
                       <li><a class="type" id="type">상품타입관리</a></li>
-                      <li><a href="plain_page.html">null</a></li>
-                      <li><a href="login.html">null</a></li>
-                      <li><a href="pricing_tables.html">null</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-windows"></i> 화면 관리<span class="fa fa-chevron-down"></span></a>

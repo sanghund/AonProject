@@ -110,4 +110,8 @@
 		<put-attribute name="main" value="/WEB-INF/views/admin/commonCode/{1}.jsp" />
 	</definition>
 	
+	<!-- 주문내역 -->
+	<definition name="admin/order/*" extends="adminMain">
+		<put-attribute name="main" value="/WEB-INF/views/admin/order/{1}.jsp" />
+	</definition>
 </tiles-definitions>

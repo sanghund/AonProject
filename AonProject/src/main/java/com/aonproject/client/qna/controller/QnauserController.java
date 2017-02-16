@@ -38,22 +38,16 @@ public class QnauserController {
 	//리스트 불러오기
 	@RequestMapping(value="/qnauserList", method=RequestMethod.GET)
 	public String qnaList(@ModelAttribute QnaVO qvo, @ModelAttribute CommentQnAVO cqvo,Model model){
-		logger.info("qnaList호출 성공");
-		
-		System.out.println(qvo.getP_no());
 		
 		int cnt = 0;
-		/*cnt = qnaService.cntList();*/
 		qvo.setCountList(5);
 		PagingSet.setPageing(qvo, cnt);
 		
 		List<QnaVO> qnaList = qnaService.qnaList(qvo);
-		logger.info("qnaList = " +qnaList);
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("qnaVO", qvo);
 		
 		List<CommentQnAVO> commentQnAList = commentQnAService.commentQnAList(cqvo);
-		logger.info("commentQnAList="+commentQnAList);
 		model.addAttribute("commentQnAList",commentQnAList);
 		
 		return  "client/userqnaList";
@@ -63,20 +57,18 @@ public class QnauserController {
 	@ResponseBody
 	@RequestMapping(value="/qnaUserInsert", method=RequestMethod.POST)
 	public String qnaUserInsert(Authentication auth, @ModelAttribute QnaVO qvo, HttpServletRequest request){
-		logger.info("qnaUserInsert호출 성공");
 		MemberVO mvo = (MemberVO)auth.getPrincipal();
 		qvo.setM_no(mvo.getM_no());
 		
 		int result = 0;
 		int success=0;
 		result = qnaService.qnaUserInsert(qvo);
-		System.out.println("result값 = "+result);
 		if(result ==1){ //글입력이 성공했을때
 			qnaService.qnaQname(qvo);  //이름 입력 성공
 			
 			success = qnaService.qnaConfirm(qvo); //관리자가 코멘트를 달면 1 안달면 0
 			if(success == 1){
-				logger.info("관리자 코멘트 성공");
+				
 			}
 		}
 		String end = "success";
@@ -87,7 +79,6 @@ public class QnauserController {
 	//비밀번호 확인
 	@RequestMapping(value="/qnaPwdConfirm", method=RequestMethod.POST)
 	public ResponseEntity<Integer> qnaPwdConfirm(@ModelAttribute QnaVO qvo){
-		logger.info("qnaConfirm호출 확인");
 		int result = 0;
 		ResponseEntity<Integer> entity = null;
 		

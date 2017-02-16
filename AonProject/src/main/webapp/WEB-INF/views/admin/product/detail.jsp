@@ -171,17 +171,17 @@
 									<c:when test="${not empty commonCodeList}">
 										<c:forEach var="commonCodeList" items="${commonCodeList}">
 											<c:if test="${commonCodeList.cc_group eq 'p_type'}">
-												<c:if test="${commonCodeList.cc_no ne productDetail.p_type}">
+												<c:if test="${commonCodeList.cc_name ne productDetail.p_type_name}">
 													<option value="${commonCodeList.cc_no}">${commonCodeList.cc_name}</option>
 												</c:if>
-												<c:if test="${commonCodeList.cc_no eq productDetail.p_type}">
+												<c:if test="${commonCodeList.cc_name eq productDetail.p_type_name}">
 													<option value="${commonCodeList.cc_no}" selected="selected">${commonCodeList.cc_name}</option>
 												</c:if>
 											</c:if>
 										</c:forEach>
 									</c:when>
 									<c:otherwise>
-										<option value="">등록된 색상이 없습니다.</option>
+										<option value="">등록된 상품이 없습니다.</option>
 									</c:otherwise>
 								</c:choose>
 							</select>

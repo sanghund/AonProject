@@ -37,7 +37,6 @@ public class CommentQnAController {
 	
 	@RequestMapping(value="/commentQnAList", method=RequestMethod.GET)
 	public String CommentQnAList(@ModelAttribute CommentQnAVO cqvo, @ModelAttribute QnaVO qvo, Model model){
-		logger.info("CommentQnAList호출 성공");
 		
 		int cnt = 0;
 		cnt = commentQnAService.cntList();
@@ -58,7 +57,6 @@ public class CommentQnAController {
 	@ResponseBody
 	@RequestMapping(value="/commentQnAInsert", method=RequestMethod.POST)
 	public String commentQnAInsert(@ModelAttribute CommentQnAVO cqvo, HttpServletRequest request){
-		logger.info("commentQnAInsert호출 성공");
 		
 		int result = 0;
 		int q_no = cqvo.getQ_no();
@@ -66,7 +64,6 @@ public class CommentQnAController {
 		
 		if(result == 1){
 			qnaService.qnaQconfirm(q_no);//확인을 0에서 1로 바꾼
-			logger.info("insert성공");
 		}
 		String good = "success";
 		
@@ -76,13 +73,12 @@ public class CommentQnAController {
 	@ResponseBody
 	@RequestMapping(value="/commentQnAUpdate", method=RequestMethod.POST)
 	public String commentQnAUpdate(@ModelAttribute CommentQnAVO cqvo, HttpServletRequest request){
-		logger.info("commentQnAInsert호출 성공");
 		
 		int result = 0;
 		result = commentQnAService.commentQnAUpdate(cqvo);
 		
 		if(result == 1){
-			logger.info("insert성공");
+
 		}
 		String good = "success";
 		
@@ -93,7 +89,6 @@ public class CommentQnAController {
 	@ResponseBody
 	@RequestMapping(value="/{q_no}", method=RequestMethod.DELETE)
 	public ResponseEntity<String> commentQnADelete(@PathVariable("q_no") Integer q_no, @ModelAttribute CommentQnAVO cqvo, @ModelAttribute QnaVO qvo, HttpServletRequest request)throws IOException{
-		logger.info("commentQnADelete 호출 성공");
 		
 		ResponseEntity<String> entity = null;
 		try{

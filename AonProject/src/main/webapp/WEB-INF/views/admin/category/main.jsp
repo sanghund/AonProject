@@ -127,7 +127,7 @@
 					<tr>
 					<td>카테고리 이름 : </td>
 					<td>
-						<input type="number" id="ca_name" name="ca_name" size="10" maxlength="4">
+						<input type="text" id="ca_name" name="ca_name" size="10" maxlength="4" placeholder="ex)2017">
 						<select id="caselect" name="caselect">
 							<option value="caoption1">S/S</option>
 							<option value="caoption2">F/W</option>
@@ -136,8 +136,8 @@
 				</tr>
 				<tr class="catr2">
 					<td colspan="2">
-						<input type="reset" id="cacancelBtn" value="취소">
-						<input type="button" id="cainsertBtn" value="등록">
+						<input type="reset" id="cacancelBtn" class="btn btn-danger" value="취소">
+						<input type="button" id="cainsertBtn" class="btn btn-primary" value="등록">
 					</td>
 				</tr>
 				</tbody>
@@ -160,17 +160,17 @@
 									<input type="hidden" class="ca_no" value="${category.ca_no }">
 									<div class="ca_name1">${category.ca_name}</div>
 									<div class="ca_name2">
-										<input type="number" id="ca_name" name="ca_name" size="10" maxlength="4">
+										<input type="text" id="ca_name" name="ca_name" size="10" maxlength="4" placeholder="ex)2017">
 										<select id="caselect" name="caselect">
 											<option value="caoption1">S/S</option>
 											<option value="caoption2">F/W</option>
 										</select>
-										<input type="button" class="caokBtn" value="확인">
-										<input type="button" class="cacancelBtn" value="취소">
+										<input type="button" class="caokBtn btn btn-primary" value="확인">
+										<input type="button" class="cacancelBtn btn btn-danger" value="취소">
 									</div>
 									<div class="caBtn" style="float:right">
-										<input type="button" class="caUpdateBtn" value="수정">
-										<input type="button" class="caDeleteBtn" value="삭제">	
+										<input type="button" class="caUpdateBtn btn btn-primary" value="수정">
+										<input type="button" class="caDeleteBtn btn btn-danger" value="삭제">	
 									</div>	
 								</td>
 							</tr>
