@@ -88,40 +88,12 @@
 				<span>주문완료</span>
 			</div>
 		</div>
-		<h4 class="bold">주문 상품 확인</h4>
+		<h4 class="bold">주문 상품 확인123</h4>
 		<!-- orderList repeat area start-->
 		<c:choose>
 			<c:when test="${not empty orderList}">
 				<c:forEach varStatus="status" items="${orderList}">
 					<c:set var="flag" value="true" />
-					<c:forEach var="chk" begin="1" end="${status.index}" step="1">
-						<c:if test="${flag eq true}">
-							<c:if test="${chk ne status.index}">
-								<c:if test="${orderList[status.index].p_no eq orderList[chk].p_no}">
-								<c:set var="flag" value="false"/>
-									<script type="text/javascript">
-										$(document).ready(function(){										
-											var sizeAdd = $("<span>");
-											sizeAdd.addClass("sizeAdd");
-											sizeAdd.html("${orderList[status.index].size}");
-											$(".orderDesc > ul li").eq(1).append(sizeAdd);
-											
-											var sizeCodeAdd = $("<span class='none'>");
-											sizeCodeAdd.addClass("sizeCodeAdd");
-											sizeCodeAdd.html("${fn:toUpperCase(orderList[status.index].size_code)}");
-											$(".orderDesc > ul li").eq(6).append(sizeCodeAdd);
-											
-											var cntAdd = $("<span>");
-											cntAdd.addClass("cntAdd");
-											cntAdd.html("${orderList[status.index].o_cnt}");
-	
-											$(".orderDesc > ul li").eq(2).append(cntAdd);
-										})
-									</script>
-								</c:if>
-							</c:if>
-						</c:if>
-					</c:forEach>
 					<c:if test="${flag eq true}">
 						<div class="preview">
 							<div class="orderContainer">
@@ -149,7 +121,37 @@
 							</div>
 						</div>
 					</c:if>
-					
+					<c:forEach var="chk" begin="1" end="${status.index}" step="1">
+						<c:if test="${flag eq true}">
+							<c:if test="${chk ne status.index}">
+								<c:forEach varStatus="status" items="${orderList}">
+									<c:if test="${orderList[status.index].p_no eq orderList[chk].p_no}">
+									<c:set var="flag" value="false"/>
+										<script type="text/javascript">
+											$(document).ready(function(){			
+												alert("h");
+												var sizeAdd = $("<span>");
+												sizeAdd.addClass("sizeAdd");
+												sizeAdd.html("${orderList[status.index].size}");
+												$(".orderDesc > ul li").eq(1).append(sizeAdd);
+												
+												var sizeCodeAdd = $("<span class='none'>");
+												sizeCodeAdd.addClass("sizeCodeAdd");
+												sizeCodeAdd.html("${fn:toUpperCase(orderList[status.index].size_code)}");
+												$(".orderDesc > ul li").eq(6).append(sizeCodeAdd);
+												
+												var cntAdd = $("<span>");
+												cntAdd.addClass("cntAdd");
+												cntAdd.html("${orderList[status.index].o_cnt}");
+		
+												$(".orderDesc > ul li").eq(2).append(cntAdd);
+											})
+										</script>
+									</c:if>
+								</c:forEach>
+							</c:if>
+						</c:if>
+					</c:forEach>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -361,7 +363,7 @@
 					"method" : "post",
 					"action" : "/order/orderResult"
 				})
-				$("#orderForm").submit();
+				//$("#orderForm").submit();
 			}
 		});
 		
