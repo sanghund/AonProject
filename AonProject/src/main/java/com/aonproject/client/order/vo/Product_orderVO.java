@@ -12,8 +12,10 @@ public class Product_orderVO extends CommonPagingVO {
 	private String 	o_confirm = "";		//결재유무
 	private String 	o_date = "";		//등록일
 	private int 	m_no = 0;			//회원번호
+	private int 	ma_no = 0;			//회원주소
 	private String 	p_no = "";			//상품번호
-	private String  o_num = "";
+	private String  o_num = "";			//주문묶음
+	private String	addrChk = "";		//신규주소등록여부확인
 	
 	private List<String> p_nos = null;	//상품번호 리스트
 	private List<Integer> o_cnts = null;//상품 주문수량 리스트
@@ -33,6 +35,19 @@ public class Product_orderVO extends CommonPagingVO {
 	private String startDate = "";
 	private String endDate = "";
 	
+
+	public String getAddrChk() {
+		return addrChk;
+	}
+	public void setAddrChk(String addrChk) {
+		this.addrChk = addrChk;
+	}
+	public int getMa_no() {
+		return ma_no;
+	}
+	public void setMa_no(int ma_no) {
+		this.ma_no = ma_no;
+	}
 	public String getStartDate() {
 		return startDate;
 	}

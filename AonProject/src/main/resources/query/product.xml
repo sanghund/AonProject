@@ -35,7 +35,7 @@
 		product.ca_no, p3.pi_file, p3.pi_route, product.p_caution, p_info
 		from (select * from product where rowid in(select max(rowid) from product group by substr(p_no,1,7)) and ca_no = #{ca_no}) product 
 		inner join (select * from product_img inner join (select min(pi_no) pi_no 
-		from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no) p3 on product.p_no = p3.p_no order by p_no desc
+		from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no order by product_img.p_no asc) p3 on product.p_no = p3.p_no order by p_no desc
 		) tt where rownum <![CDATA[<=]]> #{end_data}
 		) where rnum <![CDATA[>=]]> #{start_data}
 	
@@ -49,7 +49,7 @@
 	<!-- 상품  디테일 조회 -->
 	<select id="productDetail" resultType="product" parameterType="product">
 		/* product - productDetail */
-		select product.p_no, category.ca_name, p_type_cd.cc_name "p_type_name", product.p_name, product.p_price, product.p_discount, p3.pi_file,
+		select product.p_no, category.ca_name, p_type_cd.cc_name "p_type_name", p_type, product.p_name, product.p_price, product.p_discount, p3.pi_file,
 			   p3.pi_route, p_info, color_cd.cc_name "color", color_code, upper(size_cd.cc_name) "size", size_code, p_fabric, p_caution, 
 			   to_char(product.p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date
 		from product 

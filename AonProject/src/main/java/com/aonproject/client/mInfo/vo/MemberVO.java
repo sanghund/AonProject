@@ -36,6 +36,7 @@ public class MemberVO extends CommonPagingVO implements UserDetails{
 	
 	private String memberSearch = "";
 	
+	private int ma_no = 0;
 	
 	public MemberVO() {}
 	
@@ -74,7 +75,15 @@ public class MemberVO extends CommonPagingVO implements UserDetails{
 		}
 		
 	}
+	
+	
 
+	public int getMa_no() {
+		return ma_no;
+	}
+	public void setMa_no(int ma_no) {
+		this.ma_no = ma_no;
+	}
 	public String getMemberSearch() {
 		return memberSearch;
 	}

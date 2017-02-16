@@ -86,6 +86,10 @@ public class ClientProductController {
 		int productCnt = productService.productCnt(pvo);
 		PagingSet.setPageing(pvo, productCnt);
 		
+		/*product list all*/
+		pvo.setStart_data(0);
+		pvo.setEnd_data(productCnt);
+		
 		List<CommonCodeVO> commonCodeList = commonCodeService.CommonCodeList(cmvo);
 		model.addAttribute("commonCodeList", commonCodeList);
 		
