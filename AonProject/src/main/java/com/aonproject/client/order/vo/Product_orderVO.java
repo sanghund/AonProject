@@ -29,9 +29,13 @@ public class Product_orderVO extends CommonPagingVO {
 	private String p_size = "";
 	private String p_type = "";
 	
+	private String m_id = "";
+	private String m_name = "";
 	
+	private String startDate = "";
+	private String endDate = "";
 	
-	
+
 	public String getAddrChk() {
 		return addrChk;
 	}
@@ -43,6 +47,30 @@ public class Product_orderVO extends CommonPagingVO {
 	}
 	public void setMa_no(int ma_no) {
 		this.ma_no = ma_no;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public String getM_id() {
+		return m_id;
+	}
+	public void setM_id(String m_id) {
+		this.m_id = m_id;
+	}
+	public String getM_name() {
+		return m_name;
+	}
+	public void setM_name(String m_name) {
+		this.m_name = m_name;
 	}
 	public String getP_name() {
 		return p_name;

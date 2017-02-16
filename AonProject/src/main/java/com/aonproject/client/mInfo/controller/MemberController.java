@@ -242,6 +242,34 @@ public class MemberController {
 		return mav;
 	}
 	
+	// 마이페이지 - 환불요청
+	@ResponseBody
+	@RequestMapping(value="/mypage/odrerRefundRequest")
+	public String odrerRefundRequest(@RequestParam("o_num") String o_number){
+		logger.info("odrerRefundRequest 호출 성공");
+		String result = "";
+		int gogo = 0;
+		int o_num = 0;
+		
+		try{
+			o_num = Integer.parseInt(o_number);
+		}
+		catch(NumberFormatException e){
+			result = "fail";
+			o_num = 0;
+		}
+		
+		gogo = orderService.odrerRefundRequest(o_num);
+		
+		if(gogo > 0){
+			result = "success";
+		}
+		else{
+			result = "fail";
+		};
+		return result;
+	};
+	
 	// 마이페이지 - 구매 후기 내역
 	@RequestMapping(value="/mypage/review")
 	public ModelAndView review(Authentication auth, @ModelAttribute CategoryVO cvo, HttpServletRequest request){

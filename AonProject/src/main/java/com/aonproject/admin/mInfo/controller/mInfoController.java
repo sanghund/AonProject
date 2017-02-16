@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.aonproject.admin.mInfo.vo.mInfoVO;
 import com.aonproject.client.mInfo.service.MemberService;
 import com.aonproject.client.mInfo.vo.MemberVO;
+import com.aonproject.admin.aInfo.vo.AdminVO;
 import com.aonproject.admin.mInfo.service.mInfoService;
 import com.aonproject.common.page.Paging;
 import com.aonproject.common.util.graph.MakeChartGraph;
@@ -34,9 +36,11 @@ public class mInfoController {
 	
 	// member list
 	@RequestMapping(value="/mInfoList", method = RequestMethod.GET)
-	public String mInfoList(@ModelAttribute mInfoVO mvo, Model model, HttpServletRequest request) {
+	public String mInfoList(@ModelAttribute mInfoVO mvo, Model model, HttpServletRequest request, Authentication auth) {
 		logger.info("mInfoList calling success");
-		
+		AdminVO avo = (AdminVO) auth.getPrincipal();
+		model.addAttribute("vo", avo);
+	
 		// �젙�젹�뿉 ���븳 湲곕낯媛� �꽕�젙
 		if(mvo.getOrder_by()==null) mvo.setOrder_by("m_no");
 		if(mvo.getOrder_sc()==null) mvo.setOrder_by("DESC");
