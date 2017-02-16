@@ -3,7 +3,7 @@ package com.aonproject.admin.mInfo.vo;
 import com.aonproject.common.vo.CommonVO;
 
 public class mInfoVO extends CommonVO {
-	 
+	
 	private int m_no = 0;
 	private String m_id = "";
 	private String m_pwd = "";
@@ -14,6 +14,7 @@ public class mInfoVO extends CommonVO {
 	private String m_addr = "";
 	private String m_leave = "";
 	private String m_date = "";
+	public String setM_addr;
 	
 	public int getM_no() {
 		return m_no;

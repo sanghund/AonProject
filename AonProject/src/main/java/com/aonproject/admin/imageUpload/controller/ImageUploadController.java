@@ -43,8 +43,7 @@ public class ImageUploadController {
 	@RequestMapping(value = "/upload/ImageUploadInsert")
 	public String imageUploadInsert(@ModelAttribute ImageUploadVO iuvo, HttpServletRequest request) throws IllegalStateException, IOException {
 		logger.info("imageUploadInsert 호출 성공");
-		
-		
+				
 		List<MultipartFile> files = iuvo.getFiles();
 		
 		for(int i=0; i<files.size(); i++){

@@ -5,11 +5,11 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ImageUploadVO {
-	private int mp_no;
+	private int mp_no;  // 사진 번호
 	private String mp_route; // 실제 경로
 	private String mp_date; //등록일
 	private List<MultipartFile> files;
-	private MultipartFile file; 
+	private MultipartFile file;
 	private String mp_file; // 이미지
 	
 	public int getMp_no() {

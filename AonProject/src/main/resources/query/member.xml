@@ -41,7 +41,7 @@
 	
 	<!-- 유저 정보 조회(추가 주소) -->
 	<select id = "mSubAddrs" parameterType="member" resultType="msa">
-		select ma_no, m_addr from 
+		select ma_no, m_addr from
 		(select min(ma_no) as mno from member_addr group by(m_no) having m_no = #{m_no}), 
 		member_addr where mno != ma_no order by ma_no
 	</select>
