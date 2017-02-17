@@ -214,10 +214,20 @@
     			daumAddr();
     		});
     		
+    		var re = /[a-zA-Z0-9]/;
     		// 아이디 중복체크
     		$("#a_id").blur(function(){
     			if($("#a_id").val().replace(/\s/g,"")=="") {
     				$("#idChkMsg").html("아이디를 입력해 주세요.");
+    				idOverlopChk= false;
+    			}
+    			else if(!re.test($("#a_id").val())){
+    				$("#idChkMsg").html("아이디는 영어와 숫자만 가능합니다.");
+    				idOverlopChk = false;
+    			}
+    			else if($("#a_id").val().length < 4){
+    				$("#idChkMsg").html("아이디는 최소 4자리 이상이어야 합니다");
+    				idOverlopChk = false;
     			}
     			else{
     				overlapChk($("#a_id"), $("#idChkMsg"), "admin");
