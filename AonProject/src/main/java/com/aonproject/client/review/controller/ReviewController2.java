@@ -252,7 +252,7 @@ public class ReviewController2 {
 		String resultData =  "success";
 		
 		return resultData;
-	}
+	} 
 	
 	@ResponseBody
 	@RequestMapping(value="/reviewOrderConfirm", method=RequestMethod.POST)
