@@ -31,12 +31,20 @@ public class ProductVO extends Product_orderVO {
 	private String color;		//색상
 	private String size;		//사이즈
 	
+	private int stock_cnt;		//상품 등록 수량
+	
 	//파일 업로드 위한 속성
 	private MultipartFile file;	//첨부파일
 	private String pi_file =""; //실제 서버에 저장한 파일명
 	
 	
 	
+	public int getStock_cnt() {
+		return stock_cnt;
+	}
+	public void setStock_cnt(int stock_cnt) {
+		this.stock_cnt = stock_cnt;
+	}
 	public String getCreateP_no() {
 		return createP_no;
 	}

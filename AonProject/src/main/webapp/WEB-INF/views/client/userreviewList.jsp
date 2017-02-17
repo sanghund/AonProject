@@ -298,15 +298,10 @@
 							<td>
 								<div class="file_div">
 									<input type="file" id="files" name="files" multiple><br>
-									<!-- <img id="blah" style="float:left; padding-top:10px;"/> -->
 								</div>
 								<div class="write_btn" style="cursor: pointer;">
 									<img src="/resources/include/image/reviewimage/write_review.gif" >
 								</div>
-									
-								<!-- <div class="addFile">
-									 <a href="#this" class="btn" id="addFile">파일 추가</a>
-								</div> -->
 							</td>
 						</tr>
 					</tbody>
@@ -461,60 +456,6 @@
 									</td>
 								</tr>
 							</c:forEach>
-							<%-- <tr class="page_tr">
-								<td colspan="4" id = "pageLow">
-									<c:if test = "${reviewVO.totalPage < reviewVO.pageNum }">
-										<c:set var = "pNum" value= "${reviewVO.totalPage }"/>
-									</c:if>
-									<c:if test = "${reviewVO.totalPage >= reviewVO.pageNum }">
-										<c:set var = "pNum" value= "${reviewVO.pageNum }"/>
-									</c:if>
-									
-									<c:if test = "${reviewVO.pageTotal[0] eq 1 and pNum eq 1}" >
-										<span class = "icon-angle-double-left"></span>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[0] eq 1 and pNum ne 1}" >
-										<a href = "/review/userreviewList?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[0] ne 1}" >
-										<a href = "/client/userreviewList?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[0] eq 1}" >
-										<span class = "icon-angle-left"></span>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[0] ne 1}" >
-										<a href = "/client/userreviewList?pageNum=${reviewVO.pageTotal[0] - fn:length(reviewVO.pageTotal) }" data-num = "${reviewVO.pageTotal[0] - fn:length(reviewVO.pageTotal) }" class = "icon-angle-left"></a>
-									</c:if>
-						
-								
-									<c:forEach items="${reviewVO.pageTotal }" varStatus="status">
-										<c:if test = "${reviewVO.pageTotal[status.index] eq pNum}" >
-											<span>${reviewVO.pageTotal[status.index] }</span>
-										</c:if>
-										<c:if test = "${reviewVO.pageTotal[status.index] ne pNum}" >
-											<a href = "/client/userreviewList?pageNum=${reviewVO.pageTotal[status.index] }" data-num = "${reviewVO.pageTotal[status.index]}">
-						 						${reviewVO.pageTotal[status.index] } 
-											</a>
-										</c:if>
-									</c:forEach>
-		
-									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage}" >
-										<span class = "icon-angle-right"></span>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] ne reviewVO.totalPage}" >
-										<a href = "/client/userreviewList?pageNum=${reviewVO.pageTotal[0] + fn:length(reviewVO.pageTotal) }" data-num = "${reviewVO.pageTotal[0] + fn:length(reviewVO.pageTotal) }" class = "icon-angle-right"></a>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage and reviewVO.totalPage eq pNum}" >
-										<span class = "icon-angle-double-right"></span>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage and reviewVO.totalPage ne pNum}" >
-										<a href = "/client/userreviewList?pageNum=${reviewVO.totalPage }" data-num = "${reviewVO.totalPage }" class = "icon-angle-double-right"></a>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] ne reviewVO.totalPage}" >
-										<a href = "/client/userreviewList?pageNum=${reviewVO.totalPage }" data-num = "${reviewVO.totalPage }" class = "icon-angle-double-right"></a>
-									</c:if>
-								</td>
-							</tr> --%>
 						</c:when>
 						<c:otherwise>
 							<tr>

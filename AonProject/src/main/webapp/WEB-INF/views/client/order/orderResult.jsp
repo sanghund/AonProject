@@ -94,28 +94,34 @@
 			<c:when test="${not empty productList}">
 				<c:forEach varStatus="status" items="${productList}">
 					<c:set var="flag" value="true" />
-					<c:forEach var="chk" begin="1" end="${status.index}" step="1">
+					<c:forEach var="chk" begin="0" end="${status.index}" step="1">
 						<c:if test="${flag eq true}">
 							<c:if test="${chk ne status.index}">
-								<c:if test="${productList[status.index].p_no eq productList[chk].p_no}">
-								<c:set var="flag" value="false"/>
+								<c:set var="p_no1" value="${fn:substring(productList[status.index].p_no,0,7)}"/>
+								<c:set var="p_no2" value="${fn:substring(productList[chk].p_no,0,7)}"/>
+								<c:if test="${p_no1 eq p_no2}">
+									<c:out value="${p_no1}"/>
+									<c:set var="flag" value="false"/>
 									<script type="text/javascript">
-										$(document).ready(function(){										
+										$(document).ready(function(){		
 											var sizeAdd = $("<span>");
 											sizeAdd.addClass("sizeAdd");
 											sizeAdd.html("${productList[status.index].size}");
-											$(".orderDesc > ul li").eq(1).append(sizeAdd);
+											$("."+"${className.substring(0,7)} > ul li").eq(1).append(sizeAdd);
+											
+											console.log("<c:out value='${p_no1.substring(0,7)}' />");
+											console.log("<c:out value='${p_no2.substring(0,7)}' />");
 											
 											var sizeCodeAdd = $("<span class='none'>");
 											sizeCodeAdd.addClass("sizeCodeAdd");
 											sizeCodeAdd.html("${fn:toUpperCase(productList[status.index].size_code)}");
-											$(".orderDesc > ul li").eq(6).append(sizeCodeAdd);
+											$("."+"${className.substring(0,7)} > ul li").eq(6).append(sizeCodeAdd);
 											
 											var cntAdd = $("<span>");
 											cntAdd.addClass("cntAdd");
 											cntAdd.html("${productList[status.index].o_cnt}");
 	
-											$(".orderDesc > ul li").eq(2).append(cntAdd);
+											$("."+"${className.substring(0,7)} > ul li").eq(2).append(cntAdd);
 										})
 									</script>
 								</c:if>
@@ -130,7 +136,8 @@
 										<img src="/productUpload/${productList[status.index].pi_file}" />
 									</a>
 								</div>
-								<div class="orderDesc">
+								<c:set var="className" value="${fn:toUpperCase(productList[status.index].p_no)}"/>
+								<div class="orderDesc ${className.substring(0,7)}">
 									<h5>${productList[status.index].p_name}</h5>
 									<span class="none">${productList[status.index].p_no}</span>
 									<ul>
@@ -283,6 +290,8 @@
 	
 	//상품 가격 연산
 	function orderPriceCal(){
+		var totalPrice = 0;
+		var sumTotal = 0;
 		//상품 등록 갯수 확인
 		itemCnt = $('.orderContainer').length;
 		console.log("itemCnt:"+itemCnt);
@@ -292,14 +301,17 @@
 			var itemDiscount = $('.orderContainer').eq(i).find('.orderDesc ul > li').eq(5).find("span").text();
 			var productCnt = $('.orderContainer').eq(i).find(".cntAdd").length;
 			
+			cntSum = 0;
 			for(var j=0; j<productCnt; j++){
 				cntSum += ($('.orderContainer').eq(i).find(".cntAdd").eq(j).text())*1;
+				totalPrice = parseInt(itemPrice) * cntSum;
 			}
-			totalPrice += parseInt(itemPrice) * cntSum;
-			discountPrice += ((parseInt(itemPrice) * parseInt(itemDiscount) / 100) * cntSum);
+			sumTotal += totalPrice;
+			
+			discountPrice += ((parseInt(itemPrice) * parseInt(itemDiscount) / 100) * productCnt);
 		} 
-		orderPrice = totalPrice - discountPrice;
-		$(".w100").eq(0).find("div").eq(1).text(totalPrice+"원");
+		orderPrice = sumTotal - discountPrice;
+		$(".w100").eq(0).find("div").eq(1).text(sumTotal+"원");
 		$(".w100").eq(1).find("div").eq(1).text(discountPrice+"원");
 		$(".w100").eq(2).find("p").text(orderPrice+"원");
 	}
