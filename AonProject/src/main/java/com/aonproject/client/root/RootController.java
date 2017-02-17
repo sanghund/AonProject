@@ -42,4 +42,16 @@ public class RootController {
 		
 		return "client/index";
 	}
+	
+	@RequestMapping(value = "/admin403")
+	public String adminError403(){
+		logger.info("admin403 error 호출 성공");	
+		return "redirect:/admin/login";
+	}
+	
+	@RequestMapping(value = "/member403")
+	public String memberError403(){
+		logger.info("member403 error 호출 성공");	
+		return "redirect:/member/login";
+	}
 }

@@ -89,7 +89,7 @@
 				<div><span class = "array">비밀번호 확인</span><input type = "password" maxlength="20" id = "a_pwd2" name = "a_pwd2"><span id = "pwdChkMsg2"></span></div>		
 				<div><span class = "array">이름</span><input type = "text" maxlength="20" id = "a_name" name = "a_name"><span id = "nameChkMsg"></span></div>				
 				<div>
-					<span class = "array">핸드폰</span><input type = "text" maxlength="4" id = "a_tel1" name = "a_tel1">
+					<span class = "array">핸드폰</span><input type = "text" maxlength="3" id = "a_tel1" name = "a_tel1">
 					<input type = "text" maxlength="4" id = "a_tel2" name = "a_tel2">
 					<input type = "text" maxlength="4" id = "a_tel3" name = "a_tel3">
 					<span id = "telChkMsg"></span>
