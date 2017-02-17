@@ -43,24 +43,25 @@ public class CommonCodeController {
 	
 	// 공통 코드 size 리스트 구현
 	@RequestMapping(value = "/sCommonCodeList", method=RequestMethod.GET)
-	public String sCommonCodeList(@ModelAttribute CommonCodeVO cvo, Model model, Authentication auth){
+	public String sCommonCodeList(@ModelAttribute CommonCodeVO cvo, Authentication auth, Model model){
 		logger.info("sCommonCodeList 호출 성공!");
 		
 		UserDetails vo = (AdminVO) auth.getPrincipal();
 		model.addAttribute("vo", vo);
 		
 		List<CommonCodeVO> sCommonCodeList = commonCodeService.sCommonCodeList(cvo);
-		
 		if(sCommonCodeList != null) {
 			model.addAttribute("sCommonCodeList", sCommonCodeList);
 		}
+		model.addAttribute("vo", vo);
 		
 		return "admin/commonCode/sDetailForm";
 	}
 	
 	// 공통 코드 color 리스트 구현
 		@RequestMapping(value = "/cCommonCodeList", method=RequestMethod.GET)
-		public String cCommonCodeList(@ModelAttribute CommonCodeVO cvo, Model model, Authentication auth){
+
+		public String cCommonCodeList(@ModelAttribute CommonCodeVO cvo, Authentication auth, Model model){
 			logger.info("cCommonCodeList 호출 성공!");
 			
 			UserDetails vo = (AdminVO) auth.getPrincipal();
@@ -71,6 +72,7 @@ public class CommonCodeController {
 			if(cCommonCodeList != null) {
 				model.addAttribute("cCommonCodeList", cCommonCodeList);
 			}
+			model.addAttribute("vo", vo);
 			
 			return "admin/commonCode/cDetailForm";
 		}
@@ -88,6 +90,7 @@ public class CommonCodeController {
 			if(tCommonCodeList != null) {
 				model.addAttribute("tCommonCodeList", tCommonCodeList);
 			}
+			model.addAttribute("vo", vo);
 			
 			return "admin/commonCode/tDetailForm";
 		}

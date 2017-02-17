@@ -38,7 +38,7 @@ public class NoticeController {
 	public String boardList(@ModelAttribute CategoryVO cvo, @ModelAttribute NoticeVO nvo, Model model, Authentication auth){
 		logger.info("noticeList calling");
 		
-		/*Ä«Å×°í¸® ¸®½ºÆ® Ãâ·Â*/
+		/*Ä«ï¿½×°ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½*/
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
@@ -49,12 +49,14 @@ public class NoticeController {
 		
 		int total = noticeService.noticeListCnt(nvo);
 		logger.info("total = " + total);
+		UserDetails vo = (AdminVO) auth.getPrincipal();
 		
 		List<NoticeVO> noticeList = noticeService.noticeList(nvo);
 		
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("total", total);
 		model.addAttribute("data", nvo);
+		model.addAttribute("vo", vo);
 		
 		UserDetails vo = (AdminVO) auth.getPrincipal();
 		model.addAttribute("vo", vo);
@@ -63,8 +65,11 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/notice/writeForm")
-	public String writeForm(@ModelAttribute NoticeVO nvo){
+	public String writeForm(@ModelAttribute NoticeVO nvo, Model model, Authentication auth){
 		logger.info("writeFrom calling");
+		UserDetails vo = (AdminVO) auth.getPrincipal();
+		
+		model.addAttribute("vo", vo);
 		
 		return "admin/notice/writeForm";
 	}
@@ -93,7 +98,7 @@ public class NoticeController {
 		logger.info("no_num = " + nvo.getNo_num());
 		
 		NoticeVO detail = noticeService.detailForm(nvo);
-		
+		UserDetails vo = (AdminVO) auth.getPrincipal();
 		AdminVO admin= (AdminVO)auth.getPrincipal();
 		int a_no = admin.getA_no();
 		
@@ -106,6 +111,7 @@ public class NoticeController {
 		
 		model.addAttribute("adminInfo", admin);
 		model.addAttribute("detail", detail);
+		model.addAttribute("vo", vo);
 		String url = "admin/notice/detailForm";
 		
 		return url;
