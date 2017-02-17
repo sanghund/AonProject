@@ -50,7 +50,6 @@
 							$(".review_write").show();
 							$(".find_review").find("td").hide();
 							rollBack();
-							alert("글을 쓰실 수 있습니다.");
 						}else if(result == "fail"){
 							alert("상품주문 후에 작성하실 수 있습니다.");
 						}else if(result = "fails"){
@@ -272,14 +271,14 @@
 								<div class="tb-left">제목 : </div>
 							</th>
 							<td>
-								<div class="tb-left frm-w"><input type="text" name="re_title" id="re_title" size="20" maxlength="30"></div>
+								<div class="tb-left frm-w"><input type="text" name="re_title" id="re_title" size="40" maxlength="20"></div>
 							</td>
 						</tr>
 						<tr>
 							<th><div class="tb-left">비밀번호 : </div></th>
 							<td>
 								<div class="tb-left frm-w">
-									<input type="password" name="re_pwd" id="re_pwd" size="20" maxlength="30">
+									<input type="password" name="re_pwd" id="re_pwd" size="20" maxlength="20">
 									<span style="color:red;">비밀번호는 자동 저장됩니다.</span>
 								</div>
 							</td>
@@ -288,9 +287,8 @@
 							<th><div class="tb-left">내용 : </div></th>
 							<td>
 								<div class="tb-left frm-w">
-									<textarea rows="8" cols="70" id="re_content" name="re_content" maxlength="4000"></textarea>
+									<textarea rows="8" cols="70" id="re_content" name="re_content" maxlength="3000" style="resize: none;"></textarea>
 								</div>
-								
 							</td>
 						</tr>
 						<tr>
@@ -298,15 +296,10 @@
 							<td>
 								<div class="file_div">
 									<input type="file" id="files" name="files" multiple><br>
-									<!-- <img id="blah" style="float:left; padding-top:10px;"/> -->
 								</div>
 								<div class="write_btn" style="cursor: pointer;">
 									<img src="/resources/include/image/reviewimage/write_review.gif" >
 								</div>
-									
-								<!-- <div class="addFile">
-									 <a href="#this" class="btn" id="addFile">파일 추가</a>
-								</div> -->
 							</td>
 						</tr>
 					</tbody>
@@ -377,7 +370,7 @@
 										<div class="update_content">
 											<form id="update_form">
 												<input type="hidden" name="re_no" id="re_no" value="${review.re_no }">
-												<textarea rows="8" cols="70" id="re_content" name="re_content" maxlength="4000">${review.re_content }</textarea>
+												<textarea rows="8" cols="70" id="re_content" name="re_content" maxlength="3000">${review.re_content }</textarea>
 												<div class="mo_file"> 
 													<input type="file" id="files" name="files" style="padding-top:8px;" multiple><br />
 													<div class="imgView" style="padding-top:14px;">
@@ -406,7 +399,7 @@
 										</sec:authorize>
 										<sec:authorize ifNotGranted="user">
 											<div class="warning_modify">
-												<span>회원로그인 후 수정할 수 있습니다.</span>
+												<span style="padding:0 0 0 10px;">회원로그인 후 수정할 수 있습니다.</span>
 											</div>
 										</sec:authorize>
 										
@@ -461,60 +454,6 @@
 									</td>
 								</tr>
 							</c:forEach>
-							<%-- <tr class="page_tr">
-								<td colspan="4" id = "pageLow">
-									<c:if test = "${reviewVO.totalPage < reviewVO.pageNum }">
-										<c:set var = "pNum" value= "${reviewVO.totalPage }"/>
-									</c:if>
-									<c:if test = "${reviewVO.totalPage >= reviewVO.pageNum }">
-										<c:set var = "pNum" value= "${reviewVO.pageNum }"/>
-									</c:if>
-									
-									<c:if test = "${reviewVO.pageTotal[0] eq 1 and pNum eq 1}" >
-										<span class = "icon-angle-double-left"></span>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[0] eq 1 and pNum ne 1}" >
-										<a href = "/review/userreviewList?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[0] ne 1}" >
-										<a href = "/client/userreviewList?pageNum=1" data-num = "1" class = "icon-angle-double-left"></a>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[0] eq 1}" >
-										<span class = "icon-angle-left"></span>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[0] ne 1}" >
-										<a href = "/client/userreviewList?pageNum=${reviewVO.pageTotal[0] - fn:length(reviewVO.pageTotal) }" data-num = "${reviewVO.pageTotal[0] - fn:length(reviewVO.pageTotal) }" class = "icon-angle-left"></a>
-									</c:if>
-						
-								
-									<c:forEach items="${reviewVO.pageTotal }" varStatus="status">
-										<c:if test = "${reviewVO.pageTotal[status.index] eq pNum}" >
-											<span>${reviewVO.pageTotal[status.index] }</span>
-										</c:if>
-										<c:if test = "${reviewVO.pageTotal[status.index] ne pNum}" >
-											<a href = "/client/userreviewList?pageNum=${reviewVO.pageTotal[status.index] }" data-num = "${reviewVO.pageTotal[status.index]}">
-						 						${reviewVO.pageTotal[status.index] } 
-											</a>
-										</c:if>
-									</c:forEach>
-		
-									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage}" >
-										<span class = "icon-angle-right"></span>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] ne reviewVO.totalPage}" >
-										<a href = "/client/userreviewList?pageNum=${reviewVO.pageTotal[0] + fn:length(reviewVO.pageTotal) }" data-num = "${reviewVO.pageTotal[0] + fn:length(reviewVO.pageTotal) }" class = "icon-angle-right"></a>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage and reviewVO.totalPage eq pNum}" >
-										<span class = "icon-angle-double-right"></span>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] eq reviewVO.totalPage and reviewVO.totalPage ne pNum}" >
-										<a href = "/client/userreviewList?pageNum=${reviewVO.totalPage }" data-num = "${reviewVO.totalPage }" class = "icon-angle-double-right"></a>
-									</c:if>
-									<c:if test = "${reviewVO.pageTotal[fn:length(reviewVO.pageTotal) - 1] ne reviewVO.totalPage}" >
-										<a href = "/client/userreviewList?pageNum=${reviewVO.totalPage }" data-num = "${reviewVO.totalPage }" class = "icon-angle-double-right"></a>
-									</c:if>
-								</td>
-							</tr> --%>
 						</c:when>
 						<c:otherwise>
 							<tr>

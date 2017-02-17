@@ -239,7 +239,10 @@ public class OrderController{
 			for(int i=0; i<orderList.size(); i++){
 				Product_orderVO ovo = new Product_orderVO();
 				ovo.setP_no(orderList.get(i).getP_no().toString());
-			    ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
+				
+				logger.info(ovo.getP_no());
+			    
+				ovo.setO_cnt(Integer.parseInt(povo.getO_cnts().get(i).toString()));
 			    orderInfo.add(ovo);
 			}
 			model.addAttribute("orderInfo", orderInfo);

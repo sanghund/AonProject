@@ -9,6 +9,7 @@
    <http pattern="/resources/**" security="none"></http>
 
    <http pattern="/admin/**" authentication-manager-ref="adminManager" auto-config="true" create-session="never" use-expressions="true" disable-url-rewriting="true" >
+      <access-denied-handler error-page="/admin403"/>
       <intercept-url pattern="/admin/login" access = "permitAll" />
       <intercept-url pattern="/admin/logout" access = "permitAll" />
       <intercept-url pattern="/admin/loginCheck" access = "permitAll" />
@@ -18,6 +19,7 @@
    </http>
    
    <http authentication-manager-ref="memberManager" auto-config="true" create-session="never" use-expressions="true" disable-url-rewriting="true">
+      <access-denied-handler error-page="/member403"/>
       <intercept-url pattern="/member/mypage/**" access="hasAnyRole('user')"/>
       <intercept-url pattern="/order/order" access="hasAnyRole('user')"/>
       <intercept-url pattern="/**" access="permitAll"/>

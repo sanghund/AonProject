@@ -7,7 +7,7 @@
 		/* product - productList */
 		select * from(
 		select rownum as rnum, tt.* from(
-		select substr(p_no,1,5) as p_no, category.ca_name, p_type_cd.cc_name "p_type_name", p_name, p_price, p_discount, 
+		select substr(product.p_no,1,5) as p_no, stock_cnt, category.ca_name, p_type_cd.cc_name "p_type_name", p_name, p_price, p_discount, 
 			   p_info, color_cd.cc_name "color", color_code, upper(size_cd.cc_name) "size", size_code, p_fabric, p_caution, 
 			   to_char(p_Date, 'yyyy-mm-dd HH24:MI:SS') p_date
 		from product 
@@ -15,6 +15,7 @@
 		left join common_code size_cd on upper(product.size_code) = upper(size_cd.cc_no)
 		left join common_code color_cd on upper(product.color_code) = upper(color_cd.cc_no)
 		left join common_code p_type_cd on upper(product.p_type) = upper(p_type_cd.cc_no)
+		left join stock on product.p_no = stock.p_no
 		<where>
 			<if test="ca_no != 0">
 				product.ca_no = #{ca_no} and
@@ -38,12 +39,6 @@
 		from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no order by product_img.p_no asc) p3 on product.p_no = p3.p_no order by p_no desc
 		) tt where rownum <![CDATA[<=]]> #{end_data}
 		) where rnum <![CDATA[>=]]> #{start_data}
-	
-		<!-- select product.p_no, product.p_name, product.p_type, product.p_price, product.p_discount, 
-		product.ca_no, p3.pi_file, p3.pi_route, product.p_caution, p_info
-		from (select * from product where rowid in(select max(rowid) from product group by substr(p_no,1,7)) and ca_no = #{ca_no}) product 
-		inner join (select * from product_img inner join (select min(pi_no) pi_no 
-		from product_img group by p_no) p2 on product_img.pi_no = p2.pi_no) p3 on product.p_no = p3.p_no order by p_no desc -->
 	</select>
 	
 	<!-- 상품  디테일 조회 -->

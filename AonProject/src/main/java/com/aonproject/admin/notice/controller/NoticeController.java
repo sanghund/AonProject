@@ -58,6 +58,9 @@ public class NoticeController {
 		model.addAttribute("data", nvo);
 		model.addAttribute("vo", vo);
 		
+		UserDetails vo = (AdminVO) auth.getPrincipal();
+		model.addAttribute("vo", vo);
+		
 		return "admin/notice/noticeList";
 	}
 	

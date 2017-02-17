@@ -26,8 +26,11 @@ public class CommonCodeController {
 	
 	//공통 코드 리스트 구현
 	@RequestMapping(value = "/commonCodeList", method=RequestMethod.GET)
-	public String CommonCodeList(@ModelAttribute CommonCodeVO cvo, Model model){
+	public String CommonCodeList(@ModelAttribute CommonCodeVO cvo, Model model, Authentication auth){
 		logger.info("CommonCodeList 호출 성공!");
+		
+		UserDetails vo = (AdminVO) auth.getPrincipal();
+		model.addAttribute("vo", vo);
 			
 		List<CommonCodeVO> commonCodeList = commonCodeService.CommonCodeList(cvo);
 			
@@ -43,8 +46,10 @@ public class CommonCodeController {
 	public String sCommonCodeList(@ModelAttribute CommonCodeVO cvo, Authentication auth, Model model){
 		logger.info("sCommonCodeList 호출 성공!");
 		
-		List<CommonCodeVO> sCommonCodeList = commonCodeService.sCommonCodeList(cvo);
 		UserDetails vo = (AdminVO) auth.getPrincipal();
+		model.addAttribute("vo", vo);
+		
+		List<CommonCodeVO> sCommonCodeList = commonCodeService.sCommonCodeList(cvo);
 		if(sCommonCodeList != null) {
 			model.addAttribute("sCommonCodeList", sCommonCodeList);
 		}
@@ -55,11 +60,14 @@ public class CommonCodeController {
 	
 	// 공통 코드 color 리스트 구현
 		@RequestMapping(value = "/cCommonCodeList", method=RequestMethod.GET)
+
 		public String cCommonCodeList(@ModelAttribute CommonCodeVO cvo, Authentication auth, Model model){
 			logger.info("cCommonCodeList 호출 성공!");
 			
-			List<CommonCodeVO> cCommonCodeList = commonCodeService.cCommonCodeList(cvo);
 			UserDetails vo = (AdminVO) auth.getPrincipal();
+			model.addAttribute("vo", vo);
+			
+			List<CommonCodeVO> cCommonCodeList = commonCodeService.cCommonCodeList(cvo);
 			
 			if(cCommonCodeList != null) {
 				model.addAttribute("cCommonCodeList", cCommonCodeList);
@@ -71,11 +79,13 @@ public class CommonCodeController {
 		
 		// 공통 코드 type 리스트 구현
 		@RequestMapping(value = "/tCommonCodeList", method=RequestMethod.GET)
-		public String tCommonCodeList(@ModelAttribute CommonCodeVO cvo, Authentication auth, Model model){
+		public String tCommonCodeList(@ModelAttribute CommonCodeVO cvo, Model model, Authentication auth){
 			logger.info("tCommonCodeList 호출 성공!");
 			
-			List<CommonCodeVO> tCommonCodeList = commonCodeService.tCommonCodeList(cvo);
 			UserDetails vo = (AdminVO) auth.getPrincipal();
+			model.addAttribute("vo", vo);
+			
+			List<CommonCodeVO> tCommonCodeList = commonCodeService.tCommonCodeList(cvo);
 			
 			if(tCommonCodeList != null) {
 				model.addAttribute("tCommonCodeList", tCommonCodeList);
