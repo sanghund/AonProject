@@ -38,7 +38,7 @@ public class NoticeController {
 	public String boardList(@ModelAttribute CategoryVO cvo, @ModelAttribute NoticeVO nvo, Model model, Authentication auth){
 		logger.info("noticeList calling");
 		
-		/*ī�װ� ����Ʈ ���*/
+		/*카占쌓곤옙 占쏙옙占쏙옙트 占쏙옙占�*/
 		List<CategoryVO> categoryList = categoryService.categoryList(cvo);
 		model.addAttribute("categoryList", categoryList);
 		
@@ -56,9 +56,6 @@ public class NoticeController {
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("total", total);
 		model.addAttribute("data", nvo);
-		model.addAttribute("vo", vo);
-		
-		UserDetails vo = (AdminVO) auth.getPrincipal();
 		model.addAttribute("vo", vo);
 		
 		return "admin/notice/noticeList";
