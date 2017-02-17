@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,7 +35,7 @@ public class NoticeController {
 	private CategoryService categoryService;
 	
 	@RequestMapping(value = "/noticeList", method = RequestMethod.GET)
-	public String boardList(@ModelAttribute CategoryVO cvo, @ModelAttribute NoticeVO nvo, Model model){
+	public String boardList(@ModelAttribute CategoryVO cvo, @ModelAttribute NoticeVO nvo, Model model, Authentication auth){
 		logger.info("noticeList calling");
 		
 		/*카테고리 리스트 출력*/
@@ -54,6 +55,9 @@ public class NoticeController {
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("total", total);
 		model.addAttribute("data", nvo);
+		
+		UserDetails vo = (AdminVO) auth.getPrincipal();
+		model.addAttribute("vo", vo);
 		
 		return "admin/notice/noticeList";
 	}
