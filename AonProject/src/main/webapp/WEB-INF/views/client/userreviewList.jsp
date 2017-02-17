@@ -298,15 +298,10 @@
 							<td>
 								<div class="file_div">
 									<input type="file" id="files" name="files" multiple><br>
-									<!-- <img id="blah" style="float:left; padding-top:10px;"/> -->
 								</div>
 								<div class="write_btn" style="cursor: pointer;">
 									<img src="/resources/include/image/reviewimage/write_review.gif" >
 								</div>
-									
-								<!-- <div class="addFile">
-									 <a href="#this" class="btn" id="addFile">파일 추가</a>
-								</div> -->
 							</td>
 						</tr>
 					</tbody>
