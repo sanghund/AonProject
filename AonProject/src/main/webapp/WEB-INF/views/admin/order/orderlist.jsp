@@ -211,7 +211,7 @@
 			$("#searchForm").submit();
 		});
 		
-		$("#pageLow a").click(function(event){
+		$(".pageLow a").click(function(event){
 			event.preventDefault();
 			var adminPageNum = $(this).attr("data-num");
 			$("#pageNum").val(adminPageNum);

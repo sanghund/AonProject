@@ -89,7 +89,7 @@
 				<div><span class = "array">비밀번호 확인</span><input type = "password" maxlength="20" id = "a_pwd2" name = "a_pwd2"><span id = "pwdChkMsg2"></span></div>		
 				<div><span class = "array">이름</span><input type = "text" maxlength="20" id = "a_name" name = "a_name"><span id = "nameChkMsg"></span></div>				
 				<div>
-					<span class = "array">핸드폰</span><input type = "text" maxlength="4" id = "a_tel1" name = "a_tel1">
+					<span class = "array">핸드폰</span><input type = "text" maxlength="3" id = "a_tel1" name = "a_tel1">
 					<input type = "text" maxlength="4" id = "a_tel2" name = "a_tel2">
 					<input type = "text" maxlength="4" id = "a_tel3" name = "a_tel3">
 					<span id = "telChkMsg"></span>
@@ -214,10 +214,20 @@
     			daumAddr();
     		});
     		
+    		var re = /[a-zA-Z0-9]/;
     		// 아이디 중복체크
     		$("#a_id").blur(function(){
     			if($("#a_id").val().replace(/\s/g,"")=="") {
     				$("#idChkMsg").html("아이디를 입력해 주세요.");
+    				idOverlopChk= false;
+    			}
+    			else if(!re.test($("#a_id").val())){
+    				$("#idChkMsg").html("아이디는 영어와 숫자만 가능합니다.");
+    				idOverlopChk = false;
+    			}
+    			else if($("#a_id").val().length < 4){
+    				$("#idChkMsg").html("아이디는 최소 4자리 이상이어야 합니다");
+    				idOverlopChk = false;
     			}
     			else{
     				overlapChk($("#a_id"), $("#idChkMsg"), "admin");

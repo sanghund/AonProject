@@ -97,26 +97,15 @@ public class ClientProductController {
 		
 		pvo.setP_no(no);
 		ProductVO productDetail = productService.productDetail(pvo);
-		//logger.info("productDetail_pno:"+productDetail.getP_no());
 		uvo.setP_no(productDetail.getP_no());
 		List<UploadVO> uploadList = uploadService.uploadList(uvo);
 		model.addAttribute("uploadList", uploadList);
 		
 		List<ProductVO> productList = productService.productList(pvo);
 		model.addAttribute("productList", productList);
-		
-		///////////////////////////////////////////////
-		for(int i=0; i<productList.size(); i++){
-			logger.info("list: "+productList.get(i).getP_no());
-		}
-		///////////////////////////////////////////////
-		
+
 		productDetail.setP_no(pvo.getP_no());
-		
-		///////////////////////////////////////////////
-		logger.info("target: "+productDetail.getP_no());
-		///////////////////////////////////////////////
-		
+
 		model.addAttribute("productDetail", productDetail);
 		
 		return "client/product/productDetail";
