@@ -496,7 +496,7 @@
 										
 										<!-- 관리자 코멘트가 시작되는 구간 -->
 										<div class="reviewcomment-list">
-											<h3>COMMENT LIST</h3>
+											<h3>COMMENT</h3>
 											<div class="comment-cover">
 												<div class="comment-content">
 													<div class="content-top">

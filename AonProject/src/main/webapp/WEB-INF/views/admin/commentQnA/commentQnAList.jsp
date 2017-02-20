@@ -288,7 +288,7 @@
 								<tr class="qna_tr4" data-no="${qna.q_no }">
 									<td colspan="4">
 										<div class="qnacomment-list">
-											<h3>COMMENT LIST</h3>
+											<h3>COMMENT</h3>
 											<div class="comment-cover">
 												<div class="comment-content">
 													<div class="content-top">
